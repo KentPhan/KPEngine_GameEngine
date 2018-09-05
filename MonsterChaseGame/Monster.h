@@ -6,6 +6,8 @@ private:
 public:
 	char* GetName() const;
 	void SetName(char* name);
+	void PrintInfo() const;
+
 
 	Monster();
 	~Monster();
