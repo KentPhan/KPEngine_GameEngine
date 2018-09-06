@@ -1,14 +1,9 @@
 #pragma once
-class Monster
+#include "GameObject.h"
+
+class Monster : public GameObject
 {
-private:
-	char* name_;
 public:
-	char* GetName() const;
-	void SetName(char* name);
-	void PrintInfo() const;
-
-
 	Monster();
 	~Monster();
 };

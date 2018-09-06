@@ -22,6 +22,12 @@
     <Filter Include="Source Files\Classes">
       <UniqueIdentifier>{8d2a8ee8-49c6-4fe2-9956-8b10f89b45a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObjects\Core">
+      <UniqueIdentifier>{acc51165-235b-4178-96ea-76ddb379bbf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjects\Classes">
+      <UniqueIdentifier>{4293b037-29c2-4741-ba7f-52cea03ad849}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -36,6 +42,9 @@
     <ClInclude Include="InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -44,14 +53,17 @@
     <ClCompile Include="MonsterChaseGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Source Files\GameObjects\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\GameObjects\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\GameObjects\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
