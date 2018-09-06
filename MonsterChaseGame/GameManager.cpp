@@ -7,7 +7,9 @@
 
 GameManager::GameManager()
 {
+	
 }
+
 
 
 void GameManager::InitiateGame()
@@ -48,6 +50,28 @@ void GameManager::InitiateGame()
 	std::cin >> name_input;
 	(*player).SetName(name_input);
 
+
+	// Main game loop
+	while(true)
+	{
+		char input;
+		std::cin >> input;
+
+
+		switch(input)
+		{
+		case 'w':
+			break;
+		case 's':
+			break;
+		case 'a':
+			break;
+		case 'd':
+			break;
+		}
+
+	}
+	
 
 	// Lists all monsters and their info
 	for (int i = 0; i < number_of_monsters; i++)
