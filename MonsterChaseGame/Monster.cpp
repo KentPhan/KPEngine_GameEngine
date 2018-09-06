@@ -7,6 +7,12 @@ Monster::Monster()
 {
 }
 
+
+void Monster::PrintInfo() const
+{
+	std::cout << "Monster \"" << name_ << "\" at ["<< X << "," << Y <<"]\n";
+}
+
 Monster::~Monster()
 {
 	

@@ -5,6 +5,7 @@ class Monster : public GameObject
 {
 public:
 	Monster();
+	void PrintInfo() const override;
 	~Monster();
 };
 

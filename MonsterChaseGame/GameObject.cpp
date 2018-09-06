@@ -17,7 +17,7 @@ void GameObject::SetName(char* name)
 	this->name_ = name;
 }
 
-void GameObject::PrintInfo()
+void GameObject::PrintInfo() const
 {
 	std::cout << "Name: " << name_ << "\n";
 }

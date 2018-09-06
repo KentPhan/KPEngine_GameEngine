@@ -8,7 +8,10 @@ protected:
 public:
 	char* GetName() const;
 	void SetName(char* name);
-	virtual void PrintInfo();
+	virtual void PrintInfo() const;
+
+	int X;
+	int Y;
 
 	GameObject();
 	~GameObject();

@@ -5,6 +5,7 @@ class Player : public GameObject
 {
 public:
 	Player();
+	void PrintInfo() const;
 	~Player();
 };
 
