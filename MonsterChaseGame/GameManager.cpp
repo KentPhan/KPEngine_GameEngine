@@ -72,6 +72,7 @@ void GameManager::InitiateGame()
 	// Place Player
 	map_[0][0] = player;
 	player->SetPosition(0, 0);
+	player->Type = PlayerType;
 
 	// Main Loop
 	PrintMap();
@@ -124,10 +125,10 @@ void GameManager::MainGameLoop( Player* player, Monster* monsters)
 		default:
 			std::cout << "Invalid Input\n";
 		}
+		MoveMonsters();
+		/*char* testName = new char[1000];
+		SpawnMonster(testName);*/
 		PrintMap();
-
-		
-
 	}
 }
 
@@ -176,37 +177,53 @@ void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
 	player->SetPosition(newX, newY);
 }
 
-void GameManager::MoveMonster(Monster* monsterList)
+void GameManager::MoveMonsters()
 {
 	// For each monster. Move randomly
 	for(int i = 0; i < MONSTER_LIST_SIZE; i++)
 	{
 		// skip over it nothing there
-		if (monsterList[i].empty)
+		if (MonsterList[i].empty)
 			continue;
 
-		Monster monster = monsterList[i];
+		// Why does doing this mess things up?
+		//Monster monster = MonsterList[i];
+		Monster* monster = &MonsterList[i];
 
 		// magnitude to move
-		int newX = (rand() % 2 - 1) + monster.X;
-		int newY = (rand() % 2 - 1) + monster.Y;
+		int newX = (rand() % 3 - 1) + monster->X;
+		int newY = (rand() % 3 - 1) + monster->Y;
+		// only move if would stay in boundaries
+		if (newX < 0 || newX > 19)
+		{
+			newX = monster->X;
+		}
+		if (newY < 0 || newY > 19)
+		{
+			newY = monster->Y;
+		}
 
 		
 		// if new spot is empty. just move
 		if (map_[newY][newX] == nullptr)
 		{
-			map_[monster.Y][monster.X] = nullptr;
-			map_[newY][newX] = &monsterList[i];
-			monsterList[i].SetPosition(newX, newY);
-			break;
+			map_[monster->Y][monster->X] = nullptr;
+			map_[newY][newX] = &MonsterList[i];
+			MonsterList[i].SetPosition(newX, newY);
 		}
-		else
+		else if(map_[newY][newX]->Type == MonsterType)
 		{
 			
 		}
+		else if(map_[newY][newX]->Type == PlayerType)
+		{
+			
+		}
+		else
+		{
+			std::cout << "I have no idea what the hell is there\n";
+		}
 
-		// Place monster in new position
-		
 	}
 }
 
@@ -241,6 +258,7 @@ void GameManager::SpawnMonster(char* name)
 
 	newMonster->SetName(name);
 	newMonster->empty = false;
+	newMonster->Type = MonsterType;
 
 	monster_allocation_location_++;
 }

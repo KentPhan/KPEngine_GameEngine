@@ -13,13 +13,13 @@ private:
 	
 	
 	int monster_allocation_location_ = 0;
-	const int MONSTER_LIST_SIZE = 1000;
+	const int MONSTER_LIST_SIZE = 10;
 
 	void GetParameters();
 	void MainGameLoop(Player* player, Monster* monsters);
 	void PrintMap();
 	void MovePlayer(Player* player, int xMagnitude, int yMagnitude);
-	void MoveMonster(Monster* monsterList);
+	void MoveMonsters();
 	void SpawnMonster(char* name);
 
 public:

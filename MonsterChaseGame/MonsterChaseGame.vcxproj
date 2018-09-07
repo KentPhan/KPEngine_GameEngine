@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectType.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="pch.h" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectType.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterChaseGame.cpp" />
     <ClCompile Include="pch.cpp">

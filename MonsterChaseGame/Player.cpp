@@ -5,6 +5,7 @@
 
 Player::Player()
 {
+	
 }
 
 void Player::PrintInfo() const

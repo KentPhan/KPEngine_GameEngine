@@ -48,6 +48,9 @@
     <ClInclude Include="GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -67,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectType.cpp">
+      <Filter>Source Files\GameObjects\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
