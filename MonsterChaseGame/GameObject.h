@@ -4,7 +4,7 @@ class GameObject
 
 protected:
 	char* name_;
-
+	
 public:
 	char* GetName() const;
 	void SetName(char* name);
@@ -14,7 +14,7 @@ public:
 	
 	int X;
 	int Y;
-
+	bool empty = true;
 	GameObject();
 	~GameObject();
 };

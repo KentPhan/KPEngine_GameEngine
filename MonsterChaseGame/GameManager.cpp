@@ -7,7 +7,17 @@
 
 GameManager::GameManager()
 {
-	
+	this->MonsterList = new Monster[MONSTER_LIST_SIZE];
+
+	// Construct Map
+	// Default map with nullPtrs
+	for (int column = 0; column < 20; column++)
+	{
+		for (int row = 0; row < 20; row++)
+		{
+			map_[column][row] = nullptr;
+		}
+	}
 }
 
 
@@ -20,9 +30,18 @@ void GameManager::InitiateGame()
 	while (true)
 	{
 		std::cout << "How many monsters to start:\n";
-		if (std::cin >> number_of_monsters)
+
+		int numberInput;
+
+		if (std::cin >> numberInput)
 		{
-			break;
+			if (numberInput > monster_limit_)
+				std::cout << "Too many dang monsters, can't go over "<< monster_limit_ << "\n";
+			else
+			{
+				number_of_monsters = numberInput;
+				break;
+			}
 		}
 		else
 		{
@@ -33,13 +52,15 @@ void GameManager::InitiateGame()
 	}
 
 	// Name monsters
-	Monster *monsterList = new Monster[number_of_monsters];
+	// Im eventually gonna run out of memory for this monster list. But you know what... not gonna go through the trouble of making
+	// a dynamic monster list as of the current moment.
+	Monster *monsterList = new Monster[MONSTER_LIST_SIZE];
 	for (int i = 0; i < number_of_monsters; i++)
 	{
 		char* name_input = new char[1000];
 		std::cout << "Name monster " << i + 1 << ":";
 		std::cin >> name_input;
-		monsterList[i].SetName(name_input);
+		SpawnMonster(name_input);
 	}
 
 	// Name player
@@ -48,49 +69,9 @@ void GameManager::InitiateGame()
 	std::cout << "Name player: \n";
 	std::cin >> name_input;
 	(*player).SetName(name_input);
-
-	// Construct Map
-	// Default map with nullPtrs
-	for (int column = 0; column < 20; column++)
-	{
-		for (int row = 0; row < 20; row++)
-		{
-			Map[column][row] = nullptr;
-
-		}
-	}
-
-
 	// Place Player
-	Map[0][10] = player;
-	player->SetPosition(10, 0);
-
-	// Place Monsters
-	// For each monster. Move randomly
-	for (int i = 0; i < number_of_monsters; i++)
-	{
-		;
-
-		int newX = rand() % 19 + 1;
-		int newY = rand() % 19 + 1;
-		bool positionFound = false;
-		while(!positionFound)
-		{
-			// Check spot is empty;
-			if(Map[newY][newX] == nullptr)
-			{
-				break;
-			}
-
-			// try another one
-			newX = rand() % 19 + 1;
-			newY = rand() % 19 + 1;
-		}
-
-		// Place monster in new position
-		Map[newY][newX] = &monsterList[i];
-		monsterList[i].SetPosition(newX, newY);
-	}
+	map_[0][0] = player;
+	player->SetPosition(0, 0);
 
 	// Main Loop
 	PrintMap();
@@ -153,13 +134,13 @@ void GameManager::MainGameLoop( Player* player, Monster* monsters)
 void GameManager::PrintMap()
 {
 	// Print Map
-	std::cout << "Map:\n";
+	std::cout << "Use WASD to control movement, Map:\n";
 	for (int column = 0; column < 20; column++)
 	{
 		std::cout << "[";
 		for (int row = 0; row < 20; row++)
 		{
-			GameObject* position = this->Map[column][row];
+			GameObject* position = this->map_[column][row];
 
 			if (position == nullptr)
 				std::cout << " " << 'X' << " ";
@@ -188,23 +169,85 @@ void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
 	}
 
 	// remove old position
-	Map[player->Y][player->X] = nullptr;
+	map_[player->Y][player->X] = nullptr;
 
 	// set new position
-	Map[newY][newX] = player;
+	map_[newY][newX] = player;
 	player->SetPosition(newX, newY);
 }
 
 void GameManager::MoveMonster(Monster* monsterList)
 {
 	// For each monster. Move randomly
-	for(int i = 0; i < number_of_monsters; i++)
+	for(int i = 0; i < MONSTER_LIST_SIZE; i++)
 	{
+		// skip over it nothing there
+		if (monsterList[i].empty)
+			continue;
+
+		Monster monster = monsterList[i];
+
+		// magnitude to move
+		int newX = (rand() % 2 - 1) + monster.X;
+		int newY = (rand() % 2 - 1) + monster.Y;
+
+		
+		// if new spot is empty. just move
+		if (map_[newY][newX] == nullptr)
+		{
+			map_[monster.Y][monster.X] = nullptr;
+			map_[newY][newX] = &monsterList[i];
+			monsterList[i].SetPosition(newX, newY);
+			break;
+		}
+		else
+		{
+			
+		}
+
+		// Place monster in new position
 		
 	}
+}
+
+void GameManager::SpawnMonster(char* name)
+{
+	// don't spawn over limit
+	if (number_of_monsters >= (monster_limit_))
+		return;
+
+	Monster* newMonster = &MonsterList[monster_allocation_location_];
+
+	// Generate empty position
+	int newX = rand() % 19 + 1;
+	int newY = rand() % 19 + 1;
+	bool positionFound = false;
+	while (!positionFound)
+	{
+		// Check spot is empty;
+		if (map_[newY][newX] == nullptr)
+		{
+			break;
+		}
+
+		// try another one
+		newX = rand() % 19 + 1;
+		newY = rand() % 19 + 1;
+	}
+
+	// Place monster in new position
+	map_[newY][newX] = newMonster;
+	newMonster->SetPosition(newX, newY);
+
+	newMonster->SetName(name);
+	newMonster->empty = false;
+
+	monster_allocation_location_++;
 }
 
 
 GameManager::~GameManager()
 {
+	delete[] MonsterList;
+	delete[] map_;
 }
