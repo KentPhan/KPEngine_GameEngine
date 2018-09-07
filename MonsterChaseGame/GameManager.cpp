@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include <iostream>
+#include "conio.h"
 
 
 GameManager::GameManager()
@@ -90,21 +91,22 @@ void GameManager::MainGameLoop( Player* player)
 		
 
 		char input;
-		std::cin >> input;
+		input = _getch();
 
 		switch (input)
 		{
 		case 'w':
 			MovePlayer(player, 0, -1);
-			break;
 		case 's':
 			MovePlayer(player, 0, 1);
-			break;
 		case 'a':
 			MovePlayer(player, -1, 0);
-			break;
 		case 'd':
 			MovePlayer(player, 1, 0);
+			MoveMonsters();
+			if (endGame)
+				return;
+			PrintMap();
 			break;
 		case 'q':
 			return;
@@ -118,15 +120,13 @@ void GameManager::MainGameLoop( Player* player)
 			(*player).PrintInfo();
 			continue;
 		default:
-			std::cout << "Invalid Input\n";
-			continue;
+			if(input)
+			{
+				std::cout << "Invalid Input\n";
+				continue;
+			}
+			
 		}
-		MoveMonsters();
-
-		if (endGame)
-			return;
-
-		PrintMap();
 	}
 }
 
