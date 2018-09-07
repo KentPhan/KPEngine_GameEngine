@@ -56,9 +56,6 @@
     <ClCompile Include="MonsterChaseGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>Source Files\GameObjects\Classes</Filter>
     </ClCompile>

@@ -14,7 +14,7 @@ char* GameObject::GetName() const
 
 void GameObject::SetName(char* name)
 {
-	this->name_ = name;
+	name_ = name;
 }
 
 void GameObject::PrintInfo() const
@@ -26,6 +26,13 @@ char GameObject::GetSymbol()
 {
 	return 'U';
 }
+
+void GameObject::SetPosition(int x, int y)
+{
+	this->X = x;
+	this->Y = y;
+}
+
 
 GameObject::~GameObject()
 {

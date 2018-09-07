@@ -161,7 +161,6 @@
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterChaseGame.cpp" />
     <ClCompile Include="pch.cpp">

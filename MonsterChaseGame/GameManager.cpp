@@ -17,7 +17,6 @@ void GameManager::InitiateGame()
 	std::cout << "The Monster Chase Game - By Kent Phan!\n";
 
 	// Get monster count input
-	int number_of_monsters;
 	while (true)
 	{
 		std::cout << "How many monsters to start:\n";
@@ -51,61 +50,52 @@ void GameManager::InitiateGame()
 	(*player).SetName(name_input);
 
 	// Construct Map
-	GameObject* map[20][20];
 	// Default map with nullPtrs
 	for (int column = 0; column < 20; column++)
 	{
 		for (int row = 0; row < 20; row++)
 		{
-			map[column][row] = nullptr;
+			Map[column][row] = nullptr;
 
 		}
 	}
 
-	map[3][4] = player;
-	map[5][5] = &monsterList[3];
 
-	// Print Map
-	std::cout << "Map:\n";
-	for (int column = 0; column < 20; column++)
+	// Place Player
+	Map[0][10] = player;
+	player->SetPosition(10, 0);
+
+	// Place Monsters
+	// For each monster. Move randomly
+	for (int i = 0; i < number_of_monsters; i++)
 	{
-		std::cout << "[";
-		for(int row = 0; row < 20; row++)
-		{
-			GameObject* position = map[column][row];
+		;
 
-			if(position == nullptr)
-				std::cout << " "<<  'X' << " ";
-			else
-				std::cout << " " << position->GetSymbol() << " ";
-			
-		}
-		std::cout << "]\n";
-	}
-	
-	// Main game loop
-	while(true)
-	{
-		char input;
-		std::cin >> input;
-
-		switch(input)
+		int newX = rand() % 19 + 1;
+		int newY = rand() % 19 + 1;
+		bool positionFound = false;
+		while(!positionFound)
 		{
-		case 'w':
-			break;
-		case 's':
-			break;
-		case 'a':
-			break;
-		case 'd':
-			break;
-		case 'q':
-			goto quitGame;
+			// Check spot is empty;
+			if(Map[newY][newX] == nullptr)
+			{
+				break;
+			}
+
+			// try another one
+			newX = rand() % 19 + 1;
+			newY = rand() % 19 + 1;
 		}
 
+		// Place monster in new position
+		Map[newY][newX] = &monsterList[i];
+		monsterList[i].SetPosition(newX, newY);
 	}
-	quitGame:
-	
+
+	// Main Loop
+	PrintMap();
+	MainGameLoop(player, monsterList);
+
 
 	// Print list of stuff
 	for (int i = 0; i < number_of_monsters; i++)
@@ -118,11 +108,100 @@ void GameManager::InitiateGame()
 	std::cout << "Hello World" << number_of_monsters << "!\n";
 
 
+	
 	delete[] monsterList;
 	delete player;
 
 
 	std::cin >> number_of_monsters;
+}
+
+void GameManager::MainGameLoop( Player* player, Monster* monsters)
+{
+	// Main game loop
+	while (true)
+	{
+		char input;
+		std::cin >> input;
+
+		switch (input)
+		{
+		case 'w':
+			MovePlayer(player, 0, -1);
+			break;
+		case 's':
+			MovePlayer(player, 0, 1);
+			break;
+		case 'a':
+			MovePlayer(player, -1, 0);
+			break;
+		case 'd':
+			MovePlayer(player, 1, 0);
+			break;
+		case 'q':
+			return;
+		default:
+			std::cout << "Invalid Input\n";
+		}
+		PrintMap();
+
+		
+
+	}
+}
+
+void GameManager::PrintMap()
+{
+	// Print Map
+	std::cout << "Map:\n";
+	for (int column = 0; column < 20; column++)
+	{
+		std::cout << "[";
+		for (int row = 0; row < 20; row++)
+		{
+			GameObject* position = this->Map[column][row];
+
+			if (position == nullptr)
+				std::cout << " " << 'X' << " ";
+			else
+				std::cout << " " << position->GetSymbol() << " ";
+
+		}
+		std::cout << "]\n";
+	}
+}
+
+void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
+{
+	int newX = player->X + xMagnitude;
+	int newY = player->Y + yMagnitude;
+
+
+	// only move if would stay in boundaries
+	if(newX < 0 || newX > 19)
+	{
+		newX = player->X;
+	}
+	if (newY < 0 || newY > 19)
+	{
+		newY = player->Y;
+	}
+
+	// remove old position
+	Map[player->Y][player->X] = nullptr;
+
+	// set new position
+	Map[newY][newX] = player;
+	player->SetPosition(newX, newY);
+}
+
+void GameManager::MoveMonster(Monster* monsterList)
+{
+	// For each monster. Move randomly
+	for(int i = 0; i < number_of_monsters; i++)
+	{
+		
+	}
 }
 
 

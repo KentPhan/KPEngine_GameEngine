@@ -10,7 +10,8 @@ public:
 	void SetName(char* name);
 	virtual void PrintInfo() const;
 	virtual char GetSymbol();
-
+	void SetPosition(int x, int y);
+	
 	int X;
 	int Y;
 
