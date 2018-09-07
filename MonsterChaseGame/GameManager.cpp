@@ -97,10 +97,25 @@ void GameManager::MainGameLoop( Player* player)
 		{
 		case 'w':
 			MovePlayer(player, 0, -1);
+			MoveMonsters();
+			if (endGame)
+				return;
+			PrintMap();
+			break;
 		case 's':
 			MovePlayer(player, 0, 1);
+			MoveMonsters();
+			if (endGame)
+				return;
+			PrintMap();
+			break;
 		case 'a':
 			MovePlayer(player, -1, 0);
+			MoveMonsters();
+			if (endGame)
+				return;
+			PrintMap();
+			break;
 		case 'd':
 			MovePlayer(player, 1, 0);
 			MoveMonsters();
