@@ -249,7 +249,7 @@ void GameManager::MoveMonsters()
 			// If monster attacks player first, player dies and quits game
 			endGame = true;
 			std::cout << "Monster "<< MonsterList[i].GetName() << " Killed You!!!\n";
-			
+			return;
 		}
 		else
 		{
@@ -299,5 +299,6 @@ void GameManager::SpawnMonster(char* name)
 
 GameManager::~GameManager()
 {
+	delete MonsterList;
 	delete[] map_;
 }
