@@ -179,7 +179,7 @@ void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
 	else if(map_[newY][newX]->Type == MonsterType)
 	{
 		// kill monster
-		std::cout << "Monster Slain!\n";
+		std::cout << " Monster Slain!\n";
 		map_[newY][newX]->empty = true;
 		map_[newY][newX] = player;
 		number_of_monsters--;
@@ -226,9 +226,23 @@ void GameManager::MoveMonsters()
 		}
 		else if(map_[newY][newX]->Type == MonsterType)
 		{
-			// If another monster. Spawn another monster and stay in current positions
-			char* newName = new char[1000] {"Spawn"};
-			SpawnMonster(newName);
+			// If another monster. Spawn another monster or it dies.
+			int roll = rand() % 100 + 1;
+
+			if(roll > 20)
+			{
+				std::cout << " Monster Spawned!\n";
+				char* newName = new char[1000]{ "Spawn" };
+				SpawnMonster(newName);
+			}
+			else
+			{
+				std::cout << " Monster Died!\n";
+				map_[monster->Y][monster->X] = nullptr;
+				monster->empty = true;
+				number_of_monsters--;
+			}
+			
 		}
 		else if(map_[newY][newX]->Type == PlayerType)
 		{
