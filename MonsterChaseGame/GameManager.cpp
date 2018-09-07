@@ -27,11 +27,12 @@ void GameManager::InitiateGame()
 	std::cout << "The Monster Chase Game - By Kent Phan!\n";
 
 	// Get monster count input
+	int numberInput;
 	while (true)
 	{
 		std::cout << "How many monsters to start:\n";
 
-		int numberInput;
+		
 
 		if (std::cin >> numberInput)
 		{
@@ -39,7 +40,6 @@ void GameManager::InitiateGame()
 				std::cout << "Too many dang monsters, can't go over "<< monster_limit_ << "\n";
 			else
 			{
-				number_of_monsters = numberInput;
 				break;
 			}
 		}
@@ -54,7 +54,8 @@ void GameManager::InitiateGame()
 	// Name and spawn monsters
 	// Im eventually gonna run out of memory for this monster list. But you know what... not gonna go through the trouble of making
 	// a dynamic monster list as of the current moment.
-	for (int i = 0; i < number_of_monsters; i++)
+	
+	for (int i = 0; i < numberInput; i++)
 	{
 		char* name_input = new char[1000];
 		std::cout << "Name monster " << i + 1 << ":";
@@ -86,6 +87,8 @@ void GameManager::MainGameLoop( Player* player)
 	// Main game loop
 	while (true)
 	{
+		
+
 		char input;
 		std::cin >> input;
 
@@ -116,10 +119,13 @@ void GameManager::MainGameLoop( Player* player)
 			continue;
 		default:
 			std::cout << "Invalid Input\n";
+			continue;
 		}
 		MoveMonsters();
-		/*char* testName = new char[1000];
-		SpawnMonster(testName);*/
+
+		if (endGame)
+			return;
+
 		PrintMap();
 	}
 }
@@ -127,7 +133,7 @@ void GameManager::MainGameLoop( Player* player)
 void GameManager::PrintMap()
 {
 	// Print Map
-	std::cout << "Use WASD to control movement, press Q to quit, press P to print info, Map:\n";
+	std::cout << "Use WASD to control movement, press Q to quit, press P to print info. Touch monsters first to kill them. Get touched to die. " << number_of_monsters <<" Monsters Alive\n";
 	for (int column = 0; column < 20; column++)
 	{
 		std::cout << "[";
@@ -165,7 +171,21 @@ void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
 	map_[player->Y][player->X] = nullptr;
 
 	// set new position
-	map_[newY][newX] = player;
+	if(map_[newY][newX] == nullptr)
+	{
+		// move
+		map_[newY][newX] = player;
+	}
+	else if(map_[newY][newX]->Type == MonsterType)
+	{
+		// kill monster
+		std::cout << "Monster Slain!\n";
+		map_[newY][newX]->empty = true;
+		map_[newY][newX] = player;
+		number_of_monsters--;
+
+	}
+	 
 	player->SetPosition(newX, newY);
 }
 
@@ -212,8 +232,10 @@ void GameManager::MoveMonsters()
 		}
 		else if(map_[newY][newX]->Type == PlayerType)
 		{
-			// If Player. Quit Game
-
+			// If monster attacks player first, player dies and quits game
+			endGame = true;
+			std::cout << "Monster "<< MonsterList[i].GetName() << " Killed You!!!\n";
+			
 		}
 		else
 		{
@@ -255,6 +277,7 @@ void GameManager::SpawnMonster(char* name)
 	newMonster->SetName(name);
 	newMonster->empty = false;
 	newMonster->Type = MonsterType;
+	number_of_monsters++;
 
 	monster_allocation_location_++;
 }

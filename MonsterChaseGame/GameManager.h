@@ -8,6 +8,7 @@ class GameManager
 private:
 	GameObject* map_[20][20];
 	Monster* MonsterList;
+	bool endGame = false;;
 	
 	const int monster_limit_ = 50;
 	
