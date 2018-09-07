@@ -51,10 +51,9 @@ void GameManager::InitiateGame()
 		}
 	}
 
-	// Name monsters
+	// Name and spawn monsters
 	// Im eventually gonna run out of memory for this monster list. But you know what... not gonna go through the trouble of making
 	// a dynamic monster list as of the current moment.
-	Monster *monsterList = new Monster[MONSTER_LIST_SIZE];
 	for (int i = 0; i < number_of_monsters; i++)
 	{
 		char* name_input = new char[1000];
@@ -76,29 +75,13 @@ void GameManager::InitiateGame()
 
 	// Main Loop
 	PrintMap();
-	MainGameLoop(player, monsterList);
-
-
-	// Print list of stuff
-	for (int i = 0; i < number_of_monsters; i++)
-	{
-		monsterList[i].PrintInfo();
-	}
-	(*player).PrintInfo();
-
-
-	std::cout << "Hello World" << number_of_monsters << "!\n";
-
+	MainGameLoop(player);
 
 	
-	delete[] monsterList;
 	delete player;
-
-
-	std::cin >> number_of_monsters;
 }
 
-void GameManager::MainGameLoop( Player* player, Monster* monsters)
+void GameManager::MainGameLoop( Player* player)
 {
 	// Main game loop
 	while (true)
@@ -122,6 +105,15 @@ void GameManager::MainGameLoop( Player* player, Monster* monsters)
 			break;
 		case 'q':
 			return;
+		case 'p':
+			// Print list of stuff
+			for (int i = 0; i < MONSTER_LIST_SIZE; i++)
+			{
+				if(!MonsterList[i].empty)
+					MonsterList[i].PrintInfo();
+			}
+			(*player).PrintInfo();
+			continue;
 		default:
 			std::cout << "Invalid Input\n";
 		}
@@ -135,7 +127,7 @@ void GameManager::MainGameLoop( Player* player, Monster* monsters)
 void GameManager::PrintMap()
 {
 	// Print Map
-	std::cout << "Use WASD to control movement, Map:\n";
+	std::cout << "Use WASD to control movement, press Q to quit, press P to print info, Map:\n";
 	for (int column = 0; column < 20; column++)
 	{
 		std::cout << "[";
@@ -204,20 +196,24 @@ void GameManager::MoveMonsters()
 		}
 
 		
-		// if new spot is empty. just move
+		
 		if (map_[newY][newX] == nullptr)
 		{
+			// if new spot is empty. just move
 			map_[monster->Y][monster->X] = nullptr;
 			map_[newY][newX] = &MonsterList[i];
 			MonsterList[i].SetPosition(newX, newY);
 		}
 		else if(map_[newY][newX]->Type == MonsterType)
 		{
-			
+			// If another monster. Spawn another monster and stay in current positions
+			char* newName = new char[1000] {"Spawn"};
+			SpawnMonster(newName);
 		}
 		else if(map_[newY][newX]->Type == PlayerType)
 		{
-			
+			// If Player. Quit Game
+
 		}
 		else
 		{
@@ -266,6 +262,5 @@ void GameManager::SpawnMonster(char* name)
 
 GameManager::~GameManager()
 {
-	delete[] MonsterList;
 	delete[] map_;
 }
