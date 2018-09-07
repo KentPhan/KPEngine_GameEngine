@@ -50,13 +50,44 @@ void GameManager::InitiateGame()
 	std::cin >> name_input;
 	(*player).SetName(name_input);
 
+	// Construct Map
+	GameObject* map[20][20];
+	// Default map with nullPtrs
+	for (int column = 0; column < 20; column++)
+	{
+		for (int row = 0; row < 20; row++)
+		{
+			map[column][row] = nullptr;
 
+		}
+	}
+
+	map[3][4] = player;
+	map[5][5] = &monsterList[3];
+
+	// Print Map
+	std::cout << "Map:\n";
+	for (int column = 0; column < 20; column++)
+	{
+		std::cout << "[";
+		for(int row = 0; row < 20; row++)
+		{
+			GameObject* position = map[column][row];
+
+			if(position == nullptr)
+				std::cout << " "<<  'X' << " ";
+			else
+				std::cout << " " << position->GetSymbol() << " ";
+			
+		}
+		std::cout << "]\n";
+	}
+	
 	// Main game loop
 	while(true)
 	{
 		char input;
 		std::cin >> input;
-
 
 		switch(input)
 		{
@@ -68,17 +99,21 @@ void GameManager::InitiateGame()
 			break;
 		case 'd':
 			break;
+		case 'q':
+			goto quitGame;
 		}
 
 	}
+	quitGame:
 	
 
-	// Lists all monsters and their info
+	// Print list of stuff
 	for (int i = 0; i < number_of_monsters; i++)
 	{
 		monsterList[i].PrintInfo();
 	}
 	(*player).PrintInfo();
+
 
 	std::cout << "Hello World" << number_of_monsters << "!\n";
 

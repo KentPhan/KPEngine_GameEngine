@@ -10,7 +10,6 @@ private:
 	void MainGameLoop();
 	void MovePlayer();
 
-	GameObject *Map[10][10];
 public:
 	GameManager();
 

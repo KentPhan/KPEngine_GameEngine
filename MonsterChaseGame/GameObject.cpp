@@ -22,6 +22,11 @@ void GameObject::PrintInfo() const
 	std::cout << "Name: " << name_ << "\n";
 }
 
+char GameObject::GetSymbol()
+{
+	return 'U';
+}
+
 GameObject::~GameObject()
 {
 	delete name_;
