@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "Player.h"
 #include <iostream>
+#include "../../../include/GameObjects/Classes/Player.h"
 
 
 Player::Player()

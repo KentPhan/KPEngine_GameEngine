@@ -33,22 +33,22 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="include\Managers\GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
+    <ClInclude Include="include\GameObjects\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputManager.h">
+    <ClInclude Include="include\GameObjects\GameObjectType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
+    <ClInclude Include="include\Managers\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameManager.h">
+    <ClInclude Include="include\GameObjects\Classes\Monster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectType.h">
+    <ClInclude Include="include\GameObjects\Classes\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,23 +56,23 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterChaseGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Source Files\GameObjects\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\GameObjects\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\GameObjects\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="GameManager.cpp">
+    <ClCompile Include="src\Managers\GameManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectType.cpp">
+    <ClCompile Include="src\GameObjects\GameObject.cpp">
       <Filter>Source Files\GameObjects\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjects\GameObjectType.cpp">
+      <Filter>Source Files\GameObjects\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjects\Classes\Monster.cpp">
+      <Filter>Source Files\GameObjects\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MonsterChaseGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjects\Classes\Player.cpp">
+      <Filter>Source Files\GameObjects\Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

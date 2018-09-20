@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "GameManager.h"
-#include "Player.h"
-#include "Monster.h"
+#include "../../include/GameObjects/Classes/Player.h"
+#include "../../include/GameObjects/Classes/Monster.h"
 #include <iostream>
 #include "conio.h"
+#include "../../include/Managers/GameManager.h"
 
 
 GameManager::GameManager()

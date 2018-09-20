@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "Monster.h"
 #include <iostream>
+#include "../../../include/GameObjects/Classes/Monster.h"
 
 
 Monster::Monster()
