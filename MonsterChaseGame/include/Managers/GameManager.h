@@ -1,5 +1,6 @@
 #pragma once
 #include "../GameObjects/GameObject.h"
+#include "../../../KPEngine/include/Utils/List.h"
 class Monster;
 class Player;
 
@@ -7,15 +8,11 @@ class GameManager
 {
 private:
 	GameObject* map_[20][20];
-	Monster* MonsterList;
+	List<Monster*> * MonsterList;
 	bool endGame = false;;
 	
 	const int monster_limit_ = 50;
 	
-	
-	int monster_allocation_location_ = 0;
-	const int MONSTER_LIST_SIZE = 1000;
-
 	void GetParameters();
 	void MainGameLoop(Player* player);
 	void PrintMap();

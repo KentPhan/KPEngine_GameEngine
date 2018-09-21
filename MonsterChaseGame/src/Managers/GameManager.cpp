@@ -8,7 +8,7 @@
 
 GameManager::GameManager()
 {
-	this->MonsterList = new Monster[MONSTER_LIST_SIZE];
+	this->MonsterList = new List<Monster*>();
 
 	// Construct Map
 	// Default map with nullPtrs
@@ -127,10 +127,9 @@ void GameManager::MainGameLoop( Player* player)
 			return;
 		case 'p':
 			// Print list of stuff
-			for (int i = 0; i < MONSTER_LIST_SIZE; i++)
+			for (int i = 0; i < MonsterList->length(); i++)
 			{
-				if(!MonsterList[i].empty)
-					MonsterList[i].PrintInfo();
+				MonsterList->Get(i)->PrintInfo();
 			}
 			(*player).PrintInfo();
 			continue;
@@ -195,7 +194,7 @@ void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
 	{
 		// kill monster
 		std::cout << " Monster Slain!\n";
-		map_[newY][newX]->empty = true;
+		MonsterList->Remove((Monster*)map_[newY][newX]);
 		map_[newY][newX] = player;
 		number_of_monsters--;
 
@@ -207,15 +206,11 @@ void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
 void GameManager::MoveMonsters()
 {
 	// For each monster. Move randomly
-	for(int i = 0; i < MONSTER_LIST_SIZE; i++)
+	for(int i = 0; i < MonsterList->length(); i++)
 	{
-		// skip over it nothing there
-		if (MonsterList[i].empty)
-			continue;
-
-		// Why does doing this mess things up?
+		
 		//Monster monster = MonsterList[i];
-		Monster* monster = &MonsterList[i];
+		Monster* monster = MonsterList->Get(i);
 
 		// magnitude to move
 		int newX = (rand() % 3 - 1) + monster->X;
@@ -236,8 +231,8 @@ void GameManager::MoveMonsters()
 		{
 			// if new spot is empty. just move
 			map_[monster->Y][monster->X] = nullptr;
-			map_[newY][newX] = &MonsterList[i];
-			MonsterList[i].SetPosition(newX, newY);
+			map_[newY][newX] = MonsterList->Get(i);
+			MonsterList->Get(i)->SetPosition(newX, newY);
 		}
 		else if(map_[newY][newX]->Type == MonsterType)
 		{
@@ -254,7 +249,7 @@ void GameManager::MoveMonsters()
 			{
 				std::cout << " Monster Died!\n";
 				map_[monster->Y][monster->X] = nullptr;
-				monster->empty = true;
+				MonsterList->Remove(monster);
 				number_of_monsters--;
 			}
 			
@@ -263,7 +258,7 @@ void GameManager::MoveMonsters()
 		{
 			// If monster attacks player first, player dies and quits game
 			endGame = true;
-			std::cout << "Monster "<< MonsterList[i].GetName() << " Killed You!!!\n";
+			std::cout << "Monster "<< MonsterList->Get(i)->GetName() << " Killed You!!!\n";
 			return;
 		}
 		else
@@ -280,7 +275,8 @@ void GameManager::SpawnMonster(char* name)
 	if (number_of_monsters >= (monster_limit_))
 		return;
 
-	Monster* newMonster = &MonsterList[monster_allocation_location_];
+	Monster* newMonster = new Monster(); // &MonsterList[monster_allocation_location_];
+	MonsterList->Add(newMonster);
 
 	// Generate empty position
 	int newX = rand() % 19 + 1;
@@ -307,13 +303,11 @@ void GameManager::SpawnMonster(char* name)
 	newMonster->empty = false;
 	newMonster->Type = MonsterType;
 	number_of_monsters++;
-
-	monster_allocation_location_++;
 }
 
 
 GameManager::~GameManager()
 {
-	delete[] MonsterList;
-	delete[] map_;
+	delete MonsterList;
+	//delete[] map_;
 }

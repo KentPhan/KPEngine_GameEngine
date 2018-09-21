@@ -96,6 +96,68 @@ public:
 		size++;
 	};
 
+		
+	/// <summary>
+	/// Removes the specified item.
+	/// </summary>
+	/// <param name="item">The item.</param>
+	/// <returns>True if removal was a success. Otherwise false</returns>
+	bool Remove(T item)
+	{
+		if (head == nullptr || item == NULL)
+			return false;
+
+		Node<T> * previousNode = nullptr;
+		Node<T> * currentNode = head;
+		while(currentNode != nullptr)
+		{
+			if(currentNode->data == item)
+			{
+				if(previousNode == nullptr)
+				{
+					head = currentNode->next;
+				}
+				else
+				{
+					previousNode->next = currentNode->next;
+					
+				}
+				delete currentNode;
+				size--;
+				return true;
+			}
+			previousNode = currentNode;
+			currentNode = currentNode->next;
+		}
+		return false;
+	}
+	
+	/// <summary>
+	/// Gets the specified i.
+	/// </summary>
+	/// <param name="i">The i.</param>
+	/// <returns></returns>
+	T Get(int i)
+	{
+		if (head == nullptr || i < 0)
+			return NULL;
+
+		Node<T> * currentNode = head;
+		int position = 0;
+		while(currentNode != nullptr)
+		{
+			if(position == i)
+			{
+				return currentNode->data;
+			}
+			currentNode = currentNode->next;
+			position++;
+		}
+
+		// Item not found
+		return NULL;
+	}
+
 	
 	/// <summary>
 	/// Prints this instance.
@@ -112,7 +174,7 @@ public:
 
 		while (currentNode != nullptr)
 		{
-			std::cout << " ["<< currentNode << "] ";
+			std::cout << " ["<< currentNode->data << "] ";
 			currentNode = currentNode->next;
 		}
 		std::cout << "\n";
