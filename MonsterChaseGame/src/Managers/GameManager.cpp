@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include "../../include/GameObjects/Classes/Player.h"
 #include "../../include/GameObjects/Classes/Monster.h"
 #include <iostream>
@@ -314,6 +314,6 @@ void GameManager::SpawnMonster(char* name)
 
 GameManager::~GameManager()
 {
-	delete MonsterList;
+	delete[] MonsterList;
 	delete[] map_;
 }

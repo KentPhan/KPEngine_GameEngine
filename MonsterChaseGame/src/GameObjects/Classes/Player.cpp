@@ -1,4 +1,4 @@
-#include "pch.h"
+
 #include <iostream>
 #include "../../../include/GameObjects/Classes/Player.h"
 

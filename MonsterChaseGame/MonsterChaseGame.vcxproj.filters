@@ -30,9 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Managers\GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,11 +48,11 @@
     <ClInclude Include="include\GameObjects\Classes\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Managers\GameManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
@@ -68,11 +65,14 @@
     <ClCompile Include="src\GameObjects\Classes\Monster.cpp">
       <Filter>Source Files\GameObjects\Classes</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObjects\Classes\Player.cpp">
+      <Filter>Source Files\GameObjects\Classes</Filter>
+    </ClCompile>
     <ClCompile Include="src\MonsterChaseGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObjects\Classes\Player.cpp">
-      <Filter>Source Files\GameObjects\Classes</Filter>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
