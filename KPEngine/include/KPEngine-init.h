@@ -1,7 +1,7 @@
 #pragma once
 namespace KPEngine
 {
-	bool Initalize();
+	bool Initialize();
 }
 
 	
