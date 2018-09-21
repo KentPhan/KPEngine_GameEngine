@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28010.2003
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MonsterChaseGame", "MonsterChaseGame.vcxproj", "{C974E9B7-5A3D-47BE-8833-95D710FB2744}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MonsterChaseGame", "MonsterChaseGame\MonsterChaseGame.vcxproj", "{C974E9B7-5A3D-47BE-8833-95D710FB2744}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KPEngine", "..\KPEngine\KPEngine.vcxproj", "{F2A542AA-9DF0-4550-89DE-A1DE95EC397F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KPEngine", "KPEngine\KPEngine.vcxproj", "{F2A542AA-9DF0-4550-89DE-A1DE95EC397F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +36,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {58DF2B4B-2B96-4E9E-823E-2CD00FAD8697}
+		SolutionGuid = {5FF6BF8A-807A-47B4-AE3D-5EEF34A3F1A5}
 	EndGlobalSection
 EndGlobal
