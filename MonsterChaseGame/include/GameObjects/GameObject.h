@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObjectType.h"
+#include "include/Utils/KPVector2.h"
 
 class GameObject
 {
@@ -15,8 +16,7 @@ public:
 	virtual char GetSymbol();
 	void SetPosition(int x, int y);
 
-	int X;
-	int Y;
+	KPEngine::Utils::KPVector2 Position;
 	GameObjectType Type;
 
 	bool empty = true;

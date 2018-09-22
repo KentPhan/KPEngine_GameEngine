@@ -5,6 +5,7 @@
 #include "conio.h"
 #include "../../include/Managers/GameManager.h"
 
+using namespace KPEngine::Utils;
 
 GameManager::GameManager()
 {
@@ -167,22 +168,23 @@ void GameManager::PrintMap()
 
 void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
 {
-	int newX = player->X + xMagnitude;
-	int newY = player->Y + yMagnitude;
+	int newX = player->Position.X() + xMagnitude;
+	int newY = player->Position.Y() + yMagnitude;
+
 
 
 	// only move if would stay in boundaries
 	if(newX < 0 || newX > 19)
 	{
-		newX = player->X;
+		newX = player->Position.X();
 	}
 	if (newY < 0 || newY > 19)
 	{
-		newY = player->Y;
+		newY = player->Position.Y();
 	}
 
 	// remove old position
-	map_[player->Y][player->X] = nullptr;
+	map_[player->Position.Y()][player->Position.X()] = nullptr;
 
 	// set new position
 	if(map_[newY][newX] == nullptr)
@@ -213,16 +215,16 @@ void GameManager::MoveMonsters()
 		Monster* monster = MonsterList->Get(i);
 
 		// magnitude to move
-		int newX = (rand() % 3 - 1) + monster->X;
-		int newY = (rand() % 3 - 1) + monster->Y;
+		int newX = (rand() % 3 - 1) + monster->Position.X();
+		int newY = (rand() % 3 - 1) + monster->Position.Y();
 		// only move if would stay in boundaries
 		if (newX < 0 || newX > 19)
 		{
-			newX = monster->X;
+			newX = monster->Position.X();
 		}
 		if (newY < 0 || newY > 19)
 		{
-			newY = monster->Y;
+			newY = monster->Position.Y();
 		}
 
 		
@@ -230,7 +232,7 @@ void GameManager::MoveMonsters()
 		if (map_[newY][newX] == nullptr)
 		{
 			// if new spot is empty. just move
-			map_[monster->Y][monster->X] = nullptr;
+			map_[monster->Position.Y()][monster->Position.X()] = nullptr;
 			map_[newY][newX] = MonsterList->Get(i);
 			MonsterList->Get(i)->SetPosition(newX, newY);
 		}
@@ -248,7 +250,7 @@ void GameManager::MoveMonsters()
 			else
 			{
 				std::cout << " Monster Died!\n";
-				map_[monster->Y][monster->X] = nullptr;
+				map_[monster->Position.Y()][monster->Position.X()] = nullptr;
 				MonsterList->Remove(monster);
 				number_of_monsters--;
 			}

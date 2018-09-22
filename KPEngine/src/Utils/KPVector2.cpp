@@ -24,12 +24,12 @@ namespace KPEngine
 		{
 		}
 
-		int KPVector2::X()
+		int KPVector2::X() const
 		{
 			return m_X;
 		}
 
-		int KPVector2::Y()
+		int KPVector2::Y() const
 		{
 			return m_Y;
 		}
@@ -44,15 +44,15 @@ namespace KPEngine
 			m_Y = i_y;
 		}
 
-		KPVector2 KPVector2::operator+(const KPVector2& i_other)
+		KPVector2 & KPVector2::operator+(const KPVector2& i_other)
 		{
 			KPVector2 temp;
 			temp.X(m_X + i_other.m_X);
-			temp.X(m_Y + i_other.m_Y);
+			temp.Y(m_Y + i_other.m_Y);
 			return temp;
 		}
 
-		KPVector2 KPVector2::operator+=(const KPVector2& i_other)
+		KPVector2 & KPVector2::operator+=(const KPVector2& i_other)
 		{
 			this->m_X = (this->m_X + i_other.m_X);
 			this->m_Y = (this->m_Y + i_other.m_Y);

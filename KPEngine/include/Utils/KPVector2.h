@@ -13,16 +13,16 @@ namespace KPEngine
 			~KPVector2();
 
 			// Get
-			int X();
-			int Y();
+			int X() const;
+			int Y() const;
 
 			// Set
 			void X(int i_x);
 			void Y(int i_Y);
 
 			// operators
-			KPVector2 operator+(const KPVector2 & i_other);
-			KPVector2 operator+=(const KPVector2 & i_other);
+			KPVector2& operator+(const KPVector2 & i_other);
+			KPVector2& operator+=(const KPVector2 & i_other);
 
 			//Print
 			void Print();

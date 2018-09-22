@@ -3,8 +3,11 @@
 #include "../../include/GameObjects/GameObject.h"
 
 
+using namespace  KPEngine::Utils;
+
 GameObject::GameObject()
 {
+	this->Position = KPVector2(0, 0);
 }
 
 char* GameObject::GetName() const
@@ -29,8 +32,8 @@ char GameObject::GetSymbol()
 
 void GameObject::SetPosition(int x, int y)
 {
-	this->X = x;
-	this->Y = y;
+	this->Position.X(x);
+	this->Position.Y(y);
 }
 
 
