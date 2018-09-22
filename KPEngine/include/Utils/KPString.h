@@ -8,7 +8,13 @@ namespace KPEngine
 		{
 		public:
 			KPString();
+			KPString(const char * i_str);
 			~KPString();
+			char* Get();
+			int length();
+		private:
+			char* m_str;
+			int m_length;
 		};
 	}
 }

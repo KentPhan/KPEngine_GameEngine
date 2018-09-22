@@ -12,17 +12,19 @@ GameObject::GameObject()
 
 char* GameObject::GetName() const
 {
-	return name_;
+	return name_->Get();
 }
 
-void GameObject::SetName(char* name)
+void GameObject::SetName(const char* name)
 {
-	name_ = name;
+	if (name_ != nullptr)
+		delete name_;
+	name_ = new KPString(name);
 }
 
 void GameObject::PrintInfo() const
 {
-	std::cout << "Name: " << name_ << "\n";
+	std::cout << "Name: " << name_->Get() << "\n";
 }
 
 char GameObject::GetSymbol()

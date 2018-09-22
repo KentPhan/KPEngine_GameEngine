@@ -63,6 +63,7 @@ void GameManager::InitiateGame()
 		std::cout << "Name monster " << i + 1 << ":";
 		std::cin >> name_input;
 		SpawnMonster(name_input);
+		delete name_input;
 	}
 
 	// Name player
@@ -71,6 +72,7 @@ void GameManager::InitiateGame()
 	std::cout << "Name player: \n";
 	std::cin >> name_input;
 	(*player).SetName(name_input);
+	delete name_input;
 	// Place Player
 	map_[0][0] = player;
 	player->SetPosition(0, 0);
@@ -244,8 +246,7 @@ void GameManager::MoveMonsters()
 			if(roll > 20)
 			{
 				std::cout << " Monster Spawned!\n";
-				char* newName = new char[1000]{ "Spawn" };
-				SpawnMonster(newName);
+				SpawnMonster("Spawn");
 			}
 			else
 			{
@@ -271,7 +272,7 @@ void GameManager::MoveMonsters()
 	}
 }
 
-void GameManager::SpawnMonster(char* name)
+void GameManager::SpawnMonster(const char* name)
 {
 	// don't spawn over limit
 	if (number_of_monsters >= (monster_limit_))

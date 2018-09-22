@@ -4,7 +4,7 @@ namespace KPEngine
 {
 	namespace Utils
 	{
-
+		// TODO:Current games uses integer based positions. Need to swap this to floats when applicable later
 		class KPVector2
 		{
 		public:

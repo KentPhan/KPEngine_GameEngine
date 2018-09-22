@@ -18,7 +18,7 @@ private:
 	void PrintMap();
 	void MovePlayer(Player* player, int xMagnitude, int yMagnitude);
 	void MoveMonsters();
-	void SpawnMonster(char* name);
+	void SpawnMonster(const char* name);
 
 public:
 	GameManager();
