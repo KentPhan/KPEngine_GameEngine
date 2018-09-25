@@ -1,0 +1,11 @@
+Good interview question: implement memory allocator
+- need to provide API similar to malloc(size_t size) and free( void* ptr)
+- Where do we get the memory: _aligned_malloc()
+
+misallocation for strings: (forgetting null terminator)
+stale pointers: allocate memory, free memory, someone trys to use the pointer. (very hard to track down). can build system to track for it.
+Need to track allocator
+
+malloc(32)
+
+Proper singly linked list: two lists behind, a free list and a in use list
