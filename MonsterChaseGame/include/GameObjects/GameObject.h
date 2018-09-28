@@ -5,25 +5,32 @@
 
 using namespace KPEngine::Utils;
 
-class GameObject
+namespace MonsterChaseGame
 {
-	
-protected:
-	KPString *name_;
-	
-	
-public:
-	char* GetName() const;
-	void SetName(const char* name);
-	virtual void PrintInfo() const;
-	virtual char GetSymbol();
-	void SetPosition(int x, int y);
+	namespace GameObjects
+	{
+		class GameObject
+		{
 
-	KPVector2 Position;
-	GameObjectType Type;
+		protected:
+			KPString * name_;
 
-	bool empty = true;
-	GameObject();
-	~GameObject();
-};
+
+		public:
+			char* GetName() const;
+			void SetName(const char* name);
+			virtual void PrintInfo() const;
+			virtual char GetSymbol();
+			void SetPosition(int x, int y);
+
+			KPVector2 Position;
+			GameObjectType Type;
+
+			bool empty = true;
+			GameObject();
+			~GameObject();
+		};
+	}
+}
+
 

@@ -1,12 +1,19 @@
 #pragma once
 #include "../GameObject.h"
 
-class Player : public GameObject
+namespace MonsterChaseGame
 {
-public:
-	Player();
-	void PrintInfo() const;
-	char GetSymbol() override;
-	~Player();
-};
+	namespace GameObjects
+	{
+		class Player : public GameObject
+		{
+		public:
+			Player();
+			void PrintInfo() const;
+			char GetSymbol() override;
+			~Player();
+		};
+	}
+}
+
 

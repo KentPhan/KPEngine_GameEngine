@@ -1,7 +1,15 @@
 #pragma once
-enum GameObjectType
-{
-	PlayerType,
-	MonsterType
-};
 
+namespace MonsterChaseGame
+{
+	namespace GameObjects
+	{
+		enum GameObjectType
+		{
+			PlayerType,
+			MonsterType
+		};
+
+
+	}
+}

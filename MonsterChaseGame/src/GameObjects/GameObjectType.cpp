@@ -1,0 +1,7 @@
+namespace MonsterChaseGame
+{
+	namespace GameObjects
+	{
+
+	}
+}
