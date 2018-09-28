@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\KPEngine-init.h" />
+    <ClInclude Include="include\Utils\KP_Log.h" />
     <ClInclude Include="include\Utils\List.h" />
     <ClInclude Include="include\Utils\KPString.h" />
     <ClInclude Include="include\Utils\KPVector2.h" />
