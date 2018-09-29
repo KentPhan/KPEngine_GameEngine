@@ -9,13 +9,10 @@ namespace KPEngine
 	{
 		enum LogType
 		{
-			NoLogging = 0,
-			Fatal,
-			Error,
-			Warning,
-			Display,
-			Log,
-			Verbose,
+			Fatal, // A Fatal Error
+			Error, // A Error
+			Warning, // A Warning
+			Verbose, // Just a common log
 			/*VeryVerbose,
 			All = VeryVerbose,
 			NumVerbosity,
@@ -32,13 +29,34 @@ namespace KPEngine
 			//KPString * temp = new KPString("LOG: ");
 
 			const size_t lenTemp = 256;
-			char strTemp[lenTemp] = "LOG: ";
+			char strTemp[lenTemp] = "LOG:";
 
-			// convert to + string operator
+
+			// Categorize Log. CUSTOM FUNCTION ADDED
+			switch(type) { 
+				case Fatal:
+					strcat_s(strTemp, "FATAL ERROR: ");
+					break;
+				case Error:
+					strcat_s(strTemp, "ERROR: ");
+					break;
+				case Warning:
+					strcat_s(strTemp, "WARNING: ");
+					break;
+				case Verbose:
+					strcat_s(strTemp, "INFO: ");
+					break;
+				default: 
+					strcat_s(strTemp, "UNDEFINED: ");
+					break;
+			}
+
+			// need to convert to + string operator
 			strcat_s(strTemp, i_fmt);
 			strcat_s(strTemp, "\n");
 
 
+			// need to convert to custom string
 			const size_t lenOutput = lenTemp + 32;
 			char strOutput[lenOutput];
 
