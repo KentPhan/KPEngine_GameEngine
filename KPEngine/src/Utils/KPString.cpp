@@ -1,4 +1,5 @@
 #include "../../include/Utils/KPString.h"
+
 #include <cstring>
 
 namespace KPEngine

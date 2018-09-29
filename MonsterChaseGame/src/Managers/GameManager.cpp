@@ -1,11 +1,8 @@
-
-#include "../../include/GameObjects/Classes/Player.h"
-#include "../../include/GameObjects/Classes/Monster.h"
+#include "../../include/Managers/GameManager.h"
 #include <iostream>
 #include "conio.h"
-#include "../../include/Managers/GameManager.h"
+#include "include/Utils/KP_Log.h"
 
-using namespace KPEngine::Utils;
 
 namespace MonsterChaseGame
 {

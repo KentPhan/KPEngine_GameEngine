@@ -9,7 +9,5 @@ namespace MonsterChaseGame
 			PlayerType,
 			MonsterType
 		};
-
-
 	}
 }

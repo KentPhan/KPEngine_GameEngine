@@ -1,6 +1,6 @@
+#include "../../../include/GameObjects/Classes/Player.h"
 
 #include <iostream>
-#include "../../../include/GameObjects/Classes/Player.h"
 
 using namespace KPEngine::Utils;
 

@@ -1,6 +1,9 @@
 #pragma once
+
 #include "../GameObjects/GameObject.h"
 #include "../../../KPEngine/include/Utils/List.h"
+#include "../../include/GameObjects/Classes/Player.h"
+#include "../../include/GameObjects/Classes/Monster.h"
 
 
 using namespace MonsterChaseGame::GameObjects;

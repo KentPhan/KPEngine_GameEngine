@@ -39,13 +39,13 @@
     <ClInclude Include="include\GameObjects\GameObjectType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Managers\InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\GameObjects\Classes\Monster.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GameObjects\Classes\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MonsterChaseGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

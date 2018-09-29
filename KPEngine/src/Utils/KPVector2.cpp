@@ -1,8 +1,6 @@
-//#include "../../include/Utils/KPVector2.h"
-#include <iostream>
 #include "../../include/Utils/KPVector2.h"
 
-
+#include <iostream>
 namespace KPEngine
 {
 	namespace Utils

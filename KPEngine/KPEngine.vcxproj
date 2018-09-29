@@ -137,6 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\KPEngine-init.h" />
+    <ClInclude Include="include\Utils\KPLogType.h" />
     <ClInclude Include="include\Utils\KP_Log.h" />
     <ClInclude Include="include\Utils\List.h" />
     <ClInclude Include="include\Utils\KPString.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="src\KPEngine-init.cpp" />
     <ClCompile Include="src\Utils\KPString.cpp" />
     <ClCompile Include="src\Utils\KPVector2.cpp" />
+    <ClCompile Include="src\Utils\KP_Log.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

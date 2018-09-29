@@ -1,6 +1,6 @@
+#include "../../../include/GameObjects/Classes/Monster.h"
 
 #include <iostream>
-#include "../../../include/GameObjects/Classes/Monster.h"
 
 using namespace KPEngine::Utils;
 
