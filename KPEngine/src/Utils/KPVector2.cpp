@@ -1,6 +1,8 @@
 #include "../../include/Utils/KPVector2.h"
 
 #include <iostream>
+#include <cassert>
+
 namespace KPEngine
 {
 	namespace Utils

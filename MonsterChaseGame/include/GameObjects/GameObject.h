@@ -22,7 +22,7 @@ namespace MonsterChaseGame
 			void SetName(const char* name);
 			virtual void PrintInfo() const;
 			virtual char GetSymbol();
-			void SetPosition(int x, int y);
+			void SetPosition(int i_x, int i_y);
 
 			KPVector2 Position;
 			GameObjectType Type;

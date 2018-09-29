@@ -1,8 +1,8 @@
 #include "../../include/Utils/KPLogType.h"
 
-#include <assert.h>
+#include <cassert>
 #include <Windows.h>	// for OutputDebugStringA(). Uggh.. this pulls in a lot of Windows specific stuff. Gotten from sample project
-#include <stdio.h>
+#include <cstdio>
 
 namespace KPEngine
 {
@@ -17,6 +17,7 @@ namespace KPEngine
 		/// <param name="">The .</param>
 		void KP_Log(KPLogType type, const char * i_fmt, ...)
 		{
+			assert(type >= 1 && type <= 4);
 			assert(i_fmt);
 
 			// Need to convert to using custom string class:

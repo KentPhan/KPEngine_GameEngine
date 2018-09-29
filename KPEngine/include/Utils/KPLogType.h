@@ -6,10 +6,10 @@ namespace KPEngine
 	{
 		enum KPLogType
 		{
-			Fatal, // A Fatal Error
-			Error, // A Error
-			Warning, // A Warning
-			Verbose, // Just a common log
+			Fatal = 1, // A Fatal Error
+			Error = 2, // A Error
+			Warning = 3, // A Warning
+			Verbose = 4, // Just a common log
 			/*VeryVerbose,
 			All = VeryVerbose,
 			NumVerbosity,

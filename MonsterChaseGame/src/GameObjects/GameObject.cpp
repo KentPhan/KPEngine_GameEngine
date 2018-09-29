@@ -1,6 +1,7 @@
 #include "../../include/GameObjects/GameObject.h"
 
 #include <iostream>
+#include <cassert>
 
 using namespace  KPEngine::Utils;
 
@@ -20,8 +21,9 @@ namespace MonsterChaseGame
 
 		void GameObject::SetName(const char* name)
 		{
-			if (name_ != nullptr)
-				delete name_;
+			assert(name);
+
+			delete name_;
 			name_ = new KPString(name);
 		}
 
@@ -35,10 +37,10 @@ namespace MonsterChaseGame
 			return 'U';
 		}
 
-		void GameObject::SetPosition(int x, int y)
+		void GameObject::SetPosition(int i_x, int i_y)
 		{
-			this->Position.X(x);
-			this->Position.Y(y);
+			this->Position.X(i_x);
+			this->Position.Y(i_y);
 		}
 
 

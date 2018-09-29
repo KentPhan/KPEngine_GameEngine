@@ -1,6 +1,7 @@
 #include "../../include/Utils/KPString.h"
 
 #include <cstring>
+#include <cassert>
 
 namespace KPEngine
 {
@@ -13,7 +14,7 @@ namespace KPEngine
 		}
 		KPString::KPString(const char* i_str)
 		{
-
+			assert(i_str);
 			// count size of string
 			int length = 0;
 			const char* start = i_str;

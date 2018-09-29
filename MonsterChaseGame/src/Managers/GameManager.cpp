@@ -101,6 +101,8 @@ namespace MonsterChaseGame
 
 		void GameManager::MainGameLoop(Player* player)
 		{
+			assert(player != nullptr);
+
 			// Main game loop
 			while (true)
 			{
@@ -183,6 +185,8 @@ namespace MonsterChaseGame
 
 		void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
 		{
+			assert(player);
+
 			int newX = player->Position.X() + xMagnitude;
 			int newY = player->Position.Y() + yMagnitude;
 
@@ -287,6 +291,8 @@ namespace MonsterChaseGame
 
 		void GameManager::SpawnMonster(const char* name)
 		{
+			assert(name);
+
 			// don't spawn over limit
 			if (number_of_monsters >= (monster_limit_))
 				return;

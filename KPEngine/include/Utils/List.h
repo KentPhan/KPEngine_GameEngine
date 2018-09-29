@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <cassert>
 
 /// <summary>
 /// Node Class
@@ -77,6 +78,8 @@ public:
 	/// <param name="item">The item.</param>
 	void Add(T item)
 	{
+		assert(item);
+		
 		if (head == nullptr)
 		{
 			head = new Node<T>(item);
@@ -104,7 +107,7 @@ public:
 	/// <returns>True if removal was a success. Otherwise false</returns>
 	bool Remove(T item)
 	{
-		if (head == nullptr || item == NULL)
+		if (head == nullptr || item == NULL || item == nullptr)
 			return false;
 
 		Node<T> * previousNode = nullptr;
@@ -139,8 +142,10 @@ public:
 	/// <returns></returns>
 	T Get(int i)
 	{
-		if (head == nullptr || i < 0)
-			return NULL;
+		assert(i >= 0);
+
+		if (head == nullptr)
+			return nullptr;
 
 		Node<T> * currentNode = head;
 		int position = 0;
@@ -155,7 +160,7 @@ public:
 		}
 
 		// Item not found
-		return NULL;
+		return nullptr;
 	}
 
 	
