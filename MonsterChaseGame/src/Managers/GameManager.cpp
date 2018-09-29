@@ -27,6 +27,10 @@ namespace MonsterChaseGame
 
 		void GameManager::InitiateGame()
 		{
+
+			
+			DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Started");
+
 			std::cout << "The Monster Chase Game - By Kent Phan!\n";
 
 			// Get monster count input
@@ -54,6 +58,7 @@ namespace MonsterChaseGame
 				}
 			}
 
+			
 			// Name and spawn monsters
 			// Im eventually gonna run out of memory for this monster list. But you know what... not gonna go through the trouble of making
 			// a dynamic monster list as of the current moment.
@@ -66,6 +71,8 @@ namespace MonsterChaseGame
 				SpawnMonster(name_input);
 				delete name_input;
 			}
+			DEBUG_PRINT(KPLogType::Verbose, "%d Monsters Created", numberInput);
+			
 
 			// Name player
 			Player *player = new Player();
@@ -78,6 +85,7 @@ namespace MonsterChaseGame
 			map_[0][0] = player;
 			player->SetPosition(0, 0);
 			player->Type = PlayerType;
+			DEBUG_PRINT(KPLogType::Verbose, "Player Made");
 
 			// Main Loop
 			PrintMap();
@@ -85,6 +93,10 @@ namespace MonsterChaseGame
 
 
 			delete player;
+
+			DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Ended");
+
+
 		}
 
 		void GameManager::MainGameLoop(Player* player)

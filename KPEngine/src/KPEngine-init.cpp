@@ -12,7 +12,13 @@ namespace KPEngine
 
 	bool Initialize()
 	{
+
+		DEBUG_PRINT(KPLogType::Verbose ,"Engine Initialized");
+
 		std::cout << "KPEngine Initialized\n";
+
+		DEBUG_PRINT(KPLogType::Verbose, "Engine Killed");
+
 		return true;
 	}
 }
