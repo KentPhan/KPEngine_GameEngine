@@ -10,7 +10,7 @@ namespace KPEngine
 			// Constructors Destructors
 			KPString();
 			KPString(const char * i_str);
-			/*KPString(const KPString &i_kp2);*/
+			KPString(const KPString &i_kp2);
 			~KPString();
 
 			// Accessors

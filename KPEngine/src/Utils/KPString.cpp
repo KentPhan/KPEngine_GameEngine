@@ -36,14 +36,13 @@ namespace KPEngine
 			m_str[m_length] = '\0';
 
 		}
-		//KPString::KPString(const KPString &i_kp2)
-		//{
-		//	this = i_kp2;
-		//	/*this->m_length = i_kp2.m_length;
-		//	char * temp = new char[this->m_length + 1];
-		//	strcpy_s(temp, (this->m_length + 1), i_kp2.m_str);
-		//	this->m_str = temp;*/
-		//}
+		KPString::KPString(const KPString &i_kp2)
+		{
+			this->m_length = i_kp2.m_length;
+			char * temp = new char[this->m_length + 1];
+			strcpy_s(temp, (this->m_length + 1), i_kp2.m_str);
+			this->m_str = temp;
+		}
 		KPString::~KPString()
 		{
 			delete m_str;
@@ -77,9 +76,9 @@ namespace KPEngine
 			strcat_s(newString, (newLength + 1), i_other.m_str);
 
 			// create new KPString on heap and return
-			KPString temp = KPString();
-			temp.m_str = newString;
-			temp.m_length = strlen(newString);
+			KPString temp(newstring);
+
+			delete newString;
 
 			//TO DO How do I handle this? Am I supposed to allocate on heap ????? If I do when do I delete????
 
