@@ -1,4 +1,4 @@
-#include "../../../include/Core/HeapManager/HeapManagerProxy.h"
+#include "../../../include/Core/HeapManager/KPHeapManagerProxy.h"
 
 
 #include "../../../include/Core/HeapManager/KPHeapManager.h"

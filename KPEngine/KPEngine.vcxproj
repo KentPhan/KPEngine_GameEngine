@@ -136,7 +136,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\Core\HeapManager\HeapManagerProxy.h" />
+    <ClInclude Include="include\Core\HeapManager\KPHeapManagerProxy.h" />
     <ClInclude Include="include\Core\HeapManager\KPHeapManager.h" />
     <ClInclude Include="include\KPEngine-init.h" />
     <ClInclude Include="include\Utils\KPLogType.h" />

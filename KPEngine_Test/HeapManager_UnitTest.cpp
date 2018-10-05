@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include "../KPEngine/include/Core/HeapManager/KPHeapManager.h"
-#include "../KPEngine/include/Core/HeapManager/HeapManagerProxy.h"
+#include "../KPEngine/include/Core/HeapManager/KPHeapManagerProxy.h"
 
 #define SUPPORTS_ALIGNMENT
 #define SUPPORTS_SHOWFREEBLOCKS
@@ -15,6 +15,8 @@ bool HeapManager_UnitTest()
 {
 	using namespace KPEngine::Core::HeapManager;
 
+	
+	
 	const size_t 		sizeHeap = 1024 * 1024;
 	const unsigned int 	numDescriptors = 2048;
 
@@ -24,6 +26,8 @@ bool HeapManager_UnitTest()
 
 	// Create a heap manager for my test heap.
 	KPHeapManager * pHeapManager = KPEngine::Core::HeapManager::CreateHeapManager(pHeapMemory, sizeHeap, numDescriptors);
+
+
 	assert(pHeapManager);
 
 	if (pHeapManager == nullptr)

@@ -30,4 +30,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="Externals\HeapManager-Debug-x64.lib" />
+    <Library Include="Externals\HeapManager-Debug-x86.lib" />
+    <Library Include="Externals\HeapManager-Release-x64.lib" />
+    <Library Include="Externals\HeapManager-Release-x86.lib" />
+  </ItemGroup>
 </Project>

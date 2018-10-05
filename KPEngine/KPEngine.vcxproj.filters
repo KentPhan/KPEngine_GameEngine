@@ -56,7 +56,7 @@
     <ClInclude Include="include\Core\HeapManager\KPHeapManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\HeapManager\HeapManagerProxy.h">
+    <ClInclude Include="include\Core\HeapManager\KPHeapManagerProxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
