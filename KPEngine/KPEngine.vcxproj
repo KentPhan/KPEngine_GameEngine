@@ -136,6 +136,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Core\HeapManager\HeapManagerProxy.h" />
+    <ClInclude Include="include\Core\HeapManager\KPHeapManager.h" />
     <ClInclude Include="include\KPEngine-init.h" />
     <ClInclude Include="include\Utils\KPLogType.h" />
     <ClInclude Include="include\Utils\KP_Log.h" />
@@ -144,6 +146,8 @@
     <ClInclude Include="include\Utils\KPVector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\HeapManager\HeapManagerProxy.cpp" />
+    <ClCompile Include="src\Core\HeapManager\KPHeapManager.cpp" />
     <ClCompile Include="src\KPEngine-init.cpp" />
     <ClCompile Include="src\Utils\KPString.cpp" />
     <ClCompile Include="src\Utils\KPVector2.cpp" />
