@@ -189,8 +189,8 @@
     <ClCompile Include="src\GameObjects\GameObject.cpp" />
     <ClCompile Include="src\GameObjects\GameObjectType.cpp" />
     <ClCompile Include="src\GameObjects\Classes\Monster.cpp" />
-    <ClCompile Include="src\MonsterChaseGame.cpp" />
     <ClCompile Include="src\GameObjects\Classes\Player.cpp" />
+    <ClCompile Include="src\MonsterChaseGame.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
