@@ -18,7 +18,7 @@ namespace KPEngine
 			int length();
 
 			//operators
-			KPString& operator+(const KPString & i_other);
+			KPString operator+(const KPString & i_other);
 			KPString& operator=(const KPString& i_other);
 
 

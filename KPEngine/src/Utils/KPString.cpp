@@ -62,28 +62,24 @@ namespace KPEngine
 
 
 		// Operators
-		// TODO May need to handle private variables differently
-		// TODO: This does not work and is still a work in progress
-		KPString& KPString::operator+(const KPString & i_other)
+		KPString KPString::operator+(const KPString & i_other)
 		{
 			// new length
 			int newLength = this->m_length + i_other.m_length; 
 
 			// concat new string
-			char* newString = new char[newLength + 1];
-			newString[0] = '\0';
-			strcat_s(newString, (newLength + 1), this->m_str);
-			strcat_s(newString, (newLength + 1), i_other.m_str);
+			char* tempString = new char[newLength + 1];
+			tempString[0] = '\0';
+			strcat_s(tempString, (newLength + 1), this->m_str);
+			strcat_s(tempString, (newLength + 1), i_other.m_str);
 
 			// create new KPString on heap and return
-			KPString temp(newstring);
+			KPString tempValue = KPString(tempString);
 
-			delete newString;
+			delete tempString;
 
-			//TO DO How do I handle this? Am I supposed to allocate on heap ????? If I do when do I delete????
-
-			return temp;
-		}
+			return tempValue;// Because returning by value, copy constructor will be called first before the destructor of tempValue
+		}// destructor of copyConstructed item will be called here if the item has not been stored somewhere
 
 		KPString& KPString::operator=(const KPString& i_other)
 		{
