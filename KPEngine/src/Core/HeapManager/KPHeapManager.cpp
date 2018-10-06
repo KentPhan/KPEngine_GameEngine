@@ -89,6 +89,10 @@ namespace KPEngine
 					// reinterpret initial part as descriptor
 					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
 
+					// TODO Create valid checker outside of Contains
+					//// ensure this is a valid descriptor
+					//assert(Contains(descriptor));
+
 					
 					// TODO Add Range Condition to try to match a block that more closely fits
 					// if it fits return the pointer to the
@@ -123,6 +127,7 @@ namespace KPEngine
 			bool KPHeapManager::_free(void* i_ptr)
 			{
 				assert(i_ptr);
+				assert(Contains(i_ptr));
 
 				// go in the reverse direction and modify descriptor to mark the block as not free
 				BlockDescriptor* descriptor =  static_cast<BlockDescriptor*>(i_ptr) - 1;
@@ -132,12 +137,42 @@ namespace KPEngine
 
 			void KPHeapManager::collect()
 			{
-				//// TODO: Implement
-				//std::cout << "NOT YET IMPLEMENTED collect" << "\n";
-				//assert(false);
-				return;
-			}
+				//// loop through internal heap and merge abuding blocks
+				//char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				//while (true)
+				//{
+				//	// reinterpret initial part as descriptor
+				//	BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
 
+				//	// ensure this is a valid descriptor
+				//	
+
+				//	// if this block is free
+				//	if (descriptor->m_free)
+				//	{
+
+				//		// if next block is free
+				//		char* nextPointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
+				//		BlockDescriptor* nextDescriptor = reinterpret_cast<BlockDescriptor*>(nextPointer);
+
+				//		if(nextDescriptor)
+				//		
+				//	}
+
+
+				//	// if the pointer goes over the end of our heap, we have done all we can
+				//	if (pointer > (this->m_InternalHeapEnd))
+				//		return;
+				//}
+			}
+			
+			/// <summary>
+			/// Determines whether [contains] a valid black at the specified pointer
+			/// </summary>
+			/// <param name="i_ptr">The i PTR.</param>
+			/// <returns>
+			///   <c>true</c> if [contains] a valid black at the specified pointer; otherwise, <c>false</c>.
+			/// </returns>
 			bool KPHeapManager::Contains(void* i_ptr) const
 			{
 				assert(i_ptr);
@@ -152,8 +187,9 @@ namespace KPEngine
 				assert(i_ptr);
 				assert(Contains(i_ptr));
 
+				// go in reverse and check to see if its free
 				BlockDescriptor* descriptor = static_cast<BlockDescriptor*>(i_ptr) - 1;
-				return !(descriptor->m_free);
+				return m_ValidateDescriptor(descriptor);
 			}
 
 			size_t KPHeapManager::getLargestFreeBlock() const
@@ -178,6 +214,14 @@ namespace KPEngine
 				std::cout << "NOT YET IMPLEMENTED ShowFreeBlocks" << "\n";
 				assert(false);
 				return;
+			}
+
+			bool KPHeapManager::m_ValidateDescriptor(void* i_pMemory) const
+			{
+				assert(i_pMemory);
+
+				BlockDescriptor* descriptor = static_cast<BlockDescriptor*>(i_pMemory);
+				return (descriptor->m_validKey == this->m_validDescriptorKey);
 			}
 		}
 	}

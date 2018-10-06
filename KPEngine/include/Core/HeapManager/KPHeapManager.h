@@ -40,6 +40,9 @@ namespace KPEngine
 				void ShowFreeBlocks() const;
 
 			private:
+
+				bool m_ValidateDescriptor(void* i_pMemory) const;
+
 				void * m_InternalHeapStart;
 				void * m_InternalHeapEnd;
 				size_t m_InternalTotalSpace;
