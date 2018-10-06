@@ -6,10 +6,17 @@ namespace KPEngine
 	{
 		namespace HeapManager
 		{
+			struct BlockDescriptor
+			{
+				size_t m_sizeBlock; // 4/8 bytes
+				bool m_free;
+			};
+
+
 			class KPHeapManager
 			{
 			public:
-				static KPHeapManager* create(void * i_pMemory,size_t i_sizeMemory, unsigned int i_numDescriptors);
+				static KPHeapManager* create(void * i_pMemory,size_t i_sizeMemory);
 
 				void destroy();
 
@@ -32,7 +39,9 @@ namespace KPEngine
 				void ShowFreeBlocks() const;
 
 			private:
-				
+				void * m_InternalHeapStart;
+				size_t m_InternalTotalSpace;
+				size_t LARGEST_BLOCK_SIZE = 512;
 			};
 			
 		}

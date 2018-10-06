@@ -12,7 +12,7 @@ namespace KPEngine
 		{
 			class KPHeapManager;
 
-			KPHeapManager *	CreateHeapManager(void * i_pMemory, size_t i_sizeMemory, unsigned int i_numDescriptors);
+			KPHeapManager *	CreateHeapManager(void * i_pMemory, size_t i_sizeMemory);
 			void			Destroy(KPHeapManager * i_pManager);
 
 			void *			alloc(KPHeapManager * i_pManager, size_t i_size);

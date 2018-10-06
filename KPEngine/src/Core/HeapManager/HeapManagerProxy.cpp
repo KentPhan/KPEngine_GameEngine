@@ -11,9 +11,9 @@ namespace KPEngine
 	{
 		namespace HeapManager
 		{
-			KPHeapManager * CreateHeapManager(void * i_pMemory, size_t i_sizeMemory, unsigned int i_numDescriptors)
+			KPHeapManager * CreateHeapManager(void * i_pMemory, size_t i_sizeMemory)
 			{
-				return KPHeapManager::create(i_pMemory, i_sizeMemory, i_numDescriptors);
+				return KPHeapManager::create(i_pMemory, i_sizeMemory);
 			}
 
 			void Destroy(KPHeapManager * i_pManager)

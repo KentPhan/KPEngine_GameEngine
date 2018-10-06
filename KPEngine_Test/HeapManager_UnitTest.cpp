@@ -18,14 +18,14 @@ bool HeapManager_UnitTest()
 	
 	
 	const size_t 		sizeHeap = 1024 * 1024;
-	const unsigned int 	numDescriptors = 2048;
+	//const unsigned int 	numDescriptors = 2048; My Allocator does not require a number of descriptors to be defined
 
 	// Allocate memory for my test heap.
 	void * pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
 	assert(pHeapMemory);
 
 	// Create a heap manager for my test heap.
-	KPHeapManager * pHeapManager = KPEngine::Core::HeapManager::CreateHeapManager(pHeapMemory, sizeHeap, numDescriptors);
+	KPHeapManager * pHeapManager = CreateHeapManager(pHeapMemory, sizeHeap);
 
 
 	assert(pHeapManager);
@@ -158,6 +158,7 @@ bool HeapManager_UnitTest()
 
 	} while (1);
 
+ 
 #if defined(SUPPORTS_SHOWFREEBLOCKS) || defined(SUPPORTS_SHOWOUTSTANDINGALLOCATIONS)
 	printf("After exhausting allocations:\n");
 #ifdef SUPPORTS_SHOWFREEBLOCKS
