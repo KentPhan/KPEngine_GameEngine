@@ -112,9 +112,11 @@ namespace KPEngine
 
 			bool KPHeapManager::_free(void* i_ptr)
 			{
-				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED _free" << "\n";
-				assert(false);
+				assert(i_ptr);
+
+				// go in the reverse direction and modify descriptor to mark the block as not free
+				BlockDescriptor* descriptor =  static_cast<BlockDescriptor*>(i_ptr) - 1;
+				descriptor->m_free = true;
 				return false;
 			}
 
