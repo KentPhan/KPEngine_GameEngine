@@ -9,6 +9,7 @@ namespace KPEngine
 			struct BlockDescriptor
 			{
 				size_t m_sizeBlock; // 4/8 bytes
+				char m_validKey;
 				bool m_free;
 			};
 
@@ -42,7 +43,8 @@ namespace KPEngine
 				void * m_InternalHeapStart;
 				void * m_InternalHeapEnd;
 				size_t m_InternalTotalSpace;
-				size_t LARGEST_BLOCK_SIZE = 512;
+				size_t LARGEST_BLOCK_SIZE;
+				char m_validDescriptorKey; // for checking the block descriptor is valid
 			};
 			
 		}

@@ -12,6 +12,11 @@ namespace KPEngine
 			KPHeapManager* KPHeapManager::create(void* i_pMemory, size_t i_sizeMemory)
 			{
 				assert(i_pMemory);
+				const size_t c_initialBlockSize = 512;
+				const char c_blockDescriptorValidKey = 0xAFBC;
+
+
+
 
 				std::cout << "size of HeapManager:" << sizeof(KPHeapManager) << "\n";
 				std::cout << "size of BlockDescriptor:"  << sizeof(BlockDescriptor) << "\n";
@@ -25,11 +30,10 @@ namespace KPEngine
 				manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPHeapManager);
 
 				// Define initial block size
-				const size_t initialBlockSize = 512;
-				manager->LARGEST_BLOCK_SIZE = initialBlockSize;
+				manager->LARGEST_BLOCK_SIZE = c_initialBlockSize;
 
 				// Calculate total number of blocks that we can fit
-				int numberOfTotalBlocks = manager->m_InternalTotalSpace / (initialBlockSize + sizeof(BlockDescriptor));
+				int numberOfTotalBlocks = manager->m_InternalTotalSpace / (c_initialBlockSize + sizeof(BlockDescriptor));
 
 
 				std::cout << "Total number of blocks allocated:" << numberOfTotalBlocks << "\n";
@@ -39,16 +43,22 @@ namespace KPEngine
 				std::cout << "FirstHeapBlockPointer" << manager->m_InternalHeapStart << "\n";*/
 
 
+				// assign key to determining if descriptors are valid
+				manager->m_validDescriptorKey = c_blockDescriptorValidKey;
+
+
+
 				// initialize blocks with pointer arithmetic
 				char * block = static_cast<char*>(manager->m_InternalHeapStart);
 				for(int i = 0; i < numberOfTotalBlocks; i++)
 				{
 					// initialize block descriptor at the start of the block
-					reinterpret_cast<BlockDescriptor*>(block)->m_sizeBlock = initialBlockSize;
+					reinterpret_cast<BlockDescriptor*>(block)->m_sizeBlock = c_initialBlockSize;
 					reinterpret_cast<BlockDescriptor*>(block)->m_free = true;
+					reinterpret_cast<BlockDescriptor*>(block)->m_validKey = manager->m_validDescriptorKey;
 
 					// move block pointer to next block
-					block = block + (sizeof(BlockDescriptor) + initialBlockSize);
+					block = block + (sizeof(BlockDescriptor) + c_initialBlockSize);
 				}
 
 				// Save this pointer as the end of our internal heap
@@ -117,31 +127,33 @@ namespace KPEngine
 				// go in the reverse direction and modify descriptor to mark the block as not free
 				BlockDescriptor* descriptor =  static_cast<BlockDescriptor*>(i_ptr) - 1;
 				descriptor->m_free = true;
-				return false;
+				return true;
 			}
 
 			void KPHeapManager::collect()
 			{
-				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED collect" << "\n";
-				assert(false);
+				//// TODO: Implement
+				//std::cout << "NOT YET IMPLEMENTED collect" << "\n";
+				//assert(false);
 				return;
 			}
 
 			bool KPHeapManager::Contains(void* i_ptr) const
 			{
-				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED Contains" << "\n";
-				assert(false);
-				return false;
+				assert(i_ptr);
+
+				// go in reverse direction and check if block actually exists with descriptor key
+				BlockDescriptor* descriptor = static_cast<BlockDescriptor*>(i_ptr) - 1;
+				return (descriptor->m_validKey == this->m_validDescriptorKey);
 			}
 
 			bool KPHeapManager::IsAllocated(void* i_ptr) const
 			{
-				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED IsAllocated" << "\n";
-				assert(false);
-				return false;
+				assert(i_ptr);
+				assert(Contains(i_ptr));
+
+				BlockDescriptor* descriptor = static_cast<BlockDescriptor*>(i_ptr) - 1;
+				return !(descriptor->m_free);
 			}
 
 			size_t KPHeapManager::getLargestFreeBlock() const
