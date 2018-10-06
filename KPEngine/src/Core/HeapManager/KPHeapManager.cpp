@@ -137,33 +137,62 @@ namespace KPEngine
 
 			void KPHeapManager::collect()
 			{
-				//// loop through internal heap and merge abuding blocks
-				//char* pointer = static_cast<char*>(this->m_InternalHeapStart);
-				//while (true)
-				//{
-				//	// reinterpret initial part as descriptor
-				//	BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
+				// loop through internal heap and merge abuding blocks
+				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				while (true)
+				{
+					// reinterpret initial part as descriptor
+					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
 
-				//	// ensure this is a valid descriptor
-				//	
+					// ensure this is a valid descriptor
+					assert(m_ValidateDescriptor(descriptor));
+					
 
-				//	// if this block is free
-				//	if (descriptor->m_free)
-				//	{
+					// if this block is free
+					if (descriptor->m_free)
+					{
 
-				//		// if next block is free
-				//		char* nextPointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
-				//		BlockDescriptor* nextDescriptor = reinterpret_cast<BlockDescriptor*>(nextPointer);
-
-				//		if(nextDescriptor)
-				//		
-				//	}
+						// go to next block descriptor
+						char* nextPointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
+						BlockDescriptor* nextDescriptor = reinterpret_cast<BlockDescriptor*>(nextPointer);
 
 
-				//	// if the pointer goes over the end of our heap, we have done all we can
-				//	if (pointer > (this->m_InternalHeapEnd))
-				//		return;
-				//}
+						// if the next pointer goes over the end of our heap, we have done all we can
+						if (nextPointer >= (this->m_InternalHeapEnd))
+							return;
+
+
+						// ensure this is a valid descriptor
+						assert(m_ValidateDescriptor(nextDescriptor));
+
+						// if the next block is free
+						if(nextDescriptor->m_free)
+						{
+							//TODO Limit block merging based upon a certain size maybe
+							// merge blocks
+							nextDescriptor->m_validKey = '/0'; // unValidate key
+							descriptor->m_sizeBlock = descriptor->m_sizeBlock + nextDescriptor->m_sizeBlock + sizeof(BlockDescriptor); // combine sizes with the addition of the old blockdescriptor
+
+							if (descriptor->m_sizeBlock > this->LARGEST_BLOCK_SIZE)
+								this->LARGEST_BLOCK_SIZE = descriptor->m_sizeBlock;
+						}
+						else
+						{
+							// move pointer to black descriptor after next block descriptor
+							pointer = nextPointer + (sizeof(BlockDescriptor) + nextDescriptor->m_sizeBlock);
+						}
+					}
+					else
+					{
+						// move pointer to next block descriptor
+						pointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
+					}
+
+
+					// if the pointer goes over the end of our heap, we have done all we can
+					if (pointer >= (this->m_InternalHeapEnd))
+						return;
+				}
 			}
 			
 			/// <summary>
