@@ -18,8 +18,8 @@ namespace KPEngine
 
 
 
-				std::cout << "size of HeapManager:" << sizeof(KPHeapManager) << "\n";
-				std::cout << "size of BlockDescriptor:"  << sizeof(BlockDescriptor) << "\n";
+				std::cout << "size of HeapManager:" << sizeof(KPHeapManager) << std::endl;
+				std::cout << "size of BlockDescriptor:"  << sizeof(BlockDescriptor) << std::endl;
 
 
 
@@ -36,11 +36,11 @@ namespace KPEngine
 				int numberOfTotalBlocks = manager->m_InternalTotalSpace / (c_initialBlockSize + sizeof(BlockDescriptor));
 
 
-				std::cout << "Total number of blocks allocated:" << numberOfTotalBlocks << "\n";
+				std::cout << "Total number of blocks allocated:" << numberOfTotalBlocks << std::endl;
 
 
-				/*std::cout << "KPManagerPointer" << manager << "\n";
-				std::cout << "FirstHeapBlockPointer" << manager->m_InternalHeapStart << "\n";*/
+				/*std::cout << "KPManagerPointer" << manager << std::endl;
+				std::cout << "FirstHeapBlockPointer" << manager->m_InternalHeapStart << std::endl;*/
 
 
 				// assign key to determining if descriptors are valid
@@ -70,9 +70,7 @@ namespace KPEngine
 
 			void KPHeapManager::destroy()
 			{
-				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED destroy" << "\n";
-				assert(false);
+				// TODO: Get details on what this is supposed to do
 				return;
 			}
 
@@ -89,9 +87,9 @@ namespace KPEngine
 					// reinterpret initial part as descriptor
 					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
 
-					// TODO Create valid checker outside of Contains
-					//// ensure this is a valid descriptor
-					//assert(Contains(descriptor));
+					
+					// ensure this is a valid descriptor
+					assert(m_ValidateDescriptor(descriptor));
 
 					
 					// TODO Add Range Condition to try to match a block that more closely fits
@@ -99,19 +97,24 @@ namespace KPEngine
 					if(descriptor-> m_free && descriptor->m_sizeBlock >= i_size)
 					{
 						descriptor->m_free = false; // mark block not free
+
+
+						// TODO Implement used blocks;
+						std::cout << "Allocated Block: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
+
 						return static_cast<void*>(pointer + sizeof(BlockDescriptor));
 					}
 
 
-					// move pointer to next block
+					// move pointer to next block descriptor
 					pointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
 
 					// if the pointer goes over the end of our heap, we don't have a fitting block
-					if (pointer > (this->m_InternalHeapEnd))
+					if (pointer >= (this->m_InternalHeapEnd))
 						return nullptr;
 				}
 
-
+				
 
 				return nullptr;
 			}
@@ -119,7 +122,7 @@ namespace KPEngine
 			void* KPHeapManager::_alloc(size_t i_size, unsigned i_alignment)
 			{
 				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED _allocALIGN" << "\n";
+				std::cout << "NOT YET IMPLEMENTED _allocALIGN" << std::endl;
 				assert(false);
 				return nullptr;
 			}
@@ -132,6 +135,9 @@ namespace KPEngine
 				// go in the reverse direction and modify descriptor to mark the block as not free
 				BlockDescriptor* descriptor =  static_cast<BlockDescriptor*>(i_ptr) - 1;
 				descriptor->m_free = true;
+
+				// TODO Implement show free blocks;
+				std::cout << "Freed Up Block: " << static_cast<void*>(i_ptr) << " " << descriptor->m_sizeBlock << std::endl;
 				return true;
 			}
 
@@ -224,7 +230,7 @@ namespace KPEngine
 			size_t KPHeapManager::getLargestFreeBlock() const
 			{
 				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED getLargestFreeBlock" << "\n";
+				std::cout << "NOT YET IMPLEMENTED getLargestFreeBlock" << std::endl;
 				assert(false);
 				return -1;
 			}
@@ -232,7 +238,7 @@ namespace KPEngine
 			size_t KPHeapManager::getTotalFreeMemory() const
 			{
 				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED getTotalFreeMemory" << "\n";
+				std::cout << "NOT YET IMPLEMENTED getTotalFreeMemory" << std::endl;
 				assert(false);
 				return -1;
 			}
@@ -240,7 +246,7 @@ namespace KPEngine
 			void KPHeapManager::ShowFreeBlocks() const
 			{
 				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED ShowFreeBlocks" << "\n";
+				std::cout << "NOT YET IMPLEMENTED ShowFreeBlocks" << std::endl;
 				assert(false);
 				return;
 			}
@@ -250,7 +256,15 @@ namespace KPEngine
 				assert(i_pMemory);
 
 				BlockDescriptor* descriptor = static_cast<BlockDescriptor*>(i_pMemory);
-				return (descriptor->m_validKey == this->m_validDescriptorKey);
+				bool check = (descriptor->m_validKey == this->m_validDescriptorKey);
+				if(check)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 		}
 	}
