@@ -40,6 +40,7 @@ namespace KPEngine
 
 			private:
 				void * m_InternalHeapStart;
+				void * m_InternalHeapEnd;
 				size_t m_InternalTotalSpace;
 				size_t LARGEST_BLOCK_SIZE = 512;
 			};

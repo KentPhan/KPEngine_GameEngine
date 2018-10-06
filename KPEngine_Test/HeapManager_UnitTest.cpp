@@ -7,9 +7,9 @@
 #include "../KPEngine/include/Core/HeapManager/KPHeapManager.h"
 #include "../KPEngine/include/Core/HeapManager/KPHeapManagerProxy.h"
 
-#define SUPPORTS_ALIGNMENT
-#define SUPPORTS_SHOWFREEBLOCKS
-#define SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
+//#define SUPPORTS_ALIGNMENT
+//#define SUPPORTS_SHOWFREEBLOCKS
+//#define SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
 
 bool HeapManager_UnitTest()
 {

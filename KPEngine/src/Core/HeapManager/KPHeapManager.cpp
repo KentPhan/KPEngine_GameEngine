@@ -43,13 +43,16 @@ namespace KPEngine
 				char * block = static_cast<char*>(manager->m_InternalHeapStart);
 				for(int i = 0; i < numberOfTotalBlocks; i++)
 				{
-					// initialize block
+					// initialize block descriptor at the start of the block
 					reinterpret_cast<BlockDescriptor*>(block)->m_sizeBlock = initialBlockSize;
 					reinterpret_cast<BlockDescriptor*>(block)->m_free = true;
 
 					// move block pointer to next block
 					block = block + (sizeof(BlockDescriptor) + initialBlockSize);
 				}
+
+				// Save this pointer as the end of our internal heap
+				manager->m_InternalHeapEnd = block;
 
 
 				return manager;
@@ -69,15 +72,30 @@ namespace KPEngine
 				if (i_size > this->LARGEST_BLOCK_SIZE)
 					return nullptr;
 
-				//// loop through internal heap until you find an appropriate block to fit the requested size
-				//char* pointer = static_cast<char*>(this->m_InternalHeapStart);
-				//while(true)
-				//{
-				//	pointer
-				//	
+				// loop through internal heap until you find an appropriate block to fit the requested size
+				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				while(true)
+				{
+					// reinterpret initial part as descriptor
+					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
+
+					
+					// TODO Add Range Condition to try to match a block that more closely fits
+					// if it fits return the pointer to the
+					if(descriptor-> m_free && descriptor->m_sizeBlock >= i_size)
+					{
+						descriptor->m_free = false; // mark block not free
+						return static_cast<void*>(pointer + sizeof(BlockDescriptor));
+					}
 
 
-				//}
+					// move pointer to next block
+					pointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
+
+					// if the pointer goes over the end of our heap, we don't have a fitting block
+					if (pointer > (this->m_InternalHeapEnd))
+						return nullptr;
+				}
 
 
 
