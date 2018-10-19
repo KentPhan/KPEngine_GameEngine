@@ -27,8 +27,6 @@ namespace MonsterChaseGame
 
 		void GameManager::InitiateGame()
 		{
-
-			
 			DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Started");
 
 			std::cout << "The Monster Chase Game - By Kent Phan!\n";
@@ -95,8 +93,6 @@ namespace MonsterChaseGame
 			delete player;
 
 			DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Ended");
-
-
 		}
 
 		void GameManager::MainGameLoop(Player* player)
@@ -106,6 +102,8 @@ namespace MonsterChaseGame
 			// Main game loop
 			while (true)
 			{
+				if (endGame)
+					return;
 
 
 				char input;
@@ -114,32 +112,17 @@ namespace MonsterChaseGame
 				switch (input)
 				{
 				case 'w':
-					MovePlayer(player, 0, -1);
-					MoveMonsters();
-					if (endGame)
-						return;
-					PrintMap();
+					PerformPrimaryAction(player, KPVector2(0, -1));
+
 					break;
 				case 's':
-					MovePlayer(player, 0, 1);
-					MoveMonsters();
-					if (endGame)
-						return;
-					PrintMap();
+					PerformPrimaryAction(player, KPVector2(0, 1));
 					break;
 				case 'a':
-					MovePlayer(player, -1, 0);
-					MoveMonsters();
-					if (endGame)
-						return;
-					PrintMap();
+					PerformPrimaryAction(player, KPVector2(-1, 0));
 					break;
 				case 'd':
-					MovePlayer(player, 1, 0);
-					MoveMonsters();
-					if (endGame)
-						return;
-					PrintMap();
+					PerformPrimaryAction(player, KPVector2(1, 0));
 					break;
 				case 'q':
 					return;
@@ -160,6 +143,13 @@ namespace MonsterChaseGame
 
 				}
 			}
+		}
+
+		void GameManager::PerformPrimaryAction(Player* player, const KPVector2 movement)
+		{
+			MovePlayer(player, movement);
+			MoveMonsters();
+			PrintMap();
 		}
 
 		void GameManager::PrintMap()
@@ -183,45 +173,43 @@ namespace MonsterChaseGame
 			}
 		}
 
-		void GameManager::MovePlayer(Player* player, int xMagnitude, int yMagnitude)
+
+		void GameManager::MovePlayer(Player* player, const KPVector2 movement)
 		{
 			assert(player);
 
-			int newX = player->Position.X() + xMagnitude;
-			int newY = player->Position.Y() + yMagnitude;
+			KPVector2 newPosition = player->Position + movement;
 
-
-
+			// TODO consolidate enforce boundaries
 			// only move if would stay in boundaries
-			if (newX < 0 || newX > 19)
+			if (newPosition.X() < 0 || newPosition.X() > 19)
 			{
-				newX = player->Position.X();
+				newPosition.X(player->Position.X());
 			}
-			if (newY < 0 || newY > 19)
+			if (newPosition.Y() < 0 || newPosition.Y() > 19)
 			{
-				newY = player->Position.Y();
+				newPosition.Y(player->Position.Y());
 			}
 
 			// remove old position
 			map_[player->Position.Y()][player->Position.X()] = nullptr;
 
 			// set new position
-			if (map_[newY][newX] == nullptr)
+			if (map_[newPosition.Y()][newPosition.X()] == nullptr)
 			{
 				// move
-				map_[newY][newX] = player;
+				map_[newPosition.Y()][newPosition.X()] = player;
 			}
-			else if (map_[newY][newX]->Type == MonsterType)
+			else if (map_[newPosition.Y()][newPosition.X()]->Type == MonsterType)
 			{
 				// kill monster
 				std::cout << " Monster Slain!\n";
-				MonsterList->Remove((Monster*)map_[newY][newX]);
-				map_[newY][newX] = player;
+				MonsterList->Remove((Monster*)map_[newPosition.Y()][newPosition.X()]);
+				map_[newPosition.Y()][newPosition.X()] = player;
 				number_of_monsters--;
-
 			}
 
-			player->SetPosition(newX, newY);
+			player->Position = newPosition;
 		}
 
 		void GameManager::MoveMonsters()
@@ -234,28 +222,28 @@ namespace MonsterChaseGame
 				Monster* monster = MonsterList->Get(i);
 
 				// magnitude to move
-				int newX = (rand() % 3 - 1) + monster->Position.X();
-				int newY = (rand() % 3 - 1) + monster->Position.Y();
+				KPVector2 newPosition = monster->Position + KPVector2((rand() % 3 - 1), (rand() % 3 - 1));
+
+
+				// TODO consolidate enforce boundaries
 				// only move if would stay in boundaries
-				if (newX < 0 || newX > 19)
+				if (newPosition.X() < 0 || newPosition.X() > 19)
 				{
-					newX = monster->Position.X();
+					newPosition.X(monster->Position.X());
 				}
-				if (newY < 0 || newY > 19)
+				if (newPosition.Y() < 0 || newPosition.Y() > 19)
 				{
-					newY = monster->Position.Y();
+					newPosition.Y(monster->Position.Y());
 				}
 
-
-
-				if (map_[newY][newX] == nullptr)
+				if (map_[newPosition.Y()][newPosition.X()] == nullptr)
 				{
 					// if new spot is empty. just move
 					map_[monster->Position.Y()][monster->Position.X()] = nullptr;
-					map_[newY][newX] = MonsterList->Get(i);
-					MonsterList->Get(i)->SetPosition(newX, newY);
+					map_[newPosition.Y()][newPosition.X()] = MonsterList->Get(i);
+					MonsterList->Get(i)->Position = newPosition;
 				}
-				else if (map_[newY][newX]->Type == MonsterType)
+				else if (map_[newPosition.Y()][newPosition.X()]->Type == MonsterType)
 				{
 					// If another monster. Spawn another monster or it dies.
 					int roll = rand() % 100 + 1;
@@ -274,7 +262,7 @@ namespace MonsterChaseGame
 					}
 
 				}
-				else if (map_[newY][newX]->Type == PlayerType)
+				else if (map_[newPosition.Y()][newPosition.X()]->Type == PlayerType)
 				{
 					// If monster attacks player first, player dies and quits game
 					endGame = true;
@@ -285,6 +273,7 @@ namespace MonsterChaseGame
 				{
 					std::cout << "I have no idea what the hell is there\n";
 				}
+
 
 			}
 		}

@@ -10,6 +10,7 @@ namespace KPEngine
 		public:
 			KPVector2();
 			KPVector2(int i_x, int i_y);
+			KPVector2(const KPVector2 & other);
 			~KPVector2();
 
 			// Get
@@ -21,7 +22,7 @@ namespace KPEngine
 			void Y(int i_Y);
 
 			// operators
-			KPVector2& operator+(const KPVector2 & i_other);
+			KPVector2 operator+(const KPVector2 & i_other);
 			KPVector2& operator+=(const KPVector2 & i_other);
 
 			//Print

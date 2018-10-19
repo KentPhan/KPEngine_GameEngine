@@ -19,6 +19,12 @@ namespace KPEngine
 			m_Y = i_y;
 		}
 
+		KPVector2::KPVector2(const KPVector2& other)
+		{
+			this->m_X = other.m_X;
+			this->m_Y = other.m_Y;
+		}
+
 
 		KPVector2::~KPVector2()
 		{
@@ -44,7 +50,7 @@ namespace KPEngine
 			m_Y = i_y;
 		}
 
-		KPVector2 & KPVector2::operator+(const KPVector2& i_other)
+		KPVector2 KPVector2::operator+(const KPVector2& i_other)
 		{
 			KPVector2 temp;
 			temp.X(m_X + i_other.m_X);
