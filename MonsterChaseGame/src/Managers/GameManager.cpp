@@ -1,7 +1,7 @@
 #include "../../include/Managers/GameManager.h"
 #include <iostream>
 #include "conio.h"
-#include "include/Utils/KP_Log.h"
+#include "Utils/KP_Log.h"
 
 
 namespace MonsterChaseGame

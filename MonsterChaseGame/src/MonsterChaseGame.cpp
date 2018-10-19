@@ -2,7 +2,7 @@
 // MonsterChaseGame.cpp : This file contains the 'main' function. Program execution begins and ends there.
 
 
-#include "../../KPEngine/include/KPEngine-init.h"
+#include "KPEngine-init.h"
 #include <iostream>
 #include "../include/Managers/GameManager.h"
 

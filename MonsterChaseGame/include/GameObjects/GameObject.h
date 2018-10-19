@@ -1,8 +1,8 @@
 #pragma once
 
 #include "GameObjectType.h"
-#include "include/Utils/KPVector2.h"
-#include "include/Utils/KPString.h"
+#include "Utils/KPString.h"
+#include "Utils/KPVector2.h"
 
 using namespace KPEngine::Utils;
 
