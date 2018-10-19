@@ -21,7 +21,7 @@ namespace KPEngine
 			void Y(int i_Y);
 
 			// operators
-			KPVector2& operator+(const KPVector2 & i_other);
+			KPVector2 operator+(const KPVector2 & i_other);
 			KPVector2& operator+=(const KPVector2 & i_other);
 
 			//Print
