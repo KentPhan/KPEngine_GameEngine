@@ -19,7 +19,7 @@ namespace KPEngine
 			m_Y = i_y;
 		}
 
-		KPVector2::KPVector2(KPVector2& other)
+		KPVector2::KPVector2(const KPVector2& other)
 		{
 			this->m_X = other.m_X;
 			this->m_Y = other.m_Y;
