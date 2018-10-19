@@ -10,6 +10,7 @@ namespace KPEngine
 		public:
 			KPVector2();
 			KPVector2(int i_x, int i_y);
+			KPVector2(KPVector2 & other);
 			~KPVector2();
 
 			// Get
