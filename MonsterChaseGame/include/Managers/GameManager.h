@@ -15,8 +15,10 @@ private:
 	
 	void GetParameters();
 	void MainGameLoop(Player* player);
+	void PerformPrimaryAction(Player* player, const KPVector2 movement);
 	void PrintMap();
-	void MovePlayer(Player* player, int xMagnitude, int yMagnitude);
+	
+	void MovePlayer(Player* player, const KPVector2 movement);
 	void MoveMonsters();
 	void SpawnMonster(const char* name);
 
