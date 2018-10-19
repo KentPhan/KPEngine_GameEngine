@@ -12,7 +12,7 @@ namespace KPEngine
 			KPHeapManager* KPHeapManager::create(void* i_pMemory, size_t i_sizeMemory)
 			{
 				assert(i_pMemory);
-				const size_t c_initialBlockSize = 512;
+				const size_t c_initialBlockSize = 512; // Needs to be alignable by 4 bytes
 				const char c_blockDescriptorValidKey = 0xAFBC;
 
 
@@ -26,7 +26,9 @@ namespace KPEngine
 				// TODO: Implement
 				// Initialize HeapManager properties and crap
 				KPHeapManager * manager = static_cast<KPHeapManager *>(i_pMemory);
+				// TODO align this to 4 bytes
 				manager->m_InternalHeapStart  = (void*) (manager + 1);
+				// TODO align this to 4 byte size
 				manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPHeapManager);
 
 				// Define initial block size
@@ -56,6 +58,7 @@ namespace KPEngine
 					reinterpret_cast<BlockDescriptor*>(block)->m_sizeBlock = c_initialBlockSize;
 					reinterpret_cast<BlockDescriptor*>(block)->m_free = true;
 					reinterpret_cast<BlockDescriptor*>(block)->m_validKey = manager->m_validDescriptorKey;
+					reinterpret_cast<BlockDescriptor*>(block)->m_alignment = 4;
 
 					// move block pointer to next block
 					block = block + (sizeof(BlockDescriptor) + c_initialBlockSize);
@@ -76,6 +79,8 @@ namespace KPEngine
 
 			void* KPHeapManager::_alloc(size_t i_size)
 			{
+				// Assumes 4 byte alignment, can call other alloc function
+				
 				// If size requested is larger the largest block size
 				if (i_size > this->LARGEST_BLOCK_SIZE)
 					return nullptr;
@@ -121,9 +126,58 @@ namespace KPEngine
 
 			void* KPHeapManager::_alloc(size_t i_size, unsigned i_alignment)
 			{
-				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED _allocALIGN" << std::endl;
-				assert(false);
+				// If size requested is larger the largest block size
+				if (i_size > this->LARGEST_BLOCK_SIZE)
+					return nullptr;
+
+				// supported alignments
+				if (!(i_alignment == 4 || i_alignment == 8 || i_alignment == 16 || i_alignment == 32 || i_alignment == 64))
+					return nullptr;
+
+				// loop through internal heap until you find an appropriate block to fit the requested size
+				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				while (true)
+				{
+					// reinterpret initial part as descriptor
+					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
+
+
+					// ensure this is a valid descriptor
+					assert(m_ValidateDescriptor(descriptor));
+
+
+					// TODO Add Range Condition to try to match a block that more closely fits
+					// if it fits return the pointer to the
+					// TODO modify size detection based upon alignment
+					void* startReturned = pointer + sizeof(BlockDescriptor);
+
+					// while not aligned
+					while(!((reinterpret_cast<uintptr_t>(startReturned) & (i_alignment - 1)) == 0))
+					{
+						
+					}
+
+
+					if (descriptor->m_free && descriptor->m_sizeBlock >= i_size)
+					{
+						descriptor->m_free = false; // mark block not free
+
+
+						// TODO Implement used blocks;
+						std::cout << "Allocated Block: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
+
+						return static_cast<void*>(pointer + sizeof(BlockDescriptor));
+					}
+
+
+					// move pointer to next block descriptor
+					pointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
+
+					// if the pointer goes over the end of our heap, we don't have a fitting block
+					if (pointer >= (this->m_InternalHeapEnd))
+						return nullptr;
+				}
+
 				return nullptr;
 			}
 
@@ -137,6 +191,7 @@ namespace KPEngine
 				descriptor->m_free = true;
 
 				// TODO Implement show free blocks;
+				// TODO convert back to 4 byte alignment
 				std::cout << "Freed Up Block: " << static_cast<void*>(i_ptr) << " " << descriptor->m_sizeBlock << std::endl;
 				return true;
 			}

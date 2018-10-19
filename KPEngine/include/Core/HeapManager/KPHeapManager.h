@@ -11,6 +11,7 @@ namespace KPEngine
 				size_t m_sizeBlock; // 4/8 bytes
 				char m_validKey;
 				bool m_free;
+				int m_alignment; // MUST BE AT THE END;
 			};
 
 
