@@ -207,7 +207,7 @@ namespace KPEngine
 				descriptor->m_free = true;
 
 				// TODO Implement show free blocks;
-				std::cout << "FREED UP BLOCK  : " << static_cast<void*>(i_ptr) << " " << descriptor->m_sizeBlock << std::endl;
+				std::cout << "FREED UP BLOCK : " << static_cast<void*>(i_ptr) << " " << descriptor->m_sizeBlock << std::endl;
 				return true;
 			}
 
