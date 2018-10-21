@@ -33,6 +33,7 @@ namespace KPEngine
 
 				// Define initial block size
 				manager->LARGEST_BLOCK_SIZE = c_initialBlockSize;
+				manager->LARGEST_REQUESTED_SIZE = c_initialBlockSize;
 
 				// Calculate total number of blocks that we can fit
 				int numberOfTotalBlocks = manager->m_InternalTotalSpace / (c_initialBlockSize + sizeof(BlockDescriptor));
@@ -81,9 +82,17 @@ namespace KPEngine
 			{
 				// Assumes 4 byte alignment, can call other alloc function
 				
-				// If size requested is larger the largest block size
+				// If size requested is larger the largest block size. Try to collect and retry
 				if (i_size > this->LARGEST_BLOCK_SIZE)
-					return nullptr;
+				{
+					this->LARGEST_REQUESTED_SIZE = i_size;
+					collect();
+					if (i_size > this->LARGEST_BLOCK_SIZE)
+					{
+						return nullptr;
+					}
+				}
+					
 
 				// loop through internal heap until you find an appropriate block to fit the requested size
 				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
@@ -126,9 +135,16 @@ namespace KPEngine
 
 			void* KPHeapManager::_alloc(size_t i_size, unsigned i_alignment)
 			{
-				// If size requested is larger the largest block size
+				// If size requested is larger the largest block size. Try to collect and retry
 				if (i_size > this->LARGEST_BLOCK_SIZE)
-					return nullptr;
+				{
+					this->LARGEST_REQUESTED_SIZE = i_size;
+					collect();
+					if (i_size > this->LARGEST_BLOCK_SIZE)
+					{
+						return nullptr;
+					}
+				}
 
 				// supported alignments
 				if (!(i_alignment == 4 || i_alignment == 8 || i_alignment == 16 || i_alignment == 32 || i_alignment == 64))
@@ -209,8 +225,8 @@ namespace KPEngine
 					assert(m_ValidateDescriptor(descriptor));
 					
 
-					// if this block is free
-					if (descriptor->m_free)
+					// if this block is free, and it's size is smaller then the largest request size so far
+					if (descriptor->m_free && descriptor->m_sizeBlock < this->LARGEST_REQUESTED_SIZE)
 					{
 
 						// go to next block descriptor
@@ -239,7 +255,7 @@ namespace KPEngine
 						}
 						else
 						{
-							// move pointer to black descriptor after next block descriptor
+							// move pointer to block descriptor after next block descriptor
 							pointer = nextPointer + (sizeof(BlockDescriptor) + nextDescriptor->m_sizeBlock);
 						}
 					}

@@ -48,6 +48,7 @@ namespace KPEngine
 				void * m_InternalHeapEnd;
 				size_t m_InternalTotalSpace;
 				size_t LARGEST_BLOCK_SIZE;
+				size_t LARGEST_REQUESTED_SIZE;
 				char m_validDescriptorKey; // for checking the block descriptor is valid
 			};
 			
