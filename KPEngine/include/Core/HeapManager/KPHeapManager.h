@@ -37,6 +37,8 @@ namespace KPEngine
 
 				size_t getTotalFreeMemory() const;
 
+				void ShowOutstandingAllocations() const;
+
 				void ShowFreeBlocks() const;
 
 			private:

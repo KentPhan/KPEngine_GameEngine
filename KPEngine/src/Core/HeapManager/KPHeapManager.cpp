@@ -108,7 +108,7 @@ namespace KPEngine
 
 
 						// TODO Implement used blocks;
-						std::cout << "Allocated Block: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << " For: " << i_size<< std::endl;
+						std::cout << "ALLOCATED BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << " For: " << i_size<< std::endl;
 
 						return static_cast<void*>(pointer + sizeof(BlockDescriptor));
 					}
@@ -185,7 +185,7 @@ namespace KPEngine
 					{
 						descriptor->m_free = false; // mark block not free
 						// TODO Implement used blocks;
-						std::cout << "Allocated Block: " << static_cast<void*>(lp_startOfBlock) << " " << descriptor->m_sizeBlock << " For: " << i_size << " Shifted:" << shiftRequired<< std::endl;
+						std::cout << "ALLOCATED BLOCK: " << static_cast<void*>(lp_startOfBlock) << " " << descriptor->m_sizeBlock << " For: " << i_size << " Shifted:" << shiftRequired<< std::endl;
 						return static_cast<void*>(lp_startOfBlock);
 					}
 
@@ -207,7 +207,7 @@ namespace KPEngine
 				descriptor->m_free = true;
 
 				// TODO Implement show free blocks;
-				std::cout << "Freed Up Block: " << static_cast<void*>(i_ptr) << " " << descriptor->m_sizeBlock << std::endl;
+				std::cout << "FREED UP BLOCK  : " << static_cast<void*>(i_ptr) << " " << descriptor->m_sizeBlock << std::endl;
 				return true;
 			}
 
@@ -304,6 +304,40 @@ namespace KPEngine
 				return -1;
 			}
 
+			void KPHeapManager::ShowOutstandingAllocations() const
+			{
+				int count = 0;
+
+				// loop through internal heap showing free blocks
+				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				while (true)
+				{
+					// reinterpret initial part as descriptor
+					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
+
+
+					// ensure this is a valid descriptor
+					assert(m_ValidateDescriptor(descriptor));
+
+					if (!descriptor->m_free)
+					{
+						// TODO Implement used blocks;
+						std::cout << "ALLOCATED BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
+						count++;
+					}
+
+					// move pointer to next block descriptor
+					pointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
+
+					// if the pointer goes over the end of our heap, we don't have a fitting block
+					if (pointer >= (this->m_InternalHeapEnd))
+						break;
+
+				}
+				std::cout << "TOTAL ALLOCATED BLOCKS: " << count << std::endl;
+				return;
+			}
+
 			void KPHeapManager::ShowFreeBlocks() const
 			{
 				int count = 0;
@@ -319,8 +353,6 @@ namespace KPEngine
 					// ensure this is a valid descriptor
 					assert(m_ValidateDescriptor(descriptor));
 
-
-					
 					if (descriptor->m_free)
 					{
 						// TODO Implement used blocks;
