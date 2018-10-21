@@ -202,7 +202,7 @@ bool HeapManager_UnitTest()
 #endif
 
 		// do garbage collection
-		Collect(pHeapManager);
+		Collect(pHeapManager); 
 		// our heap should be one single block, all the memory it started with
 
 #if defined(SUPPORTS_SHOWFREEBLOCKS) || defined(SUPPORTS_SHOWOUTSTANDINGALLOCATIONS)
