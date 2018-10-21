@@ -306,9 +306,37 @@ namespace KPEngine
 
 			void KPHeapManager::ShowFreeBlocks() const
 			{
-				// TODO: Implement
-				std::cout << "NOT YET IMPLEMENTED ShowFreeBlocks" << std::endl;
-				assert(false);
+				int count = 0;
+
+				// loop through internal heap showing free blocks
+				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				while (true)
+				{
+					// reinterpret initial part as descriptor
+					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
+
+
+					// ensure this is a valid descriptor
+					assert(m_ValidateDescriptor(descriptor));
+
+
+					
+					if (descriptor->m_free)
+					{
+						// TODO Implement used blocks;
+						std::cout << "FREE BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
+						count++;
+					}
+					
+					// move pointer to next block descriptor
+					pointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
+
+					// if the pointer goes over the end of our heap, we don't have a fitting block
+					if (pointer >= (this->m_InternalHeapEnd))
+						break;
+						
+				}
+				std::cout << "TOTAL FREE BLOCKS: " << count << std::endl;
 				return;
 			}
 
