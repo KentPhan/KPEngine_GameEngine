@@ -11,7 +11,6 @@ namespace KPEngine
 				size_t m_sizeBlock; // 4/8 bytes
 				char m_validKey;
 				bool m_free;
-				int m_alignment; // MUST BE AT THE END;
 			};
 
 
@@ -38,11 +37,14 @@ namespace KPEngine
 
 				size_t getTotalFreeMemory() const;
 
+				void ShowOutstandingAllocations() const;
+
 				void ShowFreeBlocks() const;
 
 			private:
 
 				bool m_ValidateDescriptor(void* i_pMemory) const;
+				BlockDescriptor* m_GetDescriptor(void* i_pMemory) const;
 
 				void * m_InternalHeapStart;
 				void * m_InternalHeapEnd;

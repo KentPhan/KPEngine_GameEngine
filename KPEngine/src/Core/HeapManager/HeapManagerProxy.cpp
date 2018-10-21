@@ -5,6 +5,9 @@
 #include <cassert>
 #include <cstdio>
 
+
+#define __TRACK_ALLOCATIONS
+
 namespace KPEngine
 {
 	namespace Core
