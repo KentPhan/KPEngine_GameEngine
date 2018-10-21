@@ -15,13 +15,8 @@ namespace KPEngine
 				const size_t c_initialBlockSize = 512; // Needs to be alignable by 4 bytes
 				const char c_blockDescriptorValidKey = 0xAFBC;
 
-
-
-
 				std::cout << "size of HeapManager:" << sizeof(KPHeapManager) << std::endl;
 				std::cout << "size of BlockDescriptor:"  << sizeof(BlockDescriptor) << std::endl;
-
-
 
 				// TODO: Implement
 				// Initialize HeapManager properties and crap
@@ -59,7 +54,6 @@ namespace KPEngine
 					reinterpret_cast<BlockDescriptor*>(block)->m_sizeBlock = c_initialBlockSize;
 					reinterpret_cast<BlockDescriptor*>(block)->m_free = true;
 					reinterpret_cast<BlockDescriptor*>(block)->m_validKey = manager->m_validDescriptorKey;
-					reinterpret_cast<BlockDescriptor*>(block)->m_alignment = 4;
 
 					// move block pointer to next block
 					block = block + (sizeof(BlockDescriptor) + c_initialBlockSize);
