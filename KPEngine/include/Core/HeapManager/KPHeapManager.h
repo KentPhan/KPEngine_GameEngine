@@ -43,6 +43,7 @@ namespace KPEngine
 			private:
 
 				bool m_ValidateDescriptor(void* i_pMemory) const;
+				BlockDescriptor* m_GetDescriptor(void* i_pMemory) const;
 
 				void * m_InternalHeapStart;
 				void * m_InternalHeapEnd;

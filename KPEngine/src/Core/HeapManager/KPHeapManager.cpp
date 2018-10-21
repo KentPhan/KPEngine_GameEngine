@@ -114,7 +114,7 @@ namespace KPEngine
 
 
 						// TODO Implement used blocks;
-						std::cout << "Allocated Block: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
+						std::cout << "Allocated Block: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << " For: " << i_size<< std::endl;
 
 						return static_cast<void*>(pointer + sizeof(BlockDescriptor));
 					}
@@ -154,44 +154,50 @@ namespace KPEngine
 				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
 				while (true)
 				{
+					// if the pointer goes over the end of our heap, we don't have a fitting block
+					if (pointer >= (this->m_InternalHeapEnd))
+						return nullptr;
+
 					// reinterpret initial part as descriptor
 					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
 
-
-					// ensure this is a valid descriptor
+					// Ensure this is a valid descriptor
 					assert(m_ValidateDescriptor(descriptor));
 
+					// if block is not a free block
+					if(!descriptor->m_free)
+					{
+						// move pointer to next block descriptor and continue
+						pointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
+						continue;
+					}
 
 					// TODO Add Range Condition to try to match a block that more closely fits
 					// if it fits return the pointer to the
 					// TODO modify size detection based upon alignment
-					void* startReturned = pointer + sizeof(BlockDescriptor);
+					char* lp_startOfBlock = pointer + sizeof(BlockDescriptor);
 
-					// while not aligned
-					while(!((reinterpret_cast<uintptr_t>(startReturned) & (i_alignment - 1)) == 0))
+					// If this block is not aligned. Calculate a shift and shift
+					int shiftRequired = 0;
+					if(!((reinterpret_cast<uintptr_t>(lp_startOfBlock) & (i_alignment - 1)) == 0)) // masks pointer to check alignment
 					{
-						
+						// calculate shift required to align block
+						shiftRequired  = (i_alignment)-(reinterpret_cast<uintptr_t>(lp_startOfBlock) & (i_alignment - 1)); // alignmentWanted - currentAlignment = shift required to align
+						lp_startOfBlock = lp_startOfBlock + shiftRequired;
 					}
 
-
-					if (descriptor->m_free && descriptor->m_sizeBlock >= i_size)
+					// If after shifting, and new block size would still fit requested data
+					if ((descriptor->m_sizeBlock - shiftRequired) >= i_size)
 					{
 						descriptor->m_free = false; // mark block not free
-
-
 						// TODO Implement used blocks;
-						std::cout << "Allocated Block: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
-
-						return static_cast<void*>(pointer + sizeof(BlockDescriptor));
+						std::cout << "Allocated Block: " << static_cast<void*>(lp_startOfBlock) << " " << descriptor->m_sizeBlock << " For: " << i_size << " Shifted:" << shiftRequired<< std::endl;
+						return static_cast<void*>(lp_startOfBlock);
 					}
 
 
 					// move pointer to next block descriptor
 					pointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
-
-					// if the pointer goes over the end of our heap, we don't have a fitting block
-					if (pointer >= (this->m_InternalHeapEnd))
-						return nullptr;
 				}
 
 				return nullptr;
@@ -202,18 +208,18 @@ namespace KPEngine
 				assert(i_ptr);
 				assert(Contains(i_ptr));
 
-				// go in the reverse direction and modify descriptor to mark the block as not free
-				BlockDescriptor* descriptor =  static_cast<BlockDescriptor*>(i_ptr) - 1;
+				BlockDescriptor* descriptor = m_GetDescriptor(i_ptr);
+
 				descriptor->m_free = true;
 
 				// TODO Implement show free blocks;
-				// TODO convert back to 4 byte alignment
 				std::cout << "Freed Up Block: " << static_cast<void*>(i_ptr) << " " << descriptor->m_sizeBlock << std::endl;
 				return true;
 			}
 
 			void KPHeapManager::collect()
 			{
+				// TODO Currently only merges blocks. Never makes blocks smaller. Need to adapt this
 				// loop through internal heap and merge abuding blocks
 				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
 				while (true)
@@ -226,7 +232,7 @@ namespace KPEngine
 					
 
 					// if this block is free, and it's size is smaller then the largest request size so far
-					if (descriptor->m_free && descriptor->m_sizeBlock < this->LARGEST_REQUESTED_SIZE)
+					if (descriptor->m_free && descriptor->m_sizeBlock < (this->LARGEST_REQUESTED_SIZE + 64))
 					{
 
 						// go to next block descriptor
@@ -271,21 +277,13 @@ namespace KPEngine
 						return;
 				}
 			}
-			
-			/// <summary>
-			/// Determines whether [contains] a valid black at the specified pointer
-			/// </summary>
-			/// <param name="i_ptr">The i PTR.</param>
-			/// <returns>
-			///   <c>true</c> if [contains] a valid black at the specified pointer; otherwise, <c>false</c>.
-			/// </returns>
+
 			bool KPHeapManager::Contains(void* i_ptr) const
 			{
 				assert(i_ptr);
 
-				// go in reverse direction and check if block actually exists with descriptor key
-				BlockDescriptor* descriptor = static_cast<BlockDescriptor*>(i_ptr) - 1;
-				return (descriptor->m_validKey == this->m_validDescriptorKey);
+				BlockDescriptor* descriptor = m_GetDescriptor(i_ptr);
+				return (descriptor != nullptr);
 			}
 
 			bool KPHeapManager::IsAllocated(void* i_ptr) const
@@ -293,9 +291,7 @@ namespace KPEngine
 				assert(i_ptr);
 				assert(Contains(i_ptr));
 
-				// go in reverse and check to see if its free
-				BlockDescriptor* descriptor = static_cast<BlockDescriptor*>(i_ptr) - 1;
-				return m_ValidateDescriptor(descriptor);
+				return !(m_GetDescriptor(i_ptr)->m_free);
 			}
 
 			size_t KPHeapManager::getLargestFreeBlock() const
@@ -327,15 +323,23 @@ namespace KPEngine
 				assert(i_pMemory);
 
 				BlockDescriptor* descriptor = static_cast<BlockDescriptor*>(i_pMemory);
-				bool check = (descriptor->m_validKey == this->m_validDescriptorKey);
-				if(check)
+				const bool check = (descriptor->m_validKey == this->m_validDescriptorKey);
+				return check;
+			}
+
+			BlockDescriptor* KPHeapManager::m_GetDescriptor(void* i_pMemory) const
+			{
+				// go in the reverse direction until a valid descriptor is found and modify descriptor to mark the block as not free
+				char* l_potentialDescriptor = static_cast<char*>(i_pMemory);
+				int bytesMoved = 0;
+				while (!m_ValidateDescriptor(l_potentialDescriptor))
 				{
-					return true;
+					assert(bytesMoved < (63 + sizeof(BlockDescriptor)));
+
+					l_potentialDescriptor = l_potentialDescriptor - 1;
+					bytesMoved++;
 				}
-				else
-				{
-					return false;
-				}
+				return reinterpret_cast<BlockDescriptor*>(l_potentialDescriptor);
 			}
 		}
 	}
