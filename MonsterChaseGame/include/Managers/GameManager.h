@@ -23,7 +23,12 @@ namespace MonsterChaseGame
 
 			void GetParameters();
 			void MainGameLoop(Player* player);
-			void PerformPrimaryAction(Player* player, const KPVector2 movement);
+			inline void PerformPrimaryAction(Player* player, const KPVector2 movement)
+			{
+				MovePlayer(player, movement);
+				MoveMonsters();
+				PrintMap();
+			}
 			void PrintMap();
 			void MovePlayer(Player* player, const KPVector2 movement);
 			void MoveMonsters();
@@ -37,7 +42,11 @@ namespace MonsterChaseGame
 			int number_of_monsters;
 
 
-			~GameManager();
+			inline ~GameManager()
+			{
+				delete MonsterList;
+				//delete[] map_;
+			}
 		};
 	}
 }

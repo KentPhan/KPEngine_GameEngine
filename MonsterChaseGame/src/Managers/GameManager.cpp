@@ -145,13 +145,6 @@ namespace MonsterChaseGame
 			}
 		}
 
-		void GameManager::PerformPrimaryAction(Player* player, const KPVector2 movement)
-		{
-			MovePlayer(player, movement);
-			MoveMonsters();
-			PrintMap();
-		}
-
 		void GameManager::PrintMap()
 		{
 			// Print Map
@@ -314,13 +307,6 @@ namespace MonsterChaseGame
 			newMonster->empty = false;
 			newMonster->Type = MonsterType;
 			number_of_monsters++;
-		}
-
-
-		GameManager::~GameManager()
-		{
-			delete MonsterList;
-			//delete[] map_;
 		}
 	}
 }

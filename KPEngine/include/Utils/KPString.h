@@ -8,14 +8,26 @@ namespace KPEngine
 		public:
 
 			// Constructors Destructors
-			KPString();
+			inline KPString()
+			{
+				m_str = nullptr;
+			}
 			KPString(const char * i_str);
 			KPString(const KPString &i_kp2);
-			~KPString();
+			inline ~KPString()
+			{
+				delete m_str;
+			}
 
 			// Accessors
-			char* Get();
-			int length();
+			inline char* Get()
+			{
+				return m_str;
+			}
+			inline int length()
+			{
+				return m_length;
+			}
 
 			//operators
 			KPString operator+(const KPString & i_other);

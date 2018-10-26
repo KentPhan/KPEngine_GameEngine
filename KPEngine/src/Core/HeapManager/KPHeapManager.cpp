@@ -93,9 +93,8 @@ namespace KPEngine
 				while(true)
 				{
 					// reinterpret initial part as descriptor
-					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
+					BlockDescriptor* const descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
 
-					
 					// ensure this is a valid descriptor
 					assert(m_ValidateDescriptor(descriptor));
 

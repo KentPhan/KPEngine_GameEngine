@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 namespace KPEngine
 {
@@ -8,25 +9,55 @@ namespace KPEngine
 		class KPVector2
 		{
 		public:
-			KPVector2();
-			KPVector2(int i_x, int i_y);
-			KPVector2(const KPVector2 & other);
-			~KPVector2();
+			inline  KPVector2()
+			{
+				m_X = 0;
+				m_Y = 0;
+			}
+			inline KPVector2(int i_x, int i_y)
+			{
+				m_X = i_x;
+				m_Y = i_y;
+			}
+			inline KPVector2(const KPVector2 & other)
+			{
+				this->m_X = other.m_X;
+				this->m_Y = other.m_Y;
+			}
+			inline ~KPVector2()
+			{
+				
+			}
 
 			// Get
-			int X() const;
-			int Y() const;
+			inline int X() const
+			{
+				return m_X;
+			}
+			inline int Y() const
+			{
+				return m_Y;
+			}
 
 			// Set
-			void X(int i_x);
-			void Y(int i_Y);
+			inline void X(int i_x)
+			{
+				m_X = i_x;
+			}
+			inline void Y(int i_Y)
+			{
+				m_Y = i_Y;
+			}
 
 			// operators
-			KPVector2 operator+(const KPVector2 & i_other);
+			KPVector2 operator+(const KPVector2 & i_other) const;
 			KPVector2& operator+=(const KPVector2 & i_other);
 
 			//Print
-			void Print();
+			inline void Print()
+			{
+				std::cout << "(" << m_X << "," << m_Y << ")";
+			}
 
 
 		private:

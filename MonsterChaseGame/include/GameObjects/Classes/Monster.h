@@ -9,10 +9,22 @@ namespace MonsterChaseGame
 		class Monster : public GameObject
 		{
 		public:
-			Monster();
-			void PrintInfo() const override;
-			char GetSymbol() override;
-			~Monster();
+			inline Monster()
+			{
+				
+			};
+			inline void PrintInfo() const override
+			{
+				std::cout << "Monster \"" << name_->Get() << "\" at [" << this->Position.X() << "," << this->Position.Y() << "]\n";
+			}
+			inline char GetSymbol() override
+			{
+				return 'M';
+			}
+			inline ~Monster()
+			{
+				
+			};
 		};
 
 

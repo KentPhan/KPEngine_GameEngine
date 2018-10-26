@@ -8,10 +8,6 @@ namespace KPEngine
 	namespace Utils
 	{
 		// Constructors Destructors
-		KPString::KPString()
-		{
-			m_str = nullptr;
-		}
 		KPString::KPString(const char* i_str)
 		{
 			assert(i_str);
@@ -43,23 +39,6 @@ namespace KPEngine
 			strcpy_s(temp, (this->m_length + 1), i_kp2.m_str);
 			this->m_str = temp;
 		}
-		KPString::~KPString()
-		{
-			delete m_str;
-		}
-
-
-		// Accessors
-		char* KPString::Get()
-		{
-			return m_str;
-		}
-
-		int KPString::length()
-		{
-			return m_length;
-		}
-
 
 		// Operators
 		KPString KPString::operator+(const KPString & i_other)

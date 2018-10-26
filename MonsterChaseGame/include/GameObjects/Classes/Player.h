@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../GameObject.h"
+#include <iostream>
 
 namespace MonsterChaseGame
 {
@@ -9,10 +10,22 @@ namespace MonsterChaseGame
 		class Player : public GameObject
 		{
 		public:
-			Player();
-			void PrintInfo() const;
-			char GetSymbol() override;
-			~Player();
+			inline Player()
+			{
+				
+			};
+			inline void PrintInfo() const
+			{
+				std::cout << "Player \"" << name_->Get() << "\" at [" << this->Position.X() << "," << this->Position.Y() << "]\n";
+			}
+			inline char GetSymbol() override
+			{
+				return 'P';
+			};
+			inline ~Player()
+			{
+				
+			};
 		};
 	}
 }
