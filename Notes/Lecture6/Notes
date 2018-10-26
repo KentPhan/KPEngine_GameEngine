@@ -1,0 +1,13 @@
+32BIT vs 64 Bit types
+
+
+yo move by bytes use uint8_t instead of char for readability
+
+
+POST Questions:
+-inheritance and performance issues at the end of one of hte lectures
+-Inlining constructors, destructors, functions in inheritance
+-google stylesheet and not doing seperate files for inlining
+-functions dont actually inline sometimes.
+-Only takes place in release versions. Makes sense. Its like an optimization
+-delete and inline
