@@ -35,19 +35,6 @@ int main()
 	delete testList;*/
 
 
-	// Test Vectors
-	//KPVector2 *test = new KPVector2(1,-3); //= Vector2(1, -3);
-	//
-	//KPVector2 test2(5,20); //= Vector2(5, 10);
-	//KPVector2 test3 = *test + test2;
-	//KPVector2 test4 = *test;
-	//test4.Print();
-	//test4 += test3;
-	//test->Print();
-	//test2.Print();
-	//test3.Print();5
-	//test4.Print()
-
 
 
 

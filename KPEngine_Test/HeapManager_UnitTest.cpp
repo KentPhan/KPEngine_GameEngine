@@ -1,7 +1,7 @@
 #include "pch.h"
 #include <Windows.h>
 
-#include <assert.h>
+#include <cassert>
 #include <algorithm>
 #include <vector>
 #include "Core/HeapManager/KPHeapManager.h"

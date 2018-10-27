@@ -3,13 +3,16 @@
 #include "../KPEngine/include/KPEngine-init.h"
 
 extern bool HeapManager_UnitTest();
+extern bool KPVector2_UnitTest();
 
 int main()
 {
 
 	/*KPEngine::Initialize();*/
 
-	HeapManager_UnitTest();
+	//HeapManager_UnitTest();
+	KPVector2_UnitTest();
+	
 
 	std::getchar();
 
