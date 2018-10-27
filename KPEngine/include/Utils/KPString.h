@@ -20,17 +20,17 @@ namespace KPEngine
 			}
 
 			// Accessors
-			inline char* Get()
+			inline char* Get() const
 			{
 				return m_str;
 			}
-			inline int length()
+			inline int length() const
 			{
 				return m_length;
 			}
 
 			//operators
-			KPString operator+(const KPString & i_other);
+			KPString operator+(const KPString & i_other) const;
 			KPString& operator=(const KPString& i_other);
 
 

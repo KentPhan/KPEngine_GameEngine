@@ -41,7 +41,7 @@ namespace KPEngine
 		}
 
 		// Operators
-		KPString KPString::operator+(const KPString & i_other)
+		KPString KPString::operator+(const KPString & i_other) const
 		{
 			// new length
 			int newLength = this->m_length + i_other.m_length; 

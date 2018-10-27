@@ -12,7 +12,7 @@ namespace KPEngine
 		/// <param name="type">The type.</param>
 		/// <param name="i_fmt">The i FMT.</param>
 		/// <param name="">The .</param>
-		void KP_Log(KPLogType type, const char * i_fmt, ...);
+		void KP_Log(KPLogType type, const char * i_fmt, ...) ;
 
 		// This is how we handle variable argument pre-processor macros
 		// This is only supported by compilers that support the C99 standard

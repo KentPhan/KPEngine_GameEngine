@@ -140,7 +140,7 @@ public:
 	/// </summary>
 	/// <param name="i">The i.</param>
 	/// <returns></returns>
-	T Get(int i)
+	T Get(int i) const
 	{
 		assert(i >= 0);
 
@@ -167,7 +167,7 @@ public:
 	/// <summary>
 	/// Prints this instance.
 	/// </summary>
-	void Print()
+	void Print() const
 	{
 		if(head == nullptr)
 		{

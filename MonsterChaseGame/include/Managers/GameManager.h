@@ -18,35 +18,34 @@ namespace MonsterChaseGame
 			GameObject* map_[20][20];
 			List<Monster*> * MonsterList;
 			bool endGame = false;;
-
 			const int monster_limit_ = 50;
 
-			void GetParameters();
 			void MainGameLoop(Player* player);
+			void PrintMap() const;
+			void MovePlayer(Player* player, const KPVector2 movement);
+			void MoveMonsters();
+			void SpawnMonster(const char* name);
+
+			// Inline
 			inline void PerformPrimaryAction(Player* player, const KPVector2 movement)
 			{
 				MovePlayer(player, movement);
 				MoveMonsters();
 				PrintMap();
 			}
-			void PrintMap();
-			void MovePlayer(Player* player, const KPVector2 movement);
-			void MoveMonsters();
-			void SpawnMonster(const char* name);
 
 		public:
-			GameManager();
-
-			void InitiateGame();
-
 			int number_of_monsters;
 
-
+			// Constructors, Destructors
+			GameManager();
 			inline ~GameManager()
 			{
 				delete MonsterList;
 				//delete[] map_;
 			}
+
+			void InitiateGame();
 		};
 	}
 }

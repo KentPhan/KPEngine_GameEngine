@@ -145,7 +145,7 @@ namespace MonsterChaseGame
 			}
 		}
 
-		void GameManager::PrintMap()
+		void GameManager::PrintMap() const
 		{
 			// Print Map
 			std::cout << "Use WASD to control movement, press Q to quit, press P to print info. Touch monsters first to kill them. Get touched to die. " << number_of_monsters << " Monsters Alive\n";

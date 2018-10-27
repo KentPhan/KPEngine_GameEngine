@@ -11,3 +11,7 @@ POST Questions:
 -functions dont actually inline sometimes.
 -Only takes place in release versions. Makes sense. Its like an optimization
 -delete and inline
+-do people do const pointers much? Your HeapManagerProxy didn't do it
+-const integer parameters or primatives don't matter because they're copied right?
+-same with copied objects
+-pointers are copied when passed as an argument right?

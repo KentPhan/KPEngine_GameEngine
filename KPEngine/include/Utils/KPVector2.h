@@ -54,7 +54,7 @@ namespace KPEngine
 			KPVector2& operator+=(const KPVector2 & i_other);
 
 			//Print
-			inline void Print()
+			inline void Print() const
 			{
 				std::cout << "(" << m_X << "," << m_Y << ")";
 			}

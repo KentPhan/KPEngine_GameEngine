@@ -14,17 +14,18 @@ namespace MonsterChaseGame
 			{
 				
 			};
-			inline void PrintInfo() const
-			{
-				std::cout << "Player \"" << name_->Get() << "\" at [" << this->Position.X() << "," << this->Position.Y() << "]\n";
-			}
-			inline char GetSymbol() override
-			{
-				return 'P';
-			};
 			inline ~Player()
 			{
 				
+			};
+
+			inline void PrintInfo() const override
+			{
+				std::cout << "Player \"" << name_->Get() << "\" at [" << this->Position.X() << "," << this->Position.Y() << "]\n";
+			}
+			inline char GetSymbol() const override
+			{
+				return 'P';
 			};
 		};
 	}
