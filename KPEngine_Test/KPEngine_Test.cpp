@@ -11,6 +11,7 @@ int main()
 	/*KPEngine::Initialize();*/
 
 	//HeapManager_UnitTest();
+
 	KPVector2_UnitTest();
 	
 
