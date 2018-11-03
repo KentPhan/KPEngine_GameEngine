@@ -51,6 +51,7 @@ namespace KPEngine
 				size_t m_InternalTotalSpace;
 				size_t MINIMUM_BLOCK_SIZE;// Minimum Block size inside heap manager
 				size_t LARGEST_BLOCK_SIZE; // Largest Block size inside heap manager
+				size_t UPPER_LIMIT; // Largest size that can possibly be allocated assuming everything is free.
 				size_t REQUESTED_SIZE; // Largest Block size requested inside heap manager
 				char m_validDescriptorKey; // for checking the block descriptor is valid
 			};

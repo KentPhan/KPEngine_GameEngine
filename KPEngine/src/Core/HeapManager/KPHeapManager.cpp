@@ -17,8 +17,10 @@ namespace KPEngine
 				const size_t c_initialBlockSize = 512; // Initial block sizes
 				const char c_blockDescriptorValidKey = 0xAFBC;
 
-				std::cout << "size of HeapManager:" << sizeof(KPHeapManager) << std::endl;
-				std::cout << "size of BlockDescriptor:"  << sizeof(BlockDescriptor) << std::endl;
+				#if defined(_DEBUG)
+				std::cout << "size of HeapManager:" << sizeof(KPHeapManager) << " bytes" << std::endl;
+				std::cout << "size of BlockDescriptor:"  << sizeof(BlockDescriptor) << " bytes" << std::endl;
+				#endif
 
 				// TODO: Implement
 				// Initialize HeapManager properties and crap
@@ -29,7 +31,7 @@ namespace KPEngine
 				manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPHeapManager);
 
 				// Define initial block size
-				manager->UPPER_LIMIT = i_sizeMemory - 64 - sizeof(BlockDescriptor);
+				manager->UPPER_LIMIT = manager->m_InternalTotalSpace - 64 - sizeof(BlockDescriptor);
 				manager->MINIMUM_BLOCK_SIZE = c_minimumBlockSize;
 				manager->LARGEST_BLOCK_SIZE = c_initialBlockSize;
 				manager->REQUESTED_SIZE = c_initialBlockSize;
@@ -37,9 +39,9 @@ namespace KPEngine
 				// Calculate total number of blocks that we can fit
 				int numberOfTotalBlocks = manager->m_InternalTotalSpace / (c_initialBlockSize + sizeof(BlockDescriptor));
 
-
-				std::cout << "Total number of blocks allocated:" << numberOfTotalBlocks << std::endl;
-
+				#if defined(_DEBUG)
+				std::cout << "Initial number of blocks allocated:" << numberOfTotalBlocks << std::endl;
+				#endif 
 
 				/*std::cout << "KPManagerPointer" << manager << std::endl;
 				std::cout << "FirstHeapBlockPointer" << manager->m_InternalHeapStart << std::endl;*/
@@ -175,13 +177,19 @@ namespace KPEngine
 							l_newBlockDescriptor->m_sizeBlock = l_newBlockSize;
 							l_newBlockDescriptor->m_free = true;
 							l_newBlockDescriptor->m_validKey = this->m_validDescriptorKey;
+
+							#if defined(_DEBUG)
 							std::cout << "SUBDIVIDED NEW BLOCK: " << " SizeOf: " << l_newBlockDescriptor->m_sizeBlock << std::endl;
+							#endif			
 						}
 
 
 						descriptor->m_free = false; // mark block not free
-						// TODO Implement used blocks;
+
+						#if defined(_DEBUG)
 						std::cout << "ALLOCATED BLOCK: " << static_cast<void*>(lp_startOfBlock) << " " << descriptor->m_sizeBlock << " For: " << i_size << " Shifted:" << shiftRequired<< std::endl;
+						#endif			
+
 						return static_cast<void*>(lp_startOfBlock);
 					}
 
@@ -202,8 +210,9 @@ namespace KPEngine
 
 				descriptor->m_free = true;
 
-				// TODO Implement show free blocks;
+				#if defined(_DEBUG)
 				std::cout << "FREED UP BLOCK : " << static_cast<void*>(i_ptr) << " " << descriptor->m_sizeBlock << std::endl;
+				#endif		
 				return true;
 			}
 
@@ -245,7 +254,10 @@ namespace KPEngine
 							// merge blocks
 							nextDescriptor->m_validKey = '/0'; // unValidate key
 							descriptor->m_sizeBlock = descriptor->m_sizeBlock + nextDescriptor->m_sizeBlock + sizeof(BlockDescriptor); // combine sizes with the addition of the old blockdescriptor
+
+							#if defined(_DEBUG)
 							std::cout << "MERGED NEW BLOCK : SizeOf:"<< descriptor->m_sizeBlock << std::endl;
+							#endif
 
 
 							if (descriptor->m_sizeBlock > this->LARGEST_BLOCK_SIZE)
@@ -319,8 +331,9 @@ namespace KPEngine
 
 					if (!descriptor->m_free)
 					{
-						// TODO Implement used blocks;
+						#if defined(_DEBUG)
 						std::cout << "EXISTING ALLOCATED BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
+						#endif
 						count++;
 					}
 
@@ -353,8 +366,9 @@ namespace KPEngine
 
 					if (descriptor->m_free)
 					{
-						// TODO Implement used blocks;
+						#if defined(_DEBUG)
 						std::cout << "EXISTING FREE BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
+						#endif
 						count++;
 					}
 					

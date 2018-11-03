@@ -87,6 +87,7 @@ bool HeapManager_UnitTest()
 	long	numAllocs = 0;
 	long	numFrees = 0;
 	long	numCollects = 0;
+	size_t requestedSize = 0;
 
 	// allocate memory of random sizes up to 1024 bytes from the heap manager
 	// until it runs out of memory
@@ -125,7 +126,10 @@ bool HeapManager_UnitTest()
 
 			// if not we're done. go on to cleanup phase of test
 			if (pPtr == nullptr)
+			{
+				requestedSize = sizeAlloc;
 				break;
+			}
 		}
 
 		AllocatedAddresses.push_back(pPtr);
@@ -160,7 +164,7 @@ bool HeapManager_UnitTest()
 
  
 #if defined(SUPPORTS_SHOWFREEBLOCKS) || defined(SUPPORTS_SHOWOUTSTANDINGALLOCATIONS)
-	printf("After exhausting allocations:\n");
+	printf("After exhausting allocations on requested size of: %zu\n", requestedSize);
 #ifdef SUPPORTS_SHOWFREEBLOCKS
 	ShowFreeBlocks(pHeapManager);
 #endif // SUPPORTS_SHOWFREEBLOCKS
