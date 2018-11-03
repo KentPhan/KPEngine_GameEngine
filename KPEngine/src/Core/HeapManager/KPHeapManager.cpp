@@ -15,7 +15,7 @@ namespace KPEngine
 				assert(i_pMemory);
 				const size_t c_minimumBlockSize = 128; // Each block will be at least 128 bytes in size. Reason being to account for up to 64 byte alignment
 				const size_t c_initialBlockSize = 512; // Initial block sizes
-				const char c_blockDescriptorValidKey = 0xAFBC;
+				const uint8_t c_blockDescriptorValidKey = 0xBC;
 
 				#if defined(_DEBUG)
 				std::cout << "size of HeapManager:" << sizeof(KPHeapManager) << " bytes" << std::endl;
@@ -37,7 +37,7 @@ namespace KPEngine
 				manager->REQUESTED_SIZE = c_initialBlockSize;
 
 				// Calculate total number of blocks that we can fit
-				int numberOfTotalBlocks = manager->m_InternalTotalSpace / (c_initialBlockSize + sizeof(BlockDescriptor));
+				const size_t numberOfTotalBlocks = manager->m_InternalTotalSpace / (c_initialBlockSize + sizeof(BlockDescriptor));
 
 				#if defined(_DEBUG)
 				std::cout << "Initial number of blocks allocated:" << numberOfTotalBlocks << std::endl;
@@ -252,7 +252,7 @@ namespace KPEngine
 						{
 							//TODO Limit block merging based upon a certain size maybe
 							// merge blocks
-							nextDescriptor->m_validKey = '/0'; // unValidate key
+							nextDescriptor->m_validKey = NULL; // unValidate key
 							descriptor->m_sizeBlock = descriptor->m_sizeBlock + nextDescriptor->m_sizeBlock + sizeof(BlockDescriptor); // combine sizes with the addition of the old blockdescriptor
 
 							#if defined(_DEBUG)

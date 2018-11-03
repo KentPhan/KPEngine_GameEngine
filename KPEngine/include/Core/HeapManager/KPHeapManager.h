@@ -1,5 +1,7 @@
 #pragma once
 
+#include <inttypes.h>
+
 namespace KPEngine
 {
 	namespace Core
@@ -9,7 +11,7 @@ namespace KPEngine
 			struct BlockDescriptor
 			{
 				size_t m_sizeBlock; // 4/8 bytes
-				char m_validKey;
+				uint8_t m_validKey;
 				bool m_free;
 			};
 
@@ -53,7 +55,7 @@ namespace KPEngine
 				size_t LARGEST_BLOCK_SIZE; // Largest Block size inside heap manager
 				size_t UPPER_LIMIT; // Largest size that can possibly be allocated assuming everything is free.
 				size_t REQUESTED_SIZE; // Largest Block size requested inside heap manager
-				char m_validDescriptorKey; // for checking the block descriptor is valid
+				uint8_t m_validDescriptorKey; // for checking the block descriptor is valid
 			};
 			
 		}
