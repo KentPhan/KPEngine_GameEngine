@@ -49,8 +49,9 @@ namespace KPEngine
 				void * m_InternalHeapStart;
 				void * m_InternalHeapEnd;
 				size_t m_InternalTotalSpace;
-				size_t LARGEST_BLOCK_SIZE;
-				size_t LARGEST_REQUESTED_SIZE;
+				size_t MINIMUM_BLOCK_SIZE;// Minimum Block size inside heap manager
+				size_t LARGEST_BLOCK_SIZE; // Largest Block size inside heap manager
+				size_t REQUESTED_SIZE; // Largest Block size requested inside heap manager
 				char m_validDescriptorKey; // for checking the block descriptor is valid
 			};
 			

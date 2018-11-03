@@ -1,6 +1,7 @@
 #include "../../../include/Core/HeapManager/KPHeapManager.h"
 #include <iostream>
 #include <cassert>
+#include <experimental/filesystem>
 
 namespace KPEngine
 {
@@ -12,7 +13,8 @@ namespace KPEngine
 			KPHeapManager* KPHeapManager::create(void* i_pMemory, size_t i_sizeMemory)
 			{
 				assert(i_pMemory);
-				const size_t c_initialBlockSize = 512; // Needs to be alignable by 4 bytes
+				const size_t c_minimumBlockSize = 128; // Each block will be at least 128 bytes in size. Reason being to account for up to 64 byte alignment
+				const size_t c_initialBlockSize = 512; // Initial block sizes
 				const char c_blockDescriptorValidKey = 0xAFBC;
 
 				std::cout << "size of HeapManager:" << sizeof(KPHeapManager) << std::endl;
@@ -27,8 +29,9 @@ namespace KPEngine
 				manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPHeapManager);
 
 				// Define initial block size
+				manager->MINIMUM_BLOCK_SIZE = c_minimumBlockSize;
 				manager->LARGEST_BLOCK_SIZE = c_initialBlockSize;
-				manager->LARGEST_REQUESTED_SIZE = c_initialBlockSize;
+				manager->REQUESTED_SIZE = c_initialBlockSize;
 
 				// Calculate total number of blocks that we can fit
 				int numberOfTotalBlocks = manager->m_InternalTotalSpace / (c_initialBlockSize + sizeof(BlockDescriptor));
@@ -74,56 +77,7 @@ namespace KPEngine
 
 			void* KPHeapManager::_alloc(size_t i_size)
 			{
-				// Assumes 4 byte alignment, can call other alloc function
-				
-				// If size requested is larger the largest block size. Try to collect and retry
-				if (i_size > this->LARGEST_BLOCK_SIZE)
-				{
-					this->LARGEST_REQUESTED_SIZE = i_size;
-					collect();
-					if (i_size > this->LARGEST_BLOCK_SIZE)
-					{
-						return nullptr;
-					}
-				}
-					
-
-				// loop through internal heap until you find an appropriate block to fit the requested size
-				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
-				while(true)
-				{
-					// reinterpret initial part as descriptor
-					BlockDescriptor* const descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
-
-					// ensure this is a valid descriptor
-					assert(m_ValidateDescriptor(descriptor));
-
-					
-					// TODO Add Range Condition to try to match a block that more closely fits
-					// if it fits return the pointer to the
-					if(descriptor-> m_free && descriptor->m_sizeBlock >= i_size)
-					{
-						descriptor->m_free = false; // mark block not free
-
-
-						// TODO Implement used blocks;
-						std::cout << "ALLOCATED BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << " For: " << i_size<< std::endl;
-
-						return static_cast<void*>(pointer + sizeof(BlockDescriptor));
-					}
-
-
-					// move pointer to next block descriptor
-					pointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
-
-					// if the pointer goes over the end of our heap, we don't have a fitting block
-					if (pointer >= (this->m_InternalHeapEnd))
-						return nullptr;
-				}
-
-				
-
-				return nullptr;
+				return _alloc(i_size, 4); // Call alignment allocate with 4 byte alignment
 			}
 
 			void* KPHeapManager::_alloc(size_t i_size, unsigned i_alignment)
@@ -131,7 +85,7 @@ namespace KPEngine
 				// If size requested is larger the largest block size. Try to collect and retry
 				if (i_size > this->LARGEST_BLOCK_SIZE)
 				{
-					this->LARGEST_REQUESTED_SIZE = i_size;
+					this->REQUESTED_SIZE = i_size;
 					collect();
 					if (i_size > this->LARGEST_BLOCK_SIZE)
 					{
@@ -141,15 +95,32 @@ namespace KPEngine
 
 				// supported alignments
 				if (!(i_alignment == 4 || i_alignment == 8 || i_alignment == 16 || i_alignment == 32 || i_alignment == 64))
+				{
+					std::cout << "KP HEAPALLOCATOR DOES NOT SUPPORT "<< i_alignment <<" ALIGNMENT" << std::endl;
 					return nullptr;
+				} 
+					
 
 				// loop through internal heap until you find an appropriate block to fit the requested size
 				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				bool l_alreadyCollected = false;
 				while (true)
 				{
 					// if the pointer goes over the end of our heap, we don't have a fitting block
 					if (pointer >= (this->m_InternalHeapEnd))
-						return nullptr;
+					{
+						// collect once to see if we can get a fitting block
+						if (l_alreadyCollected)
+							return nullptr;
+						else
+							l_alreadyCollected = true;
+
+						// try one more time after collecting
+						this->REQUESTED_SIZE = i_size;
+						collect();
+						pointer = static_cast<char*>(this->m_InternalHeapStart); 
+					}
+						
 
 					// reinterpret initial part as descriptor
 					BlockDescriptor* descriptor = reinterpret_cast<BlockDescriptor*>(pointer);
@@ -167,7 +138,6 @@ namespace KPEngine
 
 					// TODO Add Range Condition to try to match a block that more closely fits
 					// if it fits return the pointer to the
-					// TODO modify size detection based upon alignment
 					char* lp_startOfBlock = pointer + sizeof(BlockDescriptor);
 
 					// If this block is not aligned. Calculate a shift and shift
@@ -182,6 +152,25 @@ namespace KPEngine
 					// If after shifting, and new block size would still fit requested data
 					if ((descriptor->m_sizeBlock - shiftRequired) >= i_size)
 					{
+
+						
+						// TODO could add padding here? Would also need to add in initialization
+						// determine if we could subdivide block and still fit the requested data
+						size_t l_minimumAllocationSize = (shiftRequired + i_size <= this->MINIMUM_BLOCK_SIZE) ? this->MINIMUM_BLOCK_SIZE : shiftRequired + i_size;
+						if( static_cast<int>(descriptor->m_sizeBlock - l_minimumAllocationSize - sizeof(BlockDescriptor)) >= static_cast<int>(this->MINIMUM_BLOCK_SIZE))
+						{
+							// Subdivide block
+							size_t l_newBlockSize = descriptor->m_sizeBlock - l_minimumAllocationSize - sizeof(BlockDescriptor);
+							descriptor->m_sizeBlock = l_minimumAllocationSize;
+
+							BlockDescriptor* l_newBlockDescriptor = reinterpret_cast<BlockDescriptor*>((pointer +  sizeof(BlockDescriptor) + descriptor->m_sizeBlock));
+							l_newBlockDescriptor->m_sizeBlock = l_newBlockSize;
+							l_newBlockDescriptor->m_free = true;
+							l_newBlockDescriptor->m_validKey = this->m_validDescriptorKey;
+							std::cout << "SUBDIVIDED NEW BLOCK: " << " SizeOf: " << l_newBlockDescriptor->m_sizeBlock << std::endl;
+						}
+
+
 						descriptor->m_free = false; // mark block not free
 						// TODO Implement used blocks;
 						std::cout << "ALLOCATED BLOCK: " << static_cast<void*>(lp_startOfBlock) << " " << descriptor->m_sizeBlock << " For: " << i_size << " Shifted:" << shiftRequired<< std::endl;
@@ -225,7 +214,7 @@ namespace KPEngine
 					
 
 					// if this block is free, and it's size is smaller then the largest request size so far
-					if (descriptor->m_free && descriptor->m_sizeBlock < (this->LARGEST_REQUESTED_SIZE + 64))
+					if (descriptor->m_free && descriptor->m_sizeBlock <= (this->REQUESTED_SIZE + 64))
 					{
 
 						// go to next block descriptor
@@ -248,6 +237,8 @@ namespace KPEngine
 							// merge blocks
 							nextDescriptor->m_validKey = '/0'; // unValidate key
 							descriptor->m_sizeBlock = descriptor->m_sizeBlock + nextDescriptor->m_sizeBlock + sizeof(BlockDescriptor); // combine sizes with the addition of the old blockdescriptor
+							std::cout << "MERGED NEW BLOCK : SizeOf:"<< descriptor->m_sizeBlock << std::endl;
+
 
 							if (descriptor->m_sizeBlock > this->LARGEST_BLOCK_SIZE)
 								this->LARGEST_BLOCK_SIZE = descriptor->m_sizeBlock;
@@ -321,7 +312,7 @@ namespace KPEngine
 					if (!descriptor->m_free)
 					{
 						// TODO Implement used blocks;
-						std::cout << "ALLOCATED BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
+						std::cout << "EXISTING ALLOCATED BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
 						count++;
 					}
 
@@ -355,7 +346,7 @@ namespace KPEngine
 					if (descriptor->m_free)
 					{
 						// TODO Implement used blocks;
-						std::cout << "FREE BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
+						std::cout << "EXISTING FREE BLOCK: " << static_cast<void*>(pointer + sizeof(BlockDescriptor)) << " " << descriptor->m_sizeBlock << std::endl;
 						count++;
 					}
 					

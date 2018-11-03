@@ -58,7 +58,7 @@ namespace KPEngine
 			delete tempString;
 
 			return tempValue;// Because returning by value, copy constructor will be called first before the destructor of tempValue
-		}// destructor of copyConstructed item will be called here if the item has not been stored somewhere
+		}// destructor of copyConstructed item will be called here if the item has not been stored somewhere here
 
 		KPString& KPString::operator=(const KPString& i_other)
 		{
