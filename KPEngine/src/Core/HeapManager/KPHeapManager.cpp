@@ -29,6 +29,7 @@ namespace KPEngine
 				manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPHeapManager);
 
 				// Define initial block size
+				manager->UPPER_LIMIT = i_sizeMemory - 64 - sizeof(BlockDescriptor);
 				manager->MINIMUM_BLOCK_SIZE = c_minimumBlockSize;
 				manager->LARGEST_BLOCK_SIZE = c_initialBlockSize;
 				manager->REQUESTED_SIZE = c_initialBlockSize;
@@ -82,6 +83,13 @@ namespace KPEngine
 
 			void* KPHeapManager::_alloc(size_t i_size, unsigned i_alignment)
 			{
+
+				if(i_size > this->UPPER_LIMIT)
+				{
+					std::cout << "REQUESTED SIZE EXCEEDS KP HEAP ALLOCATOR LIMIT OF " << this->UPPER_LIMIT << std::endl;
+					return nullptr;
+				}
+
 				// If size requested is larger the largest block size. Try to collect and retry
 				if (i_size > this->LARGEST_BLOCK_SIZE)
 				{
@@ -96,7 +104,7 @@ namespace KPEngine
 				// supported alignments
 				if (!(i_alignment == 4 || i_alignment == 8 || i_alignment == 16 || i_alignment == 32 || i_alignment == 64))
 				{
-					std::cout << "KP HEAPALLOCATOR DOES NOT SUPPORT "<< i_alignment <<" ALIGNMENT" << std::endl;
+					std::cout << "KP HEAP ALLOCATOR DOES NOT SUPPORT "<< i_alignment <<" ALIGNMENT" << std::endl;
 					return nullptr;
 				} 
 					
