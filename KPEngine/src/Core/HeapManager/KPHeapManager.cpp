@@ -53,7 +53,7 @@ namespace KPEngine
 
 
 				// initialize blocks with pointer arithmetic
-				char * block = static_cast<char*>(manager->m_InternalHeapStart);
+				uint8_t* block = static_cast<uint8_t*>(manager->m_InternalHeapStart);
 				for(int i = 0; i < numberOfTotalBlocks; i++)
 				{
 					// initialize block descriptor at the start of the block
@@ -112,7 +112,7 @@ namespace KPEngine
 					
 
 				// loop through internal heap until you find an appropriate block to fit the requested size
-				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				uint8_t* pointer = static_cast<uint8_t*>(this->m_InternalHeapStart);
 				bool l_alreadyCollected = false;
 				while (true)
 				{
@@ -128,7 +128,7 @@ namespace KPEngine
 						// try one more time after collecting
 						this->REQUESTED_SIZE = i_size;
 						collect();
-						pointer = static_cast<char*>(this->m_InternalHeapStart); 
+						pointer = static_cast<uint8_t*>(this->m_InternalHeapStart); 
 					}
 						
 
@@ -148,7 +148,7 @@ namespace KPEngine
 
 					// TODO Add Range Condition to try to match a block that more closely fits
 					// if it fits return the pointer to the
-					char* lp_startOfBlock = pointer + sizeof(BlockDescriptor);
+					uint8_t* lp_startOfBlock = pointer + sizeof(BlockDescriptor);
 
 					// If this block is not aligned. Calculate a shift and shift
 					int shiftRequired = 0;
@@ -220,7 +220,7 @@ namespace KPEngine
 			{
 				// TODO Currently only merges blocks. Never makes blocks smaller. Need to adapt this
 				// loop through internal heap and merge abuding blocks
-				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				uint8_t* pointer = static_cast<uint8_t*>(this->m_InternalHeapStart);
 				while (true)
 				{
 					// reinterpret initial part as descriptor
@@ -235,7 +235,7 @@ namespace KPEngine
 					{
 
 						// go to next block descriptor
-						char* nextPointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
+						uint8_t* nextPointer = pointer + (sizeof(BlockDescriptor) + descriptor->m_sizeBlock);
 						BlockDescriptor* nextDescriptor = reinterpret_cast<BlockDescriptor*>(nextPointer);
 
 
@@ -319,7 +319,7 @@ namespace KPEngine
 				int count = 0;
 
 				// loop through internal heap showing free blocks
-				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				uint8_t* pointer = static_cast<uint8_t*>(this->m_InternalHeapStart);
 				while (true)
 				{
 					// reinterpret initial part as descriptor
@@ -354,7 +354,7 @@ namespace KPEngine
 				int count = 0;
 
 				// loop through internal heap showing free blocks
-				char* pointer = static_cast<char*>(this->m_InternalHeapStart);
+				uint8_t* pointer = static_cast<uint8_t*>(this->m_InternalHeapStart);
 				while (true)
 				{
 					// reinterpret initial part as descriptor
@@ -396,7 +396,7 @@ namespace KPEngine
 			BlockDescriptor* KPHeapManager::m_GetDescriptor(void* i_pMemory) const
 			{
 				// go in the reverse direction until a valid descriptor is found and modify descriptor to mark the block as not free
-				char* l_potentialDescriptor = static_cast<char*>(i_pMemory);
+				uint8_t* l_potentialDescriptor = static_cast<uint8_t*>(i_pMemory);
 				int bytesMoved = 0;
 				while (!m_ValidateDescriptor(l_potentialDescriptor))
 				{
