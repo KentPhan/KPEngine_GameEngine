@@ -105,7 +105,8 @@ namespace InterviewProblems
 		}
 
 
-		l_return_string_length += 2 ;// Account for period and terminating string
+		l_return_string_length += 1 ;// Account for period and terminating string
+		std::cout<< "Counted characters to malloc:" << l_return_string_length << std::endl;
 		char* l_return_string = reinterpret_cast<char*>(malloc(l_return_string_length)); // Allocate exact
 		char* l_position_in_return_string = l_return_string;
 
