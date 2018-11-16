@@ -56,6 +56,16 @@ int main()
 	//}
 	//
 	// why is calling test.~Destructor() calling all destructors for that object type?
+	//KPString * test = new KPString("First");
+	//KPString test2 = *test; // I can point to something else later
+	//KPString& test3 = *test; // I cannot;
+
+
+	//KPString * testOther = new KPString("Second");
+	//test2 = *testOther;
+	//test3 = *testOther;
+
+	
 
 
 	// The Game
