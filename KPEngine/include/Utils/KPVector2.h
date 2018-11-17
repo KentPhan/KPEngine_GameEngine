@@ -51,6 +51,7 @@ namespace KPEngine
 
 			// operators
 			KPVector2 operator+(const KPVector2 & i_other) const;
+			KPVector2& operator=(const KPVector2 & i_other);
 			KPVector2& operator+=(const KPVector2 & i_other);
 
 			//Print
