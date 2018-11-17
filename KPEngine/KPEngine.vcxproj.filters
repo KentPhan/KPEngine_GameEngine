@@ -59,13 +59,13 @@
     <ClInclude Include="include\Core\HeapManager\KPHeapManagerProxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\Classes\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Core\Interfaces\IGameObjectController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Utils\KPVector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Classes\KPGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\Interfaces\IKPGameObjectController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -150,10 +150,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\Core\Classes\GameObject.h" />
+    <ClInclude Include="include\Core\Classes\KPGameObject.h" />
     <ClInclude Include="include\Core\HeapManager\KPHeapManagerProxy.h" />
     <ClInclude Include="include\Core\HeapManager\KPHeapManager.h" />
-    <ClInclude Include="include\Core\Interfaces\IGameObjectController.h" />
+    <ClInclude Include="include\Core\Interfaces\IKPGameObjectController.h" />
     <ClInclude Include="include\KPEngine-init.h" />
     <ClInclude Include="include\Utils\KPLogType.h" />
     <ClInclude Include="include\Utils\KPVector3.h" />
