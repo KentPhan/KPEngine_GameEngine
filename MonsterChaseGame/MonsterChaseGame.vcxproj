@@ -190,8 +190,8 @@
     <ClInclude Include="include\GameObjects\Classes\Monster.h" />
     <ClInclude Include="include\GameObjects\Classes\Player.h" />
     <ClInclude Include="include\Controllers\PlayerController.h" />
-    <ClInclude Include="include\Controllers\ZombieController.h" />
-    <ClInclude Include="include\Controllers\SuperZombieController.h" />
+    <ClInclude Include="include\Controllers\RandomMonsterController.h" />
+    <ClInclude Include="include\Controllers\FollowMonsterController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Controllers\PlayerController.cpp" />
@@ -201,8 +201,8 @@
     <ClCompile Include="src\GameObjects\Classes\Monster.cpp" />
     <ClCompile Include="src\GameObjects\Classes\Player.cpp" />
     <ClCompile Include="src\MonsterChaseGame.cpp" />
-    <ClCompile Include="src\Controllers\ZombieController.cpp" />
-    <ClCompile Include="src\Controllers\SuperZombieController.cpp" />
+    <ClCompile Include="src\Controllers\RandomMonsterController.cpp" />
+    <ClCompile Include="src\Controllers\FollowMonsterController.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

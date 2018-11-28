@@ -16,6 +16,10 @@ namespace MonsterChaseGame
 		void PlayerController::UpdateGameObject()
 		{
 		}
+
+		void PlayerController::GetMovementInput()
+		{
+		}
 	}
 }
 

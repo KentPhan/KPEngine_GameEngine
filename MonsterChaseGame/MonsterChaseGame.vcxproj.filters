@@ -51,10 +51,10 @@
     <ClInclude Include="include\Controllers\PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Controllers\ZombieController.h">
+    <ClInclude Include="include\Controllers\FollowMonsterController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Controllers\SuperZombieController.h">
+    <ClInclude Include="include\Controllers\RandomMonsterController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -80,10 +80,10 @@
     <ClCompile Include="src\Controllers\PlayerController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Controllers\ZombieController.cpp">
+    <ClCompile Include="src\Controllers\FollowMonsterController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Controllers\SuperZombieController.cpp">
+    <ClCompile Include="src\Controllers\RandomMonsterController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
