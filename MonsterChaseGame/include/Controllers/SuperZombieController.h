@@ -17,7 +17,10 @@ namespace MonsterChaseGame
 			{
 				std::cout << "Monster \"" << this->m_pObject->GetName().Get() << "\" at [" << this->m_pObject->GetPosition().X() << "," << this->m_pObject->GetPosition().Y() << "]\n";
 			}
-
+			inline char GetSymbol() const override
+			{
+				return 'M';
+			}
 		private:
 			KPEngine::Core::KPGameObject * m_pObject;
 		};

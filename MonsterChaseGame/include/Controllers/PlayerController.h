@@ -11,14 +11,17 @@ namespace MonsterChaseGame
 		public:
 			PlayerController();
 			~PlayerController();
-			void inline SetGameObject(KPEngine::Core::KPGameObject* i_pObject) override { m_pObject = i_pObject; };
+			inline void SetGameObject(KPEngine::Core::KPGameObject* i_pObject) override { m_pObject = i_pObject; };
 			void UpdateGameObject() override;
 
-			void inline PrintInfo() const override
+			inline void PrintInfo() const override
 			{
 				std::cout << "Player \"" << this->m_pObject->GetName().Get() << "\" at [" << this->m_pObject->GetPosition().X() << "," << this->m_pObject->GetPosition().Y() << "]\n";
 			}
-
+			inline char GetSymbol() const override
+			{
+				return 'P';
+			}
 		private:
 			KPEngine::Core::KPGameObject * m_pObject;
 		};
