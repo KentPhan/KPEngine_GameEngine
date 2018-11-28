@@ -9,3 +9,7 @@ ZombieController::ZombieController()
 ZombieController::~ZombieController()
 {
 }
+
+void ZombieController::UpdateGameObject()
+{
+}

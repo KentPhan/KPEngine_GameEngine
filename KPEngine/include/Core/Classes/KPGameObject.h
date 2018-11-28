@@ -12,7 +12,6 @@ namespace KPEngine
 		class KPGameObject
 		{
 		public:
-			virtual ~KPGameObject() = default;
 
 			// Accessors
 			inline KPString GetName() const
@@ -40,7 +39,6 @@ namespace KPEngine
 				return i_Name;
 			}
 			
-
 		private:
 			KPVector2 m_Position;
 			KPString m_Name;

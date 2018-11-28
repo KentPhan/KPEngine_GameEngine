@@ -9,3 +9,7 @@ PlayerController::PlayerController()
 PlayerController::~PlayerController()
 {
 }
+
+void PlayerController::UpdateGameObject()
+{
+}

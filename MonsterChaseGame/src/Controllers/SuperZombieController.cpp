@@ -9,3 +9,7 @@ SuperZombieController::SuperZombieController()
 SuperZombieController::~SuperZombieController()
 {
 }
+
+void SuperZombieController::UpdateGameObject()
+{
+}
