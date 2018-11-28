@@ -1,15 +1,21 @@
 #include "../../include/Controllers/ZombieController.h"
 
-
-ZombieController::ZombieController()
+namespace MonsterChaseGame
 {
+	namespace Controllers
+	{
+		ZombieController::ZombieController()
+		{
+		}
+
+
+		ZombieController::~ZombieController()
+		{
+		}
+
+		void ZombieController::UpdateGameObject()
+		{
+		}
+	}
 }
 
-
-ZombieController::~ZombieController()
-{
-}
-
-void ZombieController::UpdateGameObject()
-{
-}

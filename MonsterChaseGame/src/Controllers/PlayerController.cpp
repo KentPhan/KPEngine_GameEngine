@@ -1,15 +1,21 @@
 #include "../../include/Controllers/PlayerController.h"
 
-
-PlayerController::PlayerController()
+namespace MonsterChaseGame
 {
+	namespace Controllers
+	{
+		PlayerController::PlayerController()
+		{
+		}
+
+
+		PlayerController::~PlayerController()
+		{
+		}
+
+		void PlayerController::UpdateGameObject()
+		{
+		}
+	}
 }
 
-
-PlayerController::~PlayerController()
-{
-}
-
-void PlayerController::UpdateGameObject()
-{
-}

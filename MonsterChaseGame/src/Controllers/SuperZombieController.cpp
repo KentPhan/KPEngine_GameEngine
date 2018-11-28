@@ -1,15 +1,21 @@
 #include "../../include/Controllers/SuperZombieController.h"
 
-
-SuperZombieController::SuperZombieController()
+namespace MonsterChaseGame
 {
+	namespace Controllers
+	{
+		SuperZombieController::SuperZombieController()
+		{
+		}
+
+
+		SuperZombieController::~SuperZombieController()
+		{
+		}
+
+		void SuperZombieController::UpdateGameObject()
+		{
+		}
+	}
 }
 
-
-SuperZombieController::~SuperZombieController()
-{
-}
-
-void SuperZombieController::UpdateGameObject()
-{
-}
