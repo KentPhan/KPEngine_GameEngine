@@ -9,43 +9,41 @@ namespace KPEngine
 {
 	namespace Core
 	{
-		namespace Classes
+		class KPGameObject
 		{
-			class KPGameObject
+		public:
+			virtual ~KPGameObject() = default;
+
+			// Accessors
+			inline KPString GetName() const
 			{
-			public:
+				return m_Name;
+			}
+			inline KPVector2 GetPosition() const
+			{
+				return m_Position;
+			}
+			inline virtual void PrintInfo() const
+			{
+				std::cout << "Name: " << m_Name.Get() << "\n";
+			}
 
-				// Accessors
-				inline KPString GetName() const
-				{
-					return m_Name;
-				}
-				inline KPVector2 GetPosition() const
-				{
-					return m_Position;
-				}
-				inline virtual void PrintInfo() const
-				{
-					std::cout << "Name: " << m_Name.Get() << "\n";
-				}
+			// Setters
+			inline KPVector2 SetPosition(KPVector2 & i_Position)
+			{
+				m_Position = i_Position;
+				return m_Position;
+			}
+			inline KPString SetName(KPString & i_Name)
+			{
+				m_Name = i_Name;
+				return i_Name;
+			}
+			
 
-				// Setters
-				inline KPVector2 SetPosition(KPVector2 & i_Position)
-				{
-					m_Position = i_Position;
-					return m_Position;
-				}
-				inline KPString SetName(KPString & i_Name)
-				{
-					m_Name = i_Name;
-					return i_Name;
-				}
-				
-
-			private:
-				KPVector2 m_Position;
-				KPString m_Name;
-			};
-		}
+		private:
+			KPVector2 m_Position;
+			KPString m_Name;
+		};
 	}
 }
