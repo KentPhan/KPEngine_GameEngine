@@ -15,6 +15,7 @@ namespace MonsterChaseGame
 
 		void FollowMonsterController::UpdateGameObject()
 		{
+			// TODO Need to update monster position to follow player here
 		}
 	}
 }
