@@ -15,7 +15,7 @@ namespace MonsterChaseGame
 
 			// Setter
 			inline void SetGameObject(KPEngine::Core::KPGameObject* i_pObject) override { m_pObject = i_pObject; }
-			void inline SetMap(KPGameObject ** i_ppMap) override { m_Map = i_ppMap; }
+			void inline SetMap(KPGameObject* (*i_ppMap)[20][20]) override { m_Map = i_ppMap; }
 
 			// Order
 			inline void Initialize() override {}
@@ -35,8 +35,8 @@ namespace MonsterChaseGame
 				return m_pObject->GetPosition();
 			}
 		private:
-			KPEngine::Core::KPGameObject * m_pObject;
-			KPGameObject ** m_Map;
+			KPGameObject * m_pObject;
+			KPGameObject* (*m_Map)[20][20];
 		};
 	}
 }

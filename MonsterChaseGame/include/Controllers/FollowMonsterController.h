@@ -15,7 +15,7 @@ namespace MonsterChaseGame
 
 			// Setter
 			void inline SetGameObject(KPGameObject* i_pObject) override { m_pObject = i_pObject; }
-			void inline SetMap(KPGameObject**i_ppMap) override { m_Map = i_ppMap; }
+			void inline SetMap(KPGameObject* (*i_ppMap)[20][20]) override { m_Map = i_ppMap; }
 			inline void SetFocusObject(KPGameObject* i_pObject) { m_pFocus = i_pObject; }
 
 			// Order
@@ -38,7 +38,7 @@ namespace MonsterChaseGame
 		private:
 			KPGameObject * m_pObject;
 			KPGameObject * m_pFocus;
-			KPGameObject ** m_Map;
+			KPGameObject* (*m_Map)[20][20];
 		};
 	}
 }

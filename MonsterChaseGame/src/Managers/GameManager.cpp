@@ -79,7 +79,7 @@ namespace MonsterChaseGame
 			KPGameObject *l_playerObject = new KPGameObject();
 			PlayerController *l_player = new PlayerController();
 			l_player->SetGameObject(l_playerObject);
-			l_player->SetMap(map_);
+			l_player->SetMap(&map_);
 			
 
 			char* name_input = new char[1000];

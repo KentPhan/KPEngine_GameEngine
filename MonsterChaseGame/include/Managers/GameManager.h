@@ -16,7 +16,7 @@ namespace MonsterChaseGame
 		{
 		private:
 			KPGameObject* map_[20][20];
-			List<Controllers::RandomMonsterController*> * MonsterList;
+			List<KPGameObject*> * MonsterList;
 			bool endGame = false;
 			const int monster_limit_ = 50;
 

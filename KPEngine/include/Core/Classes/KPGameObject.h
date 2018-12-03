@@ -34,6 +34,11 @@ namespace KPEngine
 			{
 				std::cout << "Name: " << m_Name.Get() << "\n";
 			}
+			inline virtual int GetTag() const
+			{
+				return m_Tag;
+			}
+			
 
 			// Setters
 			inline KPVector2 SetPosition(KPVector2 & i_Position)
@@ -51,10 +56,15 @@ namespace KPEngine
 				m_Name = i_Name;
 				return m_Name;
 			}
+			inline virtual void SetTag(int tag)
+			{
+				m_Tag = tag;
+			}
 			
 		private:
 			KPVector2 m_Position;
 			KPString m_Name;
+			int m_Tag;
 		};
 	}
 }
