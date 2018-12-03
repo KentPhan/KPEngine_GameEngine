@@ -13,6 +13,14 @@ namespace KPEngine
 		{
 		public:
 
+			KPGameObject(){}
+
+			~KPGameObject()
+			{
+				
+			}
+
+
 			// Accessors
 			inline KPString GetName() const
 			{
@@ -33,10 +41,15 @@ namespace KPEngine
 				m_Position = i_Position;
 				return m_Position;
 			}
+			inline KPString SetName(const char* i_Name)
+			{
+				m_Name = KPString(i_Name);
+				return m_Name;
+			}
 			inline KPString SetName(KPString & i_Name)
 			{
 				m_Name = i_Name;
-				return i_Name;
+				return m_Name;
 			}
 			
 		private:

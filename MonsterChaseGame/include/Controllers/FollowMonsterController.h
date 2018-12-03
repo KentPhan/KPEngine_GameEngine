@@ -1,6 +1,8 @@
 #pragma once
 #include "Core/Interfaces/IKPGameObjectController.h"
 
+using namespace KPEngine::Core;
+
 namespace MonsterChaseGame
 {
 	namespace Controllers
@@ -12,8 +14,9 @@ namespace MonsterChaseGame
 			~FollowMonsterController();
 
 			// Setter
-			void inline SetGameObject(KPEngine::Core::KPGameObject* i_pObject) override { m_pObject = i_pObject; }
-			inline void SetFocusObject(KPEngine::Core::KPGameObject* i_pObject) { m_pFocus = i_pObject; }
+			void inline SetGameObject(KPGameObject* i_pObject) override { m_pObject = i_pObject; }
+			void inline SetMap(KPGameObject**i_ppMap) override { m_Map = i_ppMap; }
+			inline void SetFocusObject(KPGameObject* i_pObject) { m_pFocus = i_pObject; }
 
 			// Order
 			inline void Initialize() override {}
@@ -28,9 +31,14 @@ namespace MonsterChaseGame
 			{
 				return 'M';
 			}
+			inline KPVector2 GetPosition() const override
+			{
+				return m_pObject->GetPosition();
+			}
 		private:
-			KPEngine::Core::KPGameObject * m_pObject;
-			KPEngine::Core::KPGameObject * m_pFocus;
+			KPGameObject * m_pObject;
+			KPGameObject * m_pFocus;
+			KPGameObject ** m_Map;
 		};
 	}
 }

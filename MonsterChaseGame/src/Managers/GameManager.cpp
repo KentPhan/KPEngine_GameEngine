@@ -4,13 +4,16 @@
 #include "Utils/KP_Log.h"
 
 
+using namespace MonsterChaseGame::Controllers;
+using namespace KPEngine::Core;
+
 namespace MonsterChaseGame
 {
 	namespace Managers
 	{
 		GameManager::GameManager()
 		{
-			this->MonsterList = new List<Monster*>();
+			this->MonsterList = new List<RandomMonsterController*>();
 
 			// Construct Map
 			// Default map with nullPtrs
@@ -73,29 +76,34 @@ namespace MonsterChaseGame
 			
 
 			// Name player
-			Player *player = new Player();
+			KPGameObject *l_playerObject = new KPGameObject();
+			PlayerController *l_player = new PlayerController();
+			l_player->SetGameObject(l_playerObject);
+			l_player->SetMap(map_);
+			
+
 			char* name_input = new char[1000];
 			std::cout << "Name player: \n";
 			std::cin >> name_input;
-			(*player).SetName(name_input);
+			(*l_playerObject).SetName(name_input);
 			delete name_input;
 			// Place Player
-			map_[0][0] = player;
-			player->SetPosition(0, 0);
-			player->Type = PlayerType;
+			map_[0][0] = l_playerObject;
+			l_playerObject->SetPosition(KPVector2(0,0));
 			DEBUG_PRINT(KPLogType::Verbose, "Player Made");
 
 			// Main Loop
 			PrintMap();
-			MainGameLoop(player);
+			MainGameLoop(l_player);
 
 
-			delete player;
+			delete l_player;
+			delete l_playerObject;
 
 			DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Ended");
 		}
 
-		void GameManager::MainGameLoop(Player* player)
+		void GameManager::MainGameLoop(PlayerController* player)
 		{
 			assert(player != nullptr);
 
@@ -154,56 +162,18 @@ namespace MonsterChaseGame
 				std::cout << "[";
 				for (int row = 0; row < 20; row++)
 				{
-					GameObject* position = this->map_[column][row];
+					KPGameObject* position = this->map_[column][row];
 
 					if (position == nullptr)
 						std::cout << " " << 'X' << " ";
 					else
-						std::cout << " " << position->GetSymbol() << " ";
+						std::cout << " " << position->GetName().Get() << " ";
 
 				}
 				std::cout << "]\n";
 			}
 		}
 
-
-		void GameManager::MovePlayer(Player* player, const KPVector2 movement)
-		{
-			assert(player);
-
-			KPVector2 newPosition = player->Position + movement;
-
-			// TODO consolidate enforce boundaries
-			// only move if would stay in boundaries
-			if (newPosition.X() < 0 || newPosition.X() > 19)
-			{
-				newPosition.X(player->Position.X());
-			}
-			if (newPosition.Y() < 0 || newPosition.Y() > 19)
-			{
-				newPosition.Y(player->Position.Y());
-			}
-
-			// remove old position
-			map_[player->Position.Y()][player->Position.X()] = nullptr;
-
-			// set new position
-			if (map_[newPosition.Y()][newPosition.X()] == nullptr)
-			{
-				// move
-				map_[newPosition.Y()][newPosition.X()] = player;
-			}
-			else if (map_[newPosition.Y()][newPosition.X()]->Type == MonsterType)
-			{
-				// kill monster
-				std::cout << " Monster Slain!\n";
-				MonsterList->Remove((Monster*)map_[newPosition.Y()][newPosition.X()]);
-				map_[newPosition.Y()][newPosition.X()] = player;
-				number_of_monsters--;
-			}
-
-			player->Position = newPosition;
-		}
 
 		void GameManager::MoveMonsters()
 		{

@@ -1,6 +1,8 @@
 #pragma once
 #include <Core/Interfaces/IKPGameObjectController.h>
 
+using namespace KPEngine::Core;
+
 namespace MonsterChaseGame
 {
 	namespace Controllers
@@ -13,6 +15,7 @@ namespace MonsterChaseGame
 
 			// Setter
 			inline void SetGameObject(KPEngine::Core::KPGameObject* i_pObject) override { m_pObject = i_pObject; }
+			void inline SetMap(KPGameObject ** i_ppMap) override { m_Map = i_ppMap; }
 
 			// Order
 			inline void Initialize() override {}
@@ -27,8 +30,13 @@ namespace MonsterChaseGame
 			{
 				return 'm';
 			}
+			inline KPVector2 GetPosition() const override
+			{
+				return m_pObject->GetPosition();
+			}
 		private:
 			KPEngine::Core::KPGameObject * m_pObject;
+			KPGameObject ** m_Map;
 		};
 	}
 }

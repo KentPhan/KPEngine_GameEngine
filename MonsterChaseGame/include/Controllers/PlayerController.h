@@ -2,18 +2,21 @@
 #include <Core/Interfaces/IKPGameObjectController.h>
 #include <iostream>
 
+using namespace KPEngine::Core;
+
 namespace MonsterChaseGame
 {
 	namespace Controllers
 	{
-		class PlayerController : public KPEngine::Core::Interfaces::IKPGameObjectController
+		class PlayerController : public Interfaces::IKPGameObjectController
 		{
 		public:
 			PlayerController();
 			~PlayerController();
 
 			// Setter
-			inline void SetGameObject(KPEngine::Core::KPGameObject* i_pObject) override { m_pObject = i_pObject; };
+			inline void SetGameObject(KPGameObject* i_pObject) override { m_pObject = i_pObject; };
+			void inline SetMap(KPGameObject** i_ppMap) override { m_Map = i_ppMap; }
 
 			// Order
 			inline void Initialize() override {}
@@ -31,8 +34,13 @@ namespace MonsterChaseGame
 			{
 				return 'P';
 			}
+			inline KPVector2 GetPosition() const override
+			{
+				return m_pObject->GetPosition();
+			}
 		private:
-			KPEngine::Core::KPGameObject * m_pObject;
+			KPGameObject * m_pObject;
+			KPGameObject **m_Map;
 		};
 	}
 }
