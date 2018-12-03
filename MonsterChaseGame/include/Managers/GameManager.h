@@ -22,16 +22,8 @@ namespace MonsterChaseGame
 
 			void MainGameLoop(Controllers::PlayerController* player);
 			void PrintMap() const;
-			void MoveMonsters();
+			void UpdateMonsters();
 			void SpawnMonster(const char* name);
-
-			// Inline
-			inline void PerformPrimaryAction(Controllers::PlayerController* player, const KPVector2 movement)
-			{
-				MovePlayer(player, movement);
-				MoveMonsters();
-				PrintMap();
-			}
 
 		public:
 			int number_of_monsters;

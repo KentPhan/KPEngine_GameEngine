@@ -1,6 +1,7 @@
 #include "../../include/Controllers/PlayerController.h"
 #include <assert.h>
 #include "../../include/GameObjects/Classes/Monster.h"
+#include <conio.h>
 
 namespace MonsterChaseGame
 {
@@ -19,11 +20,48 @@ namespace MonsterChaseGame
 		{
 			// TODO Need to get input from user somehow here.
 			// TODO Need to update Player Position from here. Transfer from old code
+			MovePlayer(m_Direction);
+
 		}
 
-		void PlayerController::GetMovementInput()
+		void PlayerController::GetInput()
 		{
+			char input;
+			input = _getch();
 
+			switch (input)
+			{
+			case 'w':
+				m_Direction = KPVector2(0, -1);
+				break;
+			case 's':
+				m_Direction = KPVector2(0, 1);
+				break;
+			case 'a':
+				m_Direction = KPVector2(-1, 0);
+				break;
+			case 'd':
+				m_Direction = KPVector2(1, 0);
+				break;
+			case 'q':
+				return;
+			case 'p':
+				// TODO Monster Manager Instance
+				// Print list of stuff
+				for (int i = 0; i < MonsterList->length(); i++)
+				{
+					MonsterList->Get(i)->PrintInfo();
+				}
+				PrintInfo();
+				break;
+			default:
+				if (input)
+				{
+					std::cout << "Invalid Input\n";
+					break;
+				}
+
+			}
 		}
 
 		void PlayerController::MovePlayer(const KPVector2 movement)
@@ -54,6 +92,7 @@ namespace MonsterChaseGame
 			}
 			else if ((*m_pMap)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::MonsterType)
 			{
+				// TODO Get reference to Monster List Instance
 				// kill monster
 				std::cout << " Monster Slain!\n";
 				MonsterList->Remove((Monster*)map_[newPosition.Y()][newPosition.X()]);

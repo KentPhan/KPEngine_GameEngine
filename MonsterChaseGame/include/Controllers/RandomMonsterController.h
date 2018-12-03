@@ -35,6 +35,7 @@ namespace MonsterChaseGame
 				return m_pObject->GetPosition();
 			}
 		private:
+			void MoveMonsterRandomly();
 			KPGameObject * m_pObject;
 			KPGameObject* (*m_Map)[20][20];
 		};

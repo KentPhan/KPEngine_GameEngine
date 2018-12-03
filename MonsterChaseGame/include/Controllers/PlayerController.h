@@ -16,14 +16,14 @@ namespace MonsterChaseGame
 
 			// Setter
 			inline void SetGameObject(KPGameObject* i_pObject) override { m_pObject = i_pObject; };
-			void inline SetMap(KPGameObject* (*i_ppMap) [20][20]) override { m_Map = i_ppMap; }
+			void inline SetMap(KPGameObject* (*i_ppMap) [20][20]) override { m_pMap = i_ppMap; }
 
 			// Order
 			inline void Initialize() override {}
 			void UpdateGameObject() override;
 
 			// Input
-			void GetMovementInput();
+			void GetInput();
 
 			// Info
 			inline void PrintInfo() const override
@@ -40,8 +40,9 @@ namespace MonsterChaseGame
 			}
 		private:
 			void MovePlayer(const KPVector2 movement);
+			KPVector2 m_Direction;
 			KPGameObject * m_pObject;
-			KPGameObject* (*m_Map)[20][20];
+			KPGameObject* (*m_pMap)[20][20];
 		};
 	}
 }

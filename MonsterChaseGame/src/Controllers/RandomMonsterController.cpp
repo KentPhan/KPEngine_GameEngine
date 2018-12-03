@@ -1,4 +1,5 @@
 #include "../../include/Controllers/RandomMonsterController.h"
+#include "../../include/GameObjects/Classes/Monster.h"
 
 namespace MonsterChaseGame
 {
@@ -16,6 +17,68 @@ namespace MonsterChaseGame
 		void RandomMonsterController::UpdateGameObject()
 		{
 			//TODO Need to update monster position to be random here. Transfer from old code
+			MoveMonsterRandomly();
+		}
+
+		void RandomMonsterController::MoveMonsterRandomly()
+		{
+			// magnitude to move
+			KPVector2 newPosition = m_pObject->GetPosition() + KPVector2((rand() % 3 - 1), (rand() % 3 - 1));
+
+
+			// TODO consolidate enforce boundaries
+			// only move if would stay in boundaries
+			if (newPosition.X() < 0 || newPosition.X() > 19)
+			{
+				newPosition.X(m_pObject->GetPosition().X());
+			}
+			if (newPosition.Y() < 0 || newPosition.Y() > 19)
+			{
+				newPosition.Y(m_pObject->GetPosition().Y());
+			}
+
+			if ((*m_Map)[newPosition.Y()][newPosition.X()] == nullptr)
+			{
+				// if new spot is empty. just move
+				(*m_Map)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
+
+				// TODO use reference to Monster List here
+				(*m_Map)[newPosition.Y()][newPosition.X()] = MonsterList->Get(i);
+				MonsterList->Get(i)->Position = newPosition;
+			}
+			else if ((*m_Map)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::MonsterType)
+			{
+				// If another monster. Spawn another monster or it dies.
+				int roll = rand() % 100 + 1;
+
+				if (roll > 20)
+				{
+					std::cout << " Monster Spawned!\n";
+					SpawnMonster("Spawn"); // TODO Monster Manager Instance
+				}
+				else
+				{
+					std::cout << " Monster Died!\n";
+					(*m_Map)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
+
+					// TODO Monster Manager Instance
+					MonsterList->Remove(monster);
+					number_of_monsters--;
+				}
+
+			}
+			else if ((*m_Map)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::PlayerType)
+			{
+				// If monster attacks player first, player dies and quits game
+				// TODO Game Manager Instance
+				endGame = true;
+				std::cout << "Monster " << MonsterList->Get(i)->GetName() << " Killed You!!!\n";
+				return;
+			}
+			else
+			{
+				std::cout << "I have no idea what the hell is there\n";
+			}
 		}
 	}
 }

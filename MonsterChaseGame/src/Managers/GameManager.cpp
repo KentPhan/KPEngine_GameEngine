@@ -114,42 +114,10 @@ namespace MonsterChaseGame
 					return;
 
 
-				char input;
-				input = _getch();
-
-				switch (input)
-				{
-				case 'w':
-					PerformPrimaryAction(player, KPVector2(0, -1));
-
-					break;
-				case 's':
-					PerformPrimaryAction(player, KPVector2(0, 1));
-					break;
-				case 'a':
-					PerformPrimaryAction(player, KPVector2(-1, 0));
-					break;
-				case 'd':
-					PerformPrimaryAction(player, KPVector2(1, 0));
-					break;
-				case 'q':
-					return;
-				case 'p':
-					// Print list of stuff
-					for (int i = 0; i < MonsterList->length(); i++)
-					{
-						MonsterList->Get(i)->PrintInfo();
-					}
-					(*player).PrintInfo();
-					continue;
-				default:
-					if (input)
-					{
-						std::cout << "Invalid Input\n";
-						continue;
-					}
-
-				}
+				// TODO Get Player Input
+				player->UpdateGameObject(); // TODO Call Player Update
+				UpdateMonsters(); // TODO Call Monster Updates
+				PrintMap(); // TODO Print Map
 			}
 		}
 
@@ -175,72 +143,21 @@ namespace MonsterChaseGame
 		}
 
 
-		void GameManager::MoveMonsters()
+		void GameManager::UpdateMonsters()
 		{
 			// For each monster. Move randomly
 			for (int i = 0; i < MonsterList->length(); i++)
 			{
 
 				//Monster monster = MonsterList[i];
+				// TODO call update for each monster
 				Monster* monster = MonsterList->Get(i);
 
-				// magnitude to move
-				KPVector2 newPosition = monster->Position + KPVector2((rand() % 3 - 1), (rand() % 3 - 1));
-
-
-				// TODO consolidate enforce boundaries
-				// only move if would stay in boundaries
-				if (newPosition.X() < 0 || newPosition.X() > 19)
-				{
-					newPosition.X(monster->Position.X());
-				}
-				if (newPosition.Y() < 0 || newPosition.Y() > 19)
-				{
-					newPosition.Y(monster->Position.Y());
-				}
-
-				if (map_[newPosition.Y()][newPosition.X()] == nullptr)
-				{
-					// if new spot is empty. just move
-					map_[monster->Position.Y()][monster->Position.X()] = nullptr;
-					map_[newPosition.Y()][newPosition.X()] = MonsterList->Get(i);
-					MonsterList->Get(i)->Position = newPosition;
-				}
-				else if (map_[newPosition.Y()][newPosition.X()]->Type == MonsterType)
-				{
-					// If another monster. Spawn another monster or it dies.
-					int roll = rand() % 100 + 1;
-
-					if (roll > 20)
-					{
-						std::cout << " Monster Spawned!\n";
-						SpawnMonster("Spawn");
-					}
-					else
-					{
-						std::cout << " Monster Died!\n";
-						map_[monster->Position.Y()][monster->Position.X()] = nullptr;
-						MonsterList->Remove(monster);
-						number_of_monsters--;
-					}
-
-				}
-				else if (map_[newPosition.Y()][newPosition.X()]->Type == PlayerType)
-				{
-					// If monster attacks player first, player dies and quits game
-					endGame = true;
-					std::cout << "Monster " << MonsterList->Get(i)->GetName() << " Killed You!!!\n";
-					return;
-				}
-				else
-				{
-					std::cout << "I have no idea what the hell is there\n";
-				}
-
-
+				
 			}
 		}
 
+		// TODO Move To and Instance of some sort
 		void GameManager::SpawnMonster(const char* name)
 		{
 			assert(name);
