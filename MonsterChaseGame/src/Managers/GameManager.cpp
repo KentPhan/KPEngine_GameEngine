@@ -126,10 +126,10 @@ namespace MonsterChaseGame
 					return;
 
 
-				player->GetInput();// TODO Get Player Input
-				player->UpdateGameObject(); // TODO Call Player Update
-				UpdateMonsters(); // TODO Call Monster Updates
-				PrintMap(); // TODO Print Map
+				player->GetInput();
+				player->UpdateGameObject();
+				UpdateMonsters();
+				PrintMap();
 			}
 		}
 
@@ -147,7 +147,14 @@ namespace MonsterChaseGame
 					if (position == nullptr)
 						std::cout << " " << 'X' << " ";
 					else
-						std::cout << " " << position->GetName().Get() << " ";
+					{
+						if(position->GetTag() == GameObjects::PlayerType)
+							std::cout << " " << "P" << " ";
+						else
+							std::cout << " " << "M" << " ";
+						
+					}
+						
 
 				}
 				std::cout << "]\n";

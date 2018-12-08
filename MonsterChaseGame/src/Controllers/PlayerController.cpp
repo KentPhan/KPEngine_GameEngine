@@ -15,16 +15,13 @@ namespace MonsterChaseGame
 
 		void PlayerController::UpdateGameObject()
 		{
-			// TODO Need to get input from user somehow here.
-			// TODO Need to update Player Position from here. Transfer from old code
 			MovePlayer(m_Direction);
-
 		}
 
 		void PlayerController::GetInput()
 		{
-			char input;
-			input = _getch();
+			char input = _getch();
+			_getch();
 
 			switch (input)
 			{
