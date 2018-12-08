@@ -11,7 +11,8 @@ namespace KPEngine
 			inline KPString()
 			{
 				m_str = new char[1];
-				m_str[1] = '\0';
+				m_str[0] = '\0';
+				m_length = 0;
 			}
 			KPString(const char * i_str);
 			KPString(const KPString &i_kp2);

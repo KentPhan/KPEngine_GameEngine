@@ -111,7 +111,6 @@ namespace MonsterChaseGame
 
 
 			delete l_player;
-			delete l_playerObject;
 
 			DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Ended");
 		}

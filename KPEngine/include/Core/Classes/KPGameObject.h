@@ -24,6 +24,7 @@ namespace KPEngine
 
 			KPGameObject(KPString& i_Name, KPVector2 & i_Position, int tag)
 			{
+
 				SetName(i_Name);
 				SetPosition(i_Position);
 				SetTag(tag);

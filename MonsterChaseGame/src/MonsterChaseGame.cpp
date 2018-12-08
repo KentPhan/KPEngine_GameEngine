@@ -74,7 +74,7 @@ int main()
 	std::cout << "Ending Game\n";
 	std::cin.ignore();
 
-	//GameManager::CleanUp();
+	GameManager::CleanUp();
 
 	
 

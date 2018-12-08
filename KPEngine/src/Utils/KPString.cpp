@@ -65,7 +65,6 @@ namespace KPEngine
 			// free up old string
 			delete this->m_str;
 
-
 			this->m_length = i_other.m_length;
 			char * temp = new char[this->m_length + 1];
 			strcpy_s(temp, (this->m_length + 1), i_other.m_str);
