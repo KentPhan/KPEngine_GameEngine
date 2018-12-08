@@ -10,7 +10,8 @@ namespace KPEngine
 			// Constructors Destructors
 			inline KPString()
 			{
-				m_str = nullptr;
+				m_str = new char[1];
+				m_str[1] = '\0';
 			}
 			KPString(const char * i_str);
 			KPString(const KPString &i_kp2);

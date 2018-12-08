@@ -2,7 +2,6 @@
 
 #include "../../../KPEngine/include/Utils/List.h"
 #include "Core/Classes/KPGameObject.h"
-#include "../Controllers/RandomMonsterController.h"
 #include "../Controllers/PlayerController.h"
 
 
@@ -15,28 +14,34 @@ namespace MonsterChaseGame
 		class GameManager
 		{
 		private:
-			KPGameObject* map_[20][20];
-			List<KPGameObject*> * MonsterList;
-			bool endGame = false;
-			const int monster_limit_ = 50;
+			// static members
+			static KPGameObject* map_[20][20];
+			static const int monster_limit_ = 50;
 
-			void MainGameLoop(Controllers::PlayerController* player);
-			void PrintMap() const;
-			void UpdateMonsters();
-			void SpawnMonster(const char* name);
+			// static game functions
+			static void MainGameLoop(Controllers::PlayerController* player);
+			static void PrintMap();
+			static void UpdateMonsters();
 
 		public:
-			int number_of_monsters;
 
-			// Constructors, Destructors
-			GameManager();
-			inline ~GameManager()
+			// Construction and Deconstruction
+			static void InitializeGame();
+			static void CleanUp()
 			{
 				delete MonsterList;
-				//delete[] map_;
 			}
 
-			void InitiateGame();
+			// static game functions
+			static void InitiateGame();
+			static void SpawnMonster(const char* name);
+
+			// Instances to access
+			static List<Interfaces::IKPGameObjectController*> * MonsterList;
+
+
+			// TODO Clean this up
+			static bool endGame;
 		};
 	}
 }

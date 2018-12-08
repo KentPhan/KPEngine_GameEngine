@@ -69,11 +69,14 @@ int main()
 
 
 	// The Game
-	GameManager* game = new GameManager();
-	game->InitiateGame();
+	GameManager::InitializeGame();
+	GameManager::InitiateGame();
 	std::cout << "Ending Game\n";
 	std::cin.ignore();
-	delete game;
+
+	//GameManager::CleanUp();
+
+	
 
 
 	//delete test;

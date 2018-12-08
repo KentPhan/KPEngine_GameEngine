@@ -161,8 +161,10 @@
     <ClInclude Include="include\Utils\List.h" />
     <ClInclude Include="include\Utils\KPString.h" />
     <ClInclude Include="include\Utils\KPVector2.h" />
+    <ClInclude Include="include\Core\Classes\KPMap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Classes\KPMap.cpp" />
     <ClCompile Include="src\Core\HeapManager\HeapManagerProxy.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPHeapManager.cpp" />
     <ClCompile Include="src\KPEngine-init.cpp" />

@@ -1,16 +1,12 @@
 #include "../../include/Controllers/RandomMonsterController.h"
-#include "../../include/GameObjects/Classes/Monster.h"
+#include "../../include/GameObjects/GameObjectType.h"
+#include "../../include/Managers/GameManager.h"
 
 namespace MonsterChaseGame
 {
 	namespace Controllers
 	{
 		RandomMonsterController::RandomMonsterController()
-		{
-		}
-
-
-		RandomMonsterController::~RandomMonsterController()
 		{
 		}
 
@@ -42,9 +38,8 @@ namespace MonsterChaseGame
 				// if new spot is empty. just move
 				(*m_Map)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
 
-				// TODO use reference to Monster List here
-				(*m_Map)[newPosition.Y()][newPosition.X()] = MonsterList->Get(i);
-				MonsterList->Get(i)->Position = newPosition;
+				(*m_Map)[newPosition.Y()][newPosition.X()] = m_pObject;
+				m_pObject->SetPosition(newPosition);
 			}
 			else if ((*m_Map)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::MonsterType)
 			{
@@ -54,7 +49,7 @@ namespace MonsterChaseGame
 				if (roll > 20)
 				{
 					std::cout << " Monster Spawned!\n";
-					SpawnMonster("Spawn"); // TODO Monster Manager Instance
+					Managers::GameManager::SpawnMonster("Spawn");
 				}
 				else
 				{
@@ -62,17 +57,15 @@ namespace MonsterChaseGame
 					(*m_Map)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
 
 					// TODO Monster Manager Instance
-					MonsterList->Remove(monster);
-					number_of_monsters--;
+					Managers::GameManager::MonsterList->Remove(reinterpret_cast<IKPGameObjectController*>(m_pObject->GetController())); // TODO IS THIS RIGHT?
 				}
 
 			}
 			else if ((*m_Map)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::PlayerType)
 			{
 				// If monster attacks player first, player dies and quits game
-				// TODO Game Manager Instance
-				endGame = true;
-				std::cout << "Monster " << MonsterList->Get(i)->GetName() << " Killed You!!!\n";
+				Managers::GameManager::endGame = true;
+				std::cout << "Monster " << m_pObject->GetName().Get() << " Killed You!!!\n";
 				return;
 			}
 			else

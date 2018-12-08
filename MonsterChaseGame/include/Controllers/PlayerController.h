@@ -12,14 +12,19 @@ namespace MonsterChaseGame
 		{
 		public:
 			PlayerController();
-			~PlayerController();
+			~PlayerController()
+			{
+				delete m_pObject;
+			};
 
 			// Setter
-			inline void SetGameObject(KPGameObject* i_pObject) override { m_pObject = i_pObject; };
-			void inline SetMap(KPGameObject* (*i_ppMap) [20][20]) override { m_pMap = i_ppMap; }
 
 			// Order
-			inline void Initialize() override {}
+			inline void Initialize(KPGameObject* i_pObject, KPGameObject* (*i_ppMap)[20][20]) override
+			{
+				m_pObject = i_pObject;
+				m_pMap = i_ppMap;
+			}
 			void UpdateGameObject() override;
 
 			// Input

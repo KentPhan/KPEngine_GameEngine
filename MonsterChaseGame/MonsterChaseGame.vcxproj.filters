@@ -33,16 +33,7 @@
     <ClInclude Include="include\Managers\GameManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameObjects\GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\GameObjects\GameObjectType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\Classes\Monster.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObjects\Classes\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\MonsterChaseGame.h">
@@ -61,18 +52,6 @@
   <ItemGroup>
     <ClCompile Include="src\Managers\GameManager.cpp">
       <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\GameObject.cpp">
-      <Filter>Source Files\GameObjects\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\GameObjectType.cpp">
-      <Filter>Source Files\GameObjects\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\Classes\Monster.cpp">
-      <Filter>Source Files\GameObjects\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjects\Classes\Player.cpp">
-      <Filter>Source Files\GameObjects\Classes</Filter>
     </ClCompile>
     <ClCompile Include="src\MonsterChaseGame.cpp">
       <Filter>Source Files</Filter>

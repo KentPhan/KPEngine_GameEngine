@@ -11,15 +11,20 @@ namespace MonsterChaseGame
 		{
 		public:
 			FollowMonsterController();
-			~FollowMonsterController();
+			~FollowMonsterController()
+			{
+				delete m_pObject;
+			};
 
 			// Setter
-			void inline SetGameObject(KPGameObject* i_pObject) override { m_pObject = i_pObject; }
-			void inline SetMap(KPGameObject* (*i_ppMap)[20][20]) override { m_Map = i_ppMap; }
 			inline void SetFocusObject(KPGameObject* i_pObject) { m_pFocus = i_pObject; }
 
 			// Order
-			inline void Initialize() override {}
+			inline void Initialize(KPGameObject* i_pObject, KPGameObject* (*i_ppMap)[20][20]) override
+			{
+				m_pObject = i_pObject;
+				m_pMap = i_ppMap;
+			}
 			void UpdateGameObject() override;
 
 			// Info
@@ -39,7 +44,7 @@ namespace MonsterChaseGame
 			void MoveMonsterTowardsTarget();
 			KPGameObject * m_pObject;
 			KPGameObject * m_pFocus;
-			KPGameObject* (*m_Map)[20][20];
+			KPGameObject* (*m_pMap)[20][20];
 		};
 	}
 }

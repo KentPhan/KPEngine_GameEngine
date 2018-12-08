@@ -1,18 +1,15 @@
 #include "../../include/Controllers/PlayerController.h"
-#include <assert.h>
-#include "../../include/GameObjects/Classes/Monster.h"
 #include <conio.h>
+#include "../../include/Managers/GameManager.h"
+#include "../../include/GameObjects/GameObjectType.h"
 
 namespace MonsterChaseGame
 {
 	namespace Controllers
 	{
+
+
 		PlayerController::PlayerController()
-		{
-		}
-
-
-		PlayerController::~PlayerController()
 		{
 		}
 
@@ -44,13 +41,13 @@ namespace MonsterChaseGame
 				m_Direction = KPVector2(1, 0);
 				break;
 			case 'q':
+				Managers::GameManager::endGame = true;
 				return;
 			case 'p':
-				// TODO Monster Manager Instance
 				// Print list of stuff
-				for (int i = 0; i < MonsterList->length(); i++)
+				for (int i = 0; i < Managers::GameManager::MonsterList->length(); i++)
 				{
-					MonsterList->Get(i)->PrintInfo();
+					Managers::GameManager::MonsterList->Get(i)->PrintInfo();
 				}
 				PrintInfo();
 				break;
@@ -66,7 +63,7 @@ namespace MonsterChaseGame
 
 		void PlayerController::MovePlayer(const KPVector2 movement)
 		{
-			assert(player);
+			assert(m_pObject);
 
 			KPVector2 newPosition = m_pObject->GetPosition() + movement;
 
@@ -95,9 +92,9 @@ namespace MonsterChaseGame
 				// TODO Get reference to Monster List Instance
 				// kill monster
 				std::cout << " Monster Slain!\n";
-				MonsterList->Remove((Monster*)map_[newPosition.Y()][newPosition.X()]);
-				map_[newPosition.Y()][newPosition.X()] = player;
-				number_of_monsters--;
+				KPGameObject* l_toKill = (*m_pMap)[newPosition.Y()][newPosition.X()];
+				Managers::GameManager::MonsterList->Remove( reinterpret_cast<IKPGameObjectController*>(l_toKill->GetController())); // TODO IS THIS RIGHT?
+				(*m_pMap)[newPosition.Y()][newPosition.X()] = m_pObject;
 			}
 
 			m_pObject->SetPosition(newPosition);

@@ -11,9 +11,7 @@ namespace KPEngine
 			class IKPGameObjectController
 			{
 			public:
-				virtual void Initialize() = 0;
-				virtual void SetGameObject(KPGameObject * i_pObject) = 0;
-				virtual void SetMap(KPGameObject* (*i_Map)[20][20]) = 0;
+				virtual void Initialize(KPGameObject * i_pObject, KPGameObject* (*i_Map)[20][20]) = 0;
 				virtual void UpdateGameObject() = 0;
 				virtual void PrintInfo() const = 0;
 				virtual char GetSymbol() const = 0;

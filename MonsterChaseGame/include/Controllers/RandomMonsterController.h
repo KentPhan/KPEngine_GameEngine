@@ -11,14 +11,20 @@ namespace MonsterChaseGame
 		{
 		public:
 			RandomMonsterController();
-			~RandomMonsterController();
+			~RandomMonsterController()
+			{
+				delete m_pObject;
+			};
 
 			// Setter
-			inline void SetGameObject(KPEngine::Core::KPGameObject* i_pObject) override { m_pObject = i_pObject; }
-			void inline SetMap(KPGameObject* (*i_ppMap)[20][20]) override { m_Map = i_ppMap; }
+			
 
 			// Order
-			inline void Initialize() override {}
+			inline void Initialize(KPGameObject* i_pObject, KPGameObject* (*i_ppMap)[20][20]) override
+			{
+				m_pObject = i_pObject;
+				m_Map = i_ppMap;
+			}
 			void UpdateGameObject() override;
 
 			// Info
