@@ -30,7 +30,7 @@ namespace MonsterChaseGame
 			// Info
 			inline void PrintInfo() const override
 			{
-				std::cout << "Super Monster \"" << this->m_pObject->GetName().Get() << "\" at [" << this->m_pObject->GetPosition().X() << "," << this->m_pObject->GetPosition().Y() << "]\n";
+				std::cout << "Dumb Monster \"" << this->m_pObject->GetName().Get() << "\" at [" << this->m_pObject->GetPosition().X() << "," << this->m_pObject->GetPosition().Y() << "]\n";
 			}
 			inline char GetSymbol() const override
 			{

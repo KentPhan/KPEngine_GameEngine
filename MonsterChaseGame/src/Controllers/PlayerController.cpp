@@ -47,6 +47,7 @@ namespace MonsterChaseGame
 					Managers::GameManager::MonsterList->Get(i)->PrintInfo();
 				}
 				PrintInfo();
+				m_Direction = KPVector2(0, 0);
 				break;
 			default:
 				if (input)
