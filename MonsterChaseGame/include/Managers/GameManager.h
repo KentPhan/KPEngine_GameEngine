@@ -14,7 +14,7 @@ namespace MonsterChaseGame
 		{
 		private:
 			// static members
-			static KPGameObject* map_[20][20];
+			static KPGameObject* ms_pMap[20][20];
 			static const int monster_limit_ = 50;
 
 			// static game functions
@@ -28,7 +28,7 @@ namespace MonsterChaseGame
 			static void InitializeGame();
 			static void CleanUp()
 			{
-				delete MonsterList;
+				delete ms_pMonsterList;
 			}
 
 			// static game functions
@@ -36,11 +36,12 @@ namespace MonsterChaseGame
 			static void SpawnMonster(const char* name);
 
 			// Instances to access
-			static List<Interfaces::IKPGameObjectController*> * MonsterList;
+			static List<Interfaces::IKPGameObjectController*> * ms_pMonsterList;
+			static Controllers::PlayerController* ms_pPlayerController;
 
 
 			// TODO Clean this up
-			static bool endGame;
+			static bool ms_bEndGame;
 		};
 	}
 }

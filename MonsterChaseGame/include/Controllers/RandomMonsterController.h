@@ -23,7 +23,7 @@ namespace MonsterChaseGame
 			inline void Initialize(KPGameObject* i_pObject, KPGameObject* (*i_ppMap)[20][20]) override
 			{
 				m_pObject = i_pObject;
-				m_Map = i_ppMap;
+				m_pMap = i_ppMap;
 			}
 			void UpdateGameObject() override;
 
@@ -43,7 +43,7 @@ namespace MonsterChaseGame
 		private:
 			void MoveMonsterRandomly();
 			KPGameObject * m_pObject;
-			KPGameObject* (*m_Map)[20][20];
+			KPGameObject* (*m_pMap)[20][20];
 		};
 	}
 }

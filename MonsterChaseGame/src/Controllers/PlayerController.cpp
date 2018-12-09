@@ -20,7 +20,8 @@ namespace MonsterChaseGame
 
 		void PlayerController::GetInput()
 		{
-			char input = _getch();
+			char input;
+			std::cin >> input;
 
 			switch (input)
 			{
@@ -37,13 +38,13 @@ namespace MonsterChaseGame
 				m_Direction = KPVector2(1, 0);
 				break;
 			case 'q':
-				Managers::GameManager::endGame = true;
+				Managers::GameManager::ms_bEndGame = true;
 				return;
 			case 'p':
 				// Print list of stuff
-				for (int i = 0; i < Managers::GameManager::MonsterList->length(); i++)
+				for (int i = 0; i < Managers::GameManager::ms_pMonsterList->length(); i++)
 				{
-					Managers::GameManager::MonsterList->Get(i)->PrintInfo();
+					Managers::GameManager::ms_pMonsterList->Get(i)->PrintInfo();
 				}
 				PrintInfo();
 				m_Direction = KPVector2(0,0);
@@ -90,7 +91,7 @@ namespace MonsterChaseGame
 				// kill monster
 				std::cout << " Monster Slain!\n";
 				KPGameObject* l_toKill = (*m_pMap)[newPosition.Y()][newPosition.X()];
-				Managers::GameManager::MonsterList->Remove( reinterpret_cast<IKPGameObjectController*>(l_toKill->GetController())); // TODO IS THIS RIGHT?
+				Managers::GameManager::ms_pMonsterList->Remove( reinterpret_cast<IKPGameObjectController*>(l_toKill->GetController())); // TODO IS THIS RIGHT?
 				(*m_pMap)[newPosition.Y()][newPosition.X()] = m_pObject;
 			}
 

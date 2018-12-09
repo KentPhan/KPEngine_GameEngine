@@ -18,53 +18,52 @@ namespace MonsterChaseGame
 
 		void RandomMonsterController::MoveMonsterRandomly()
 		{
+			assert(m_pObject);
+
 			// magnitude to move
 			KPVector2 newPosition = m_pObject->GetPosition() + KPVector2((rand() % 3 - 1), (rand() % 3 - 1));
 
 
 			// TODO consolidate enforce boundaries
-			// only move if would stay in boundaries
-			if (newPosition.X() < 0 || newPosition.X() > 19)
+			// Stay in position if would move outside of boundaries
+			if (newPosition.X() < 0 || newPosition.X() > 19 || newPosition.Y() < 0 || newPosition.Y() > 19)
 			{
-				newPosition.X(m_pObject->GetPosition().X());
+				return;
 			}
-			if (newPosition.Y() < 0 || newPosition.Y() > 19)
-			{
-				newPosition.Y(m_pObject->GetPosition().Y());
-			}
-
-			if ((*m_Map)[newPosition.Y()][newPosition.X()] == nullptr)
+			// Move to empty spot
+			else if ((*m_pMap)[newPosition.Y()][newPosition.X()] == nullptr)
 			{
 				// if new spot is empty. just move
-				(*m_Map)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
+				(*m_pMap)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
 
-				(*m_Map)[newPosition.Y()][newPosition.X()] = m_pObject;
+				(*m_pMap)[newPosition.Y()][newPosition.X()] = m_pObject;
 				m_pObject->SetPosition(newPosition);
 			}
-			else if ((*m_Map)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::MonsterType)
+			// Move to spot with a monster and either spawn a new monster or kill it
+			else if ((*m_pMap)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::MonsterType)
 			{
 				// If another monster. Spawn another monster or it dies.
 				int roll = rand() % 100 + 1;
 
 				if (roll > 20)
 				{
-					std::cout << " Monster Spawned!\n";
+					std::cout << m_pObject->GetName().Get() << " Spawned a Monster!\n";
 					Managers::GameManager::SpawnMonster("Spawn");
 				}
 				else
 				{
 					std::cout << " Monster Died!\n";
-					(*m_Map)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
+					(*m_pMap)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
 
-					// TODO Monster Manager Instance
-					Managers::GameManager::MonsterList->Remove(reinterpret_cast<IKPGameObjectController*>(m_pObject->GetController())); // TODO IS THIS RIGHT?
+					Managers::GameManager::ms_pMonsterList->Remove(reinterpret_cast<IKPGameObjectController*>(m_pObject->GetController())); // TODO IS THIS RIGHT?
 				}
 
 			}
-			else if ((*m_Map)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::PlayerType)
+			// Move to a spot with a player and kill the player
+			else if ((*m_pMap)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::PlayerType)
 			{
 				// If monster attacks player first, player dies and quits game
-				Managers::GameManager::endGame = true;
+				Managers::GameManager::ms_bEndGame = true;
 				std::cout << "Monster " << m_pObject->GetName().Get() << " Killed You!!!\n";
 				return;
 			}

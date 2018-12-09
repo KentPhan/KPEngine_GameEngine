@@ -3,6 +3,7 @@
 #include "conio.h"
 #include "Utils/KP_Log.h"
 #include "../../include/Controllers/RandomMonsterController.h"
+#include "../../include/Controllers/FollowMonsterController.h"
 #include "../../include/GameObjects/GameObjectType.h"
 
 
@@ -17,15 +18,16 @@ namespace MonsterChaseGame
 		using namespace KPEngine::Core::Interfaces;
 
 		// define static members
-		bool GameManager::endGame = false;
-		List<Interfaces::IKPGameObjectController*> * GameManager::MonsterList = nullptr;
-		KPGameObject* GameManager::map_[20][20] = {};
+		bool GameManager::ms_bEndGame = false;
+		List<Interfaces::IKPGameObjectController*> * GameManager::ms_pMonsterList = nullptr;
+		PlayerController* GameManager::ms_pPlayerController = nullptr;
+		KPGameObject* GameManager::ms_pMap[20][20] = {};
 
 		void GameManager::InitializeGame()
 		{
-			if(GameManager::MonsterList == nullptr)
+			if(GameManager::ms_pMonsterList == nullptr)
 			{
-				GameManager::MonsterList = new List<Interfaces::IKPGameObjectController*>();
+				GameManager::ms_pMonsterList = new List<Interfaces::IKPGameObjectController*>();
 			}
 
 			// Construct Map
@@ -34,11 +36,11 @@ namespace MonsterChaseGame
 			{
 				for (int row = 0; row < 20; row++)
 				{
-					map_[column][row] = nullptr;
+					ms_pMap[column][row] = nullptr;
 				}
 			}
 
-			endGame = false;
+			ms_bEndGame = false;
 		}
 
 
@@ -76,7 +78,6 @@ namespace MonsterChaseGame
 
 			
 			// Name and spawn monsters
-
 			for (int i = 0; i < numberInput; i++)
 			{
 				char* name_input = new char[1000];
@@ -96,10 +97,11 @@ namespace MonsterChaseGame
 			KPVector2 l_startPosition = KPVector2(0, 0);
 
 			KPGameObject *l_playerObject = new KPGameObject(name_input, l_startPosition, GameObjects::PlayerType);
-			PlayerController *l_player = new PlayerController();
-			l_player->Initialize(l_playerObject, &map_);
+			PlayerController *l_pPlayerController = new PlayerController();
+			l_pPlayerController->Initialize(l_playerObject, &ms_pMap);
+			ms_pPlayerController = l_pPlayerController;
 
-			map_[0][0] = l_playerObject;
+			ms_pMap[0][0] = l_playerObject;
 
 			delete name_input;
 
@@ -107,10 +109,10 @@ namespace MonsterChaseGame
 
 			// Main Loop
 			PrintMap();
-			MainGameLoop(l_player);
+			MainGameLoop(l_pPlayerController);
 
 
-			delete l_player;
+			delete l_pPlayerController;
 
 			DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Ended");
 		}
@@ -122,9 +124,8 @@ namespace MonsterChaseGame
 			// Main game loop
 			while (true)
 			{
-				if (endGame)
+				if (ms_bEndGame)
 					return;
-
 
 				player->GetInput();
 				player->UpdateGameObject();
@@ -136,13 +137,13 @@ namespace MonsterChaseGame
 		void GameManager::PrintMap()
 		{
 			// Print Map
-			std::cout << "Use WASD to control movement, press Q to quit, press P to print info. Touch monsters first to kill them. Get touched to die. " << MonsterList->length() << " Monsters Alive\n";
+			std::cout << "Use WASD to control movement, press Q to quit, press P to print info. MUST PRESS ENTER AFTER INPUT. Touch monsters first to kill them. Get touched to die. " << ms_pMonsterList->length() << " Monsters Alive\n";
 			for (int column = 0; column < 20; column++)
 			{
 				std::cout << "[";
 				for (int row = 0; row < 20; row++)
 				{
-					KPGameObject* position = map_[column][row];
+					KPGameObject* position = ms_pMap[column][row];
 
 					if (position == nullptr)
 						std::cout << " " << 'X' << " ";
@@ -164,16 +165,17 @@ namespace MonsterChaseGame
 
 		void GameManager::UpdateMonsters()
 		{
-			assert(MonsterList);
+			assert(ms_pMonsterList);
 
 			// For each monster. Move randomly
-			for (int i = 0; i < MonsterList->length(); i++)
+			for (int i = 0; i < ms_pMonsterList->length(); i++)
 			{
 
-				//Monster monster = MonsterList[i];
+				//Monster monster = ms_pMonsterList[i];
 
-				RandomMonsterController* monster = dynamic_cast<RandomMonsterController*>(MonsterList->Get(i));
-				monster->UpdateGameObject();
+				ms_pMonsterList->Get(i)->UpdateGameObject();
+				/*IKPGameObjectController* monster = ms_pMonsterList->Get(i);
+				monster->UpdateGameObject();*/
 			}
 		}
 
@@ -183,7 +185,7 @@ namespace MonsterChaseGame
 			assert(name);
 
 			// don't spawn over limit
-			if (MonsterList->length() >= (monster_limit_))
+			if (ms_pMonsterList->length() >= (monster_limit_))
 				return;
 
 			// Generate empty position
@@ -193,7 +195,7 @@ namespace MonsterChaseGame
 			while (!positionFound)
 			{
 				// Check spot is empty;
-				if (map_[newY][newX] == nullptr)
+				if (ms_pMap[newY][newX] == nullptr)
 				{
 					break;
 				}
@@ -207,12 +209,15 @@ namespace MonsterChaseGame
 
 
 			KPGameObject* l_pObjMonster = new KPGameObject(name, newPosition, GameObjects::MonsterType);
-			map_[newY][newX] = l_pObjMonster;
+			ms_pMap[newY][newX] = l_pObjMonster;
 
 
-			RandomMonsterController* l_pCtrMonster = new RandomMonsterController();
-			l_pCtrMonster->Initialize(l_pObjMonster, &map_);
-			MonsterList->Add(l_pCtrMonster);
+			/*RandomMonsterController* l_pCtrMonster = new RandomMonsterController();*/
+			
+			FollowMonsterController* l_pCtrMonster = new FollowMonsterController();
+
+			l_pCtrMonster->Initialize(l_pObjMonster, &ms_pMap);
+			ms_pMonsterList->Add(l_pCtrMonster);
 
 			// TODO HANDLE THIS:
 			//newMonster->empty = false;

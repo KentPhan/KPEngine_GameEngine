@@ -43,6 +43,10 @@ namespace MonsterChaseGame
 			{
 				return m_pObject->GetPosition();
 			}
+			inline KPGameObject* GetPossessedObject() const
+			{
+				return m_pObject;
+			}
 		private:
 			void MovePlayer(const KPVector2 movement);
 			KPVector2 m_Direction;
