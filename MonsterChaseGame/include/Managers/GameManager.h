@@ -3,8 +3,7 @@
 #include "../../../KPEngine/include/Utils/List.h"
 #include "Core/Classes/KPGameObject.h"
 #include "../Controllers/PlayerController.h"
-
-
+#include "../Controllers/RandomMonsterController.h"
 
 
 namespace MonsterChaseGame

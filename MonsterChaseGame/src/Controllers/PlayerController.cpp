@@ -21,7 +21,6 @@ namespace MonsterChaseGame
 		void PlayerController::GetInput()
 		{
 			char input = _getch();
-			_getch();
 
 			switch (input)
 			{
@@ -47,7 +46,7 @@ namespace MonsterChaseGame
 					Managers::GameManager::MonsterList->Get(i)->PrintInfo();
 				}
 				PrintInfo();
-				m_Direction = KPVector2(0, 0);
+				m_Direction = KPVector2(0,0);
 				break;
 			default:
 				if (input)
