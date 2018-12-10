@@ -89,11 +89,10 @@ namespace MonsterChaseGame
 			}
 			else if ((*m_pMap)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::MonsterType)
 			{
-				// TODO Get reference to Monster List Instance
 				// kill monster
 				std::cout << " Monster Slain!\n";
 				KPGameObject* l_toKill = (*m_pMap)[newPosition.Y()][newPosition.X()];
-				Managers::GameManager::ms_pMonsterList->Remove( reinterpret_cast<IKPGameObjectController*>(l_toKill->GetController())); // TODO IS THIS RIGHT?
+				Managers::GameManager::ms_pMonsterList->Remove(l_toKill->GetController()); 
 				(*m_pMap)[newPosition.Y()][newPosition.X()] = m_pObject;
 			}
 

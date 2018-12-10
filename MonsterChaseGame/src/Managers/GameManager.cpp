@@ -211,13 +211,20 @@ namespace MonsterChaseGame
 			KPGameObject* l_pObjMonster = new KPGameObject(name, newPosition, GameObjects::MonsterType);
 			ms_pMap[newY][newX] = l_pObjMonster;
 
-
-			/*RandomMonsterController* l_pCtrMonster = new RandomMonsterController();*/
-			
-			FollowMonsterController* l_pCtrMonster = new FollowMonsterController();
-			l_pCtrMonster->Initialize(l_pObjMonster, &ms_pMap);
-
-			ms_pMonsterList->Add(l_pCtrMonster);
+			// 20% chance to spawn a follow monster instead
+			int l_randMonsterType = rand() % 100 + 1;
+			if(l_randMonsterType > 20)
+			{
+				RandomMonsterController* l_pCtrMonster = new RandomMonsterController();
+				l_pCtrMonster->Initialize(l_pObjMonster, &ms_pMap);
+				ms_pMonsterList->Add(l_pCtrMonster);
+			}
+			else
+			{
+				FollowMonsterController* l_pCtrMonster = new FollowMonsterController();
+				l_pCtrMonster->Initialize(l_pObjMonster, &ms_pMap);
+				ms_pMonsterList->Add(l_pCtrMonster);
+			}
 		}
 	}
 }
