@@ -175,7 +175,7 @@ namespace MonsterChaseGame
 
 				ms_pMonsterList->Get(i)->UpdateGameObject();
 				/*IKPGameObjectController* monster = ms_pMonsterList->Get(i);
-				monster->UpdateGameObject();*/
+				monster->UpdateGameObject();TODO Why can't I do this?*/
 			}
 		}
 
@@ -215,13 +215,9 @@ namespace MonsterChaseGame
 			/*RandomMonsterController* l_pCtrMonster = new RandomMonsterController();*/
 			
 			FollowMonsterController* l_pCtrMonster = new FollowMonsterController();
-
 			l_pCtrMonster->Initialize(l_pObjMonster, &ms_pMap);
-			ms_pMonsterList->Add(l_pCtrMonster);
 
-			// TODO HANDLE THIS:
-			//newMonster->empty = false;
-			//newMonster->Type = MonsterType;
+			ms_pMonsterList->Add(l_pCtrMonster);
 		}
 	}
 }

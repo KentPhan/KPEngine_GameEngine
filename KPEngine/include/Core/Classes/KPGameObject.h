@@ -5,7 +5,16 @@
 
 using namespace KPEngine::Utils;
 
-class IKPGameObjectController;
+namespace KPEngine
+{
+	namespace Core
+	{
+		namespace Interfaces
+		{
+			class IKPGameObjectController;
+		}
+	}
+}
 
 namespace KPEngine
 {
@@ -50,7 +59,7 @@ namespace KPEngine
 			{
 				return m_Tag;
 			}
-			inline IKPGameObjectController* GetController() const
+			inline Interfaces::IKPGameObjectController* GetController() const
 			{
 				return m_pController;
 			}
@@ -76,16 +85,14 @@ namespace KPEngine
 			{
 				m_Tag = tag;
 			}
-			inline void SetController(IKPGameObjectController* i_pController)
-			{
-				m_pController = i_pController;
-			}
+			void SetController(Interfaces::IKPGameObjectController* i_pController);
 			
 			
 		private:
+			Interfaces::IKPGameObjectController* m_pController;
 			KPVector2 m_Position;
 			KPString m_Name;
-			IKPGameObjectController* m_pController;
+			
 			int m_Tag;
 		};
 	}

@@ -164,6 +164,7 @@
     <ClInclude Include="include\Core\Classes\KPMap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Classes\KPGameObject.cpp" />
     <ClCompile Include="src\Core\Classes\KPMap.cpp" />
     <ClCompile Include="src\Core\HeapManager\HeapManagerProxy.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPHeapManager.cpp" />

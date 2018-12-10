@@ -1,5 +1,5 @@
 #pragma once
-#include "Core/Classes/KPGameObject.h"
+#include "../../Core/Classes/KPGameObject.h"
 
 
 namespace KPEngine

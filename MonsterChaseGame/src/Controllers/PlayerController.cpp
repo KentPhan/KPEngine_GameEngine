@@ -2,6 +2,8 @@
 #include <conio.h>
 #include "../../include/Managers/GameManager.h"
 #include "../../include/GameObjects/GameObjectType.h"
+#include "Utils/KPLogType.h"
+#include "Utils/KP_Log.h"
 
 namespace MonsterChaseGame
 {

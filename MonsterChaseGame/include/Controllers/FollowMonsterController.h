@@ -24,6 +24,7 @@ namespace MonsterChaseGame
 			{
 				m_pObject = i_pObject;
 				m_pMap = i_ppMap;
+				m_pObject->SetController(this);
 			}
 			void UpdateGameObject() override;
 

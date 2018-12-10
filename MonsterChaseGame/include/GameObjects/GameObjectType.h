@@ -7,7 +7,7 @@ namespace MonsterChaseGame
 		enum GameObjectType
 		{
 			PlayerType,
-			MonsterType
+			MonsterType,
 		};
 	}
 }

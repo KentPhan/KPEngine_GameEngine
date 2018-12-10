@@ -76,7 +76,6 @@ namespace MonsterChaseGame
 					std::cout << " Monster Died!\n";
 					(*m_pMap)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
 
-					// TODO Monster Manager Instance
 					Managers::GameManager::ms_pMonsterList->Remove(reinterpret_cast<IKPGameObjectController*>(m_pObject->GetController())); // TODO IS THIS RIGHT?
 				}
 
