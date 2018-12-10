@@ -30,6 +30,7 @@ bool HeapManager_UnitTest()
 
 	assert(pHeapManager);
 
+
 	if (pHeapManager == nullptr)
 		return false;
 

@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Classes\KPGameObject.h" />
+    <ClInclude Include="include\Core\HeapManager\HeapOperatorOverloads.h" />
     <ClInclude Include="include\Core\HeapManager\KPHeapManagerProxy.h" />
     <ClInclude Include="include\Core\HeapManager\KPHeapManager.h" />
     <ClInclude Include="include\Core\Interfaces\IKPGameObjectController.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="src\Core\Classes\KPGameObject.cpp" />
     <ClCompile Include="src\Core\Classes\KPMap.cpp" />
     <ClCompile Include="src\Core\HeapManager\HeapManagerProxy.cpp" />
+    <ClCompile Include="src\Core\HeapManager\HeapOperatorOverloads.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPHeapManager.cpp" />
     <ClCompile Include="src\KPEngine-init.cpp" />
     <ClCompile Include="src\Utils\KPString.cpp" />

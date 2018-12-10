@@ -5,6 +5,8 @@
 #include "../../include/Controllers/RandomMonsterController.h"
 #include "../../include/Controllers/FollowMonsterController.h"
 #include "../../include/GameObjects/GameObjectType.h"
+#include "Core/HeapManager/HeapOperatorOverloads.h"
+
 
 
 using namespace MonsterChaseGame::Controllers;
