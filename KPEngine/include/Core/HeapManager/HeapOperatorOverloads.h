@@ -20,16 +20,3 @@ void * operator new(size_t i_size, dummy_parameter, void * i_ptr); // Placement 
 void * operator new(size_t i_size, KP_Alignment i_alignment); // New Extension
 void operator delete(void* i_ptr, KP_Alignment i_alignment); // Delete Extension
 
-//{
-//	
-//};
-//{
-//	
-//}
-// Placement New
-
-
-
-//TODO Implement extension new
-//TODO Implement extension delete
-
