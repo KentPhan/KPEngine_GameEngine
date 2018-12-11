@@ -1,4 +1,4 @@
-#include "../../../include/Core/HeapManager/KPHeapManager.h"
+#include "../../../include/Core/HeapManager/KPDynamicHeapManager.h"
 #include <iostream>
 #include <cassert>
 #include <experimental/filesystem>
@@ -10,7 +10,7 @@ namespace KPEngine
 		namespace HeapManager
 		{
 			
-			KPHeapManager* KPHeapManager::create(void* i_pMemory, size_t i_sizeMemory)
+			KPDynamicHeapManager* KPDynamicHeapManager::create(void* i_pMemory, size_t i_sizeMemory)
 			{
 				assert(i_pMemory);
 				const size_t c_minimumBlockSize = 128; // Each block will be at least 128 bytes in size. Reason being to account for up to 64 byte alignment
@@ -18,17 +18,17 @@ namespace KPEngine
 				const uint8_t c_blockDescriptorValidKey = 0xBC;
 
 				#if defined(_DEBUG)
-				std::cout << "size of HeapManager:" << sizeof(KPHeapManager) << " bytes" << std::endl;
+				std::cout << "size of HeapManager:" << sizeof(KPDynamicHeapManager) << " bytes" << std::endl;
 				std::cout << "size of BlockDescriptor:"  << sizeof(BlockDescriptor) << " bytes" << std::endl;
 				#endif
 
 				// TODO: Implement
 				// Initialize HeapManager properties and crap
-				KPHeapManager * manager = static_cast<KPHeapManager *>(i_pMemory);
+				KPDynamicHeapManager * manager = static_cast<KPDynamicHeapManager *>(i_pMemory);
 				// TODO align this to 4 bytes
 				manager->m_InternalHeapStart  = (void*) (manager + 1);
 				// TODO align this to 4 byte size
-				manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPHeapManager);
+				manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPDynamicHeapManager);
 
 				// Define initial block size
 				manager->UPPER_LIMIT = manager->m_InternalTotalSpace - 64 - sizeof(BlockDescriptor);
@@ -72,18 +72,18 @@ namespace KPEngine
 				return manager;
 			}
 
-			void KPHeapManager::destroy()
+			void KPDynamicHeapManager::destroy()
 			{
 				// TODO: Get details on what this is supposed to do
 				return;
 			}
 
-			void* KPHeapManager::_alloc(size_t i_size)
+			void* KPDynamicHeapManager::_alloc(size_t i_size)
 			{
 				return _alloc(i_size, 4); // Call alignment allocate with 4 byte alignment
 			}
 
-			void* KPHeapManager::_alloc(size_t i_size, unsigned i_alignment)
+			void* KPDynamicHeapManager::_alloc(size_t i_size, unsigned i_alignment)
 			{
 
 				if(i_size > this->UPPER_LIMIT)
@@ -201,7 +201,7 @@ namespace KPEngine
 				return nullptr;
 			}
 
-			bool KPHeapManager::_free(void* i_ptr)
+			bool KPDynamicHeapManager::_free(void* i_ptr)
 			{
 				assert(i_ptr);
 				assert(Contains(i_ptr));
@@ -216,7 +216,7 @@ namespace KPEngine
 				return true;
 			}
 
-			void KPHeapManager::collect()
+			void KPDynamicHeapManager::collect()
 			{
 				// TODO Currently only merges blocks. Never makes blocks smaller. Need to adapt this
 				// loop through internal heap and merge abuding blocks
@@ -282,7 +282,7 @@ namespace KPEngine
 				}
 			}
 
-			bool KPHeapManager::Contains(void* i_ptr) const
+			bool KPDynamicHeapManager::Contains(void* i_ptr) const
 			{
 				assert(i_ptr);
 
@@ -290,7 +290,7 @@ namespace KPEngine
 				return (descriptor != nullptr);
 			}
 
-			bool KPHeapManager::IsAllocated(void* i_ptr) const
+			bool KPDynamicHeapManager::IsAllocated(void* i_ptr) const
 			{
 				assert(i_ptr);
 				assert(Contains(i_ptr));
@@ -298,7 +298,7 @@ namespace KPEngine
 				return !(m_GetDescriptor(i_ptr)->m_free);
 			}
 
-			size_t KPHeapManager::getLargestFreeBlock() const
+			size_t KPDynamicHeapManager::getLargestFreeBlock() const
 			{
 				// TODO: Implement
 				std::cout << "NOT YET IMPLEMENTED getLargestFreeBlock" << std::endl;
@@ -306,7 +306,7 @@ namespace KPEngine
 				return -1;
 			}
 
-			size_t KPHeapManager::getTotalFreeMemory() const
+			size_t KPDynamicHeapManager::getTotalFreeMemory() const
 			{
 				// TODO: Implement
 				std::cout << "NOT YET IMPLEMENTED getTotalFreeMemory" << std::endl;
@@ -314,7 +314,7 @@ namespace KPEngine
 				return -1;
 			}
 
-			void KPHeapManager::ShowOutstandingAllocations() const
+			void KPDynamicHeapManager::ShowOutstandingAllocations() const
 			{
 				int count = 0;
 
@@ -349,7 +349,7 @@ namespace KPEngine
 				return;
 			}
 
-			void KPHeapManager::ShowFreeBlocks() const
+			void KPDynamicHeapManager::ShowFreeBlocks() const
 			{
 				int count = 0;
 
@@ -384,7 +384,7 @@ namespace KPEngine
 				return;
 			}
 
-			bool KPHeapManager::m_ValidateDescriptor(void* i_pMemory) const
+			bool KPDynamicHeapManager::m_ValidateDescriptor(void* i_pMemory) const
 			{
 				assert(i_pMemory);
 
@@ -393,7 +393,7 @@ namespace KPEngine
 				return check;
 			}
 
-			BlockDescriptor* KPHeapManager::m_GetDescriptor(void* i_pMemory) const
+			BlockDescriptor* KPDynamicHeapManager::m_GetDescriptor(void* i_pMemory) const
 			{
 				// go in the reverse direction until a valid descriptor is found and modify descriptor to mark the block as not free
 				uint8_t* l_potentialDescriptor = static_cast<uint8_t*>(i_pMemory);

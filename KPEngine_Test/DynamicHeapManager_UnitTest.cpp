@@ -1,17 +1,17 @@
-#include "pch.h"
+
 #include <Windows.h>
 
 #include <cassert>
 #include <algorithm>
 #include <vector>
-#include "Core/HeapManager/KPHeapManager.h"
+#include "Core/HeapManager/KPDynamicHeapManager.h"
 #include "Core/HeapManager/KPHeapManagerProxy.h"
 
 #define SUPPORTS_ALIGNMENT
 #define SUPPORTS_SHOWFREEBLOCKS
 #define SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
 
-bool HeapManager_UnitTest()
+bool DynamicHeapManager_UnitTest()
 {
 	using namespace KPEngine::Core::HeapManager;
 
@@ -25,7 +25,7 @@ bool HeapManager_UnitTest()
 	assert(pHeapMemory);
 
 	// Create a heap manager for my test heap.
-	KPHeapManager * pHeapManager = CreateHeapManager(pHeapMemory, sizeHeap);
+	KPDynamicHeapManager * pHeapManager = CreateHeapManager(pHeapMemory, sizeHeap);
 
 
 	assert(pHeapManager);

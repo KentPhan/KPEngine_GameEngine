@@ -153,7 +153,8 @@
     <ClInclude Include="include\Core\Classes\KPGameObject.h" />
     <ClInclude Include="include\Core\HeapManager\HeapOperatorOverloads.h" />
     <ClInclude Include="include\Core\HeapManager\KPHeapManagerProxy.h" />
-    <ClInclude Include="include\Core\HeapManager\KPHeapManager.h" />
+    <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManager.h" />
+    <ClInclude Include="include\Core\HeapManager\MemorySystem.h" />
     <ClInclude Include="include\Core\Interfaces\IKPGameObjectController.h" />
     <ClInclude Include="include\KPEngine-init.h" />
     <ClInclude Include="include\Utils\KPLogType.h" />
@@ -169,7 +170,9 @@
     <ClCompile Include="src\Core\Classes\KPMap.cpp" />
     <ClCompile Include="src\Core\HeapManager\HeapManagerProxy.cpp" />
     <ClCompile Include="src\Core\HeapManager\HeapOperatorOverloads.cpp" />
-    <ClCompile Include="src\Core\HeapManager\KPHeapManager.cpp" />
+    <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManager.cpp" />
+    <ClCompile Include="src\Core\HeapManager\Allocators.cpp" />
+    <ClCompile Include="src\Core\HeapManager\MemorySystem.cpp" />
     <ClCompile Include="src\KPEngine-init.cpp" />
     <ClCompile Include="src\Utils\KPString.cpp" />
     <ClCompile Include="src\Utils\KPVector2.cpp" />

@@ -1,5 +1,5 @@
 #pragma once
-#include "KPHeapManager.h"
+#include "KPDynamicHeapManager.h"
 
 enum dummy_parameter {};
 

@@ -26,10 +26,13 @@
     <ClCompile Include="KPEngine_Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HeapManager_UnitTest.cpp">
+    <ClCompile Include="KPVector2_UnitTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KPVector2_UnitTest.cpp">
+    <ClCompile Include="FixedHeapManager_UnitTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicHeapManager_UnitTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

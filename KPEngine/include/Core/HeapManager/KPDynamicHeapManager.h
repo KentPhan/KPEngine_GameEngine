@@ -16,10 +16,10 @@ namespace KPEngine
 			};
 
 
-			class KPHeapManager
+			class KPDynamicHeapManager
 			{
 			public:
-				static KPHeapManager* create(void * i_pMemory,size_t i_sizeMemory);
+				static KPDynamicHeapManager* create(void * i_pMemory,size_t i_sizeMemory);
 
 				void destroy();
 
