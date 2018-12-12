@@ -27,16 +27,10 @@
     <ClCompile Include="src\Utils\KP_Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\HeapManager\HeapManagerProxy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Classes\KPMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Classes\KPGameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\HeapManager\HeapOperatorOverloads.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\HeapManager\Allocators.cpp">
@@ -46,6 +40,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManagerProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\HeapManager\KPDynamicHeapAllocators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,9 +68,6 @@
     <ClInclude Include="include\Utils\KPLogType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\HeapManager\KPHeapManagerProxy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Utils\KPVector3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -83,13 +80,16 @@
     <ClInclude Include="include\Core\Classes\KPMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Core\HeapManager\HeapOperatorOverloads.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Core\HeapManager\MemorySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManagerProxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\HeapManager\KPDynamicHeapAllocators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

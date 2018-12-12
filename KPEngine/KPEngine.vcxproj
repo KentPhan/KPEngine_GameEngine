@@ -151,8 +151,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Core\Classes\KPGameObject.h" />
-    <ClInclude Include="include\Core\HeapManager\HeapOperatorOverloads.h" />
-    <ClInclude Include="include\Core\HeapManager\KPHeapManagerProxy.h" />
+    <ClInclude Include="include\Core\HeapManager\KPDynamicHeapAllocators.h" />
+    <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManagerProxy.h" />
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManager.h" />
     <ClInclude Include="include\Core\HeapManager\MemorySystem.h" />
     <ClInclude Include="include\Core\Interfaces\IKPGameObjectController.h" />
@@ -168,8 +168,8 @@
   <ItemGroup>
     <ClCompile Include="src\Core\Classes\KPGameObject.cpp" />
     <ClCompile Include="src\Core\Classes\KPMap.cpp" />
-    <ClCompile Include="src\Core\HeapManager\HeapManagerProxy.cpp" />
-    <ClCompile Include="src\Core\HeapManager\HeapOperatorOverloads.cpp" />
+    <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManagerProxy.cpp" />
+    <ClCompile Include="src\Core\HeapManager\KPDynamicHeapAllocators.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManager.cpp" />
     <ClCompile Include="src\Core\HeapManager\Allocators.cpp" />
     <ClCompile Include="src\Core\HeapManager\MemorySystem.cpp" />

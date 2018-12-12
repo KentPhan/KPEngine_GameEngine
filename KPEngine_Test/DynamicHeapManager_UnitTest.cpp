@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include "Core/HeapManager/KPDynamicHeapManager.h"
-#include "Core/HeapManager/KPHeapManagerProxy.h"
+#include "Core/HeapManager/KPDynamicHeapManagerProxy.h"
 
 #define SUPPORTS_ALIGNMENT
 #define SUPPORTS_SHOWFREEBLOCKS
