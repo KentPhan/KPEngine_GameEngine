@@ -154,6 +154,7 @@
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapAllocators.h" />
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManagerProxy.h" />
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManager.h" />
+    <ClInclude Include="include\Core\HeapManager\KPFixedHeapAllocators.h" />
     <ClInclude Include="include\Core\HeapManager\MemorySystem.h" />
     <ClInclude Include="include\Core\Interfaces\IKPGameObjectController.h" />
     <ClInclude Include="include\KPEngine-init.h" />
@@ -171,7 +172,7 @@
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManagerProxy.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapAllocators.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManager.cpp" />
-    <ClCompile Include="src\Core\HeapManager\Allocators.cpp" />
+    <ClCompile Include="src\Core\HeapManager\KPFixedHeapAllocators.cpp" />
     <ClCompile Include="src\Core\HeapManager\MemorySystem.cpp" />
     <ClCompile Include="src\KPEngine-init.cpp" />
     <ClCompile Include="src\Utils\KPString.cpp" />

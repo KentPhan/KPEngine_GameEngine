@@ -10,9 +10,9 @@ int main()
 {
 
 	/*KPEngine::Initialize();*/
-	DynamicHeapManager_UnitTest();
 	/*KPVector2_UnitTest();*/
-	/*FixedHeapManager_UnitTest();*/
+	/*DynamicHeapManager_UnitTest();*/
+	FixedHeapManager_UnitTest();
 	
 
 	std::getchar();
