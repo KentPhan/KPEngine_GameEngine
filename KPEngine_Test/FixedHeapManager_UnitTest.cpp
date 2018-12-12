@@ -15,7 +15,7 @@
 
 bool MemorySystem_UnitTest();
 
-int FixedHeapManager_UnitTest(int i_arg, char **)
+bool FixedHeapManager_UnitTest()
 {
 	const size_t 		sizeHeap = 1024 * 1024;
 

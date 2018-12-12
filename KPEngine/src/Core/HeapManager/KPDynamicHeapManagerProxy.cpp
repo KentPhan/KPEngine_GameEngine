@@ -14,93 +14,96 @@ namespace KPEngine
 	{
 		namespace HeapManager
 		{
-			KPDynamicHeapManager * CreateHeapManager(void * i_pMemory, size_t i_sizeMemory)
+			namespace Dynamic
 			{
-				return KPDynamicHeapManager::create(i_pMemory, i_sizeMemory);
-			}
+				KPDynamicHeapManager * CreateHeapManager(void * i_pMemory, size_t i_sizeMemory)
+				{
+					return KPDynamicHeapManager::create(i_pMemory, i_sizeMemory);
+				}
 
-			void Destroy(KPDynamicHeapManager * i_pManager)
-			{
-				assert(i_pManager);
+				void Destroy(KPDynamicHeapManager * i_pManager)
+				{
+					assert(i_pManager);
 
-				i_pManager->destroy();
-			}
-
-			
-			void * alloc(KPDynamicHeapManager * i_pManager, size_t i_size)
-			{
-				assert(i_pManager);
-				return i_pManager->_alloc(i_size);
-			}
-
-			void * alloc(KPDynamicHeapManager * i_pManager, size_t i_size, unsigned int i_alignment)
-			{
-				assert(i_pManager);
-
-				return i_pManager->_alloc(i_size, i_alignment);
-			}
-			
-
-			bool free(KPDynamicHeapManager * i_pManager, void * i_ptr)
-			{
-				assert(i_pManager);
-
-				return i_pManager->_free(i_ptr);
-			}
-
-			void Collect(KPDynamicHeapManager * i_pManager)
-			{
-				assert(i_pManager);
-
-				i_pManager->collect();
-			}
+					i_pManager->destroy();
+				}
 
 
-			bool Contains(const KPDynamicHeapManager * i_pManager, void * i_ptr)
-			{
-				assert(i_pManager);
+				void * alloc(KPDynamicHeapManager * i_pManager, size_t i_size)
+				{
+					assert(i_pManager);
+					return i_pManager->_alloc(i_size);
+				}
 
-				return i_pManager->Contains(i_ptr);
-			}
+				void * alloc(KPDynamicHeapManager * i_pManager, size_t i_size, unsigned int i_alignment)
+				{
+					assert(i_pManager);
 
-			bool IsAllocated(const KPDynamicHeapManager * i_pManager, void * i_ptr)
-			{
-				assert(i_pManager);
+					return i_pManager->_alloc(i_size, i_alignment);
+				}
 
-				return i_pManager->IsAllocated(i_ptr);
-			}
 
-			size_t GetLargestFreeBlock(const KPDynamicHeapManager * i_pManager)
-			{
-				assert(i_pManager);
+				bool free(KPDynamicHeapManager * i_pManager, void * i_ptr)
+				{
+					assert(i_pManager);
 
-				return i_pManager->getLargestFreeBlock();
-			}
+					return i_pManager->_free(i_ptr);
+				}
 
-			size_t GetTotalFreeMemory(const KPDynamicHeapManager * i_pManager)
-			{
-				assert(i_pManager);
+				void Collect(KPDynamicHeapManager * i_pManager)
+				{
+					assert(i_pManager);
 
-				return i_pManager->getTotalFreeMemory();
-			}
+					i_pManager->collect();
+				}
 
-			void ShowFreeBlocks(const KPDynamicHeapManager * i_pManager)
-			{
-				assert(i_pManager);
 
-				i_pManager->ShowFreeBlocks();
-			}
+				bool Contains(const KPDynamicHeapManager * i_pManager, void * i_ptr)
+				{
+					assert(i_pManager);
 
-			void ShowOutstandingAllocations(const KPDynamicHeapManager * i_pManager)
-			{
-				assert(i_pManager);
+					return i_pManager->Contains(i_ptr);
+				}
 
-				#ifdef __TRACK_ALLOCATIONS
-				i_pManager->ShowOutstandingAllocations();
-				#else
-				printf("HeapManager compiled without __TRACK_ALLOCATIONS defined.\n");
-				#endif
+				bool IsAllocated(const KPDynamicHeapManager * i_pManager, void * i_ptr)
+				{
+					assert(i_pManager);
 
+					return i_pManager->IsAllocated(i_ptr);
+				}
+
+				size_t GetLargestFreeBlock(const KPDynamicHeapManager * i_pManager)
+				{
+					assert(i_pManager);
+
+					return i_pManager->getLargestFreeBlock();
+				}
+
+				size_t GetTotalFreeMemory(const KPDynamicHeapManager * i_pManager)
+				{
+					assert(i_pManager);
+
+					return i_pManager->getTotalFreeMemory();
+				}
+
+				void ShowFreeBlocks(const KPDynamicHeapManager * i_pManager)
+				{
+					assert(i_pManager);
+
+					i_pManager->ShowFreeBlocks();
+				}
+
+				void ShowOutstandingAllocations(const KPDynamicHeapManager * i_pManager)
+				{
+					assert(i_pManager);
+
+#ifdef __TRACK_ALLOCATIONS
+					i_pManager->ShowOutstandingAllocations();
+#else
+					printf("HeapManager compiled without __TRACK_ALLOCATIONS defined.\n");
+#endif
+
+				}
 			}
 		}
 	}

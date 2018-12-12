@@ -7,7 +7,7 @@
 #include <Windows.h>
 #include <cassert>
 
-KPEngine::Core::HeapManager::KPDynamicHeapManager* pUnderlyingHeap;
+KPEngine::Core::HeapManager::Dynamic::KPDynamicHeapManager* pUnderlyingHeap;
 
 void * operator new(size_t i_size)
 {
@@ -17,7 +17,7 @@ void * operator new(size_t i_size)
 	{
 		const size_t sizeHeap = 1024 * 1024;
 		void * pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
-		pUnderlyingHeap = KPEngine::Core::HeapManager::KPDynamicHeapManager::create(pHeapMemory, sizeHeap);
+		pUnderlyingHeap = KPEngine::Core::HeapManager::Dynamic::KPDynamicHeapManager::create(pHeapMemory, sizeHeap);
 	}
 
 	
@@ -43,7 +43,7 @@ void* operator new [](size_t i_size)
 	{
 		const size_t sizeHeap = 1024 * 1024;
 		void * pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
-		pUnderlyingHeap = KPEngine::Core::HeapManager::KPDynamicHeapManager::create(pHeapMemory, sizeHeap);
+		pUnderlyingHeap = KPEngine::Core::HeapManager::Dynamic::KPDynamicHeapManager::create(pHeapMemory, sizeHeap);
 	}
 
 
@@ -73,7 +73,7 @@ void* operator new(size_t i_size, KP_Alignment i_alignment)
 	{
 		const size_t sizeHeap = 1024 * 1024;
 		void * pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
-		pUnderlyingHeap = KPEngine::Core::HeapManager::KPDynamicHeapManager::create(pHeapMemory, sizeHeap);
+		pUnderlyingHeap = KPEngine::Core::HeapManager::Dynamic::KPDynamicHeapManager::create(pHeapMemory, sizeHeap);
 	}
 
 	size_t l_chosenAlignment = 4;

@@ -13,7 +13,7 @@
 
 bool DynamicHeapManager_UnitTest()
 {
-	using namespace KPEngine::Core::HeapManager;
+	using namespace KPEngine::Core::HeapManager::Dynamic;
 
 	
 	
