@@ -48,6 +48,12 @@
     <ClCompile Include="src\Core\HeapManager\KPFixedHeapAllocators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\HeapManager\KPFixedHeapManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\HeapManager\BitArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Utils\List.h">
@@ -93,6 +99,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Core\HeapManager\KPFixedHeapAllocators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\HeapManager\KPFixedHeapManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Core\HeapManager\BitArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

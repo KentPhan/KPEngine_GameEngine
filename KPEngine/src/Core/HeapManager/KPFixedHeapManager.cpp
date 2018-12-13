@@ -1,7 +1,6 @@
-#include "../../../include/Core/HeapManager/KPDynamicHeapManager.h"
-#include <iostream>
+#include "../../../include/Core/HeapManager/KPFixedHeapManager.h"
 #include <cassert>
-#include <experimental/filesystem>
+#include <iostream>
 
 namespace KPEngine
 {
@@ -9,83 +8,103 @@ namespace KPEngine
 	{
 		namespace HeapManager
 		{
-			namespace Dynamic
+			namespace Fixed
 			{
-				KPDynamicHeapManager* KPDynamicHeapManager::create(void* i_pMemory, size_t i_sizeMemory)
+
+
+
+				KPFixedHeapManager* KPFixedHeapManager::Create(void* i_pMemory, size_t i_sizeMemory, FixedByteSizeConfiguration i_byteConfig, int i_minimumBlocksRequired)
 				{
 					assert(i_pMemory);
-					const size_t c_minimumBlockSize = 128; // Each block will be at least 128 bytes in size. Reason being to account for up to 64 byte alignment
-					const size_t c_initialBlockSize = 512; // Initial block sizes
-					const uint8_t c_blockDescriptorValidKey = 0xBC;
+					
+
+					// Set initial fixed block size
+					size_t c_BlockByteSize = 512; // Initial block sizes
+					switch(i_byteConfig)
+					{
+						case Size_32:
+							c_BlockByteSize = 32;
+							break;	
+						case Size_64:
+							c_BlockByteSize = 64;
+							break;
+						case Size_128: 
+							c_BlockByteSize = 128;
+							break;
+						case Size_256: 
+							c_BlockByteSize = 256;
+							break;
+						case Size_512: 
+							c_BlockByteSize = 512;
+							break;
+						case Size_1024: 
+							c_BlockByteSize = 1024;
+							break;
+					default: ;
+						assert(false);
+					}
 
 #if defined(_DEBUG)
-					std::cout << "size of HeapManager:" << sizeof(KPDynamicHeapManager) << " bytes" << std::endl;
-					std::cout << "size of BlockDescriptor:" << sizeof(BlockDescriptor) << " bytes" << std::endl;
+					std::cout << "size of Fixed HeapManager:" << sizeof(KPFixedHeapManager) << " bytes" << std::endl;
+					std::cout << "size of Fixed Block Size:" << c_BlockByteSize << " bytes" << std::endl;
 #endif
 
-					// TODO: Implement
 					// Initialize HeapManager properties and crap
-					KPDynamicHeapManager * manager = static_cast<KPDynamicHeapManager *>(i_pMemory);
+					KPFixedHeapManager * manager = static_cast<KPFixedHeapManager *>(i_pMemory);
 					// TODO align this to 4 bytes
-					manager->m_InternalHeapStart = (void*)(manager + 1);
-					// TODO align this to 4 byte size
-					manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPDynamicHeapManager);
+					manager->m_InternalHeapStart = (manager + 1);
 
-					// Define initial block size
-					manager->UPPER_LIMIT = manager->m_InternalTotalSpace - 64 - sizeof(BlockDescriptor);
-					manager->MINIMUM_BLOCK_SIZE = c_minimumBlockSize;
-					manager->LARGEST_BLOCK_SIZE = c_initialBlockSize;
-					manager->REQUESTED_SIZE = c_initialBlockSize;
+					// TODO Initialize BitArray here
+
+					manager->m_pBitArray
+
+
+					// TODO align this to 4 byte size
+					manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPFixedHeapManager);
 
 					// Calculate total number of blocks that we can fit
-					const size_t numberOfTotalBlocks = manager->m_InternalTotalSpace / (c_initialBlockSize + sizeof(BlockDescriptor));
+					const size_t numberOfTotalBlocks = manager->m_InternalTotalSpace / c_BlockByteSize;
 
 #if defined(_DEBUG)
 					std::cout << "Initial number of blocks allocated:" << numberOfTotalBlocks << std::endl;
 #endif 
-
-					/*std::cout << "KPManagerPointer" << manager << std::endl;
-					std::cout << "FirstHeapBlockPointer" << manager->m_InternalHeapStart << std::endl;*/
-
-
-					// assign key to determining if descriptors are valid
-					manager->m_validDescriptorKey = c_blockDescriptorValidKey;
-
-
+					if(i_minimumBlocksRequired > numberOfTotalBlocks)
+					{
+						std::cout << "Not enough memory given to accommodate minimum blocks required." << std::endl;
+						return nullptr;
+					}
 
 					// initialize blocks with pointer arithmetic
 					uint8_t* block = static_cast<uint8_t*>(manager->m_InternalHeapStart);
 					for (int i = 0; i < numberOfTotalBlocks; i++)
 					{
-						// initialize block descriptor at the start of the block
-						reinterpret_cast<BlockDescriptor*>(block)->m_sizeBlock = c_initialBlockSize;
-						reinterpret_cast<BlockDescriptor*>(block)->m_free = true;
-						reinterpret_cast<BlockDescriptor*>(block)->m_validKey = manager->m_validDescriptorKey;
+						// TODO could define block parts here. Remember to also update InternalHeapEnd below.
+						// Currently does nothing but loop through
 
 						// move block pointer to next block
-						block = block + (sizeof(BlockDescriptor) + c_initialBlockSize);
+						block = block + (c_BlockByteSize);
 					}
 
 					// Save this pointer as the end of our internal heap
-					// TODO Bug found here. Not actual end of Heap. Need to add (sizeof(BlockDescriptor) + c_initialBlockSize). Add and test later
-					manager->m_InternalHeapEnd = block;
+					manager->m_InternalHeapEnd = block + (c_BlockByteSize);
 
+					
 
 					return manager;
 				}
 
-				void KPDynamicHeapManager::destroy()
+				void KPFixedHeapManager::destroy()
 				{
 					// TODO: Get details on what this is supposed to do
 					return;
 				}
 
-				void* KPDynamicHeapManager::_alloc(size_t i_size)
+				void* KPFixedHeapManager::_alloc(size_t i_size)
 				{
 					return _alloc(i_size, 4); // Call alignment allocate with 4 byte alignment
 				}
 
-				void* KPDynamicHeapManager::_alloc(size_t i_size, unsigned i_alignment)
+				void* KPFixedHeapManager::_alloc(size_t i_size, unsigned i_alignment)
 				{
 
 					if (i_size > this->UPPER_LIMIT)
@@ -203,7 +222,7 @@ namespace KPEngine
 					return nullptr;
 				}
 
-				bool KPDynamicHeapManager::_free(void* i_ptr)
+				bool KPFixedHeapManager::_free(void* i_ptr)
 				{
 					assert(i_ptr);
 					assert(Contains(i_ptr));
@@ -218,7 +237,7 @@ namespace KPEngine
 					return true;
 				}
 
-				void KPDynamicHeapManager::collect()
+				void KPFixedHeapManager::collect()
 				{
 					// TODO Currently only merges blocks. Never makes blocks smaller. Need to adapt this
 					// loop through internal heap and merge abuding blocks
@@ -284,7 +303,7 @@ namespace KPEngine
 					}
 				}
 
-				bool KPDynamicHeapManager::Contains(void* i_ptr) const
+				bool KPFixedHeapManager::Contains(void* i_ptr) const
 				{
 					assert(i_ptr);
 
@@ -292,7 +311,7 @@ namespace KPEngine
 					return (descriptor != nullptr);
 				}
 
-				bool KPDynamicHeapManager::IsAllocated(void* i_ptr) const
+				bool KPFixedHeapManager::IsAllocated(void* i_ptr) const
 				{
 					assert(i_ptr);
 					assert(Contains(i_ptr));
@@ -300,15 +319,7 @@ namespace KPEngine
 					return !(m_GetDescriptor(i_ptr)->m_free);
 				}
 
-				size_t KPDynamicHeapManager::getLargestFreeBlock() const
-				{
-					// TODO: Implement
-					std::cout << "NOT YET IMPLEMENTED getLargestFreeBlock" << std::endl;
-					assert(false);
-					return -1;
-				}
-
-				size_t KPDynamicHeapManager::getTotalFreeMemory() const
+				size_t KPFixedHeapManager::getTotalFreeMemory() const
 				{
 					// TODO: Implement
 					std::cout << "NOT YET IMPLEMENTED getTotalFreeMemory" << std::endl;
@@ -316,7 +327,7 @@ namespace KPEngine
 					return -1;
 				}
 
-				void KPDynamicHeapManager::ShowOutstandingAllocations() const
+				void KPFixedHeapManager::ShowOutstandingAllocations() const
 				{
 					int count = 0;
 
@@ -351,7 +362,7 @@ namespace KPEngine
 					return;
 				}
 
-				void KPDynamicHeapManager::ShowFreeBlocks() const
+				void KPFixedHeapManager::ShowFreeBlocks() const
 				{
 					int count = 0;
 
@@ -386,7 +397,7 @@ namespace KPEngine
 					return;
 				}
 
-				bool KPDynamicHeapManager::m_ValidateDescriptor(void* i_pMemory) const
+				bool KPFixedHeapManager::m_ValidateDescriptor(void* i_pMemory) const
 				{
 					assert(i_pMemory);
 
@@ -394,24 +405,7 @@ namespace KPEngine
 					const bool check = (descriptor->m_validKey == this->m_validDescriptorKey);
 					return check;
 				}
-
-				BlockDescriptor* KPDynamicHeapManager::m_GetDescriptor(void* i_pMemory) const
-				{
-					// go in the reverse direction until a valid descriptor is found and modify descriptor to mark the block as not free
-					uint8_t* l_potentialDescriptor = static_cast<uint8_t*>(i_pMemory);
-					int bytesMoved = 0;
-					while (!m_ValidateDescriptor(l_potentialDescriptor))
-					{
-						assert(bytesMoved < (63 + sizeof(BlockDescriptor)));
-
-						l_potentialDescriptor = l_potentialDescriptor - 1;
-						bytesMoved++;
-					}
-					return reinterpret_cast<BlockDescriptor*>(l_potentialDescriptor);
-				}
 			}
 		}
 	}
 }
-
-
