@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <cassert>
 
 namespace KPEngine
 {
@@ -13,13 +14,13 @@ namespace KPEngine
 				class BitArray
 				{
 				public:
-					static BitArray Create(void* i_pMemory, size_t i_sizeMemory, size_t i_numBits, bool i_startClear = true);
+					static BitArray* Create(void* i_pMemory, size_t i_sizeMemory, size_t i_numBits, bool i_startClear = true);
 
 					void ClearAll(void);
 					void SetAll(void);
 					
-					bool AreAllClear(void);
-					bool AreAllSet(void);
+					bool AreAllClear(void) const;
+					bool AreAllSet(void) const;
 
 					bool IsBitSet(size_t i_bitNumber) const;
 					bool IsBitClear(size_t i_bitNumber) const;
@@ -33,10 +34,21 @@ namespace KPEngine
 					bool operator[](size_t i_index) const;
 
 				private:
-					void* m_BitArrayStart;
+
+					inline size_t GetDivisionNumber(size_t i_bitNumber) const
+					{
+						return (i_bitNumber - 1) / 32;
+					};
+
+					inline size_t GetBitOffset(size_t i_bitNumber) const
+					{
+						return (i_bitNumber - 1) % 32;
+					};
+
+					uint32_t* m_BitArrayStart;
 					size_t m_BitArraySubdivisionLength;
-					void* m_BitArrayEnd;
 					size_t m_NumOfBits;
+					
 				};
 			}
 		}
