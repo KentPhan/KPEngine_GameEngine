@@ -33,6 +33,8 @@ namespace KPEngine
 
 					bool operator[](size_t i_index) const;
 
+					void PrintBitArray() const;
+
 				private:
 
 					inline size_t GetDivisionNumber(size_t i_bitNumber) const

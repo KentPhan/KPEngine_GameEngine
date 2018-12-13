@@ -178,6 +178,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BitArray_UnitTest.cpp" />
     <ClCompile Include="FixedHeapManager_UnitTest.cpp" />
     <ClCompile Include="DynamicHeapManager_UnitTest.cpp" />
     <ClCompile Include="KPEngine_Test.cpp" />

@@ -2,6 +2,8 @@
 #include <cassert>
 #include <stdint.h>
 #include <intrin.h>
+#include <iostream>
+#include <bitset>
 
 namespace KPEngine
 {
@@ -105,7 +107,7 @@ namespace KPEngine
 						{
 							unsigned long offset;
 							_BitScanForward(&offset, ~this->m_BitArrayStart[i]);//TODO  Returns 0 if not found. Returns 1 If Found, could work this into the if statement
-							o_bitNumber = offset + (i * 32); // Calculate bit number
+							o_bitNumber = (offset + (i * 32)) + 1; // Calculate bit number
 							return true;
 						}
 					}
@@ -120,16 +122,28 @@ namespace KPEngine
 						{
 							unsigned long offset;
 							_BitScanForward(&offset, this->m_BitArrayStart[i]);//TODO  Returns 0 if not found. Returns 1 If Found, could work this into the if statement
-							o_bitNumber = offset + (i * 32); // Calculate bit number
+							o_bitNumber = (offset + (i * 32)) + 1 ; // Calculate bit number
 							return true;
 						}
 					}
 					return false;
 				}
 
+
+
 				bool BitArray::operator[](size_t i_index) const
 				{
 					return(IsBitSet(i_index));
+				}
+
+				void BitArray::PrintBitArray() const
+				{
+					for (size_t i = 0; i < m_BitArraySubdivisionLength; i++)
+					{
+						std::cout << std::bitset<32>((this->m_BitArrayStart[i])) << "|";
+					}
+
+					std::cout << std::endl;
 				}
 			}
 		}
