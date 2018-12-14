@@ -1,4 +1,4 @@
-//// To Swap between Dynamic and Static Heap Allocators. These have to be commented out and in according to what you want to use
+//// To Swap between Dynamic and Mixed Heap Allocators. These have to be commented out and in according to what you want to use
 //
 //#pragma once
 //

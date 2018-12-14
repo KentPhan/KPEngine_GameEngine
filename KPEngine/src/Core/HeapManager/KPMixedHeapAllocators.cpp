@@ -1,10 +1,10 @@
-// To Swap between Dynamic and Static Heap Allocators. These have to be commented out and in according to what you want to use
+// To Swap between Dynamic and Mixed Heap Allocators. These have to be commented out and in according to what you want to use
 
 #include <inttypes.h>
 #include <malloc.h>
 
 #include <stdio.h>
-#include "../../../include/Core/HeapManager/KPFixedHeapAllocators.h"
+#include "../../../include/Core/HeapManager/KPMixedHeapAllocators.h"
 
 
 void * __cdecl malloc(size_t i_size)
