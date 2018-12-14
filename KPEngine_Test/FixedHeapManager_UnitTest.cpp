@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 #include "Core/HeapManager/MemorySystem.h"
+#include "Core/HeapManager/KPMixedHeapAllocators.h"
 
 //#include "Core/HeapManager/KPFixedHeapManager.h"
 
@@ -79,7 +80,7 @@ bool MemorySystem_UnitTest()
 
 		size_t			sizeAlloc = 1 + (rand() & (maxTestAllocationSize - 1));
 
-		void * pPtr = malloc(sizeAlloc);
+		void * pPtr = _malloc(sizeAlloc);
 
 		// if allocation failed see if garbage collecting will create a large enough block
 		if (pPtr == nullptr)
@@ -107,7 +108,7 @@ bool MemorySystem_UnitTest()
 			void * pPtrToFree = AllocatedAddresses.back();
 			AllocatedAddresses.pop_back();
 
-			free(pPtrToFree);
+			_free(pPtrToFree);
 			numFrees++;
 		}
 		else if ((rand() % garbageCollectAboutEvery) == 0)
@@ -139,11 +140,11 @@ bool MemorySystem_UnitTest()
 		// our heap should be one single block, all the memory it started with
 
 		// do a large test allocation to see if garbage collection worked
-		void * pPtr = malloc(totalAllocated / 2);
+		void * pPtr = _malloc(totalAllocated / 2);
 
 		if (pPtr)
 		{
-			free(pPtr);
+			_free(pPtr);
 		}
 		else
 		{

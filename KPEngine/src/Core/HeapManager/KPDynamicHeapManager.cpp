@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cassert>
 #include <experimental/filesystem>
+#include "../../../include/Utils/KPLogType.h"
+#include "../../../include/Utils/KP_Log.h"
 
 namespace KPEngine
 {
@@ -19,8 +21,7 @@ namespace KPEngine
 					const uint8_t c_blockDescriptorValidKey = 0xBC;
 
 #if defined(_DEBUG)
-					std::cout << "size of HeapManager:" << sizeof(KPDynamicHeapManager) << " bytes" << std::endl;
-					std::cout << "size of BlockDescriptor:" << sizeof(BlockDescriptor) << " bytes" << std::endl;
+					DEBUG_PRINT(Utils::KPLogType::Verbose, "Dynamic Heap Manager Created:");
 #endif
 
 					// TODO: Implement
@@ -41,7 +42,7 @@ namespace KPEngine
 					const size_t numberOfTotalBlocks = manager->m_InternalTotalSpace / (c_initialBlockSize + sizeof(BlockDescriptor));
 
 #if defined(_DEBUG)
-					std::cout << "Initial number of blocks allocated:" << numberOfTotalBlocks << std::endl;
+					DEBUG_PRINT(Utils::KPLogType::Verbose, "Blocks Allocated: %u", numberOfTotalBlocks);
 #endif 
 
 					/*std::cout << "KPManagerPointer" << manager << std::endl;
@@ -187,7 +188,7 @@ namespace KPEngine
 								l_newBlockDescriptor->m_validKey = this->m_validDescriptorKey;
 
 #if defined(_DEBUG)
-								std::cout << "SUBDIVIDED NEW BLOCK: " << " SizeOf: " << l_newBlockDescriptor->m_sizeBlock << std::endl;
+								DEBUG_PRINT(Utils::KPLogType::Verbose, "SUBDIVIDED NEW BLOCK Size Of: %u", l_newBlockDescriptor->m_sizeBlock);
 #endif			
 							}
 
@@ -195,7 +196,7 @@ namespace KPEngine
 							descriptor->m_free = false; // mark block not free
 
 #if defined(_DEBUG)
-							std::cout << "ALLOCATED BLOCK: " << static_cast<void*>(lp_startOfBlock) << " " << descriptor->m_sizeBlock << " For: " << i_size << " Shifted:" << shiftRequired << std::endl;
+							DEBUG_PRINT(Utils::KPLogType::Verbose, "ALLOCATED BLOCK %p %u For %u Shifted %i", static_cast<void*>(lp_startOfBlock), descriptor->m_sizeBlock, i_size, shiftRequired);
 #endif			
 
 							return static_cast<void*>(lp_startOfBlock);
@@ -219,7 +220,7 @@ namespace KPEngine
 					descriptor->m_free = true;
 
 #if defined(_DEBUG)
-					std::cout << "FREED UP BLOCK : " << static_cast<void*>(i_ptr) << " " << descriptor->m_sizeBlock << std::endl;
+					DEBUG_PRINT(Utils::KPLogType::Verbose, "FREED UP BLOCK %p %u", static_cast<void*>(i_ptr), descriptor->m_sizeBlock);
 #endif		
 					return true;
 				}
@@ -264,7 +265,7 @@ namespace KPEngine
 								descriptor->m_sizeBlock = descriptor->m_sizeBlock + nextDescriptor->m_sizeBlock + sizeof(BlockDescriptor); // combine sizes with the addition of the old blockdescriptor
 
 #if defined(_DEBUG)
-								std::cout << "MERGED NEW BLOCK : SizeOf:" << descriptor->m_sizeBlock << std::endl;
+								DEBUG_PRINT(Utils::KPLogType::Verbose, "MERGED NEW BLOCK %u", descriptor->m_sizeBlock);
 #endif
 
 
