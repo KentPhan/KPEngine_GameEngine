@@ -1,4 +1,5 @@
 #include "../../../include/Core/HeapManager/KPFixedHeapManager.h"
+#include "../../../include/Core/HeapManager/BitArray.h"
 #include <cassert>
 #include <iostream>
 
@@ -13,66 +14,56 @@ namespace KPEngine
 
 
 
-				KPFixedHeapManager* KPFixedHeapManager::Create(void* i_pMemory, size_t i_sizeMemory, FixedByteSizeConfiguration i_byteConfig, int i_minimumBlocksRequired)
+				KPFixedHeapManager* KPFixedHeapManager::Create(void* i_pMemory, size_t i_sizeMemory, FixedByteSizeConfiguration i_byteConfig, size_t i_minimumBlocksRequired)
 				{
 					assert(i_pMemory);
 					
+#if defined(_DEBUG)
+					
+#endif 
+					// Initialize HeapManager properties and crap
+					KPFixedHeapManager * manager = static_cast<KPFixedHeapManager *>(i_pMemory);
 
 					// Set initial fixed block size
-					size_t c_BlockByteSize = 512; // Initial block sizes
-					switch(i_byteConfig)
+					manager->m_ByteSizeConfig = 512; // Initial block sizes
+					switch (i_byteConfig)
 					{
-						case Size_32:
-							c_BlockByteSize = 32;
-							break;	
-						case Size_64:
-							c_BlockByteSize = 64;
-							break;
-						case Size_128: 
-							c_BlockByteSize = 128;
-							break;
-						case Size_256: 
-							c_BlockByteSize = 256;
-							break;
-						case Size_512: 
-							c_BlockByteSize = 512;
-							break;
-						case Size_1024: 
-							c_BlockByteSize = 1024;
-							break;
-					default: ;
+					case Size_32:
+						manager->m_ByteSizeConfig = 32;
+						break;
+					case Size_64:
+						manager->m_ByteSizeConfig = 64;
+						break;
+					case Size_128:
+						manager->m_ByteSizeConfig = 128;
+						break;
+					case Size_256:
+						manager->m_ByteSizeConfig = 256;
+						break;
+					case Size_512:
+						manager->m_ByteSizeConfig = 512;
+						break;
+					case Size_1024:
+						manager->m_ByteSizeConfig = 1024;
+						break;
+					default:;
 						assert(false);
 					}
 
-#if defined(_DEBUG)
-					std::cout << "size of Fixed HeapManager:" << sizeof(KPFixedHeapManager) << " bytes" << std::endl;
-					std::cout << "size of Fixed Block Size:" << c_BlockByteSize << " bytes" << std::endl;
-#endif
-
-					// Initialize HeapManager properties and crap
-					KPFixedHeapManager * manager = static_cast<KPFixedHeapManager *>(i_pMemory);
 					// TODO align this to 4 bytes
-					manager->m_InternalHeapStart = (manager + 1);
+					manager->m_pBitArray = BitArray::Create(static_cast<void*>(manager + 1), i_sizeMemory - sizeof(KPFixedHeapManager), i_minimumBlocksRequired, true);
+					manager->m_InternalHeapStart = (manager->m_pBitArray->GetBitArrayEnd());
 
-					// TODO Initialize BitArray here
-
-					manager->m_pBitArray
-
+					const size_t numberOfTotalBlocks = manager->m_pBitArray->GetTotalBlocksMapped();
 
 					// TODO align this to 4 byte size
-					manager->m_InternalTotalSpace = i_sizeMemory - sizeof(KPFixedHeapManager);
+					manager->m_TotalSizeOfEverything = sizeof(KPFixedHeapManager) + manager->m_pBitArray->GetTotalSizeOfBitArray() + (numberOfTotalBlocks * manager->m_ByteSizeConfig);// Heap Manager Size | BitArray Size | HeapManager Blocks Size |
 
-					// Calculate total number of blocks that we can fit
-					const size_t numberOfTotalBlocks = manager->m_InternalTotalSpace / c_BlockByteSize;
-
+					std::cout << "Fixed HeapManager Created:" << sizeof(KPFixedHeapManager) << " bytes" << " Fixed Byte Config:" << manager->m_ByteSizeConfig << " Minimum Blocks:" << i_minimumBlocksRequired << std::endl;
 #if defined(_DEBUG)
-					std::cout << "Initial number of blocks allocated:" << numberOfTotalBlocks << std::endl;
+					assert(manager->m_TotalSizeOfEverything < i_sizeMemory);
+					std::cout << "Total number of blocks allocated:" << numberOfTotalBlocks << std::endl;
 #endif 
-					if(i_minimumBlocksRequired > numberOfTotalBlocks)
-					{
-						std::cout << "Not enough memory given to accommodate minimum blocks required." << std::endl;
-						return nullptr;
-					}
 
 					// initialize blocks with pointer arithmetic
 					uint8_t* block = static_cast<uint8_t*>(manager->m_InternalHeapStart);
@@ -82,13 +73,11 @@ namespace KPEngine
 						// Currently does nothing but loop through
 
 						// move block pointer to next block
-						block = block + (c_BlockByteSize);
+						block = block + (manager->m_ByteSizeConfig);
 					}
 
 					// Save this pointer as the end of our internal heap
-					manager->m_InternalHeapEnd = block + (c_BlockByteSize);
-
-					
+					manager->m_InternalHeapEnd = block + (manager->m_ByteSizeConfig);
 
 					return manager;
 				}

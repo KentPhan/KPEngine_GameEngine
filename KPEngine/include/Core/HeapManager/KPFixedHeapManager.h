@@ -25,7 +25,8 @@ namespace KPEngine
 				class KPFixedHeapManager
 				{
 				public:
-					static KPFixedHeapManager* Create(void * i_pMemory, size_t i_sizeMemory, FixedByteSizeConfiguration i_byteConfig, int i_minimumBlocks);
+
+					static KPFixedHeapManager* Create(void * i_pMemory, size_t i_sizeMemory, FixedByteSizeConfiguration i_byteConfig, size_t i_minimumBlocks);
 
 					void destroy();
 
@@ -51,9 +52,10 @@ namespace KPEngine
 
 					bool m_ValidateDescriptor(void* i_pMemory) const;
 					BitArray* m_pBitArray;
+					size_t m_byteSizeConfig;
 					void * m_InternalHeapStart;
 					void * m_InternalHeapEnd;
-					size_t m_InternalTotalSpace;
+					size_t m_TotalSizeOfEverything;
 				};
 			}
 		}

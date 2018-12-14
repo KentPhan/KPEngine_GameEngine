@@ -40,6 +40,16 @@ namespace KPEngine
 						return m_BitArrayEnd;
 					}
 
+					inline size_t GetTotalBlocksMapped() const
+					{
+						return  m_BitArraySubdivisionLength * 32; // Each subdivision is 32 bits. So 32 blocks
+					}
+
+					inline size_t GetTotalSizeOfBitArray() const
+					{
+						return sizeof(BitArray) + (m_BitArraySubdivisionLength * 4);//Each subdivision is 4 bytes
+					}
+
 				private:
 
 					inline size_t GetDivisionNumber(size_t i_bitNumber) const
