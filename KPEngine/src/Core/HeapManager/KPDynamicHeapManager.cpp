@@ -11,7 +11,7 @@ namespace KPEngine
 		{
 			namespace Dynamic
 			{
-				KPDynamicHeapManager* KPDynamicHeapManager::create(void* i_pMemory, size_t i_sizeMemory)
+				KPDynamicHeapManager* KPDynamicHeapManager::Create(void* i_pMemory, size_t i_sizeMemory)
 				{
 					assert(i_pMemory);
 					const size_t c_minimumBlockSize = 128; // Each block will be at least 128 bytes in size. Reason being to account for up to 64 byte alignment
@@ -73,9 +73,16 @@ namespace KPEngine
 					return manager;
 				}
 
-				void KPDynamicHeapManager::destroy()
+				void KPDynamicHeapManager::Destroy()
 				{
-					// TODO: Get details on what this is supposed to do
+					this->m_InternalHeapStart = nullptr;
+					this->m_InternalHeapEnd = nullptr;
+					this->m_InternalTotalSpace = 0;
+					this->MINIMUM_BLOCK_SIZE = 0;
+					this->LARGEST_BLOCK_SIZE = 0;
+					this->UPPER_LIMIT = 0;
+					this->REQUESTED_SIZE = 0;
+					this->m_validDescriptorKey = 0;
 					return;
 				}
 
@@ -97,7 +104,7 @@ namespace KPEngine
 					if (i_size > this->LARGEST_BLOCK_SIZE)
 					{
 						this->REQUESTED_SIZE = i_size;
-						collect();
+						Collect();
 						if (i_size > this->LARGEST_BLOCK_SIZE)
 						{
 							return nullptr;
@@ -128,7 +135,7 @@ namespace KPEngine
 
 							// try one more time after collecting
 							this->REQUESTED_SIZE = i_size;
-							collect();
+							Collect();
 							pointer = static_cast<uint8_t*>(this->m_InternalHeapStart);
 						}
 
@@ -217,7 +224,7 @@ namespace KPEngine
 					return true;
 				}
 
-				void KPDynamicHeapManager::collect()
+				void KPDynamicHeapManager::Collect()
 				{
 					// TODO Currently only merges blocks. Never makes blocks smaller. Need to adapt this
 					// loop through internal heap and merge abuding blocks

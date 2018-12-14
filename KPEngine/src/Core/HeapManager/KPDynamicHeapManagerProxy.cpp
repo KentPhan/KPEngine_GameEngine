@@ -18,14 +18,14 @@ namespace KPEngine
 			{
 				KPDynamicHeapManager * CreateHeapManager(void * i_pMemory, size_t i_sizeMemory)
 				{
-					return KPDynamicHeapManager::create(i_pMemory, i_sizeMemory);
+					return KPDynamicHeapManager::Create(i_pMemory, i_sizeMemory);
 				}
 
 				void Destroy(KPDynamicHeapManager * i_pManager)
 				{
 					assert(i_pManager);
 
-					i_pManager->destroy();
+					i_pManager->Destroy();
 				}
 
 
@@ -54,7 +54,7 @@ namespace KPEngine
 				{
 					assert(i_pManager);
 
-					i_pManager->collect();
+					i_pManager->Collect();
 				}
 
 

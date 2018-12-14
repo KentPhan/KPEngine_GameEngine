@@ -21,9 +21,9 @@ namespace KPEngine
 				class KPDynamicHeapManager
 				{
 				public:
-					static KPDynamicHeapManager* create(void * i_pMemory, size_t i_sizeMemory);
+					static KPDynamicHeapManager* Create(void * i_pMemory, size_t i_sizeMemory);
 
-					void destroy();
+					void Destroy();
 
 					void * _alloc(size_t i_size);
 
@@ -31,7 +31,7 @@ namespace KPEngine
 
 					bool _free(void * i_ptr);
 
-					void collect();
+					void Collect();
 
 					bool Contains(void * i_ptr) const;
 

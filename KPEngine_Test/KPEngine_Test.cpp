@@ -14,8 +14,8 @@ int main()
 	/*KPEngine::Initialize();*/
 	/*KPVector2_UnitTest();*/
 	/*DynamicHeapManager_UnitTest();*/
-	/*FixedHeapManager_UnitTest();*/
-	CustomFixedHeapManager_UnitTest();
+	FixedHeapManager_UnitTest();
+	/*CustomFixedHeapManager_UnitTest();*/
 	/*BitArray_UnitTest();*/
 	
 

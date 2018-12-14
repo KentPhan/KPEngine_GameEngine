@@ -16,10 +16,11 @@
 
 bool MemorySystem_UnitTest();
 
-using KPEngine::Core::HeapManager::Fixed::KPFixedHeapManager;
+
 
 bool CustomFixedHeapManager_UnitTest()
 {
+	using KPEngine::Core::HeapManager::Fixed::KPFixedHeapManager;
 	const size_t 		sizeHeap = 1024 * 1024;
 
 	// Allocate memory for my test heap.
@@ -39,21 +40,18 @@ bool FixedHeapManager_UnitTest()
 {
 	const size_t 		sizeHeap = 1024 * 1024;
 
-	// you may not need this if you don't use a descriptor pool
-	const unsigned int 	numDescriptors = 2048;
-
 	// Allocate memory for my test heap.
 	void * pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
 	assert(pHeapMemory);
 
 	// Create your HeapManager and FixedSizeAllocators.
-	InitializeMemorySystem(pHeapMemory, sizeHeap, numDescriptors);
+	KPEngine::Core::HeapManager::InitializeMemorySystem(pHeapMemory, sizeHeap);
 
 	bool success = MemorySystem_UnitTest();
 	assert(success);
 
 	// Clean up your Memory System (HeapManager and FixedSizeAllocators)
-	DestroyMemorySystem();
+	KPEngine::Core::HeapManager::DestroyMemorySystem();
 
 	HeapFree(GetProcessHeap(), 0, pHeapMemory);
 
@@ -87,7 +85,7 @@ bool MemorySystem_UnitTest()
 		// if allocation failed see if garbage collecting will create a large enough block
 		if (pPtr == nullptr)
 		{
-			Collect();
+			KPEngine::Core::HeapManager::Collect();
 
 			pPtr = new char[sizeAlloc];
 
@@ -115,7 +113,7 @@ bool MemorySystem_UnitTest()
 		}
 		else if ((rand() % garbageCollectAboutEvery) == 0)
 		{
-			Collect();
+			KPEngine::Core::HeapManager::Collect();
 
 			numCollects++;
 		}
@@ -138,7 +136,7 @@ bool MemorySystem_UnitTest()
 		}
 
 		// do garbage collection
-		Collect();
+		KPEngine::Core::HeapManager::Collect();
 		// our heap should be one single block, all the memory it started with
 
 		// do a large test allocation to see if garbage collection worked

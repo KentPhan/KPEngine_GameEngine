@@ -13,6 +13,7 @@ namespace KPEngine
 
 				enum FixedByteSizeConfiguration
 				{
+					Size_16,
 					Size_32,
 					Size_64,
 					Size_128,
@@ -38,11 +39,19 @@ namespace KPEngine
 
 					bool IsAllocated(void * i_ptr) const;
 
-					size_t getTotalFreeMemory() const;
-
 					void ShowOutstandingAllocations() const;
 
 					void ShowFreeBlocks() const;
+
+					inline void* GetPointerToEnd() const
+					{
+						return m_InternalHeapEnd;
+					}
+
+					inline size_t GetByteSizeOfEverything() const
+					{
+						return m_TotalSizeOfEverything;
+					}
 
 				private:
 

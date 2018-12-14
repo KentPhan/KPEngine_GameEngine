@@ -28,6 +28,9 @@ namespace KPEngine
 					manager->m_ByteSizeConfig = 512; // Initial block sizes
 					switch (i_byteConfig)
 					{
+					case Size_16:
+						manager->m_ByteSizeConfig = 16;
+						break;
 					case Size_32:
 						manager->m_ByteSizeConfig = 32;
 						break;
@@ -82,9 +85,13 @@ namespace KPEngine
 					return manager;
 				}
 
-				void KPFixedHeapManager::destroy()
+				void KPFixedHeapManager::Destroy()
 				{
-					// TODO: Get details on what this is supposed to do
+					this->m_pBitArray = nullptr; // TODO consider destroying internals of BitArray Later?
+					this->m_ByteSizeConfig = 0;
+					this->m_InternalHeapStart = nullptr;
+					this->m_InternalHeapEnd = nullptr;
+					this->m_TotalSizeOfEverything = 0;
 					return;
 				}
 
@@ -143,14 +150,6 @@ namespace KPEngine
 					assert(Contains(i_ptr));
 
 					return this->m_pBitArray->IsBitSet(CalculateBitNumberFromPointerToBlock(i_ptr));
-				}
-
-				size_t KPFixedHeapManager::getTotalFreeMemory() const
-				{
-					// TODO: Implement
-					std::cout << "NOT YET IMPLEMENTED getTotalFreeMemory" << std::endl;
-					assert(false);
-					return -1;
 				}
 
 				void KPFixedHeapManager::ShowOutstandingAllocations() const

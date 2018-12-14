@@ -18,8 +18,6 @@ bool BitArray_UnitTest()
 
 	BitArray* test = BitArray::Create(pHeapMemory, sizeHeap, 52, true);
 
-
-
 	std::cout << "Initial State" << std::endl;
 	test->PrintBitArray();
 
