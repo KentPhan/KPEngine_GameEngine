@@ -89,6 +89,14 @@ namespace KPEngine
 
 				void KPFixedHeapManager::Destroy()
 				{
+					if (!this->m_pBitArray->AreAllClear())
+					{
+#if defined(_DEBUG)
+						DEBUG_PRINT(Utils::KPLogType::Verbose, "OUTSTANDING ALLOCATIONS STILL EXIST ON DESTRUCTION:");
+						this->ShowOutstandingAllocations();
+#endif
+					}
+
 					this->m_pBitArray = nullptr; // TODO consider destroying internals of BitArray Later?
 					this->m_ByteSizeConfig = 0;
 					this->m_InternalHeapStart = nullptr;
@@ -144,7 +152,7 @@ namespace KPEngine
 					// Calculate block number off of pointer
 					intptr_t l_difference = reinterpret_cast<intptr_t>(i_ptr) - reinterpret_cast<intptr_t>(this->m_InternalHeapStart);
 					return (i_ptr >= this->m_InternalHeapStart) && (i_ptr < this->m_InternalHeapEnd) && l_difference >= 0 && (l_difference % this->m_ByteSizeConfig == 0);// Check if in heap bounds. Then check that it falls on a boundary
-					// TODO could optimize this check possibly with l_difference
+					// TODO: could optimize this check possibly with l_difference
 				}
 
 				bool KPFixedHeapManager::IsAllocated(void* i_ptr) const
@@ -157,29 +165,23 @@ namespace KPEngine
 
 				void KPFixedHeapManager::ShowOutstandingAllocations() const
 				{
-					// TODO: Implement
-					std::cout << "NOT YET IMPLEMENTED ShowOutstandingAllocations" << std::endl;
-					assert(false);
-
-					int count = 0;
-
-
-					std::cout << "TOTAL ALLOCATED BLOCKS: " << count << std::endl;
+					std::cout << "FIXED OUTSTANDING ALLOCATIONS ("<< this->m_ByteSizeConfig<<" bytes): "<< std::endl;
+					for(int i = 0; i < this->m_pBitArray->GetTotalBlocksMapped(); i++)
+					{
+						if (this->m_pBitArray->operator[](i))
+							std::cout << "BLOCK: " << (i + 1) << std::endl;
+					}
 					return;
 				}
 
 				void KPFixedHeapManager::ShowFreeBlocks() const
 				{
-					// TODO: Implement
-					std::cout << "NOT YET IMPLEMENTED ShowFreeBlocks" << std::endl;
-					assert(false);
-
-					int count = 0;
-
-					// loop through internal heap showing free blocks
-					uint8_t* pointer = static_cast<uint8_t*>(this->m_InternalHeapStart);
-				
-					std::cout << "TOTAL FREE BLOCKS: " << count << std::endl;
+					std::cout << "FIXED FREE BLOCKS (" << this->m_ByteSizeConfig << " bytes): " << std::endl;
+					for (int i = 0; i < this->m_pBitArray->GetTotalBlocksMapped(); i++)
+					{
+						if (!this->m_pBitArray->operator[](i))
+							std::cout << "BLOCK: " << (i + 1) << std::endl;
+					}
 					return;
 				}
 			}
