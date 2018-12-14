@@ -45,13 +45,13 @@ bool FixedHeapManager_UnitTest()
 	assert(pHeapMemory);
 
 	// Create your HeapManager and FixedSizeAllocators.
-	KPEngine::Core::HeapManager::InitializeMemorySystem(pHeapMemory, sizeHeap);
+	KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(pHeapMemory, sizeHeap);
 
 	bool success = MemorySystem_UnitTest();
 	assert(success);
 
 	// Clean up your Memory System (HeapManager and FixedSizeAllocators)
-	KPEngine::Core::HeapManager::DestroyMemorySystem();
+	KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();
 
 	HeapFree(GetProcessHeap(), 0, pHeapMemory);
 
@@ -86,7 +86,7 @@ bool MemorySystem_UnitTest()
 		// if allocation failed see if garbage collecting will create a large enough block
 		if (pPtr == nullptr)
 		{
-			KPEngine::Core::HeapManager::Collect();
+			KPEngine::Core::HeapManager::MemorySystem::Collect();
 
 			pPtr = new char[sizeAlloc];
 
@@ -115,7 +115,7 @@ bool MemorySystem_UnitTest()
 		}
 		else if ((rand() % garbageCollectAboutEvery) == 0)
 		{
-			KPEngine::Core::HeapManager::Collect();
+			KPEngine::Core::HeapManager::MemorySystem::Collect();
 
 			numCollects++;
 		}
@@ -139,7 +139,7 @@ bool MemorySystem_UnitTest()
 		}
 
 		// do garbage collection
-		KPEngine::Core::HeapManager::Collect();
+		KPEngine::Core::HeapManager::MemorySystem::Collect();
 		// our heap should be one single block, all the memory it started with
 
 		// do a large test allocation to see if garbage collection worked

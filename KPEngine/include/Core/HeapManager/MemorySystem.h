@@ -25,17 +25,16 @@ namespace KPEngine
 
 				static void* MemorySystemAlloc(size_t i_size);
 				static void MemorySystemFree(void* i_ptr);
+
+				// InitializeMemorySystem - initialize your memory system including your HeapManager and some FixedSizeAllocators
+				static bool InitializeMemorySystem(void * i_pHeapMemory, size_t i_sizeHeapMemory);
+
+				// Collect - coalesce free blocks in attempt to create larger blocks
+				static void Collect();
+
+				// DestroyMemorySystem - destroy your memory systems
+				static void DestroyMemorySystem();
 			};
-			
-
-			// InitializeMemorySystem - initialize your memory system including your HeapManager and some FixedSizeAllocators
-			bool InitializeMemorySystem(void * i_pHeapMemory, size_t i_sizeHeapMemory);
-
-			// Collect - coalesce free blocks in attempt to create larger blocks
-			void Collect();
-
-			// DestroyMemorySystem - destroy your memory systems
-			void DestroyMemorySystem();
 		}
 	}
 }
