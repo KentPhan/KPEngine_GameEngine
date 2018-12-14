@@ -69,6 +69,7 @@ bool MemorySystem_UnitTest()
 
 	long	numAllocs = 0;
 	long	numFrees = 0;
+	long	numTotalFrees = 0;
 	long	numCollects = 0;
 
 	size_t totalAllocated = 0;
@@ -110,6 +111,7 @@ bool MemorySystem_UnitTest()
 
 			_free(pPtrToFree);
 			numFrees++;
+			numTotalFrees++;
 		}
 		else if ((rand() % garbageCollectAboutEvery) == 0)
 		{
@@ -133,6 +135,7 @@ bool MemorySystem_UnitTest()
 			AllocatedAddresses.pop_back();
 
 			delete[] pPtrToFree;
+			numTotalFrees++;
 		}
 
 		// do garbage collection

@@ -196,7 +196,7 @@ namespace KPEngine
 							descriptor->m_free = false; // mark block not free
 
 #if defined(_DEBUG)
-							DEBUG_PRINT(Utils::KPLogType::Verbose, "ALLOCATED BLOCK %p %u For %u Shifted %i", static_cast<void*>(lp_startOfBlock), descriptor->m_sizeBlock, i_size, shiftRequired);
+							DEBUG_PRINT(Utils::KPLogType::Verbose, "ALLOCATED DYNAMIC BLOCK %p %u For %u Shifted %i", static_cast<void*>(lp_startOfBlock), descriptor->m_sizeBlock, i_size, shiftRequired);
 #endif			
 
 							return static_cast<void*>(lp_startOfBlock);
@@ -220,7 +220,7 @@ namespace KPEngine
 					descriptor->m_free = true;
 
 #if defined(_DEBUG)
-					DEBUG_PRINT(Utils::KPLogType::Verbose, "FREED UP BLOCK %p %u", static_cast<void*>(i_ptr), descriptor->m_sizeBlock);
+					DEBUG_PRINT(Utils::KPLogType::Verbose, "FREED DYNAMIC BLOCK %p %u", static_cast<void*>(i_ptr), descriptor->m_sizeBlock);
 #endif		
 					return true;
 				}
@@ -406,10 +406,12 @@ namespace KPEngine
 				{
 					// go in the reverse direction until a valid descriptor is found and modify descriptor to mark the block as not free
 					uint8_t* l_potentialDescriptor = static_cast<uint8_t*>(i_pMemory);
-					int bytesMoved = 0;
+					l_potentialDescriptor = l_potentialDescriptor - sizeof(BlockDescriptor);
+
+					size_t bytesMoved = 0;
 					while (!m_ValidateDescriptor(l_potentialDescriptor))
 					{
-						assert(bytesMoved < (63 + sizeof(BlockDescriptor)));
+						assert(bytesMoved < (63));
 
 						l_potentialDescriptor = l_potentialDescriptor - 1;
 						bytesMoved++;
