@@ -18,6 +18,7 @@ int main()
 	/*CustomFixedHeapManager_UnitTest();*/
 	/*BitArray_UnitTest();*/
 	
+	bool check = _CrtDumpMemoryLeaks();
 
 	std::getchar();
 
