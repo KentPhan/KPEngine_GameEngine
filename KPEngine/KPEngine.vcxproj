@@ -155,7 +155,7 @@
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapAllocators.h" />
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManagerProxy.h" />
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManager.h" />
-    <ClInclude Include="include\Core\HeapManager\KPFixedHeapAllocators.h" />
+    <ClInclude Include="include\Core\HeapManager\KPMixedHeapAllocators.h" />
     <ClInclude Include="include\Core\HeapManager\KPFixedHeapManager.h" />
     <ClInclude Include="include\Core\HeapManager\MemorySystem.h" />
     <ClInclude Include="include\Core\Interfaces\IKPGameObjectController.h" />
@@ -175,7 +175,7 @@
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManagerProxy.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapAllocators.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManager.cpp" />
-    <ClCompile Include="src\Core\HeapManager\KPFixedHeapAllocators.cpp" />
+    <ClCompile Include="src\Core\HeapManager\KPMixedHeapAllocators.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPFixedHeapManager.cpp" />
     <ClCompile Include="src\Core\HeapManager\MemorySystem.cpp" />
     <ClCompile Include="src\KPEngine-init.cpp" />

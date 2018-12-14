@@ -9,10 +9,12 @@ namespace KPEngine
 	{
 		namespace HeapManager
 		{
-			Fixed::KPFixedHeapManager* Fixed_16_HeapSystem;
-			Fixed::KPFixedHeapManager* Fixed_32_HeapSystem;
-			Fixed::KPFixedHeapManager* Fixed_128_HeapSystem;
-			Dynamic::KPDynamicHeapManager* Dynamic_HeapSystem;
+			//// TODO: Ask the question. Why the heck do I have to put these definitions of static variables here.
+			//Fixed::KPFixedHeapManager* MemorySystem::Fixed_16_HeapSystem = nullptr;
+			//Fixed::KPFixedHeapManager* MemorySystem::Fixed_32_HeapSystem = nullptr;
+			//Fixed::KPFixedHeapManager* MemorySystem::Fixed_128_HeapSystem = nullptr;
+			//Dynamic::KPDynamicHeapManager* MemorySystem::Dynamic_HeapSystem = nullptr;
+
 
 			bool InitializeMemorySystem(void * i_pHeapMemory, size_t i_sizeHeapMemory)
 			{

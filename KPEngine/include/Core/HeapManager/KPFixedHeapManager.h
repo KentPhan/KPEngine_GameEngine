@@ -29,7 +29,7 @@ namespace KPEngine
 
 					static KPFixedHeapManager* Create(void * i_pMemory, size_t i_sizeMemory, FixedByteSizeConfiguration i_byteConfig, size_t i_minimumBlocks);
 
-					void destroy();
+					void Destroy();
 
 					void * _alloc(size_t i_size);
 
