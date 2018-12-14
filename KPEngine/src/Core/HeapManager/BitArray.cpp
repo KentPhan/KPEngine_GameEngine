@@ -25,6 +25,8 @@ namespace KPEngine
 					l_pBitArray->m_NumOfBits = i_numBits;
 					l_pBitArray->m_BitArrayStart = reinterpret_cast<uint32_t*>((l_pBitArray + 1));
 					l_pBitArray->m_BitArraySubdivisionLength = 1 + ( (i_numBits - 1) / 32);
+					l_pBitArray->m_BitArrayEnd = reinterpret_cast<void*>(l_pBitArray->m_BitArrayStart + (l_pBitArray->m_BitArraySubdivisionLength) );
+
 
 					if (i_startClear)
 						l_pBitArray->ClearAll();

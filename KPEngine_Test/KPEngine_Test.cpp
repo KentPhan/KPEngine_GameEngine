@@ -13,8 +13,8 @@ int main()
 	/*KPEngine::Initialize();*/
 	/*KPVector2_UnitTest();*/
 	/*DynamicHeapManager_UnitTest();*/
-	/*FixedHeapManager_UnitTest();*/
-	BitArray_UnitTest();
+	FixedHeapManager_UnitTest();
+	/*BitArray_UnitTest();*/
 	
 
 	std::getchar();

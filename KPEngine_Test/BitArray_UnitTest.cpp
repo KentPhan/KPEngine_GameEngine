@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <iostream>
 #include "Core/HeapManager/BitArray.h"
+#include <bitset>
 
 using KPEngine::Core::HeapManager::Fixed::BitArray;
 
@@ -87,10 +88,11 @@ bool BitArray_UnitTest()
 	std::cout << "Get First Clear Bit: " << l_testNumber4 << std::endl;
 
 
-
-
-
-	
+	uint32_t* endPointer = static_cast<uint32_t*>(test->GetBitArrayEnd());
+	(*endPointer) = 100;
+	std::cout << "Modified value at end pointer: Set value past pointer to 100 to double check" << std::endl;
+	test->PrintBitArray();
+	std::cout << std::bitset<32>((*endPointer)) << std::endl;
 	
 
 	return true;

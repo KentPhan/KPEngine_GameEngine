@@ -35,6 +35,11 @@ namespace KPEngine
 
 					void PrintBitArray() const;
 
+					inline void* GetBitArrayEnd() const
+					{
+						return m_BitArrayEnd;
+					}
+
 				private:
 
 					inline size_t GetDivisionNumber(size_t i_bitNumber) const
@@ -48,6 +53,7 @@ namespace KPEngine
 					};
 
 					uint32_t* m_BitArrayStart;
+					void* m_BitArrayEnd;// Nothing of the BitArray exists past this pointer
 					size_t m_BitArraySubdivisionLength;
 					size_t m_NumOfBits;
 					
