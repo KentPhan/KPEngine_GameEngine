@@ -22,6 +22,9 @@ namespace KPEngine
 				static Fixed::KPFixedHeapManager* Fixed_32_HeapSystem;
 				static Fixed::KPFixedHeapManager* Fixed_128_HeapSystem;
 				static Dynamic::KPDynamicHeapManager* Dynamic_HeapSystem;
+
+				static void* MemorySystemAlloc(size_t i_size);
+				static void MemorySystemFree(void* i_ptr);
 			};
 			
 

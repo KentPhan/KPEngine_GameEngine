@@ -141,7 +141,8 @@ namespace KPEngine
 
 					// Calculate block number off of pointer
 					intptr_t l_difference = reinterpret_cast<intptr_t>(i_ptr) - reinterpret_cast<intptr_t>(this->m_InternalHeapStart);
-					return l_difference >= 0 && (l_difference % this->m_ByteSizeConfig == 0);
+					return (i_ptr >= this->m_InternalHeapStart) && (i_ptr < this->m_InternalHeapEnd) && l_difference >= 0 && (l_difference % this->m_ByteSizeConfig == 0);// Check if in heap bounds. Then check that it falls on a boundary
+					// TODO could optimize this check possibly with l_difference
 				}
 
 				bool KPFixedHeapManager::IsAllocated(void* i_ptr) const

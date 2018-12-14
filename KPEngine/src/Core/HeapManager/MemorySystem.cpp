@@ -16,6 +16,41 @@ namespace KPEngine
 			Dynamic::KPDynamicHeapManager* MemorySystem::Dynamic_HeapSystem = nullptr;
 
 
+			void* MemorySystem::MemorySystemAlloc(size_t i_size)
+			{
+				if (i_size <= 16)
+					return MemorySystem::Fixed_16_HeapSystem->_alloc(i_size);
+				else if (i_size <= 32)
+					return MemorySystem::Fixed_32_HeapSystem->_alloc(i_size);
+				else if (i_size <= 96)
+					return MemorySystem::Fixed_128_HeapSystem->_alloc(i_size);
+
+				return MemorySystem::Dynamic_HeapSystem->_alloc(i_size, 4);
+			}
+
+			void MemorySystem::MemorySystemFree(void* i_ptr)
+			{
+				if (MemorySystem::Fixed_16_HeapSystem->Contains(i_ptr))
+				{
+					MemorySystem::Fixed_16_HeapSystem->_free(i_ptr);
+					return;
+				}
+				else if (MemorySystem::Fixed_32_HeapSystem->Contains(i_ptr))
+				{
+					MemorySystem::Fixed_32_HeapSystem->_free(i_ptr);
+					return;
+				}
+				else if (MemorySystem::Fixed_128_HeapSystem->Contains(i_ptr))
+				{
+					MemorySystem::Fixed_128_HeapSystem->_free(i_ptr);
+					return;
+				}
+
+				bool test = MemorySystem::Dynamic_HeapSystem->_free(i_ptr);
+				assert(test);
+				return;
+			}
+
 			bool InitializeMemorySystem(void * i_pHeapMemory, size_t i_sizeHeapMemory)
 			{
 				// Create Fixed Heap Managers
@@ -50,6 +85,7 @@ namespace KPEngine
 				MemorySystem::Fixed_128_HeapSystem->Destroy();
 				MemorySystem::Dynamic_HeapSystem->Destroy();
 			}
+
 		}
 	}
 }
