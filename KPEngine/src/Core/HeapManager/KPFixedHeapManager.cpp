@@ -166,7 +166,7 @@ namespace KPEngine
 				void KPFixedHeapManager::ShowOutstandingAllocations() const
 				{
 					std::cout << "FIXED OUTSTANDING ALLOCATIONS ("<< this->m_ByteSizeConfig<<" bytes): "<< std::endl;
-					for(int i = 0; i < this->m_pBitArray->GetTotalBlocksMapped(); i++)
+					for(size_t i = 0; i < this->m_pBitArray->GetTotalBlocksMapped(); i++)
 					{
 						if (this->m_pBitArray->operator[](i))
 							std::cout << "BLOCK: " << (i + 1) << std::endl;
@@ -177,7 +177,7 @@ namespace KPEngine
 				void KPFixedHeapManager::ShowFreeBlocks() const
 				{
 					std::cout << "FIXED FREE BLOCKS (" << this->m_ByteSizeConfig << " bytes): " << std::endl;
-					for (int i = 0; i < this->m_pBitArray->GetTotalBlocksMapped(); i++)
+					for (size_t i = 0; i < this->m_pBitArray->GetTotalBlocksMapped(); i++)
 					{
 						if (!this->m_pBitArray->operator[](i))
 							std::cout << "BLOCK: " << (i + 1) << std::endl;
