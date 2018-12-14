@@ -76,6 +76,10 @@ namespace KPEngine
 
 				void KPDynamicHeapManager::Destroy()
 				{
+#if defined(_DEBUG)
+					ShowOutstandingAllocations();
+#endif
+
 					this->m_InternalHeapStart = nullptr;
 					this->m_InternalHeapEnd = nullptr;
 					this->m_InternalTotalSpace = 0;
