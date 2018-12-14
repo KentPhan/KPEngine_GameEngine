@@ -55,7 +55,7 @@ namespace KPEngine
 
 					// initialize blocks with pointer arithmetic
 					uint8_t* block = static_cast<uint8_t*>(manager->m_InternalHeapStart);
-					for (int i = 0; i < numberOfTotalBlocks; i++)
+					for (size_t i = 0; i < numberOfTotalBlocks; i++)// 
 					{
 						// initialize block descriptor at the start of the block
 						reinterpret_cast<BlockDescriptor*>(block)->m_sizeBlock = c_initialBlockSize;
@@ -67,7 +67,6 @@ namespace KPEngine
 					}
 
 					// Save this pointer as the end of our internal heap
-					// TODO Bug found here. Not actual end of Heap. Need to add (sizeof(BlockDescriptor) + c_initialBlockSize). Add and test later
 					manager->m_InternalHeapEnd = block;
 
 

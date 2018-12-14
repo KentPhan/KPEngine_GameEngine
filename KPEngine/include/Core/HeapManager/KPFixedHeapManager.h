@@ -32,11 +32,7 @@ namespace KPEngine
 
 					void * _alloc(size_t i_size);
 
-					void * _alloc(size_t i_size, unsigned int i_alignment);
-
 					bool _free(void * i_ptr);
-
-					void collect();
 
 					bool Contains(void * i_ptr) const;
 
@@ -50,9 +46,25 @@ namespace KPEngine
 
 				private:
 
-					bool m_ValidateDescriptor(void* i_pMemory) const;
+					inline int CalculateShiftPositiveRequiredForAlignment(uint8_t* i_pPointer, unsigned i_alignment) const
+					{
+						// If this block is not aligned. Calculate a shift and shift
+						if (!((reinterpret_cast<uintptr_t>(i_pPointer) & (i_alignment - 1)) == 0)) // masks pointer to check alignment
+						{
+							// calculate shift required to align block
+							return (i_alignment)-(reinterpret_cast<uintptr_t>(i_pPointer) & (i_alignment - 1)); // alignmentWanted - currentAlignment = shift required to align
+						}
+						return 0;
+					}
+
+					inline size_t CalculateBitNumberFromPointerToBlock(void* i_ptr) const
+					{
+						intptr_t l_difference = reinterpret_cast<intptr_t>(i_ptr) - reinterpret_cast<intptr_t>(this->m_InternalHeapStart);
+						return (l_difference / this->m_ByteSizeConfig) + 1;
+					}
+
 					BitArray* m_pBitArray;
-					size_t m_byteSizeConfig;
+					size_t m_ByteSizeConfig;
 					void * m_InternalHeapStart;
 					void * m_InternalHeapEnd;
 					size_t m_TotalSizeOfEverything;

@@ -67,7 +67,14 @@ namespace KPEngine
 					}
 					return true;
 				}
-
+				
+				/// <summary>
+				/// Determines whether [is bit set] [the specified i bit number]. 1 Indexed starting from 1
+				/// </summary>
+				/// <param name="i_bitNumber">The i bit number.</param>
+				/// <returns>
+				///   <c>true</c> if [is bit set] [the specified i bit number]; otherwise, <c>false</c>.
+				/// </returns>
 				bool BitArray::IsBitSet(size_t i_bitNumber) const
 				{
 					assert(i_bitNumber > 0);
@@ -76,6 +83,14 @@ namespace KPEngine
 					size_t l_offset = GetBitOffset(i_bitNumber);
 					return ((l_section >> l_offset) & 0x1) == 1;
 				}
+				
+				/// <summary>
+				/// Determines whether [is bit clear] [the specified i bit number].  1 Indexed starting from 1
+				/// </summary>
+				/// <param name="i_bitNumber">The i bit number.</param>
+				/// <returns>
+				///   <c>true</c> if [is bit clear] [the specified i bit number]; otherwise, <c>false</c>.
+				/// </returns>
 				bool BitArray::IsBitClear(size_t i_bitNumber) const
 				{
 					assert(i_bitNumber > 0);
@@ -84,7 +99,11 @@ namespace KPEngine
 					size_t l_offset = GetBitOffset(i_bitNumber);
 					return ((l_section >> l_offset) & 0x1) == 0;
 				}
-
+				
+				/// <summary>
+				/// Sets the bit. 1 Indexed starting from 1
+				/// </summary>
+				/// <param name="i_bitNumber">The i bit number.</param>
 				void BitArray::SetBit(size_t i_bitNumber)
 				{
 					assert(i_bitNumber > 0);
@@ -92,6 +111,11 @@ namespace KPEngine
 					size_t l_offset = GetBitOffset(i_bitNumber);
 					this->m_BitArrayStart[GetDivisionNumber(i_bitNumber)] |= (0x1 << l_offset);
 				}
+				
+				/// <summary>
+				/// Clears the bit. 1 Indexed starting from 1
+				/// </summary>
+				/// <param name="i_bitNumber">The i bit number.</param>
 				void BitArray::ClearBit(size_t i_bitNumber)
 				{
 					assert(i_bitNumber > 0);
@@ -99,7 +123,12 @@ namespace KPEngine
 					size_t l_offset = GetBitOffset(i_bitNumber);
 					this->m_BitArrayStart[GetDivisionNumber(i_bitNumber)] &= ~(0x1 << l_offset);
 				}
-
+				
+				/// <summary>
+				/// Gets the first clear bit. 1 Indexed starting from 1
+				/// </summary>
+				/// <param name="o_bitNumber">The o bit number.</param>
+				/// <returns></returns>
 				bool BitArray::GetFirstClearBit(size_t& o_bitNumber) const
 				{
 					// Loop through and find first set bit
@@ -115,6 +144,12 @@ namespace KPEngine
 					}
 					return false;
 				}
+				
+				/// <summary>
+				/// Gets the first set bit. 1 Indexed starting from 1
+				/// </summary>
+				/// <param name="o_bitNumber">The o bit number.</param>
+				/// <returns></returns>
 				bool BitArray::GetFirstSetBit(size_t& o_bitNumber) const
 				{
 					// Loop through and find first set bit
@@ -131,11 +166,9 @@ namespace KPEngine
 					return false;
 				}
 
-
-
 				bool BitArray::operator[](size_t i_index) const
 				{
-					return(IsBitSet(i_index));
+					return(IsBitSet(i_index + 1));
 				}
 
 				void BitArray::PrintBitArray() const

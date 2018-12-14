@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 #include "Core/HeapManager/MemorySystem.h"
+#include "Core/HeapManager/KPFixedHeapManager.h"
 
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
@@ -14,6 +15,25 @@
 #endif // _DEBUG
 
 bool MemorySystem_UnitTest();
+
+using KPEngine::Core::HeapManager::Fixed::KPFixedHeapManager;
+
+bool CustomFixedHeapManager_UnitTest()
+{
+	const size_t 		sizeHeap = 1024 * 1024;
+
+	// Allocate memory for my test heap.
+	void * pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
+	assert(pHeapMemory);
+
+	KPFixedHeapManager* l_manager = KPFixedHeapManager::Create(pHeapMemory, sizeHeap, KPEngine::Core::HeapManager::Fixed::Size_256, 100);
+	void* l_data = l_manager->_alloc(12);
+	void* l_data2 = l_manager->_alloc(25);
+	l_manager->_free(l_data2);
+
+	return false;
+}
+
 
 bool FixedHeapManager_UnitTest()
 {
