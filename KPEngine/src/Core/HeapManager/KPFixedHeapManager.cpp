@@ -2,6 +2,8 @@
 #include "../../../include/Core/HeapManager/BitArray.h"
 #include <cassert>
 #include <iostream>
+#include "../../../include/Utils/KPLogType.h"
+#include "../../../include/Utils/KP_Log.h"
 
 namespace KPEngine
 {
@@ -112,7 +114,7 @@ namespace KPEngine
 						this->m_pBitArray->SetBit(blockNumber);
 
 #if defined(_DEBUG)
-						std::cout << "ALLOCATED BLOCK : " << static_cast<void*>(l_pBlock) << std::endl;
+						DEBUG_PRINT(Utils::KPLogType::Verbose, "ALLOCATED FIXED BLOCK %p %u For %u Shifted %i", static_cast<void*>(l_pBlock));
 #endif		
 						return l_pBlock;
 					}
@@ -130,7 +132,7 @@ namespace KPEngine
 					this->m_pBitArray->ClearBit(CalculateBitNumberFromPointerToBlock(i_ptr));
 
 #if defined(_DEBUG)
-					std::cout << "FREED BLOCK : " << static_cast<void*>(i_ptr) << std::endl;
+					DEBUG_PRINT(Utils::KPLogType::Verbose, "FREED FIXED BLOCK %p", static_cast<void*>(i_ptr));
 #endif		
 					return true;
 				}
