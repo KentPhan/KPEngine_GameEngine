@@ -2,6 +2,8 @@
 #include "../../../include/Core/HeapManager/KPFixedHeapManager.h"
 #include "../../../include/Core/HeapManager/KPDynamicHeapManager.h"
 #include <cassert>
+#include "../../../include/Utils/KPLogType.h"
+#include "../../../include/Utils/KP_Log.h"
 
 namespace KPEngine
 {
@@ -19,11 +21,39 @@ namespace KPEngine
 			void* MemorySystem::MemorySystemAlloc(size_t i_size)
 			{
 				if (i_size <= 16)
+				{
+#if defined(_DEBUG)
+					void* toReturn = Fixed_16_HeapSystem->_alloc(i_size);
+					if (toReturn == nullptr)
+						DEBUG_PRINT(Utils::KPLogType::Error, "FIXED 16 ALLOCATOR OUT OF BLOCKS. PRECONFIGURE ADDITIONAL BLOCKS");
+					return toReturn;
+#else
 					return Fixed_16_HeapSystem->_alloc(i_size);
+#endif
+				}
 				else if (i_size <= 32)
+				{
+#if defined(_DEBUG)
+					void* toReturn = Fixed_32_HeapSystem->_alloc(i_size);
+					if (toReturn == nullptr)
+						DEBUG_PRINT(Utils::KPLogType::Error, "FIXED 32 ALLOCATOR OUT OF BLOCKS. PRECONFIGURE ADDITIONAL BLOCKS");
+					return toReturn;
+#else
 					return Fixed_32_HeapSystem->_alloc(i_size);
+#endif
+				}
 				else if (i_size <= 96)
+				{
+#if defined(_DEBUG)
+					void* toReturn = Fixed_128_HeapSystem->_alloc(i_size);
+					if (toReturn == nullptr)
+						DEBUG_PRINT(Utils::KPLogType::Error, "FIXED 128 ALLOCATOR OUT OF BLOCKS. PRECONFIGURE ADDITIONAL BLOCKS");
+					return toReturn;
+#else
 					return Fixed_128_HeapSystem->_alloc(i_size);
+#endif		
+				}
+					
 
 				return Dynamic_HeapSystem->_alloc(i_size, 4);
 			}
