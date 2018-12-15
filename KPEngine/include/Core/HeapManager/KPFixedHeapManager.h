@@ -22,6 +22,11 @@ namespace KPEngine
 					Size_1024,
 				};
 
+				struct GuardBand
+				{
+					uint32_t band = 0x0000;
+				};
+
 
 				class KPFixedHeapManager
 				{
@@ -69,7 +74,7 @@ namespace KPEngine
 					inline size_t CalculateBitNumberFromPointerToBlock(void* i_ptr) const
 					{
 						intptr_t l_difference = reinterpret_cast<intptr_t>(i_ptr) - reinterpret_cast<intptr_t>(this->m_InternalHeapStart);
-						return (l_difference / this->m_ByteSizeConfig) + 1;
+						return (l_difference / (this->m_ByteSizeConfig + sizeof(GuardBand))) + 1;
 					}
 
 					BitArray* m_pBitArray;
@@ -77,6 +82,7 @@ namespace KPEngine
 					void * m_InternalHeapStart;
 					void * m_InternalHeapEnd;
 					size_t m_TotalSizeOfEverything;
+					GuardBand MANAGER_BAND;
 				};
 			}
 		}

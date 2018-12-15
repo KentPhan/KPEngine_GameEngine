@@ -9,6 +9,7 @@
 #include "Core/HeapManager/KPMixedHeapAllocators.h"
 
 #include "Core/HeapManager/KPFixedHeapManager.h"
+#include <iostream>
 
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
@@ -180,6 +181,7 @@ bool MemorySystem_UnitTest()
 
 	delete[] pNewTest;
 
+	std::cout << "Number of Tested Allocations:" << numAllocs << " Number of Tested Frees:" << numTotalFrees << std::endl;
 	// we succeeded
 	return true;
 }

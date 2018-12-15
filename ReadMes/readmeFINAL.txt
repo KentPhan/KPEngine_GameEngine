@@ -33,7 +33,7 @@ Things I did that stand out:
 Create function, and a bit into that.
 - I added additional BitArray functions to help me found in BitArray.cpp outside of
 the spec.
-
+- I added Guard Banding to my Fixed Heap Allocator. Code can be found in "KPFixedHeapManager.cpp"(Like line 81) and "KPFixedHeapManager.h"
 
 -------------------------------------------------------------------------------------
 Flaws :

@@ -62,13 +62,13 @@ namespace KPEngine
 					const size_t numberOfTotalBlocks = manager->m_pBitArray->GetTotalBlocksMapped();
 
 					// TODO align this to 4 byte size
-					manager->m_TotalSizeOfEverything = sizeof(KPFixedHeapManager) + manager->m_pBitArray->GetTotalSizeOfBitArray() + (numberOfTotalBlocks * manager->m_ByteSizeConfig);// Heap Manager Size | BitArray Size | HeapManager Blocks Size |
+					manager->m_TotalSizeOfEverything = sizeof(KPFixedHeapManager) + manager->m_pBitArray->GetTotalSizeOfBitArray() + (numberOfTotalBlocks * (manager->m_ByteSizeConfig + sizeof(GuardBand)));// Heap Manager Size | BitArray Size | HeapManager Blocks Size With Guard Band |
 
-					std::cout << "Fixed HeapManager Created:" << sizeof(KPFixedHeapManager) << " bytes" << " Fixed Byte Config:" << manager->m_ByteSizeConfig << " Minimum Blocks:" << i_minimumBlocksRequired << std::endl;
 #if defined(_DEBUG)
 					assert(manager->m_TotalSizeOfEverything < i_sizeMemory);
 					std::cout << "Total number of blocks allocated:" << numberOfTotalBlocks << std::endl;
 #endif 
+					std::cout << "Fixed HeapManager Created:" << sizeof(KPFixedHeapManager) << " bytes" << " Fixed Byte Config:" << manager->m_ByteSizeConfig << " Minimum Blocks:" << i_minimumBlocksRequired << std::endl;
 
 					// initialize blocks with pointer arithmetic
 					uint8_t* block = static_cast<uint8_t*>(manager->m_InternalHeapStart);
@@ -78,7 +78,7 @@ namespace KPEngine
 						// Currently does nothing but loop through
 
 						// move block pointer to next block
-						block = block + (manager->m_ByteSizeConfig);
+						block = block + (manager->m_ByteSizeConfig) + sizeof(GuardBand);
 					} 
 
 					// Save this pointer as the end of our internal heap
@@ -118,7 +118,7 @@ namespace KPEngine
 					if(this->m_pBitArray->GetFirstClearBit(blockNumber))
 					{
 						// Calculate pointer to return based upon block number
-						uint8_t* l_pBlock = static_cast<uint8_t*>(this->m_InternalHeapStart) + ((blockNumber - 1) * this->m_ByteSizeConfig);
+						uint8_t* l_pBlock = static_cast<uint8_t*>(this->m_InternalHeapStart) + ((blockNumber - 1) * (this->m_ByteSizeConfig + sizeof(GuardBand)));
 						this->m_pBitArray->SetBit(blockNumber);
 
 #if defined(_DEBUG)
@@ -151,7 +151,7 @@ namespace KPEngine
 
 					// Calculate block number off of pointer
 					intptr_t l_difference = reinterpret_cast<intptr_t>(i_ptr) - reinterpret_cast<intptr_t>(this->m_InternalHeapStart);
-					return (i_ptr >= this->m_InternalHeapStart) && (i_ptr < this->m_InternalHeapEnd) && l_difference >= 0 && (l_difference % this->m_ByteSizeConfig == 0);// Check if in heap bounds. Then check that it falls on a boundary
+					return (i_ptr >= this->m_InternalHeapStart) && (i_ptr < this->m_InternalHeapEnd) && l_difference >= 0 && (l_difference % (this->m_ByteSizeConfig + sizeof(GuardBand)) == 0);// Check if in heap bounds. Then check that it falls on a boundary
 					// TODO: could optimize this check possibly with l_difference
 				}
 
