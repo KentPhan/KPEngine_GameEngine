@@ -7,6 +7,8 @@ in the solution settings.
 Assignment\u0734504\KPEngine\include\Core\HeapManager
 Assignment\u0734504\KPEngine\src\Core\HeapManager
 
+- All of my debug logs show in output using the log class we made in one of the assignments
+
 - I Integrated your MemorySystem into my project, which can be found in those folders.
 
 - I Still have my old allocator logic in there, but it's commented out to accomidate
