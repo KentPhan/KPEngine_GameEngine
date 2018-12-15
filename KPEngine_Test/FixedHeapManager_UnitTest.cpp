@@ -69,6 +69,7 @@ bool FixedHeapManager_UnitTest()
 
 bool MemorySystem_UnitTest()
 {
+	const size_t maxAllocations = 10 * 1024;
 	std::vector<void *> AllocatedAddresses;
 
 	long	numAllocs = 0;
@@ -77,12 +78,22 @@ bool MemorySystem_UnitTest()
 	long	numCollects = 0;
 
 	size_t totalAllocated = 0;
+
+	// reserve space in AllocatedAddresses for the maximum number of allocation attempts
+	// prevents new returning null when std::vector expands the underlying array
+	AllocatedAddresses.reserve(10 * 1024);
+
+
+
 	// allocate memory of random sizes up to 1024 bytes from the heap manager
 	// until it runs out of memory
 	do
 	{
 		const size_t		maxTestAllocationSize = 1024;
 
+		// reserve space in AllocatedAddresses for the maximum number of allocation attempts
+			// prevents new returning null when std::vector expands the underlying array
+		AllocatedAddresses.reserve(10 * 1024);
 		size_t			sizeAlloc = 1 + (rand() & (maxTestAllocationSize - 1));
 
 		void * pPtr = _malloc(sizeAlloc);
@@ -92,7 +103,7 @@ bool MemorySystem_UnitTest()
 		{
 			KPEngine::Core::HeapManager::MemorySystem::Collect();
 
-			pPtr = new char[sizeAlloc];
+			pPtr = _malloc(sizeAlloc);
 
 			// if not we're done. go on to cleanup phase of test
 			if (pPtr == nullptr)
@@ -124,7 +135,7 @@ bool MemorySystem_UnitTest()
 			numCollects++;
 		}
 
-	} while (1);
+	} while (numAllocs < maxAllocations);
 
 	// now free those blocks in a random order
 	if (!AllocatedAddresses.empty())
