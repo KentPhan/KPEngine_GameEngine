@@ -9,17 +9,16 @@
 #include "../../../include/Core/HeapManager/MemorySystem.h"
 #include <cassert>
 
-
 using KPEngine::Core::HeapManager::MemorySystem;
 
-void * __cdecl _malloc(size_t i_size)// TODO HELP FOR SOME REASON I CANT OVERRIDE THE ACTUAL MALLOC
+void * __cdecl malloc(size_t i_size)
 {
 	printf("malloc %zu\n", i_size);
 	
 	return MemorySystem::MemorySystemAlloc(i_size);
 }
 
-void __cdecl _free(void * i_ptr)// TODO HELP FOR SOME REASON I CANT OVERRIDE THE ACTUAL FREE
+void __cdecl free(void * i_ptr)
 {
 	printf("free 0x%" PRIXPTR "\n", reinterpret_cast<uintptr_t>(i_ptr));
 
@@ -57,3 +56,4 @@ void operator delete [](void * i_ptr)
 	MemorySystem::MemorySystemFree(i_ptr);
 	return;
 }
+

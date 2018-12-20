@@ -70,6 +70,8 @@ bool FixedHeapManager_UnitTest()
 
 bool MemorySystem_UnitTest()
 {
+	std::cout << "Memory System Test Start" << std::endl;
+
 	const size_t maxAllocations = 10 * 1024;
 	std::vector<void *> AllocatedAddresses;
 
@@ -97,14 +99,14 @@ bool MemorySystem_UnitTest()
 		AllocatedAddresses.reserve(10 * 1024);
 		size_t			sizeAlloc = 1 + (rand() & (maxTestAllocationSize - 1));
 
-		void * pPtr = _malloc(sizeAlloc);
+		void * pPtr = malloc(sizeAlloc);
 
 		// if allocation failed see if garbage collecting will create a large enough block
 		if (pPtr == nullptr)
 		{
 			KPEngine::Core::HeapManager::MemorySystem::Collect();
 
-			pPtr = _malloc(sizeAlloc);
+			pPtr = malloc(sizeAlloc);
 
 			// if not we're done. go on to cleanup phase of test
 			if (pPtr == nullptr)
@@ -125,7 +127,7 @@ bool MemorySystem_UnitTest()
 			void * pPtrToFree = AllocatedAddresses.back();
 			AllocatedAddresses.pop_back();
 
-			_free(pPtrToFree);
+			free(pPtrToFree);
 			numFrees++;
 			numTotalFrees++;
 		}
@@ -159,11 +161,11 @@ bool MemorySystem_UnitTest()
 		// our heap should be one single block, all the memory it started with
 
 		// do a large test allocation to see if garbage collection worked
-		void * pPtr = _malloc(totalAllocated / 2);
+		void * pPtr = malloc(totalAllocated / 2);
 
 		if (pPtr)
 		{
-			_free(pPtr);
+			free(pPtr);
 		}
 		else
 		{

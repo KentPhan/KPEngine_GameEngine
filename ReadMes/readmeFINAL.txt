@@ -43,13 +43,6 @@ This would come back to bite me back in the butt, for there was a chance where
 that key value could actually exist in the data. (How can I improve this? Or do I just have
 to loop through the whole list)
 
-- In my "KPMixedHeapAllocators.cpp" file, where I put your Allocators. I couldn't
-figure out for the love of god why I couldn't override the standard "malloc" and
-"free", I would get linker errors of duplicate definitions of sort. So I ended up
-naming the two to "_malloc" and "_free" (and updating this in your unit test). 
-Do you know what my problem is? I believe it has something to do with how I 
-organized my code base.
-
 - Documentation on BitScanArray was fairly weak. Does BitScanArray always scan 32 bits?
 Does BitScanArray64 always scan 64 bits? The documentation made it sound like it did,
 but other classmates said otherwise.
