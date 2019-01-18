@@ -6,7 +6,14 @@ Notes:
 \Engine\Core\Containers\BitArray.h
 \Engine\Core\Containers\BitArray.cpp
 
+First assignment:
+- Need to draw something
+- Switch to windows application in linker settings
+- Switch from main to WinMain
+- Link myGlib
 
+Once switching from a console app to a windows app. It might change basic libraries.
+Need to link in myGlib
 
 Questions:
 
@@ -29,4 +36,7 @@ Unreal
 
 Class
 - Confirm Game Engine Architecture book. Yas. Got it
-- Canvas Page?
+- Canvas Page? He's gonna make it
+
+After
+- Send message about refactoring files
