@@ -71,12 +71,12 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 
 
 	// The Game
-	GameManager::InitializeGame();
+	/*GameManager::InitializeGame();
 	GameManager::InitiateGame();
 	std::cout << "Ending Game\n";
 	std::cin.ignore();
+	GameManager::CleanUp();*/
 
-	GameManager::CleanUp();
 	KPEngine::CleanUp();
 
 	bool check = _CrtDumpMemoryLeaks();

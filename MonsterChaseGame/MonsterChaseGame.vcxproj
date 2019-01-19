@@ -104,9 +104,9 @@
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -129,7 +129,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -149,11 +149,11 @@
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -173,11 +173,11 @@
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
