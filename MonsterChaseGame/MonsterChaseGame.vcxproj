@@ -130,7 +130,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Exports\GLib;$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -154,7 +154,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Exports\GLib;$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -178,7 +178,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Exports\GLib;$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>

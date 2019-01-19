@@ -2,7 +2,7 @@
 // MonsterChaseGame.cpp : This file contains the 'main' function. Program execution begins and ends there.
 
 
-#include "KPEngine-init.h"
+//#include "KPEngine-init.h"
 #include <iostream>
 #include "../include/Managers/GameManager.h"
 #include <Windows.h>
@@ -40,7 +40,7 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 
 
 	// Test Initialization
-	KPEngine::Initialize();
+	//KPEngine::Initialize();
 
 	// G Lib Test. TODO Migrate Later
 	// IMPORTANT: first we need to initialize GLib
@@ -180,7 +180,7 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	std::cin.ignore();
 	GameManager::CleanUp();*/
 
-	KPEngine::CleanUp();
+	//KPEngine::CleanUp();
 
 	bool check = _CrtDumpMemoryLeaks();
 
