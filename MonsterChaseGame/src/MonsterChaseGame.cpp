@@ -8,8 +8,8 @@
 #include <Windows.h>
 
 using namespace MonsterChaseGame::Managers;
-int main()
-//int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
+//int main()
+int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 {
 	//_CrtSetBreakAlloc(166);
 	//_CrtSetBreakAlloc(167);
