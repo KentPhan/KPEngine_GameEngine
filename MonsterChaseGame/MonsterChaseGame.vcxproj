@@ -100,14 +100,14 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>$(ProjectDir)include\pch.h</PrecompiledHeaderFile>
       <BrowseInformation>true</BrowseInformation>
-      <AdditionalIncludeDirectories>$(SolutionDir)KPEngine\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLib\_System\;$(SolutionDir)GLib\;$(SolutionDir)KPEngine\include\</AdditionalIncludeDirectories>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <Bscmake>
@@ -123,14 +123,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)KPEngine\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLib\_System\;$(SolutionDir)GLib\;$(SolutionDir)KPEngine\include\</AdditionalIncludeDirectories>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Exports\GLib;$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -145,7 +145,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>$(ProjectDir)include\pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)KPEngine\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLib\_System\;$(SolutionDir)GLib\;$(SolutionDir)KPEngine\include\</AdditionalIncludeDirectories>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
@@ -154,7 +154,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Exports\GLib;$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -169,7 +169,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)KPEngine\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLib\_System\;$(SolutionDir)GLib\;$(SolutionDir)KPEngine\include\</AdditionalIncludeDirectories>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
@@ -178,7 +178,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\KPEngine.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Exports\GLib;$(SolutionDir)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
