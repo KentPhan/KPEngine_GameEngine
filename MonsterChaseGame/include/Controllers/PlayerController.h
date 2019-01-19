@@ -27,6 +27,7 @@ namespace MonsterChaseGame
 				m_pObject->SetController(this);
 			}
 			void UpdateGameObject() override;
+			void DrawGameObject() override;
 
 			// Input
 			void GetInput();

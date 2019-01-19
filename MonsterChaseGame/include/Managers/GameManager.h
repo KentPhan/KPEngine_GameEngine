@@ -21,6 +21,7 @@ namespace MonsterChaseGame
 			static void MainGameLoop(Controllers::PlayerController* player);
 			static void PrintMap();
 			static void UpdateMonsters();
+			static void DrawMonsters();
 
 		public:
 

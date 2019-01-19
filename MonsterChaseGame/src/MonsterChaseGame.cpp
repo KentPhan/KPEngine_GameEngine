@@ -45,7 +45,7 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 
 	// G Lib Test. TODO Migrate Later
 	// IMPORTANT: first we need to initialize GLib
-	bool bSuccess = GLib::Initialize(i_hInstance, i_nCmdShow, "GLibTest", -1, 800, 600);
+	bool bSuccess = GLib::Initialize(i_hInstance, i_nCmdShow, "Monster Chase Game", -1, 800, 600);
 
 	if (bSuccess)
 	{
@@ -53,8 +53,8 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 		GLib::SetKeyStateChangeCallback(TestKeyCallback);
 
 		// Create a couple of sprites using our own helper routine CreateSprite
-		GLib::Sprites::Sprite * pGoodGuy = CreateSprite("data\\GoodGuy.dds");
-		GLib::Sprites::Sprite * pBadGuy = CreateSprite("data\\BadGuy.dds");
+		GLib::Sprites::Sprite * pGoodGuy = CreateSprite("Assets\\girl.dds");
+		GLib::Sprites::Sprite * pBadGuy = CreateSprite("Assets\\zombie.dds");
 
 		bool bQuit = false;
 
@@ -170,8 +170,6 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	//KPString * testOther = new KPString("Second");
 	//test2 = *testOther;
 	//test3 = *testOther;
-
-	
 
 
 	// The Game

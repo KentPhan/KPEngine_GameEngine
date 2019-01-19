@@ -132,6 +132,8 @@ namespace MonsterChaseGame
 				player->UpdateGameObject();
 				UpdateMonsters();
 				PrintMap();
+				player->DrawGameObject();
+				DrawMonsters();
 			}
 		}
 
@@ -179,6 +181,21 @@ namespace MonsterChaseGame
 				monster->UpdateGameObject();TODO Why can't I do this?*/
 			}
 		}
+
+		void GameManager::DrawMonsters()
+		{
+			// For each monster. Draw
+			for (int i = 0; i < ms_pMonsterList->length(); i++)
+			{
+
+				//Monster monster = ms_pMonsterList[i];
+
+				ms_pMonsterList->Get(i)->DrawGameObject();
+				/*IKPGameObjectController* monster = ms_pMonsterList->Get(i);
+				monster->UpdateGameObject();TODO Why can't I do this?*/
+			}
+		}
+
 
 		// TODO Move To and Instance of some sort
 		void GameManager::SpawnMonster(const char* name)

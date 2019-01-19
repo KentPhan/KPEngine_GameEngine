@@ -16,6 +16,10 @@ namespace MonsterChaseGame
 			MoveMonsterRandomly();
 		}
 
+		void RandomMonsterController::DrawGameObject()
+		{
+		}
+
 		void RandomMonsterController::MoveMonsterRandomly()
 		{
 			assert(m_pObject);

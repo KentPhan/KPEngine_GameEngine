@@ -18,6 +18,11 @@ namespace MonsterChaseGame
 			MoveMonsterTowardsTarget();
 		}
 
+		void FollowMonsterController::DrawGameObject()
+		{
+		}
+
+
 		void FollowMonsterController::MoveMonsterTowardsTarget()
 		{
 			assert(m_pObject);
