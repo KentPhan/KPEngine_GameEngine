@@ -1,4 +1,4 @@
-#include "../../include/Managers/GameManager.h"
+#include "../../include/Managers/PlatformerGame.h"
 #include <iostream>
 #include "conio.h"
 #include "Utils/KP_Log.h"
@@ -19,18 +19,18 @@ namespace MonsterChaseGame
 		using namespace KPEngine::Core::Interfaces;
 
 		// define static members
-		bool GameManager::ms_bEndGame = false;
-		List<Interfaces::IKPGameObjectController*> * GameManager::ms_pMonsterList = nullptr;
-		PlayerController* GameManager::ms_pPlayerController = nullptr;
-		KPGameObject* GameManager::ms_pMap[20][20] = {};
+		bool PlatformerGame::ms_bEndGame = false;
+		List<Interfaces::IKPGameObjectController*> * PlatformerGame::ms_pMonsterList = nullptr;
+		PlayerController* PlatformerGame::ms_pPlayerController = nullptr;
+		KPGameObject* PlatformerGame::ms_pMap[20][20] = {};
 
-		bool GameManager::InitializeGame()
+		bool PlatformerGame::InitializeGame()
 		{
 			try
 			{
-				if (GameManager::ms_pMonsterList == nullptr)
+				if (PlatformerGame::ms_pMonsterList == nullptr)
 				{
-					GameManager::ms_pMonsterList = new List<Interfaces::IKPGameObjectController*>();
+					PlatformerGame::ms_pMonsterList = new List<Interfaces::IKPGameObjectController*>();
 				}
 
 				// Construct Map
@@ -55,7 +55,7 @@ namespace MonsterChaseGame
 
 
 
-		void GameManager::InitiateGame()
+		void PlatformerGame::InitiateGame()
 		{
 			DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Started");
 
@@ -127,7 +127,7 @@ namespace MonsterChaseGame
 			DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Ended");
 		}
 
-		void GameManager::MainGameLoop(PlayerController* player)
+		void PlatformerGame::MainGameLoop(PlayerController* player)
 		{
 			assert(player != nullptr);
 
@@ -148,7 +148,7 @@ namespace MonsterChaseGame
 			}
 		}
 
-		void GameManager::PrintMap()
+		void PlatformerGame::PrintMap()
 		{
 			// Print Map
 			std::cout << "Use WASD to control movement, press Q to quit, press P to print info. MUST PRESS ENTER AFTER INPUT. Touch monsters first to kill them. Get touched to die. " << ms_pMonsterList->length() << " Monsters Alive\n";
@@ -177,7 +177,7 @@ namespace MonsterChaseGame
 		}
 
 
-		void GameManager::UpdateMonsters()
+		void PlatformerGame::UpdateMonsters()
 		{
 			assert(ms_pMonsterList);
 
@@ -193,7 +193,7 @@ namespace MonsterChaseGame
 			}
 		}
 
-		void GameManager::DrawMonsters()
+		void PlatformerGame::DrawMonsters()
 		{
 			// For each monster. Draw
 			for (int i = 0; i < ms_pMonsterList->length(); i++)
@@ -209,7 +209,7 @@ namespace MonsterChaseGame
 
 
 		// TODO Move To and Instance of some sort
-		void GameManager::SpawnMonster(const char* name)
+		void PlatformerGame::SpawnMonster(const char* name)
 		{
 			assert(name);
 

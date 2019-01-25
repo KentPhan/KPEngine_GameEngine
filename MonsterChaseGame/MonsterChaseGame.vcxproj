@@ -183,8 +183,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\MonsterChaseGame.h" />
-    <ClInclude Include="include\Managers\GameManager.h" />
+    <ClInclude Include="include\GameMain.h" />
+    <ClInclude Include="include\Managers\PlatformerGame.h" />
     <ClInclude Include="include\GameObjects\GameObjectType.h" />
     <ClInclude Include="include\Controllers\PlayerController.h" />
     <ClInclude Include="include\Controllers\RandomMonsterController.h" />
@@ -192,8 +192,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Controllers\PlayerController.cpp" />
-    <ClCompile Include="src\Managers\GameManager.cpp" />
-    <ClCompile Include="src\MonsterChaseGame.cpp" />
+    <ClCompile Include="src\Managers\PlatformerGame.cpp" />
+    <ClCompile Include="src\GameMain.cpp" />
     <ClCompile Include="src\Controllers\RandomMonsterController.cpp" />
     <ClCompile Include="src\Controllers\FollowMonsterController.cpp" />
   </ItemGroup>

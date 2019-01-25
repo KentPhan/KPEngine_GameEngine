@@ -30,13 +30,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Managers\GameManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\GameObjects\GameObjectType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\MonsterChaseGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Controllers\PlayerController.h">
@@ -48,14 +42,14 @@
     <ClInclude Include="include\Controllers\RandomMonsterController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\GameMain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Managers\PlatformerGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Managers\GameManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MonsterChaseGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Controllers\PlayerController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -64,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="src\Controllers\RandomMonsterController.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Managers\PlatformerGame.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
