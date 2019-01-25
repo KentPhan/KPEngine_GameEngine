@@ -26,8 +26,8 @@ namespace MonsterChaseGame
 		public:
 
 			// Construction and Deconstruction
-			static void InitializeGame();
-			static void CleanUp()
+			static bool InitializeGame();
+			static void Shutdown()
 			{
 				delete ms_pMonsterList;
 			}

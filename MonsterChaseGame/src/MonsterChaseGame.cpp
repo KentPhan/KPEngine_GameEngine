@@ -40,86 +40,99 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	//_CrtSetBreakAlloc(167);
 
 
-	// Test Initialization
-	KPEngine::Initialize();
-
-	// G Lib Test. TODO Migrate Later
-	// IMPORTANT: first we need to initialize GLib
-	bool bSuccess = GLib::Initialize(i_hInstance, i_nCmdShow, "Monster Chase Game", -1, 800, 600);
-
-	if (bSuccess)
+	if(KPEngine::Initialize())
 	{
-		// IMPORTANT (if we want keypress info from GLib): Set a callback for notification of key presses
-		GLib::SetKeyStateChangeCallback(TestKeyCallback);
-
-		// Create a couple of sprites using our own helper routine CreateSprite
-		GLib::Sprites::Sprite * pGoodGuy = CreateSprite("Assets\\girl.dds");
-		GLib::Sprites::Sprite * pBadGuy = CreateSprite("Assets\\zombie.dds");
-
-		bool bQuit = false;
-
-		do
+		
+		if(GameManager::InitializeGame())
 		{
-			// IMPORTANT: We need to let GLib do it's thing. 
-			GLib::Service(bQuit);
+			KPEngine::Run();
 
-			if (!bQuit)
-			{
-				// IMPORTANT: Tell GLib that we want to start rendering
-				GLib::BeginRendering();
-				// Tell GLib that we want to render some sprites
-				GLib::Sprites::BeginRendering();
+			GameManager::Shutdown();
+		}
 
-				if (pGoodGuy)
-				{
-					static float			moveDist = .01f;
-					static float			moveDir = moveDist;
-
-					static GLib::Point2D	Offset = { -180.0f, -100.0f };
-
-					if (Offset.x < -220.0f)
-						moveDir = moveDist;
-					else if (Offset.x > -140.0f)
-						moveDir = -moveDist;
-
-					Offset.x += moveDir;
-
-					// Tell GLib to render this sprite at our calculated location
-					GLib::Sprites::RenderSprite(*pGoodGuy, Offset, 0.0f);
-				}
-				if (pBadGuy)
-				{
-					static float			moveDist = .02f;
-					static float			moveDir = -moveDist;
-
-					static GLib::Point2D	Offset = { 180.0f, -100.0f };
-
-					if (Offset.x > 200.0f)
-						moveDir = -moveDist;
-					else if (Offset.x < 160.0f)
-						moveDir = moveDist;
-
-					Offset.x += moveDir;
-
-					// Tell GLib to render this sprite at our calculated location
-					GLib::Sprites::RenderSprite(*pBadGuy, Offset, 0.0f);
-				}
-
-				// Tell GLib we're done rendering sprites
-				GLib::Sprites::EndRendering();
-				// IMPORTANT: Tell GLib we're done rendering
-				GLib::EndRendering();
-			}
-		} while (bQuit == false);
-
-		if (pGoodGuy)
-			GLib::Sprites::Release(pGoodGuy);
-		if (pBadGuy)
-			GLib::Sprites::Release(pBadGuy);
-
-		// IMPORTANT:  Tell GLib to shutdown, releasing resources.
-		GLib::Shutdown();
+		KPEngine::CleanUp();
 	}
+
+	
+
+	//// G Lib Test. TODO Migrate Later
+	//// IMPORTANT: first we need to initialize GLib
+	//bool bSuccess = GLib::Initialize(i_hInstance, i_nCmdShow, "Monster Chase Game", -1, 800, 600);
+
+	//if (bSuccess)
+	//{
+	//	// IMPORTANT (if we want keypress info from GLib): Set a callback for notification of key presses
+	//	GLib::SetKeyStateChangeCallback(TestKeyCallback);
+
+	//	// Create a couple of sprites using our own helper routine CreateSprite
+	//	GLib::Sprites::Sprite * pGoodGuy = CreateSprite("Assets\\girl.dds");
+	//	GLib::Sprites::Sprite * pBadGuy = CreateSprite("Assets\\zombie.dds");
+
+	//	bool bQuit = false;
+
+	//	do
+	//	{
+	//		// IMPORTANT: We need to let GLib do it's thing. 
+	//		GLib::Service(bQuit);
+
+	//		if (!bQuit)
+	//		{
+	//			// IMPORTANT: Tell GLib that we want to start rendering
+	//			GLib::BeginRendering();
+	//			// Tell GLib that we want to render some sprites
+	//			GLib::Sprites::BeginRendering();
+
+	//			if (pGoodGuy)
+	//			{
+	//				static float			moveDist = .01f;
+	//				static float			moveDir = moveDist;
+
+	//				static GLib::Point2D	Offset = { -180.0f, -100.0f };
+
+	//				if (Offset.x < -220.0f)
+	//					moveDir = moveDist;
+	//				else if (Offset.x > -140.0f)
+	//					moveDir = -moveDist;
+
+	//				Offset.x += moveDir;
+
+	//				// Tell GLib to render this sprite at our calculated location
+	//				GLib::Sprites::RenderSprite(*pGoodGuy, Offset, 0.0f);
+	//				GLib::Sprites::RenderSprite(*pGoodGuy, Offset, 90.0f);
+	//			}
+	//			if (pBadGuy)
+	//			{
+	//				static float			moveDist = .02f;
+	//				static float			moveDir = -moveDist;
+
+	//				static GLib::Point2D	Offset = { 180.0f, -100.0f };
+
+	//				if (Offset.x > 200.0f)
+	//					moveDir = -moveDist;
+	//				else if (Offset.x < 160.0f)
+	//					moveDir = moveDist;
+
+	//				Offset.x += moveDir;
+
+	//				// Tell GLib to render this sprite at our calculated location
+	//				GLib::Sprites::RenderSprite(*pBadGuy, Offset, 0.0f);
+	//			}
+
+	//			// Tell GLib we're done rendering sprites
+	//			GLib::Sprites::EndRendering();
+	//			// IMPORTANT: Tell GLib we're done rendering
+	//			GLib::EndRendering();
+	//		}
+	//	} while (bQuit == false);
+
+	//	if (pGoodGuy)
+	//		GLib::Sprites::Release(pGoodGuy);
+	//	if (pBadGuy)
+	//		GLib::Sprites::Release(pBadGuy);
+
+	//	// IMPORTANT:  Tell GLib to shutdown, releasing resources.
+	//	GLib::Shutdown();
+	//}
 
 
 
@@ -177,13 +190,11 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	GameManager::InitiateGame();
 	std::cout << "Ending Game\n";
 	std::cin.ignore();
-	GameManager::CleanUp();*/
+	GameManager::Shutdown();*/
 
-	KPEngine::CleanUp();
+	
 
 	bool check = _CrtDumpMemoryLeaks();
-
-
 	return 0;
 }
 

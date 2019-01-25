@@ -24,24 +24,33 @@ namespace MonsterChaseGame
 		PlayerController* GameManager::ms_pPlayerController = nullptr;
 		KPGameObject* GameManager::ms_pMap[20][20] = {};
 
-		void GameManager::InitializeGame()
+		bool GameManager::InitializeGame()
 		{
-			if(GameManager::ms_pMonsterList == nullptr)
+			try
 			{
-				GameManager::ms_pMonsterList = new List<Interfaces::IKPGameObjectController*>();
-			}
-
-			// Construct Map
-			// Default map with nullPtrs
-			for (int column = 0; column < 20; column++)
-			{
-				for (int row = 0; row < 20; row++)
+				if (GameManager::ms_pMonsterList == nullptr)
 				{
-					ms_pMap[column][row] = nullptr;
+					GameManager::ms_pMonsterList = new List<Interfaces::IKPGameObjectController*>();
 				}
-			}
 
-			ms_bEndGame = false;
+				// Construct Map
+				// Default map with nullPtrs
+				for (int column = 0; column < 20; column++)
+				{
+					for (int row = 0; row < 20; row++)
+					{
+						ms_pMap[column][row] = nullptr;
+					}
+				}
+
+				ms_bEndGame = false;
+			}
+			catch(int i_e)
+			{
+				DEBUG_PRINT(KPLogType::Fatal, "Game Failed to Initialize InitializeGame()");
+				return false;
+			}
+			return true;
 		}
 
 
@@ -130,8 +139,10 @@ namespace MonsterChaseGame
 
 				player->GetInput();
 				player->UpdateGameObject();
+
 				UpdateMonsters();
 				PrintMap();
+
 				player->DrawGameObject();
 				DrawMonsters();
 			}
