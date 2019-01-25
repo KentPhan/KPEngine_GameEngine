@@ -1,6 +1,6 @@
 #include "../../include/Controllers/PlayerController.h"
 #include <conio.h>
-#include "../../include/Managers/GameManager.h"
+#include "../../include/Managers/PlatformerGame.h"
 #include "../../include/GameObjects/GameObjectType.h"
 #include "Utils/KPLogType.h"
 #include "Utils/KP_Log.h"
@@ -44,13 +44,13 @@ namespace MonsterChaseGame
 				m_Direction = KPVector2(1, 0);
 				break;
 			case 'q':
-				Managers::GameManager::ms_bEndGame = true;
+				Managers::PlatformerGame::ms_bEndGame = true;
 				return;
 			case 'p':
 				// Print list of stuff
-				for (int i = 0; i < Managers::GameManager::ms_pMonsterList->length(); i++)
+				for (int i = 0; i < Managers::PlatformerGame::ms_pMonsterList->length(); i++)
 				{
-					Managers::GameManager::ms_pMonsterList->Get(i)->PrintInfo();
+					Managers::PlatformerGame::ms_pMonsterList->Get(i)->PrintInfo();
 				}
 				PrintInfo();
 				m_Direction = KPVector2(0,0);
@@ -96,7 +96,7 @@ namespace MonsterChaseGame
 				// kill monster
 				std::cout << " Monster Slain!\n";
 				KPGameObject* l_toKill = (*m_pMap)[newPosition.Y()][newPosition.X()];
-				Managers::GameManager::ms_pMonsterList->Remove(l_toKill->GetController()); 
+				Managers::PlatformerGame::ms_pMonsterList->Remove(l_toKill->GetController()); 
 				(*m_pMap)[newPosition.Y()][newPosition.X()] = m_pObject;
 			}
 

@@ -10,7 +10,7 @@ namespace MonsterChaseGame
 {
 	namespace Managers
 	{
-		class GameManager
+		class PlatformerGame
 		{
 		private:
 			// static members
