@@ -107,5 +107,8 @@
     <ClInclude Include="include\Core\HeapManager\KPMixedHeapAllocators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Core\Interfaces\IGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

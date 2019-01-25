@@ -158,6 +158,7 @@
     <ClInclude Include="include\Core\HeapManager\KPMixedHeapAllocators.h" />
     <ClInclude Include="include\Core\HeapManager\KPFixedHeapManager.h" />
     <ClInclude Include="include\Core\HeapManager\MemorySystem.h" />
+    <ClInclude Include="include\Core\Interfaces\IGame.h" />
     <ClInclude Include="include\Core\Interfaces\IKPGameObjectController.h" />
     <ClInclude Include="include\KPEngine-init.h" />
     <ClInclude Include="include\Utils\KPLogType.h" />

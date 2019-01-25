@@ -4,7 +4,6 @@
 
 //#include "KPEngine-init.h"
 #include <iostream>
-#include "../include/Managers/PlatformerGame.h"
 #include <Windows.h>
 
 
@@ -15,10 +14,7 @@
 
 #include "GLib.h"
 #include "KPEngine-init.h"
-
-
-using namespace MonsterChaseGame::Managers;
-
+#include "../include/PlatformerGame.h"
 
 void * LoadFile(const char * i_pFilename, size_t & o_sizeFile);
 GLib::Sprites::Sprite * CreateSprite(const char * i_pFilename);
@@ -43,11 +39,11 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	if(KPEngine::Initialize())
 	{
 		
-		if(PlatformerGame::InitializeGame())
+		if(MonsterChaseGame::PlatformerGame::InitializeGame())
 		{
 			KPEngine::Run();
 
-			PlatformerGame::Shutdown();
+			MonsterChaseGame::PlatformerGame::Shutdown();
 		}
 
 		KPEngine::CleanUp();
@@ -133,6 +129,7 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	//	// IMPORTANT:  Tell GLib to shutdown, releasing resources.
 	//	GLib::Shutdown();
 	//}
+
 
 	// The Game
 	/*PlatformerGame::InitializeGame();

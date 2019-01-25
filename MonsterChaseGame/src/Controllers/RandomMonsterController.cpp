@@ -1,6 +1,6 @@
 #include "../../include/Controllers/RandomMonsterController.h"
 #include "../../include/GameObjects/GameObjectType.h"
-#include "../../include/Managers/PlatformerGame.h"
+#include "../../include/PlatformerGame.h"
 
 namespace MonsterChaseGame
 {
@@ -52,14 +52,14 @@ namespace MonsterChaseGame
 				if (roll > 20)
 				{
 					std::cout << m_pObject->GetName().Get() << " Spawned a Monster!\n";
-					Managers::PlatformerGame::SpawnMonster("Spawn");
+					PlatformerGame::SpawnMonster("Spawn");
 				}
 				else
 				{
 					std::cout << " Monster Died!\n";
 					(*m_pMap)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
 
-					Managers::PlatformerGame::ms_pMonsterList->Remove(m_pObject->GetController()); // TODO IS THIS RIGHT?
+					PlatformerGame::ms_pMonsterList->Remove(m_pObject->GetController()); // TODO IS THIS RIGHT?
 				}
 
 			}
@@ -67,7 +67,7 @@ namespace MonsterChaseGame
 			else if ((*m_pMap)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::PlayerType)
 			{
 				// If monster attacks player first, player dies and quits game
-				Managers::PlatformerGame::ms_bEndGame = true;
+				PlatformerGame::ms_bEndGame = true;
 				std::cout << "Monster " << m_pObject->GetName().Get() << " Killed You!!!\n";
 				return;
 			}

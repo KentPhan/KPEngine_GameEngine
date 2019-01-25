@@ -45,7 +45,7 @@
     <ClInclude Include="include\GameMain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Managers\PlatformerGame.h">
+    <ClInclude Include="include\PlatformerGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,7 +62,7 @@
     <ClCompile Include="src\GameMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\PlatformerGame.cpp">
+    <ClCompile Include="src\PlatformerGame.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
