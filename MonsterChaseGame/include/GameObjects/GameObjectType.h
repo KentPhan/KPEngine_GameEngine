@@ -1,6 +1,6 @@
 #pragma once
 
-namespace MonsterChaseGame
+namespace PlatformerGame
 {
 	namespace GameObjects
 	{

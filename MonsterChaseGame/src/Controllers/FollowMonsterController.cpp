@@ -4,7 +4,7 @@
 #include "Utils/KPLogType.h"
 #include "Utils/KP_Log.h"
 
-namespace MonsterChaseGame
+namespace PlatformerGame
 {
 	namespace Controllers
 	{

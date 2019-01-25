@@ -4,7 +4,7 @@
 
 using namespace KPEngine::Core;
 
-namespace MonsterChaseGame
+namespace PlatformerGame
 {
 	namespace Controllers
 	{

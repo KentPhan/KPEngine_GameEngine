@@ -2,7 +2,7 @@
 #include "../../include/GameObjects/GameObjectType.h"
 #include "../../include/PlatformerGame.h"
 
-namespace MonsterChaseGame
+namespace PlatformerGame
 {
 	namespace Controllers
 	{

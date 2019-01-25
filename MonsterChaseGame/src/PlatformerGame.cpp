@@ -7,10 +7,10 @@
 #include "../include/PlatformerGame.h"
 
 
-using namespace MonsterChaseGame::Controllers;
+using namespace PlatformerGame::Controllers;
 using namespace KPEngine::Core;
 
-namespace MonsterChaseGame
+namespace PlatformerGame
 {
 	
 	using namespace KPEngine::Core::Interfaces;

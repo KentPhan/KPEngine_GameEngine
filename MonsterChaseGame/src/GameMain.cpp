@@ -1,5 +1,5 @@
 #include "../include/GameMain.h"
-// MonsterChaseGame.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// PlatformerGame.cpp : This file contains the 'main' function. Program execution begins and ends there.
 
 
 //#include "KPEngine-init.h"
@@ -39,11 +39,11 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	if(KPEngine::Initialize())
 	{
 		
-		if(MonsterChaseGame::PlatformerGame::InitializeGame())
+		if(PlatformerGame::PlatformerGame::InitializeGame())
 		{
 			KPEngine::Run();
 
-			MonsterChaseGame::PlatformerGame::Shutdown();
+			PlatformerGame::PlatformerGame::Shutdown();
 		}
 
 		KPEngine::CleanUp();

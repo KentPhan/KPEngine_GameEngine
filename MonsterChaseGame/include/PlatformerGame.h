@@ -6,7 +6,7 @@
 #include "Controllers/RandomMonsterController.h"
 
 
-namespace MonsterChaseGame
+namespace PlatformerGame
 {
 	class PlatformerGame
 	{
