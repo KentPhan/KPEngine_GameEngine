@@ -3,7 +3,7 @@
 #include <iostream>
 #include "../include/Utils/KP_Log.h"
 #include "../include/Core/HeapManager/MemorySystem.h"
-#include "../include/Core/Renderer/Renderer.h"
+#include "../include/Graphics/Renderer.h"
 //#include "../include/Core/HeapManager/MemorySystem.h"
 //#include "../include/Core/HeapManager/KPMixedHeapAllocators.h"
 
@@ -12,8 +12,6 @@ using namespace KPEngine::Utils;
 
 namespace KPEngine
 {
-	
-
 	bool Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 	{
 		try
@@ -25,7 +23,7 @@ namespace KPEngine
 
 
 			// Graphics
-			KPEngine::Core::Graphics::Renderer::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
+			KPEngine::Graphics::Renderer::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
 
 
 			DEBUG_PRINT(KPLogType::Verbose, "Engine Initialized");
@@ -67,7 +65,7 @@ namespace KPEngine
 		try
 		{
 			// Clean up Graphics
-			KPEngine::Core::Graphics::Renderer::Cleanup();
+			KPEngine::Graphics::Renderer::Cleanup();
 
 			// Clean up your Memory System (HeapManager and FixedSizeAllocators)
 			KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();
