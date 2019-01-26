@@ -27,7 +27,6 @@ namespace PlatformerGame
 				m_pObject->SetController(this);
 			}
 			void UpdateGameObject() override;
-			void DrawGameObject() override;
 
 			// Info
 			inline void PrintInfo() const override

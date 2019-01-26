@@ -20,10 +20,6 @@ namespace PlatformerGame
 			MovePlayer(m_Direction);
 		}
 
-		void PlayerController::DrawGameObject()
-		{
-		}
-
 		void PlayerController::GetInput()
 		{
 			char input;

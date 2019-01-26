@@ -180,10 +180,14 @@
     <ClInclude Include="include\Utils\KPString.h" />
     <ClInclude Include="include\Utils\KPVector2.h" />
     <ClInclude Include="include\Core\Classes\KPMap.h" />
-    <ClInclude Include="include\Core\Renderer\Renderer.h" />
+    <ClInclude Include="include\Graphics\Renderer.h" />
+    <ClInclude Include="include\Graphics\RenderComponent.h" />
+    <ClInclude Include="include\Physics\PhysicsComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Physics\PhysicsComponent.cpp" />
+    <ClCompile Include="src\Graphics\RenderComponent.cpp" />
+    <ClCompile Include="src\Graphics\Renderer.cpp" />
     <ClCompile Include="src\Core\Classes\KPGameObject.cpp" />
     <ClCompile Include="src\Core\Classes\KPMap.cpp" />
     <ClCompile Include="src\Core\HeapManager\BitArray.cpp" />
