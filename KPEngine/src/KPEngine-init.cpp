@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../include/Utils/KP_Log.h"
 #include "../include/Core/HeapManager/MemorySystem.h"
+#include "../include/Core/Renderer/Renderer.h"
 //#include "../include/Core/HeapManager/MemorySystem.h"
 //#include "../include/Core/HeapManager/KPMixedHeapAllocators.h"
 
@@ -23,7 +24,8 @@ namespace KPEngine
 			KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(pHeapMemory, sizeHeap);
 
 
-			// Renderer
+			// Graphics
+			KPEngine::Core::Graphics::Renderer::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
 
 
 			DEBUG_PRINT(KPLogType::Verbose, "Engine Initialized");
@@ -64,6 +66,9 @@ namespace KPEngine
 	{
 		try
 		{
+			// Clean up Graphics
+			KPEngine::Core::Graphics::Renderer::Cleanup();
+
 			// Clean up your Memory System (HeapManager and FixedSizeAllocators)
 			KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();
 			HeapFree(GetProcessHeap(), 0, pHeapMemory);

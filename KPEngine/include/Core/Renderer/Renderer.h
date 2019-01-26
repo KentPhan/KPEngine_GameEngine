@@ -5,25 +5,35 @@ namespace KPEngine
 {
 	namespace Core
 	{
-		namespace Renderer
+		namespace Graphics
 		{
 			class Renderer
 			{
 			public:
-				inline void Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
+				static inline void Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 				{
-					m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Monster Chase Game", -1, 800, 600);
+					// IMPORTANT: first we need to initialize GLib
+					m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 800, 600);
 				}
 
-				inline void Render()
+				
+				/// <summary>
+				/// Render Step
+				/// </summary>
+				static void Render();
+
+				static inline void Cleanup()
 				{
+					GLib::Shutdown();
 				}
 
-				inline void Cleanup()
-				{
-				}
+
+				
+
 			private:
-				bool m_InitializeSuccessful;
+				static GLib::Sprites::Sprite* CreateSprite(const char * i_pFilename);
+				static void * LoadFile(const char * i_pFilename, size_t & o_sizeFile);
+				static bool m_InitializeSuccessful;
 			};
 		}
 	}
