@@ -92,9 +92,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Lib>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -105,12 +108,15 @@
       <ConformanceMode>true</ConformanceMode>
       <BrowseInformation>true</BrowseInformation>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
     <Lib>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,6 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -129,6 +136,8 @@
     </Link>
     <Lib>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,6 +149,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLib\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -147,6 +157,8 @@
     </Link>
     <Lib>
       <OutputFile>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;$(SolutionDir)$(MSBuildProjectDefaultTargets)\$(Platform)\$(Configuration)\GLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -168,8 +180,10 @@
     <ClInclude Include="include\Utils\KPString.h" />
     <ClInclude Include="include\Utils\KPVector2.h" />
     <ClInclude Include="include\Core\Classes\KPMap.h" />
+    <ClInclude Include="include\Core\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Core\Classes\KPGameObject.cpp" />
     <ClCompile Include="src\Core\Classes\KPMap.cpp" />
     <ClCompile Include="src\Core\HeapManager\BitArray.cpp" />

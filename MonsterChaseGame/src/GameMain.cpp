@@ -36,7 +36,7 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	//_CrtSetBreakAlloc(167);
 
 
-	if(KPEngine::Initialize())
+	if(KPEngine::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine,i_nCmdShow))
 	{
 		
 		if(PlatformerGame::PlatformerGame::InitializeGame())
@@ -129,16 +129,6 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	//	// IMPORTANT:  Tell GLib to shutdown, releasing resources.
 	//	GLib::Shutdown();
 	//}
-
-
-	// The Game
-	/*PlatformerGame::InitializeGame();
-	PlatformerGame::InitiateGame();
-	std::cout << "Ending Game\n";
-	std::cin.ignore();
-	PlatformerGame::Shutdown();*/
-
-	
 
 	bool check = _CrtDumpMemoryLeaks();
 	return 0;

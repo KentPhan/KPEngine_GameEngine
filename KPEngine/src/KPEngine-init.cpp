@@ -13,7 +13,7 @@ namespace KPEngine
 {
 	
 
-	bool Initialize()
+	bool Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 	{
 		try
 		{
@@ -21,6 +21,10 @@ namespace KPEngine
 			const size_t	sizeHeap = 1024 * 1024;
 			KPEngine::pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
 			KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(pHeapMemory, sizeHeap);
+
+
+			// Renderer
+
 
 			DEBUG_PRINT(KPLogType::Verbose, "Engine Initialized");
 			std::cout << "KPEngine Initialized\n";
