@@ -9,6 +9,9 @@ namespace KPEngine
 		public:
 			RenderComponent();
 			~RenderComponent();
+			void Draw();
+		private:
+			//Sprite;
 		};
 	}
 }

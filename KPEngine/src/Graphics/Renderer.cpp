@@ -7,12 +7,28 @@ namespace KPEngine
 {
 	namespace Graphics
 	{
+		bool Renderer::m_InitializeSuccessful = false;
+
+		// TODO Move this input stuff
+//		void TestKeyCallback(unsigned int i_VKeyID, bool bWentDown)
+//		{
+//#ifdef _DEBUG
+//			const size_t	lenBuffer = 65;
+//			char			Buffer[lenBuffer];
+//
+//			sprintf_s(Buffer, lenBuffer, "VKey 0x%04x went %s\n", i_VKeyID, bWentDown ? "down" : "up");
+//			OutputDebugStringA(Buffer);
+//#endif // __DEBUG
+//		}
+		
+		
 		void Renderer::Render()
 		{
-			if (m_InitializeSuccessful)
+			if (Renderer::m_InitializeSuccessful)
 			{
+				// TODO move this input stuff
 				// IMPORTANT (if we want keypress info from GLib): Set a callback for notification of key presses
-				GLib::SetKeyStateChangeCallback(TestKeyCallback);
+				//GLib::SetKeyStateChangeCallback(TestKeyCallback);
 
 				// Create a couple of sprites using our own helper routine CreateSprite
 				GLib::Sprites::Sprite * pGoodGuy = CreateSprite("Assets\\girl.dds");

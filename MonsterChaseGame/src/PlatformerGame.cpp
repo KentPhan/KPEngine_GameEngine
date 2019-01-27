@@ -140,7 +140,7 @@ namespace PlatformerGame
 			UpdateMonsters();
 			PrintMap();
 
-			player->DrawGameObject();
+			//player->DrawGameObject();
 			DrawMonsters();
 		}
 	}
@@ -198,7 +198,7 @@ namespace PlatformerGame
 
 			//Monster monster = ms_pMonsterList[i];
 
-			ms_pMonsterList->Get(i)->DrawGameObject();
+			//ms_pMonsterList->Get(i)->DrawGameObject();
 			/*IKPGameObjectController* monster = ms_pMonsterList->Get(i);
 			monster->UpdateGameObject();TODO Why can't I do this?*/
 		}

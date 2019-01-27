@@ -57,6 +57,7 @@ namespace KPEngine
 			// TODO Physics
 
 			// TODO Draw
+			Graphics::Renderer::Render();
 		}
 	}
 

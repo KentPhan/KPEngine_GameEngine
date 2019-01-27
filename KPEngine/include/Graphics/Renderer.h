@@ -11,7 +11,7 @@ namespace KPEngine
 			static inline void Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 			{
 				// IMPORTANT: first we need to initialize GLib
-				m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 800, 600);
+				Renderer::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 800, 600);
 			}
 
 			
@@ -24,10 +24,7 @@ namespace KPEngine
 			{
 				GLib::Shutdown();
 			}
-
-
 			
-
 		private:
 			static GLib::Sprites::Sprite* CreateSprite(const char * i_pFilename);
 			static void * LoadFile(const char * i_pFilename, size_t & o_sizeFile);
