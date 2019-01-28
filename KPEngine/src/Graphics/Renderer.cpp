@@ -7,7 +7,6 @@ namespace KPEngine
 {
 	namespace Graphics
 	{
-		bool Renderer::m_InitializeSuccessful = false;
 
 		// TODO Move this input stuff
 //		void TestKeyCallback(unsigned int i_VKeyID, bool bWentDown)
@@ -24,7 +23,7 @@ namespace KPEngine
 		
 		void Renderer::Render()
 		{
-			if (Renderer::m_InitializeSuccessful)
+			if (this->m_InitializeSuccessful)
 			{
 				// TODO move this input stuff
 				// IMPORTANT (if we want keypress info from GLib): Set a callback for notification of key presses

@@ -23,7 +23,7 @@ namespace KPEngine
 
 
 			// Graphics
-			KPEngine::Graphics::Renderer::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
+			p_Renderer = new KPEngine::Graphics::Renderer(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
 
 
 			DEBUG_PRINT(KPLogType::Verbose, "Engine Initialized");
@@ -57,7 +57,7 @@ namespace KPEngine
 			// TODO Physics
 
 			// TODO Draw
-			Graphics::Renderer::Render();
+			p_Renderer->Render();
 		}
 	}
 
@@ -66,7 +66,7 @@ namespace KPEngine
 		try
 		{
 			// Clean up Graphics
-			KPEngine::Graphics::Renderer::Cleanup();
+			delete p_Renderer;
 
 			// Clean up your Memory System (HeapManager and FixedSizeAllocators)
 			KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();

@@ -8,27 +8,22 @@ namespace KPEngine
 		class Renderer
 		{
 		public:
-			static inline void Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
+			Renderer(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 			{
-				// IMPORTANT: first we need to initialize GLib
 				Renderer::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 800, 600);
 			}
 
-			
-			/// <summary>
-			/// Render Step
-			/// </summary>
-			static void Render();
+			void Render();
 
-			static inline void Cleanup()
+			~Renderer()
 			{
 				GLib::Shutdown();
 			}
 			
 		private:
-			static GLib::Sprites::Sprite* CreateSprite(const char * i_pFilename);
-			static void * LoadFile(const char * i_pFilename, size_t & o_sizeFile);
-			static bool m_InitializeSuccessful;
+			GLib::Sprites::Sprite* CreateSprite(const char * i_pFilename);
+			void * LoadFile(const char * i_pFilename, size_t & o_sizeFile);
+			bool m_InitializeSuccessful;
 		};
 	}
 }
