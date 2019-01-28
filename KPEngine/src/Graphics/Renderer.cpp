@@ -21,7 +21,7 @@ namespace KPEngine
 //		}
 		
 		
-		void Renderer::Render()
+		void Renderer::RenderStep()
 		{
 			if (this->m_InitializeSuccessful)
 			{
