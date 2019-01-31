@@ -22,43 +22,43 @@ namespace PlatformerGame
 
 		void PlayerController::GetInput()
 		{
-			char input;
-			std::cin >> input;
+			//char input;
+			//std::cin >> input;
 
-			switch (input)
-			{
-			case 'w':
-				m_Direction = KPVector2(0, -1);
-				break;
-			case 's':
-				m_Direction = KPVector2(0, 1);
-				break;
-			case 'a':
-				m_Direction = KPVector2(-1, 0);
-				break;
-			case 'd':
-				m_Direction = KPVector2(1, 0);
-				break;
-			case 'q':
-				PlatformerGame::ms_bEndGame = true;
-				return;
-			case 'p':
-				// Print list of stuff
-				for (int i = 0; i < PlatformerGame::ms_pMonsterList->length(); i++)
-				{
-					PlatformerGame::ms_pMonsterList->Get(i)->PrintInfo();
-				}
-				PrintInfo();
-				m_Direction = KPVector2(0,0);
-				break;
-			default:
-				if (input)
-				{
-					std::cout << "Invalid Input\n";
-					break;
-				}
+			//switch (input)
+			//{
+			//case 'w':
+			//	m_Direction = KPVector2(0, -1);
+			//	break;
+			//case 's':
+			//	m_Direction = KPVector2(0, 1);
+			//	break;
+			//case 'a':
+			//	m_Direction = KPVector2(-1, 0);
+			//	break;
+			//case 'd':
+			//	m_Direction = KPVector2(1, 0);
+			//	break;
+			//case 'q':
+			//	PlatformerGame::ms_bEndGame = true;
+			//	return;
+			//case 'p':
+			//	// Print list of stuff
+			//	for (int i = 0; i < PlatformerGame::ms_pMonsterList->length(); i++)
+			//	{
+			//		PlatformerGame::ms_pMonsterList->Get(i)->PrintInfo();
+			//	}
+			//	PrintInfo();
+			//	m_Direction = KPVector2(0,0);
+			//	break;
+			//default:
+			//	if (input)
+			//	{
+			//		std::cout << "Invalid Input\n";
+			//		break;
+			//	}
 
-			}
+			//}
 		}
 
 		void PlayerController::MovePlayer(const KPVector2 movement)

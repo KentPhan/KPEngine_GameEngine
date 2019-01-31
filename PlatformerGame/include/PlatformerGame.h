@@ -3,40 +3,34 @@
 #include "../../KPEngine/include/Utils/List.h"
 #include "Core/Classes/KPGameObject.h"
 #include "Controllers/PlayerController.h"
-#include "Controllers/RandomMonsterController.h"
+#include "Core/Interfaces/IGame.h"
 
 
 namespace PlatformerGame
 {
-	class PlatformerGame
+	class PlatformerGame : public KPEngine::Core::Interfaces::IGame
 	{
 	private:
 		// static members
-		//static const int monster_limit_ = 50;
-
-		// static game functions
-		static void MainGameLoop(Controllers::PlayerController* player);
 
 	public:
 
-		// Construction and Deconstruction
-		static bool InitializeGame();
-
-		static void Shutdown()
+		bool Init() override;
+		void Update(float i_deltaTime) override;
+		bool Shutdown() override
 		{
 			delete ms_pMonsterList;
+			return true;
 		}
 
-		// static game functions
-		static void InitiateGame();
-
+		//static void InitiateGame();
 		// Instances to access
-		static List<Interfaces::IKPGameObjectController*> * ms_pMonsterList;
-		static Controllers::PlayerController* ms_pPlayerController;
+		List<Interfaces::IKPGameObjectController*> * ms_pMonsterList;
+		Controllers::PlayerController* ms_pPlayerController;
 
 
 		// TODO Clean this up
-		static bool ms_bEndGame;
+		bool ms_bEndGame;
 	};
 }
 

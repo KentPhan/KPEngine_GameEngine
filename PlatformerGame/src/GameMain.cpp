@@ -22,15 +22,17 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	//_CrtSetBreakAlloc(166);
 	//_CrtSetBreakAlloc(167);
 
+	PlatformerGame::PlatformerGame Game = PlatformerGame::PlatformerGame();
 
-	if(KPEngine::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine,i_nCmdShow))
+
+	if(KPEngine::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine,i_nCmdShow, &Game))
 	{
 		
-		if(PlatformerGame::PlatformerGame::InitializeGame())
+		if(Game.Init())
 		{
 			KPEngine::Run();
 
-			PlatformerGame::PlatformerGame::Shutdown();
+			Game.Shutdown();
 		}
 
 		KPEngine::CleanUp();

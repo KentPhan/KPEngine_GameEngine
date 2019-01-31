@@ -5,14 +5,14 @@
 #include "../include/Core/HeapManager/MemorySystem.h"
 #include "../include/Graphics/Renderer.h"
 #include "../include/Core/Time/TimeSystem.h"
-
+#include "../include/Core/Interfaces/IGame.h"
 
 
 using namespace KPEngine::Utils;
 
 namespace KPEngine
 {
-	bool Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
+	bool Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow, Core::Interfaces::IGame* i_Game)
 	{
 		try
 		{
@@ -26,6 +26,10 @@ namespace KPEngine
 
 			// Graphics
 			p_Renderer = new KPEngine::Graphics::Renderer(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
+
+
+			// Game
+			p_Game = i_Game;
 
 
 			DEBUG_PRINT(KPLogType::Verbose, "Engine Initialized");
@@ -56,6 +60,7 @@ namespace KPEngine
 			//		 break;
 
 			// TODO Update GameObjects, AI
+			p_Game->Update(l_deltaTime);
 
 			// TODO Physics
 
