@@ -6,6 +6,7 @@
 #include "Core/Interfaces/IGame.h"
 
 
+
 namespace PlatformerGame
 {
 	class PlatformerGame : public KPEngine::Core::Interfaces::IGame

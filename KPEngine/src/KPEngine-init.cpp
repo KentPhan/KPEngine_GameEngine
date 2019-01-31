@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include <iostream>
 #include "../include/Utils/KP_Log.h"
-#include "../include/Core/HeapManager/MemorySystem.h"
+//#include "../include/Core/HeapManager/MemorySystem.h"
 #include "../include/Graphics/Renderer.h"
 #include "../include/Core/Time/TimeSystem.h"
 #include "../include/Core/Interfaces/IGame.h"
@@ -16,17 +16,16 @@ namespace KPEngine
 	{
 		try
 		{
-			// Custom Heap Manager and Memory System
-			const size_t	sizeHeap = 1024 * 1024;
-			KPEngine::pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
-			KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(pHeapMemory, sizeHeap);
+			//// Custom Heap Manager and Memory System
+			//const size_t	sizeHeap = 1024 * 1024;
+			//KPEngine::pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
+			//KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(pHeapMemory, sizeHeap);
 
 			// Time
 			KPEngine::Core::Time::TimeSystem::Initialize();
 
 			// Graphics
-			p_Renderer = new KPEngine::Graphics::Renderer(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
-
+			Graphics::Renderer::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
 
 			// TODO Physics
 
@@ -67,7 +66,7 @@ namespace KPEngine
 			// TODO Physics
 
 			// TODO Draw
-			p_Renderer->RenderStep();
+			Graphics::Renderer::RenderStep();
 		}
 	}
 
@@ -78,11 +77,11 @@ namespace KPEngine
 			// TODO Clean up Physics
 
 			// Clean up Graphics
-			delete p_Renderer;
+			Graphics::Renderer::Shutdown();
 
-			// Clean up your Memory System (HeapManager and FixedSizeAllocators)
-			KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();
-			HeapFree(GetProcessHeap(), 0, pHeapMemory);
+			//// Clean up your Memory System (HeapManager and FixedSizeAllocators)
+			//KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();
+			//HeapFree(GetProcessHeap(), 0, pHeapMemory);
 
 			DEBUG_PRINT(KPLogType::Verbose, "Engine Cleaned Up");
 			std::cout << "KPEngine Cleaned Up\n";

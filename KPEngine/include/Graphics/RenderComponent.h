@@ -1,14 +1,15 @@
 #pragma once
 #include "../Core/Classes/GameObject.h"
+#include "GLib.h"
 
-// TODO is this a good way to forward delcare Glib stuff?
-namespace GLib
-{
-	namespace Sprites
-	{
-		class Sprite;
-	}
-}
+//// TODO is this a good way to forward delcare Glib stuff?
+//namespace GLib
+//{
+//	namespace Sprites
+//	{
+//		class Sprite;
+//	}
+//}
 
 namespace KPEngine
 {
@@ -17,13 +18,16 @@ namespace KPEngine
 		class RenderComponent
 		{
 		public:
-			RenderComponent();
+			RenderComponent(Core::GameObject* i_GameObject, const char* i_pFileName);
 			~RenderComponent();
 			void Draw();
 		private:
-			Core::GameObject* m_pGameObject;
+			const Core::GameObject* m_pGameObject;
 			GLib::Sprites::Sprite * m_pSprite;
 			//Sprite;
+
+			GLib::Sprites::Sprite* CreateSprite(const char * i_pFilename);
+			void * LoadFile(const char * i_pFilename, size_t & o_sizeFile);
 		};
 	}
 }
