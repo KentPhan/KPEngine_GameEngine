@@ -29,6 +29,7 @@ namespace PlatformerGame
 			KPEngine::Graphics::RendererSystem::RegisterSprite(l_playerObject, "Assets\\girl.dds");
 
 			// Register Physics Component
+			// TODO Get Physics Component into Player Controller so player can apply force somehow
 			KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject);
 
 			// Attaching Controller
