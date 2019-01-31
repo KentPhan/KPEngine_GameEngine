@@ -1,6 +1,12 @@
 #pragma once
 #include <vector>
 
+namespace KPEngine {
+	namespace Core {
+		class GameObject;
+	}
+}
+
 namespace KPEngine
 {
 	namespace Physics
@@ -15,9 +21,10 @@ namespace KPEngine
 			static void PhysicsStep(float i_DeltaTime);
 			static void Shutdown();
 
-			// Outward facing functions
-
+			// Outward facing functions FOR NOW
+			static void RegisterPhysicsComponent(Core::GameObject* i_pGameObject);
 		private:
+			static bool m_InitializeSuccessful;
 			static std::vector<PhysicsComponent*> m_PhysicsComponents;
 		};
 	}
