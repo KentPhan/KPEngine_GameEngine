@@ -29,7 +29,7 @@ namespace PlatformerGame
 
 			PlayerController *l_pPlayerController = new PlayerController();
 			l_pPlayerController->Initialize(l_playerObject);
-			ms_pPlayerController = l_pPlayerController;
+			m_pPlayerController = l_pPlayerController;
 
 
 		}
@@ -43,12 +43,13 @@ namespace PlatformerGame
 
 	void PlatformerGame::Update(float i_deltaTime)
 	{
-		DEBUG_PRINT(KPLogType::Verbose, "Game Update Triggered: %f", i_deltaTime);
+		m_pPlayerController->Update(i_deltaTime);
+		//DEBUG_PRINT(KPLogType::Verbose, "Game Update Triggered: %f", i_deltaTime);
 	}
 
 	bool PlatformerGame::Shutdown()
 	{
-		delete ms_pPlayerController;
+		delete m_pPlayerController;
 		return true;
 	}
 }

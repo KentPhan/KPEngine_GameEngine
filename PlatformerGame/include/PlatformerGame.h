@@ -22,7 +22,7 @@ namespace PlatformerGame
 
 		//static void InitiateGame();
 		// Instances to access
-		Controllers::PlayerController* ms_pPlayerController;
+		Controllers::PlayerController* m_pPlayerController;
 	};
 }
 

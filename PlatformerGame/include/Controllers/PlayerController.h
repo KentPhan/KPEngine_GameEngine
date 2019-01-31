@@ -25,7 +25,7 @@ namespace PlatformerGame
 				m_pObject = i_pObject;
 				m_pObject->SetController(this);
 			}
-			void UpdateGameObject() override;
+			void Update(float i_deltaTime) override;
 
 			// Input
 			void GetInput();
@@ -48,7 +48,7 @@ namespace PlatformerGame
 				return m_pObject;
 			}
 		private:
-			void MovePlayer(const KPVector2 movement);
+			void MovePlayer(const KPVector2 movement, float i_DeltaTime);
 			KPVector2 m_Direction;
 			GameObject * m_pObject;
 		};

@@ -15,9 +15,12 @@ namespace PlatformerGame
 		{
 		}
 
-		void PlayerController::UpdateGameObject()
+		void PlayerController::Update(float i_deltaTime)
 		{
-			MovePlayer(m_Direction);
+			float l_speed = 1.0f;
+			MovePlayer(KPVector2(0.0f, 0.0f), i_deltaTime);
+
+			//MovePlayer(m_Direction);
 		}
 
 		void PlayerController::GetInput()
@@ -61,23 +64,24 @@ namespace PlatformerGame
 			//}
 		}
 
-		void PlayerController::MovePlayer(const KPVector2 movement)
+		void PlayerController::MovePlayer(const KPVector2 movement, float i_DeltaTime)
 		{
 			assert(m_pObject);
 			// TODO Update player position
+			float l_Speed = 1.0f * i_DeltaTime;
 
-			KPVector2 newPosition = m_pObject->GetPosition() + movement;
+			KPVector2 newPosition = m_pObject->GetPosition() + KPVector2(l_Speed,0.0f);
 
-			// TODO consolidate enforce boundaries
-			// only move if would stay in boundaries
-			if (newPosition.X() < 0 || newPosition.X() > 19)
-			{
-				newPosition.X(m_pObject->GetPosition().X());
-			}
-			if (newPosition.Y() < 0 || newPosition.Y() > 19)
-			{
-				newPosition.Y(m_pObject->GetPosition().Y());
-			}
+			//// TODO consolidate enforce boundaries
+			//// only move if would stay in boundaries
+			//if (newPosition.X() < 0 || newPosition.X() > 19)
+			//{
+			//	newPosition.X(m_pObject->GetPosition().X());
+			//}
+			//if (newPosition.Y() < 0 || newPosition.Y() > 19)
+			//{
+			//	newPosition.Y(m_pObject->GetPosition().Y());
+			//}
 
 			m_pObject->SetPosition(newPosition);
 		}

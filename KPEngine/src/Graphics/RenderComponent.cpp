@@ -20,7 +20,7 @@ namespace KPEngine
 
 		void RenderComponent::Draw()
 		{
-			static float			moveDist = .01f;
+			/*static float			moveDist = .01f;
 			static float			moveDir = moveDist;
 
 			static GLib::Point2D	Offset = { -180.0f, -100.0f };
@@ -30,8 +30,10 @@ namespace KPEngine
 			else if (Offset.x > -140.0f)
 				moveDir = -moveDist;
 
-			Offset.x += moveDir;
-
+			Offset.x += moveDir;*/
+			// TODO Convert Point2D to Vector
+			KPVector2 m_Position = m_pGameObject->GetPosition();
+			GLib::Point2D Offset = { m_Position.X(), m_Position.Y() };
 			GLib::Sprites::RenderSprite(*m_pSprite, Offset, 0.0f);
 		}
 

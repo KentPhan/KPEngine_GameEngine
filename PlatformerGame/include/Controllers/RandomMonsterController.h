@@ -25,7 +25,7 @@ namespace PlatformerGame
 				m_pObject = i_pObject;
 				m_pObject->SetController(this);
 			}
-			void UpdateGameObject() override;
+			void Update(float i_deltaTime) override;
 
 			// Info
 			inline void PrintInfo() const override

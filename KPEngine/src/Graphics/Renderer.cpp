@@ -51,8 +51,8 @@ namespace KPEngine
 
 				bool bQuit = false;
 
-				do
-				{
+				/*do
+				{*/
 					// IMPORTANT: We need to let GLib do it's thing. 
 					GLib::Service(bQuit);
 
@@ -109,7 +109,7 @@ namespace KPEngine
 						GLib::EndRendering();
 					}
 
-				} while (bQuit == false);
+				/*} while (bQuit == false);*/
 
 				/*if (pGoodGuy)
 					GLib::Sprites::Release(pGoodGuy);

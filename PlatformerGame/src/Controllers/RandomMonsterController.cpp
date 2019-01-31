@@ -10,7 +10,7 @@ namespace PlatformerGame
 		{
 		}
 
-		void RandomMonsterController::UpdateGameObject()
+		void RandomMonsterController::Update(float i_deltaTime)
 		{
 			//TODO Need to update monster position to be random here. Transfer from old code
 			MoveMonsterRandomly();

@@ -12,7 +12,7 @@ namespace PlatformerGame
 		{
 		}
 
-		void FollowMonsterController::UpdateGameObject()
+		void FollowMonsterController::Update(float i_deltaTime)
 		{
 			// TODO Need to update monster position to follow player here
 			MoveMonsterTowardsTarget();
