@@ -50,7 +50,7 @@ namespace PlatformerGame
 		std::cout << "Name player: \n";
 		std::cin >> name_input;
 
-		KPVector2 l_startPosition = KPVector2(0, 0);
+		KPVector2 l_startPosition = KPVector2(0.0f, 0.0f);
 
 		KPGameObject *l_playerObject = new KPGameObject(name_input, l_startPosition, GameObjects::PlayerType);
 		PlayerController *l_pPlayerController = new PlayerController();

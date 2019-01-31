@@ -14,7 +14,7 @@ namespace KPEngine
 				m_X = 0;
 				m_Y = 0;
 			}
-			inline KPVector2(int i_x, int i_y)
+			inline KPVector2(float i_x, float i_y)
 			{
 				m_X = i_x;
 				m_Y = i_y;
@@ -30,21 +30,21 @@ namespace KPEngine
 			}
 
 			// Get
-			inline int X() const
+			inline float X() const
 			{
 				return m_X;
 			}
-			inline int Y() const
+			inline float Y() const
 			{
 				return m_Y;
 			}
 
 			// Set
-			inline void X(int i_x)
+			inline void X(float i_x)
 			{
 				m_X = i_x;
 			}
-			inline void Y(int i_Y)
+			inline void Y(float i_Y)
 			{
 				m_Y = i_Y;
 			}
@@ -63,8 +63,8 @@ namespace KPEngine
 
 
 		private:
-			int m_X;
-			int m_Y;
+			float m_X;
+			float m_Y;
 			//TODO Need to use this to store positions in Monster Game
 
 			//TODO Need to do operator overloading
