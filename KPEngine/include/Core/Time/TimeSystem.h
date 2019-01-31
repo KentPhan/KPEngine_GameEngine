@@ -15,7 +15,7 @@ namespace KPEngine
 				static bool Initialized;
 				static double g_Frequency_s;
 				static double g_LastFrameStartTick;
-				static float g_LastFrameTime_ms;
+				static float g_LastFrameTime_s;
 				/*static LARGE_INTEGER* p_LastTickCount;*/
 
 			public:
@@ -41,24 +41,24 @@ namespace KPEngine
 					// if first frame
 					if(!g_LastFrameStartTick)
 					{
-						g_LastFrameTime_ms = 13.3f;
+						g_LastFrameTime_s = 13.3f;
 					}
 					// for other franes
 					else
 					{
 						double l_TickDifference = l_CurrentTickCounter - g_LastFrameStartTick;
 
-						g_LastFrameTime_ms = l_TickDifference * 1000 / g_Frequency_s;
+						g_LastFrameTime_s = l_TickDifference / g_Frequency_s;
 						//DEBUG_PRINT(Utils::KPLogType::Verbose, "Counter At %li", l_CurrentTickCounter);
 					}
 
 
-					//DEBUG_PRINT(Utils::KPLogType::Verbose, "Frame Time difference calculated At %f", g_LastFrameTime_ms);
+					//DEBUG_PRINT(Utils::KPLogType::Verbose, "Frame Time difference calculated At %f", g_LastFrameTime_s);
 					
 					// Save counter for next frame
 					g_LastFrameStartTick = l_CurrentTickCounter;
 
-					return g_LastFrameTime_ms;
+					return g_LastFrameTime_s;
 				}
 
 				static double GetCurrentTickCounter()
@@ -73,7 +73,7 @@ namespace KPEngine
 			bool TimeSystem::Initialized = false;
 			double TimeSystem::g_Frequency_s = 0;
 			double TimeSystem::g_LastFrameStartTick = 0;
-			float TimeSystem::g_LastFrameTime_ms = 0.0f;
+			float TimeSystem::g_LastFrameTime_s = 0.0f;
 		}
 	}
 }
