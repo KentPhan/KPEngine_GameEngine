@@ -8,7 +8,7 @@ namespace KPEngine
 {
 	namespace Graphics
 	{
-		class Renderer;
+		class RendererSystem;
 	}
 	namespace Core
 	{

@@ -6,7 +6,7 @@
 
 #include "../include/Core/Interfaces/IGame.h"
 #include "../include/Core/Time/TimeSystem.h"
-#include "../include/Graphics/Renderer.h"
+#include "../include/Graphics/RendererSystem.h"
 #include "../include/Physics/PhysicsSystem.h"
 #include "../include/Utils/KP_Log.h"
 
@@ -29,7 +29,7 @@ namespace KPEngine
 			KPEngine::Core::Time::TimeSystem::Initialize();
 
 			// Graphics
-			Graphics::Renderer::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
+			Graphics::RendererSystem::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
 
 			// Physics
 			Physics::PhysicsSystem::Initialize();
@@ -73,7 +73,7 @@ namespace KPEngine
 
 
 			// Draw
-			Graphics::Renderer::RenderStep();
+			Graphics::RendererSystem::RenderStep();
 		}
 	}
 
@@ -85,7 +85,7 @@ namespace KPEngine
 			Physics::PhysicsSystem::Shutdown();
 
 			// Clean up Graphics
-			Graphics::Renderer::Shutdown();
+			Graphics::RendererSystem::Shutdown();
 
 			//// Clean up your Memory System (HeapManager and FixedSizeAllocators)
 			//KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();

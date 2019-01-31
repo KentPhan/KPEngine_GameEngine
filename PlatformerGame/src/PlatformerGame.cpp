@@ -5,7 +5,7 @@
 #include "../include/Controllers/FollowMonsterController.h"
 #include "../include/GameObjects/GameObjectType.h"
 #include "../include/PlatformerGame.h"
-#include "Graphics/Renderer.h"
+#include "Graphics/RendererSystem.h"
 
 
 using namespace PlatformerGame::Controllers;
@@ -25,7 +25,7 @@ namespace PlatformerGame
 			GameObject *l_playerObject = new GameObject("Kent", l_startPosition, GameObjects::PlayerType);
 
 			// Registering Renderer Component
-			KPEngine::Graphics::Renderer::RegisterSprite(l_playerObject, "Assets\\girl.dds");
+			KPEngine::Graphics::RendererSystem::RegisterSprite(l_playerObject, "Assets\\girl.dds");
 
 			// Register Physics Component
 

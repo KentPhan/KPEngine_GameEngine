@@ -180,7 +180,7 @@
     <ClInclude Include="include\Utils\KPString.h" />
     <ClInclude Include="include\Utils\KPVector2.h" />
     <ClInclude Include="include\Core\Classes\KPMap.h" />
-    <ClInclude Include="include\Graphics\Renderer.h" />
+    <ClInclude Include="include\Graphics\RendererSystem.h" />
     <ClInclude Include="include\Graphics\RenderComponent.h" />
     <ClInclude Include="include\Physics\PhysicsComponent.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
@@ -189,7 +189,7 @@
   <ItemGroup>
     <ClCompile Include="src\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\Graphics\RenderComponent.cpp" />
-    <ClCompile Include="src\Graphics\Renderer.cpp" />
+    <ClCompile Include="src\Graphics\RendererSystem.cpp" />
     <ClCompile Include="src\Core\Classes\GameObject.cpp" />
     <ClCompile Include="src\Core\Classes\KPMap.cpp" />
     <ClCompile Include="src\Core\HeapManager\BitArray.cpp" />
