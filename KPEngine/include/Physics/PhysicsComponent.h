@@ -13,7 +13,7 @@ namespace KPEngine
 			void UpdatePhysics(float i_DeltaTime);
 		private:
 			// TODO Condense and organize types
-			const Core::GameObject* m_pGameObject;
+			Core::GameObject* m_pGameObject;
 			bool m_HasGravity;
 			float m_Mass;
 			KPVector2 m_Velocity;

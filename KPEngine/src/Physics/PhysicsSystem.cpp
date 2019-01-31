@@ -13,6 +13,8 @@ namespace KPEngine
 		void PhysicsSystem::RegisterPhysicsComponent(Core::GameObject* i_pGameObject)
 		{
 			assert(i_pGameObject);
+			PhysicsComponent* l_NewComponent = new PhysicsComponent(i_pGameObject);
+			m_PhysicsComponents.push_back(l_NewComponent);
 		}
 
 		void PhysicsSystem::Initialize()

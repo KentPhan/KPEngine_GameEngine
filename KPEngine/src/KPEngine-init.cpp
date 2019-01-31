@@ -71,7 +71,6 @@ namespace KPEngine
 			// Physics
 			Physics::PhysicsSystem::PhysicsStep(l_deltaTime);
 
-
 			// Draw
 			Graphics::RendererSystem::RenderStep();
 		}

@@ -6,6 +6,7 @@
 #include "../include/GameObjects/GameObjectType.h"
 #include "../include/PlatformerGame.h"
 #include "Graphics/RendererSystem.h"
+#include "Physics/PhysicsSystem.h"
 
 
 using namespace PlatformerGame::Controllers;
@@ -28,6 +29,7 @@ namespace PlatformerGame
 			KPEngine::Graphics::RendererSystem::RegisterSprite(l_playerObject, "Assets\\girl.dds");
 
 			// Register Physics Component
+			KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject);
 
 			// Attaching Controller
 			PlayerController *l_pPlayerController = new PlayerController();
