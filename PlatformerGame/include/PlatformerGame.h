@@ -17,20 +17,11 @@ namespace PlatformerGame
 
 		bool Init() override;
 		void Update(float i_deltaTime) override;
-		bool Shutdown() override
-		{
-			delete ms_pMonsterList;
-			return true;
-		}
+		bool Shutdown() override;
 
 		//static void InitiateGame();
 		// Instances to access
-		List<Interfaces::IKPGameObjectController*> * ms_pMonsterList;
 		Controllers::PlayerController* ms_pPlayerController;
-
-
-		// TODO Clean this up
-		bool ms_bEndGame;
 	};
 }
 

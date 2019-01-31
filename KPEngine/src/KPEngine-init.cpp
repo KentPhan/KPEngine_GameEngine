@@ -28,6 +28,8 @@ namespace KPEngine
 			p_Renderer = new KPEngine::Graphics::Renderer(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
 
 
+			// TODO Physics
+
 			// Game
 			p_Game = i_Game;
 
@@ -73,6 +75,8 @@ namespace KPEngine
 	{
 		try
 		{
+			// TODO Clean up Physics
+
 			// Clean up Graphics
 			delete p_Renderer;
 

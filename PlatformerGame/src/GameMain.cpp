@@ -22,6 +22,7 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 	//_CrtSetBreakAlloc(166);
 	//_CrtSetBreakAlloc(167);
 
+	// TODO is this right?
 	PlatformerGame::PlatformerGame Game = PlatformerGame::PlatformerGame();
 
 

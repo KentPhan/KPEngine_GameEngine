@@ -19,16 +19,20 @@ namespace PlatformerGame
 	{
 		try
 		{
-			if (PlatformerGame::ms_pMonsterList == nullptr)
-			{
-				PlatformerGame::ms_pMonsterList = new List<Interfaces::IKPGameObjectController*>();
-			}
+			// Create Player Game Object and register with engine
+			KPVector2 l_startPosition = KPVector2(0.0f, 0.0f);
+			KPGameObject *l_playerObject = new KPGameObject("Kent", l_startPosition, GameObjects::PlayerType);
 
-			ms_bEndGame = false;
+
+			PlayerController *l_pPlayerController = new PlayerController();
+			l_pPlayerController->Initialize(l_playerObject);
+			ms_pPlayerController = l_pPlayerController;
+
+
 		}
 		catch (int i_e)
 		{
-			DEBUG_PRINT(KPLogType::Fatal, "Game Failed to Initialize InitializeGame()");
+			DEBUG_PRINT(KPLogType::Fatal, "Game Failed to Initialize InitGame()");
 			return false;
 		}
 		return true;
@@ -39,30 +43,10 @@ namespace PlatformerGame
 		DEBUG_PRINT(KPLogType::Verbose, "Game Update Triggered: %f", i_deltaTime);
 	}
 
-
-	//void PlatformerGame::InitiateGame()
-	//{
-	//	DEBUG_PRINT(KPLogType::Verbose, "Platformer Game Started");
-
-	//	// Initialize player stuff
-	//	char* name_input = new char[1000];
-	//	std::cout << "Name player: \n";
-	//	std::cin >> name_input;
-
-	//	KPVector2 l_startPosition = KPVector2(0.0f, 0.0f);
-
-	//	KPGameObject *l_playerObject = new KPGameObject(name_input, l_startPosition, GameObjects::PlayerType);
-	//	PlayerController *l_pPlayerController = new PlayerController();
-	//	l_pPlayerController->Initialize(l_playerObject);
-	//	ms_pPlayerController = l_pPlayerController;
-
-	//	delete name_input;
-
-	//	DEBUG_PRINT(KPLogType::Verbose, "Player Made");
-
-	//	delete l_pPlayerController;
-
-	//	DEBUG_PRINT(KPLogType::Verbose, "Monster Chase Game Ended");
-	//}
+	bool PlatformerGame::Shutdown()
+	{
+		delete ms_pPlayerController;
+		return true;
+	}
 }
 
