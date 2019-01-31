@@ -11,7 +11,7 @@ namespace KPEngine
 			PhysicsComponent(Core::GameObject* i_GameObject);
 			~PhysicsComponent();
 
-			void ApplyForce(KPVector2 i_Force);
+			void AddForce(KPVector2 i_Force);
 
 			void UpdatePhysics(float i_DeltaTime);
 		private:

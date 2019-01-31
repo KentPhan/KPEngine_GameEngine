@@ -13,16 +13,7 @@ namespace KPEngine
 
 
 		// TODO Move this input stuff
-//		void TestKeyCallback(unsigned int i_VKeyID, bool bWentDown)
-//		{
-//#ifdef _DEBUG
-//			const size_t	lenBuffer = 65;
-//			char			Buffer[lenBuffer];
-//
-//			sprintf_s(Buffer, lenBuffer, "VKey 0x%04x went %s\n", i_VKeyID, bWentDown ? "down" : "up");
-//			OutputDebugStringA(Buffer);
-//#endif // __DEBUG
-//		}
+
 
 		
 		void RendererSystem::RegisterSprite(Core::GameObject* i_pGameObject, const char* i_pFileName)
@@ -35,10 +26,16 @@ namespace KPEngine
 			m_RenderComponents.push_back(l_NewComponent);
 		}
 
-		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
+		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow, void (*f)(unsigned int, bool))
 		{
 			RendererSystem::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 800, 600);
 			m_RenderComponents = std::vector<RenderComponent*>();
+
+
+			// TODO move this input stuff
+			// IMPORTANT (if we want keypress info from GLib): Set a callback for notification of key presses
+			GLib::SetKeyStateChangeCallback(f);
+
 		}
 
 		void RendererSystem::Shutdown()
@@ -55,9 +52,6 @@ namespace KPEngine
 		{
 			if (RendererSystem::m_InitializeSuccessful)
 			{
-				// TODO move this input stuff
-				// IMPORTANT (if we want keypress info from GLib): Set a callback for notification of key presses
-				//GLib::SetKeyStateChangeCallback(TestKeyCallback);
 
 				// Create a couple of sprites using our own helper routine CreateSprite
 				/*GLib::Sprites::Sprite * pGoodGuy = CreateSprite("Assets\\girl.dds");

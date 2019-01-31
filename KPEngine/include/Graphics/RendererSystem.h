@@ -12,7 +12,7 @@ namespace KPEngine
 		{
 		public:
 			// Core functions
-			static void Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow);
+			static void Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow, void (*f)(unsigned int, bool) );
 			static void RenderStep();
 			static void Shutdown();
 

@@ -16,6 +16,18 @@ using namespace KPEngine::Utils;
 
 namespace KPEngine
 {
+
+	void TestKeyCallback(unsigned int i_VKeyID, bool bWentDown)
+	{
+#ifdef _DEBUG
+		const size_t	lenBuffer = 65;
+		char			Buffer[lenBuffer];
+
+		sprintf_s(Buffer, lenBuffer, "VKey 0x%04x went %s\n", i_VKeyID, bWentDown ? "down" : "up");
+		OutputDebugStringA(Buffer);
+#endif // __DEBUG
+	}
+
 	bool Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow, Core::Interfaces::IGame* i_Game)
 	{
 		try
@@ -29,7 +41,7 @@ namespace KPEngine
 			KPEngine::Core::Time::TimeSystem::Initialize();
 
 			// Graphics
-			Graphics::RendererSystem::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
+			Graphics::RendererSystem::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow, TestKeyCallback);
 
 			// Physics
 			Physics::PhysicsSystem::Initialize();

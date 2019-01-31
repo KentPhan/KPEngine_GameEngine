@@ -32,7 +32,7 @@ namespace KPEngine
 			KPVector2 l_NewPosition = m_pGameObject->GetPosition() + ( ( (l_StartVelocity + m_Velocity)/2.0f) * i_DeltaTime);
 			m_pGameObject->SetPosition(l_NewPosition);
 
-			DEBUG_PRINT(KPLogType::Verbose, "Current Velocity: %f %f", l_NewPosition.X(), l_NewPosition.Y());
+			//DEBUG_PRINT(KPLogType::Verbose, "Current Velocity: %f %f", l_NewPosition.X(), l_NewPosition.Y());
 		}
 	}
 }
