@@ -10,6 +10,9 @@ namespace KPEngine
 		public:
 			PhysicsComponent(Core::GameObject* i_GameObject);
 			~PhysicsComponent();
+
+			void ApplyForce(KPVector2 i_Force);
+
 			void UpdatePhysics(float i_DeltaTime);
 		private:
 			// TODO Condense and organize types

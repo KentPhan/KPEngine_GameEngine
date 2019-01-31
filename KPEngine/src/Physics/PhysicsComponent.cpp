@@ -17,6 +17,11 @@ namespace KPEngine
 		{
 		}
 
+		void PhysicsComponent::AddForce(KPVector2 i_Force)
+		{
+			m_Acceleration +=  (i_Force / m_Mass);
+		}
+
 		void PhysicsComponent::UpdatePhysics(float i_DeltaTime)
 		{
 			// Update velocity via acceleration
