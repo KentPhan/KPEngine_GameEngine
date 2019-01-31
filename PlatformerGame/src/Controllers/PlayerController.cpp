@@ -70,7 +70,7 @@ namespace PlatformerGame
 			// TODO Update player position
 			float l_Speed = 5.0f * i_DeltaTime;
 
-			KPVector2 newPosition = m_pObject->GetPosition() + KPVector2(l_Speed,0.0f);
+			KPVector2 newPosition = m_pObject->GetPosition() + KPVector2(1.0f,1.0f) * l_Speed;
 
 			//// TODO consolidate enforce boundaries
 			//// only move if would stay in boundaries
