@@ -20,10 +20,9 @@ namespace PlatformerGame
 			// Setter
 
 			// Order
-			inline void Initialize(KPGameObject* i_pObject, KPGameObject* (*i_ppMap)[20][20]) override
+			inline void Initialize(KPGameObject* i_pObject) override
 			{
 				m_pObject = i_pObject;
-				m_pMap = i_ppMap;
 				m_pObject->SetController(this);
 			}
 			void UpdateGameObject() override;
@@ -52,7 +51,6 @@ namespace PlatformerGame
 			void MovePlayer(const KPVector2 movement);
 			KPVector2 m_Direction;
 			KPGameObject * m_pObject;
-			KPGameObject* (*m_pMap)[20][20];
 		};
 	}
 }

@@ -64,6 +64,7 @@ namespace PlatformerGame
 		void PlayerController::MovePlayer(const KPVector2 movement)
 		{
 			assert(m_pObject);
+			// TODO Update player position
 
 			KPVector2 newPosition = m_pObject->GetPosition() + movement;
 
@@ -76,24 +77,6 @@ namespace PlatformerGame
 			if (newPosition.Y() < 0 || newPosition.Y() > 19)
 			{
 				newPosition.Y(m_pObject->GetPosition().Y());
-			}
-
-			// remove old position
-			(*m_pMap)[m_pObject->GetPosition().Y()][m_pObject->GetPosition().X()] = nullptr;
-
-			// set new position
-			if ((*m_pMap)[newPosition.Y()][newPosition.X()] == nullptr)
-			{
-				// move
-				(*m_pMap)[newPosition.Y()][newPosition.X()] = m_pObject;
-			}
-			else if ((*m_pMap)[newPosition.Y()][newPosition.X()]->GetTag() == GameObjects::MonsterType)
-			{
-				// kill monster
-				std::cout << " Monster Slain!\n";
-				KPGameObject* l_toKill = (*m_pMap)[newPosition.Y()][newPosition.X()];
-				PlatformerGame::ms_pMonsterList->Remove(l_toKill->GetController()); 
-				(*m_pMap)[newPosition.Y()][newPosition.X()] = m_pObject;
 			}
 
 			m_pObject->SetPosition(newPosition);

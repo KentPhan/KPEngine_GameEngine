@@ -20,10 +20,9 @@ namespace PlatformerGame
 			
 
 			// Order
-			inline void Initialize(KPGameObject* i_pObject, KPGameObject* (*i_ppMap)[20][20]) override
+			inline void Initialize(KPGameObject* i_pObject) override
 			{
 				m_pObject = i_pObject;
-				m_pMap = i_ppMap;
 				m_pObject->SetController(this);
 			}
 			void UpdateGameObject() override;
@@ -44,7 +43,6 @@ namespace PlatformerGame
 		private:
 			void MoveMonsterRandomly();
 			KPGameObject * m_pObject;
-			KPGameObject* (*m_pMap)[20][20];
 		};
 	}
 }
