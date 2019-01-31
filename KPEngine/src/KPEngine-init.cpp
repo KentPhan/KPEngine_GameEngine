@@ -47,7 +47,6 @@ namespace KPEngine
 			// TODO Time Since Last Call Goes here
 			// Time
 			float l_deltaTime = KPEngine::Core::Time::TimeSystem::CalculateLastFrameTime();
-
 			// TODO Get Input From User
 			// Input:: Read();
 
