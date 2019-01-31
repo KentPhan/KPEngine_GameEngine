@@ -11,7 +11,7 @@ namespace KPEngine
 	{
 		namespace Interfaces
 		{
-			class IKPGameObjectController;
+			class IGameObjectController;
 		}
 	}
 }
@@ -59,7 +59,7 @@ namespace KPEngine
 			{
 				return m_Tag;
 			}
-			inline Interfaces::IKPGameObjectController* GetController() const
+			inline Interfaces::IGameObjectController* GetController() const
 			{
 				return m_pController;
 			}
@@ -85,11 +85,11 @@ namespace KPEngine
 			{
 				m_Tag = tag;
 			}
-			void SetController(Interfaces::IKPGameObjectController* i_pController);
+			void SetController(Interfaces::IGameObjectController* i_pController);
 			
 			
 		private:
-			Interfaces::IKPGameObjectController* m_pController;
+			Interfaces::IGameObjectController* m_pController;
 			KPVector2 m_Position;
 			KPString m_Name;
 			

@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Interfaces/IKPGameObjectController.h>
+#include <Core/Interfaces/IGameObjectController.h>
 #include <iostream>
 
 using namespace KPEngine::Core;
@@ -8,7 +8,7 @@ namespace PlatformerGame
 {
 	namespace Controllers
 	{
-		class PlayerController : public Interfaces::IKPGameObjectController
+		class PlayerController : public Interfaces::IGameObjectController
 		{
 		public:
 			PlayerController();
@@ -20,7 +20,7 @@ namespace PlatformerGame
 			// Setter
 
 			// Order
-			inline void Initialize(KPGameObject* i_pObject) override
+			inline void Initialize(GameObject* i_pObject) override
 			{
 				m_pObject = i_pObject;
 				m_pObject->SetController(this);
@@ -43,14 +43,14 @@ namespace PlatformerGame
 			{
 				return m_pObject->GetPosition();
 			}
-			inline KPGameObject* GetPossessedObject() const
+			inline GameObject* GetPossessedObject() const
 			{
 				return m_pObject;
 			}
 		private:
 			void MovePlayer(const KPVector2 movement);
 			KPVector2 m_Direction;
-			KPGameObject * m_pObject;
+			GameObject * m_pObject;
 		};
 	}
 }

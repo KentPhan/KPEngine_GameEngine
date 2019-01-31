@@ -21,7 +21,7 @@ namespace PlatformerGame
 		{
 			// Create Player Game Object and register with engine
 			KPVector2 l_startPosition = KPVector2(0.0f, 0.0f);
-			KPGameObject *l_playerObject = new KPGameObject("Kent", l_startPosition, GameObjects::PlayerType);
+			GameObject *l_playerObject = new GameObject("Kent", l_startPosition, GameObjects::PlayerType);
 
 
 			PlayerController *l_pPlayerController = new PlayerController();

@@ -1,4 +1,6 @@
 #pragma once
+#include "../Core/Classes/GameObject.h"
+
 // TODO is this a good way to forward delcare Glib stuff?
 namespace GLib
 {
@@ -19,6 +21,7 @@ namespace KPEngine
 			~RenderComponent();
 			void Draw();
 		private:
+			Core::GameObject* m_pGameObject;
 			GLib::Sprites::Sprite * m_pSprite;
 			//Sprite;
 		};

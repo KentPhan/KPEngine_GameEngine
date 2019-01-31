@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../KPEngine/include/Utils/List.h"
-#include "Core/Classes/KPGameObject.h"
+#include "Core/Classes/GameObject.h"
 #include "Controllers/PlayerController.h"
 #include "Core/Interfaces/IGame.h"
 

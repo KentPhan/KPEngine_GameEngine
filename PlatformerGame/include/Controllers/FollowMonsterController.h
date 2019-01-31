@@ -1,5 +1,5 @@
 #pragma once
-#include "Core/Interfaces/IKPGameObjectController.h"
+#include "Core/Interfaces/IGameObjectController.h"
 
 using namespace KPEngine::Core;
 
@@ -7,7 +7,7 @@ namespace PlatformerGame
 {
 	namespace Controllers
 	{
-		class FollowMonsterController : public KPEngine::Core::Interfaces::IKPGameObjectController
+		class FollowMonsterController : public KPEngine::Core::Interfaces::IGameObjectController
 		{
 		public:
 			FollowMonsterController();
@@ -17,10 +17,10 @@ namespace PlatformerGame
 			};
 
 			// Setter
-			inline void SetFocusObject(KPGameObject* i_pObject) { m_pFocus = i_pObject; }
+			inline void SetFocusObject(GameObject* i_pObject) { m_pFocus = i_pObject; }
 
 			// Order
-			inline void Initialize(KPGameObject* i_pObject) override
+			inline void Initialize(GameObject* i_pObject) override
 			{
 				m_pObject = i_pObject;
 				m_pObject->SetController(this);
@@ -42,8 +42,8 @@ namespace PlatformerGame
 			}
 		private:
 			void MoveMonsterTowardsTarget();
-			KPGameObject * m_pObject;
-			KPGameObject * m_pFocus;
+			GameObject * m_pObject;
+			GameObject * m_pFocus;
 		};
 	}
 }

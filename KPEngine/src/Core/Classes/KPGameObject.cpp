@@ -1,7 +1,7 @@
-#include "../../../include/Core/Classes/KPGameObject.h"
+#include "../../../include/Core/Classes/GameObject.h"
 #include  "../../../include/Core/Interfaces/IKPGameObjectController.h"
 
-void KPEngine::Core::KPGameObject::SetController(Interfaces::IKPGameObjectController* i_pController)
+void KPEngine::Core::GameObject::SetController(Interfaces::IKPGameObjectController* i_pController)
 {
 	m_pController = i_pController;
 	

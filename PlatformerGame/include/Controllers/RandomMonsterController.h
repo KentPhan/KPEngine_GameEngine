@@ -1,5 +1,5 @@
 #pragma once
-#include <Core/Interfaces/IKPGameObjectController.h>
+#include <Core/Interfaces/IGameObjectController.h>
 
 using namespace KPEngine::Core;
 
@@ -7,7 +7,7 @@ namespace PlatformerGame
 {
 	namespace Controllers
 	{
-		class RandomMonsterController : public KPEngine::Core::Interfaces::IKPGameObjectController
+		class RandomMonsterController : public KPEngine::Core::Interfaces::IGameObjectController
 		{
 		public:
 			RandomMonsterController();
@@ -20,7 +20,7 @@ namespace PlatformerGame
 			
 
 			// Order
-			inline void Initialize(KPGameObject* i_pObject) override
+			inline void Initialize(GameObject* i_pObject) override
 			{
 				m_pObject = i_pObject;
 				m_pObject->SetController(this);
@@ -42,7 +42,7 @@ namespace PlatformerGame
 			}
 		private:
 			void MoveMonsterRandomly();
-			KPGameObject * m_pObject;
+			GameObject * m_pObject;
 		};
 	}
 }

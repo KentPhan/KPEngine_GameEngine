@@ -27,7 +27,7 @@ namespace KPEngine
 				}
 				GLib::Shutdown();
 			}
-			
+
 		private:
 			GLib::Sprites::Sprite* CreateSprite(const char * i_pFilename);
 			void * LoadFile(const char * i_pFilename, size_t & o_sizeFile);

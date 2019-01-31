@@ -162,7 +162,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\Core\Classes\KPGameObject.h" />
+    <ClInclude Include="include\Core\Classes\GameObject.h" />
     <ClInclude Include="include\Core\HeapManager\BitArray.h" />
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapAllocators.h" />
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManagerProxy.h" />
@@ -171,7 +171,7 @@
     <ClInclude Include="include\Core\HeapManager\KPFixedHeapManager.h" />
     <ClInclude Include="include\Core\HeapManager\MemorySystem.h" />
     <ClInclude Include="include\Core\Interfaces\IGame.h" />
-    <ClInclude Include="include\Core\Interfaces\IKPGameObjectController.h" />
+    <ClInclude Include="include\Core\Interfaces\IGameObjectController.h" />
     <ClInclude Include="include\KPEngine-init.h" />
     <ClInclude Include="include\Utils\KPLogType.h" />
     <ClInclude Include="include\Utils\KPVector3.h" />
@@ -190,7 +190,7 @@
     <ClCompile Include="src\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\Graphics\RenderComponent.cpp" />
     <ClCompile Include="src\Graphics\Renderer.cpp" />
-    <ClCompile Include="src\Core\Classes\KPGameObject.cpp" />
+    <ClCompile Include="src\Core\Classes\GameObject.cpp" />
     <ClCompile Include="src\Core\Classes\KPMap.cpp" />
     <ClCompile Include="src\Core\HeapManager\BitArray.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManagerProxy.cpp" />
