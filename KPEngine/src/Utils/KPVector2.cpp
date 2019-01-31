@@ -14,13 +14,39 @@ namespace KPEngine
 			temp.Y(m_Y + i_other.m_Y);
 			return temp;
 		}
-
+		KPVector2& KPVector2::operator+=(const KPVector2& i_other)
+		{
+			this->m_X = (this->m_X + i_other.m_X);
+			this->m_Y = (this->m_Y + i_other.m_Y);
+			return *this;
+		}
+		
 		KPVector2 KPVector2::operator*(const float& i_other) const
 		{
 			KPVector2 temp;
 			temp.X(m_X * i_other);
 			temp.Y(m_Y * i_other);
 			return temp;
+		}
+		KPVector2& KPVector2::operator*=(const float& i_other)
+		{
+			this->m_X = (this->m_X * i_other);
+			this->m_Y = (this->m_Y * i_other);
+			return *this;
+		}
+
+		KPVector2 KPVector2::operator/(const float& i_other) const
+		{
+			KPVector2 temp;
+			temp.X(m_X / i_other);
+			temp.Y(m_Y / i_other);
+			return temp;
+		}
+		KPVector2& KPVector2::operator/=(const float& i_other)
+		{
+			this->m_X = (this->m_X / i_other);
+			this->m_Y = (this->m_Y / i_other);
+			return *this;
 		}
 
 		KPVector2& KPVector2::operator=(const KPVector2& i_other)
@@ -29,21 +55,6 @@ namespace KPEngine
 			this->m_Y = i_other.m_Y;
 			return *this;
 		}
-
-		KPVector2& KPVector2::operator*=(const float& i_other)
-		{
-			this->m_X = (this->m_X * i_other);
-			this->m_Y = (this->m_Y * i_other);
-			return *this;
-		}
-
-		KPVector2& KPVector2::operator+=(const KPVector2& i_other)
-		{
-			this->m_X = (this->m_X + i_other.m_X);
-			this->m_Y = (this->m_Y + i_other.m_Y);
-			return *this;
-		}
-
 		KPVector2 KPVector2::operator-(const KPVector2& i_other) const
 		{
 			KPVector2 temp;
@@ -51,6 +62,7 @@ namespace KPEngine
 			temp.Y(m_Y - i_other.m_Y);
 			return temp;
 		}
+		
 	}
 }
 

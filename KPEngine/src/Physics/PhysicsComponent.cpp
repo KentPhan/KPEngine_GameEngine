@@ -1,4 +1,5 @@
 #include "../../include/Physics/PhysicsComponent.h"
+#include "../../include/Utils/KP_Log.h"
 
 namespace KPEngine
 {
@@ -8,8 +9,8 @@ namespace KPEngine
 		{
 			m_HasGravity = false;
 			m_Mass = 1.0f;
-			m_Velocity = KPVector2(-10.0f, 0.0f);
-			m_Acceleration = KPVector2(0.0f, 0.0f);
+			m_Velocity = KPVector2(-10.0f, 10.0f);
+			m_Acceleration = KPVector2(2.0f, -2.0f);
 		}
 
 		PhysicsComponent::~PhysicsComponent()
@@ -18,15 +19,15 @@ namespace KPEngine
 
 		void PhysicsComponent::UpdatePhysics(float i_DeltaTime)
 		{
-			
-
 			// Update velocity via acceleration
+			KPVector2 l_StartVelocity = m_Velocity;
+			m_Velocity = m_Velocity + (m_Acceleration * i_DeltaTime);
 
-
-			// TODO do midpoint when applying acceleration
 			// Update position via velocity
-			KPVector2 l_NewPosition = m_pGameObject->GetPosition() + (m_Velocity * i_DeltaTime);
+			KPVector2 l_NewPosition = m_pGameObject->GetPosition() + ( ( (l_StartVelocity + m_Velocity)/2.0f) * i_DeltaTime);
 			m_pGameObject->SetPosition(l_NewPosition);
+
+			DEBUG_PRINT(KPLogType::Verbose, "Current Velocity: %f %f", l_NewPosition.X(), l_NewPosition.Y());
 		}
 	}
 }
