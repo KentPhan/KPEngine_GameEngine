@@ -20,13 +20,16 @@ namespace PlatformerGame
 	{
 		try
 		{
-			// Create Player Game Object and register with engine
+			// Create Player Game Object and register components with engine
 			KPVector2 l_startPosition = KPVector2(0.0f, 0.0f);
 			GameObject *l_playerObject = new GameObject("Kent", l_startPosition, GameObjects::PlayerType);
 
+			// Registering Renderer Component
 			KPEngine::Graphics::Renderer::RegisterSprite(l_playerObject, "Assets\\girl.dds");
 
+			// Register Physics Component
 
+			// Attaching Controller
 			PlayerController *l_pPlayerController = new PlayerController();
 			l_pPlayerController->Initialize(l_playerObject);
 			m_pPlayerController = l_pPlayerController;

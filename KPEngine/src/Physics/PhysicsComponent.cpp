@@ -4,13 +4,21 @@ namespace KPEngine
 {
 	namespace Physics
 	{
-		PhysicsComponent::PhysicsComponent()
+		PhysicsComponent::PhysicsComponent(Core::GameObject* i_GameObject) :m_pGameObject(i_GameObject)
 		{
+
 		}
+
+		
 
 
 		PhysicsComponent::~PhysicsComponent()
 		{
+		}
+
+		void PhysicsComponent::UpdatePhysics()
+		{
+
 		}
 	}
 }

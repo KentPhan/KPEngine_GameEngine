@@ -31,12 +31,26 @@ namespace KPEngine
 			assert(i_pGameObject);
 			assert(i_pFileName);
 
-
 			RenderComponent* l_NewComponent = new RenderComponent(i_pGameObject, i_pFileName);
 			m_RenderComponents.push_back(l_NewComponent);
 		}
 
-		
+		void Renderer::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
+		{
+			Renderer::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 800, 600);
+			m_RenderComponents = std::vector<RenderComponent*>();
+		}
+
+		void Renderer::Shutdown()
+		{
+			for (size_t i = 0; i < m_RenderComponents.size(); i++)
+			{
+				delete m_RenderComponents[i];
+			}
+			// IMPORTANT:  Tell GLib to shutdown, releasing resources.
+			GLib::Shutdown();
+		}
+
 		void Renderer::RenderStep()
 		{
 			if (Renderer::m_InitializeSuccessful)

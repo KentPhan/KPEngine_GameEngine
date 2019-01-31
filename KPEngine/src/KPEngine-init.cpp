@@ -1,13 +1,17 @@
 #include "../include/KPEngine-init.h"
+
 #include <Windows.h>
 #include <iostream>
-#include "../include/Utils/KP_Log.h"
-//#include "../include/Core/HeapManager/MemorySystem.h"
-#include "../include/Graphics/Renderer.h"
-#include "../include/Core/Time/TimeSystem.h"
+
+
 #include "../include/Core/Interfaces/IGame.h"
+#include "../include/Core/Time/TimeSystem.h"
+#include "../include/Graphics/Renderer.h"
+#include "../include/Physics/PhysicsSystem.h"
+#include "../include/Utils/KP_Log.h"
 
 
+//#include "../include/Core/HeapManager/MemorySystem.h"
 using namespace KPEngine::Utils;
 
 namespace KPEngine
@@ -27,7 +31,8 @@ namespace KPEngine
 			// Graphics
 			Graphics::Renderer::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
 
-			// TODO Physics
+			// Physics
+			Physics::PhysicsSystem::Initialize();
 
 			// Game
 			p_Game = i_Game;
@@ -63,9 +68,11 @@ namespace KPEngine
 			// TODO Update GameObjects, AI
 			p_Game->Update(l_deltaTime);
 
-			// TODO Physics
+			// Physics
+			Physics::PhysicsSystem::PhysicsStep(l_deltaTime);
 
-			// TODO Draw
+
+			// Draw
 			Graphics::Renderer::RenderStep();
 		}
 	}
@@ -74,7 +81,8 @@ namespace KPEngine
 	{
 		try
 		{
-			// TODO Clean up Physics
+			// Clean up Physics
+			Physics::PhysicsSystem::Shutdown();
 
 			// Clean up Graphics
 			Graphics::Renderer::Shutdown();

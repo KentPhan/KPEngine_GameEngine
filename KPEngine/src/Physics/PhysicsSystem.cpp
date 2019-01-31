@@ -5,12 +5,15 @@ namespace KPEngine
 {
 	namespace Physics
 	{
-		PhysicsSystem::PhysicsSystem()
+		void PhysicsSystem::Initialize()
 		{
 		}
 
+		void PhysicsSystem::PhysicsStep(float i_DeltaTime)
+		{
+		}
 
-		PhysicsSystem::~PhysicsSystem()
+		void PhysicsSystem::Shutdown()
 		{
 		}
 	}

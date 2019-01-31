@@ -10,14 +10,15 @@ namespace KPEngine
 		class PhysicsSystem
 		{
 		public:
-			PhysicsSystem();
+			// Core functions
+			static void Initialize();
+			static void PhysicsStep(float i_DeltaTime);
+			static void Shutdown();
 
-			void PhysicsStep();
-
-			~PhysicsSystem();
+			// Outward facing functions
 
 		private:
-			std::vector<PhysicsComponent*> m_PhysicsComponents;
+			static std::vector<PhysicsComponent*> m_PhysicsComponents;
 		};
 	}
 }

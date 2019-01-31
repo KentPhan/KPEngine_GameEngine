@@ -1,4 +1,5 @@
 #pragma once
+#include "../Core/Classes/GameObject.h"
 
 namespace KPEngine
 {
@@ -7,8 +8,11 @@ namespace KPEngine
 		class PhysicsComponent
 		{
 		public:
-			PhysicsComponent();
+			PhysicsComponent(Core::GameObject* i_GameObject);
 			~PhysicsComponent();
+			void UpdatePhysics();
+		private:
+			const Core::GameObject* m_pGameObject;
 		};
 	}
 }
