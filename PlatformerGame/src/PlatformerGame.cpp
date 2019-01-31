@@ -5,6 +5,7 @@
 #include "../include/Controllers/FollowMonsterController.h"
 #include "../include/GameObjects/GameObjectType.h"
 #include "../include/PlatformerGame.h"
+#include "Graphics/Renderer.h"
 
 
 using namespace PlatformerGame::Controllers;
@@ -22,6 +23,8 @@ namespace PlatformerGame
 			// Create Player Game Object and register with engine
 			KPVector2 l_startPosition = KPVector2(0.0f, 0.0f);
 			GameObject *l_playerObject = new GameObject("Kent", l_startPosition, GameObjects::PlayerType);
+
+			KPEngine::Graphics::Renderer::RegisterSprite(l_playerObject, "Assets\\girl.dds");
 
 
 			PlayerController *l_pPlayerController = new PlayerController();
