@@ -68,41 +68,6 @@ namespace KPEngine
 							m_RenderComponents[i]->Draw();
 						}
 
-						//if (pGoodGuy)
-						//{
-						//	static float			moveDist = .01f;
-						//	static float			moveDir = moveDist;
-
-						//	static GLib::Point2D	Offset = { -180.0f, -100.0f };
-
-						//	if (Offset.x < -220.0f)
-						//		moveDir = moveDist;
-						//	else if (Offset.x > -140.0f)
-						//		moveDir = -moveDist;
-
-						//	Offset.x += moveDir;
-
-						//	// Tell GLib to render this sprite at our calculated location
-						//	GLib::Sprites::RenderSprite(*pGoodGuy, Offset, 0.0f);
-						//}
-						//if (pBadGuy)
-						//{
-						//	static float			moveDist = .02f;
-						//	static float			moveDir = -moveDist;
-
-						//	static GLib::Point2D	Offset = { 180.0f, -100.0f };
-
-						//	if (Offset.x > 200.0f)
-						//		moveDir = -moveDist;
-						//	else if (Offset.x < 160.0f)
-						//		moveDir = moveDist;
-
-						//	Offset.x += moveDir;
-
-						//	// Tell GLib to render this sprite at our calculated location
-						//	GLib::Sprites::RenderSprite(*pBadGuy, Offset, 0.0f);
-						//}
-
 						// Tell GLib we're done rendering sprites
 						GLib::Sprites::EndRendering();
 						// IMPORTANT: Tell GLib we're done rendering
@@ -110,13 +75,6 @@ namespace KPEngine
 					}
 
 				/*} while (bQuit == false);*/
-
-				/*if (pGoodGuy)
-					GLib::Sprites::Release(pGoodGuy);
-				if (pBadGuy)
-					GLib::Sprites::Release(pBadGuy);*/
-
-				// IMPORTANT:  Tell GLib to shutdown, releasing resources.
 			}
 		}
 	}

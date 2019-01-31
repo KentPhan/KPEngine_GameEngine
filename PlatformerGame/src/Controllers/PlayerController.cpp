@@ -68,7 +68,7 @@ namespace PlatformerGame
 		{
 			assert(m_pObject);
 			// TODO Update player position
-			float l_Speed = 1.0f * i_DeltaTime;
+			float l_Speed = 5.0f * i_DeltaTime;
 
 			KPVector2 newPosition = m_pObject->GetPosition() + KPVector2(l_Speed,0.0f);
 

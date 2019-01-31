@@ -25,6 +25,7 @@ namespace KPEngine
 				{
 					delete m_RenderComponents[i];
 				}
+				// IMPORTANT:  Tell GLib to shutdown, releasing resources.
 				GLib::Shutdown();
 			}
 			// Outward facing functions FOR NOW
