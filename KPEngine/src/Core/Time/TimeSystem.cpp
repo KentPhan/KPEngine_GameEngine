@@ -7,14 +7,7 @@ namespace KPEngine
 	{
 		namespace Time
 		{
-			TimeSystem::TimeSystem()
-			{
-			}
-
-
-			TimeSystem::~TimeSystem()
-			{
-			}
+			
 		}
 	}
 }

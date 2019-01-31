@@ -183,6 +183,8 @@
     <ClInclude Include="include\Graphics\Renderer.h" />
     <ClInclude Include="include\Graphics\RenderComponent.h" />
     <ClInclude Include="include\Physics\PhysicsComponent.h" />
+    <ClInclude Include="include\Physics\PhysicsSystem.h" />
+    <ClInclude Include="include\Core\Time\TimeSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\PhysicsComponent.cpp" />
@@ -198,9 +200,11 @@
     <ClCompile Include="src\Core\HeapManager\KPFixedHeapManager.cpp" />
     <ClCompile Include="src\Core\HeapManager\MemorySystem.cpp" />
     <ClCompile Include="src\KPEngine-init.cpp" />
+    <ClCompile Include="src\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="src\Utils\KPString.cpp" />
     <ClCompile Include="src\Utils\KPVector2.cpp" />
     <ClCompile Include="src\Utils\KP_Log.cpp" />
+    <ClCompile Include="src\Core\Time\TimeSystem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

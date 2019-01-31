@@ -4,8 +4,8 @@
 #include "../include/Utils/KP_Log.h"
 #include "../include/Core/HeapManager/MemorySystem.h"
 #include "../include/Graphics/Renderer.h"
-//#include "../include/Core/HeapManager/MemorySystem.h"
-//#include "../include/Core/HeapManager/KPMixedHeapAllocators.h"
+#include "../include/Core/Time/TimeSystem.h"
+
 
 
 using namespace KPEngine::Utils;
@@ -21,6 +21,8 @@ namespace KPEngine
 			KPEngine::pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
 			KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(pHeapMemory, sizeHeap);
 
+			// Time
+			KPEngine::Core::Time::TimeSystem::Initialize();
 
 			// Graphics
 			p_Renderer = new KPEngine::Graphics::Renderer(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
@@ -43,7 +45,8 @@ namespace KPEngine
 		while (1)
 		{
 			// TODO Time Since Last Call Goes here
-			// flat l_deltaTime = Timing::CalcTimeSinceLastCall();
+			// Time
+			float l_deltaTime = KPEngine::Core::Time::TimeSystem::CalculateLastFrameTime();
 
 			// TODO Get Input From User
 			// Input:: Read();
