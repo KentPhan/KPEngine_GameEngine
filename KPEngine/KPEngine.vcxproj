@@ -185,8 +185,10 @@
     <ClInclude Include="include\Physics\PhysicsComponent.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Core\Time\TimeSystem.h" />
+    <ClInclude Include="include\Input\InputSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Input\InputSystem.cpp" />
     <ClCompile Include="src\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\Graphics\RenderComponent.cpp" />
     <ClCompile Include="src\Graphics\RendererSystem.cpp" />

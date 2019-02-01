@@ -69,6 +69,9 @@
     <ClCompile Include="src\Graphics\RendererSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Input\InputSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Utils\List.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Graphics\RendererSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input\InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
