@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <math.h>
 
 namespace KPEngine
 {
@@ -38,6 +39,14 @@ namespace KPEngine
 			{
 				return m_Y;
 			}
+			inline float Magnitude() const
+			{
+				return sqrtf(powf(m_X, 2.0f) + powf(m_Y, 2.0f) );
+			}
+			inline KPVector2 Normalized() const
+			{
+				return KPVector2(m_X,m_Y)/ Magnitude();
+			}
 
 			// Set
 			inline void X(float i_x)
@@ -61,12 +70,19 @@ namespace KPEngine
 
 			KPVector2& operator=(const KPVector2 & i_other);
 			KPVector2 operator-(const KPVector2 & i_other) const;
+
+			inline float Dot(const KPVector2 & i_other) const
+			{
+				return (m_X * i_other.m_X) + (m_Y * i_other.m_Y);
+			}
 			
 			//Print
 			inline void Print() const
 			{
 				std::cout << "(" << m_X << "," << m_Y << ")";
 			}
+
+			
 
 
 		private:

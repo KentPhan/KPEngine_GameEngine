@@ -11,6 +11,7 @@ namespace KPEngine
 		// TODO Having a hard time understanding why I have to do this
 		std::unordered_set<KeyCode>* InputSystem::m_pInputHashKeyDown;
 		std::unordered_set<KeyCode>* InputSystem::m_pInputHashKeyUp;
+		std::unordered_set<KeyCode>* InputSystem::m_pInputHashKeyHeldDown;
 
 
 		bool InputSystem::GetInputDown(KeyCode i_Key)
@@ -21,6 +22,11 @@ namespace KPEngine
 		bool InputSystem::GetInputUp(KeyCode i_Key)
 		{
 			return m_pInputHashKeyUp->count(i_Key);
+		}
+
+		bool InputSystem::GetInputHeldDown(KeyCode i_Key)
+		{
+			return m_pInputHashKeyHeldDown->count(i_Key);
 		}
 
 		bool InputSystem::QuitRequested()
@@ -35,6 +41,7 @@ namespace KPEngine
 
 			m_pInputHashKeyDown = new std::unordered_set<KeyCode>();
 			m_pInputHashKeyUp = new std::unordered_set<KeyCode>();
+			m_pInputHashKeyHeldDown = new std::unordered_set<KeyCode>();
 
 			return true;
 		}
@@ -58,6 +65,7 @@ namespace KPEngine
 
 			delete m_pInputHashKeyDown;
 			delete m_pInputHashKeyUp;
+			delete m_pInputHashKeyHeldDown;
 		}
 
 		void InputSystem::InputWindowCallBack(unsigned i_KeyID, bool i_bWentDown)
@@ -72,9 +80,16 @@ namespace KPEngine
 
 			// TODO Check for if key is not mapped
 			if (i_bWentDown)
+			{
 				m_pInputHashKeyDown->insert(static_cast<KeyCode>(i_KeyID));
+				m_pInputHashKeyHeldDown->insert(static_cast<KeyCode>(i_KeyID));
+			}
 			else
+			{
 				m_pInputHashKeyUp->insert(static_cast<KeyCode>(i_KeyID));
+				m_pInputHashKeyHeldDown->erase(static_cast<KeyCode>(i_KeyID));
+			}
+				
 
 			//KeyCode l_Key = static_cast<KeyCode>(i_KeyID);
 			//DEBUG_PRINT(Utils::Verbose, "Input Code: %i %i", InputSystem::inputCount++,  i_KeyID);

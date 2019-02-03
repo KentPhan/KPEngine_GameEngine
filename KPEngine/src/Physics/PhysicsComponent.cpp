@@ -9,6 +9,8 @@ namespace KPEngine
 		{
 			m_HasGravity = false;
 			m_Mass = 1.0f;
+			m_HasDrag = true;
+			m_DragCoefficient = 0.1f;
 			m_Velocity = KPVector2(0.0f, 0.0f);
 			m_Acceleration = KPVector2(0.0f, 0.0f);
 		}
@@ -32,6 +34,7 @@ namespace KPEngine
 			KPVector2 l_NewPosition = m_pGameObject->GetPosition() + ( ( (l_StartVelocity + m_Velocity)/2.0f) * i_DeltaTime);
 			m_pGameObject->SetPosition(l_NewPosition);
 
+			ApplyDrag(i_DeltaTime);
 			//DEBUG_PRINT(KPLogType::Verbose, "Current Velocity: %f %f", l_NewPosition.X(), l_NewPosition.Y());
 		}
 	}

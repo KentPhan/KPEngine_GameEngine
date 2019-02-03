@@ -177,6 +177,7 @@ namespace KPEngine
 			// Outward facing functions FOR NOW
 			static bool GetInputDown(KeyCode i_Key);
 			static bool GetInputUp(KeyCode i_Key);
+			static bool GetInputHeldDown(KeyCode i_Key);
 
 			// TODO Put this in a smarter place
 			static bool QuitRequested();
@@ -184,6 +185,7 @@ namespace KPEngine
 			static void InputWindowCallBack(unsigned int i_KeyID, bool i_bWentDown);
 			static std::unordered_set<KeyCode>* m_pInputHashKeyDown;
 			static std::unordered_set<KeyCode>* m_pInputHashKeyUp;
+			static std::unordered_set<KeyCode>* m_pInputHashKeyHeldDown;
 		};
 
 	}

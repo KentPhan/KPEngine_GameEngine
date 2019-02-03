@@ -17,23 +17,22 @@ namespace PlatformerGame
 
 		void PlayerController::Update(float i_deltaTime)
 		{
-			float l_Force = 5.0f;
+			float l_Force = 100.0f;
 			//MovePlayer(KPVector2(0.0f, 0.0f), i_deltaTime);
 
-
-			if(InputSystem::GetInputDown(KeyCode::W))
+			if(InputSystem::GetInputHeldDown(KeyCode::W))
 			{
 				m_pPlayersPhysicsComponent->AddForce(KPVector2(0.0f, 1.0f) * l_Force);
 			}
-			if(InputSystem::GetInputDown(KeyCode::S))
+			if(InputSystem::GetInputHeldDown(KeyCode::S))
 			{
 				m_pPlayersPhysicsComponent->AddForce(KPVector2(0.0f, -1.0f) * l_Force);
 			}
-			if (InputSystem::GetInputDown(KeyCode::A))
+			if (InputSystem::GetInputHeldDown(KeyCode::A))
 			{
 				m_pPlayersPhysicsComponent->AddForce(KPVector2(-1.0f, 0.0f) * l_Force);
 			}
-			if (InputSystem::GetInputDown(KeyCode::D))
+			if (InputSystem::GetInputHeldDown(KeyCode::D))
 			{
 				m_pPlayersPhysicsComponent->AddForce(KPVector2(1.0f, 0.0f) * l_Force);
 			}
