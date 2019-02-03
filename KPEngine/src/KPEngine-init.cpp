@@ -5,10 +5,12 @@
 
 
 #include "../include/Core/Interfaces/IGame.h"
+#include "../include/Input/InputSystem.h"
 #include "../include/Core/Time/TimeSystem.h"
 #include "../include/Graphics/RendererSystem.h"
 #include "../include/Physics/PhysicsSystem.h"
 #include "../include/Utils/KP_Log.h"
+
 
 
 //#include "../include/Core/HeapManager/MemorySystem.h"
@@ -16,17 +18,7 @@ using namespace KPEngine::Utils;
 
 namespace KPEngine
 {
-	// TODO Add Input System that returns bools to player based upon if a button is being pressed
-	void TestKeyCallback(unsigned int i_VKeyID, bool bWentDown)
-	{
-#ifdef _DEBUG
-		const size_t	lenBuffer = 65;
-		char			Buffer[lenBuffer];
-
-		sprintf_s(Buffer, lenBuffer, "VKey 0x%04x went %s\n", i_VKeyID, bWentDown ? "down" : "up");
-		OutputDebugStringA(Buffer);
-#endif // __DEBUG
-	}
+	
 
 	bool Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow, Core::Interfaces::IGame* i_Game)
 	{
@@ -34,20 +26,23 @@ namespace KPEngine
 		{
 			//// Custom Heap Manager and Memory System
 			//const size_t	sizeHeap = 1024 * 1024;
-			//KPEngine::pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
-			//KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(pHeapMemory, sizeHeap);
+			//KPEngine::g_pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
+			//KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(g_pHeapMemory, sizeHeap);
 
 			// Time
 			KPEngine::Core::Time::TimeSystem::Initialize();
 
+			// Input
+			Input::InputSystem::Initialize();
+
 			// Graphics
-			Graphics::RendererSystem::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow, TestKeyCallback);
+			Graphics::RendererSystem::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine, i_nCmdShow);
 
 			// Physics
 			Physics::PhysicsSystem::Initialize();
 
 			// Game
-			p_Game = i_Game;
+			g_pGame = i_Game;
 
 
 			DEBUG_PRINT(KPLogType::Verbose, "Engine Initialized");
@@ -66,25 +61,24 @@ namespace KPEngine
 	{
 		while (1)
 		{
-			// TODO Time Since Last Call Goes here
 			// Time
 			float l_deltaTime = KPEngine::Core::Time::TimeSystem::CalculateLastFrameTime();
 
-			// TODO Get Input From User
-			// Input:: Read();
+			// Check for quit
+			 if (Input::InputSystem::QuitRequested())
+					 break;
 
-			// TODO Check for quit
-			// if (QuitRequested())
-			//		 break;
-
-			// TODO Update GameObjects, AI
-			p_Game->Update(l_deltaTime);
+			// Update GameObjects, AI
+			g_pGame->Update(l_deltaTime);
 
 			// Physics
 			Physics::PhysicsSystem::PhysicsStep(l_deltaTime);
 
 			// Draw
 			Graphics::RendererSystem::RenderStep();
+
+			// Clear Input
+			Input::InputSystem::ClearInput();
 		}
 	}
 
@@ -98,9 +92,14 @@ namespace KPEngine
 			// Clean up Graphics
 			Graphics::RendererSystem::Shutdown();
 
+			// Clean up Input
+			Input::InputSystem::Shutdown();
+
+			// Clean up Time
+
 			//// Clean up your Memory System (HeapManager and FixedSizeAllocators)
 			//KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();
-			//HeapFree(GetProcessHeap(), 0, pHeapMemory);
+			//HeapFree(GetProcessHeap(), 0, g_pHeapMemory);
 
 			DEBUG_PRINT(KPLogType::Verbose, "Engine Cleaned Up");
 			std::cout << "KPEngine Cleaned Up\n";

@@ -12,7 +12,7 @@ namespace KPEngine
 		{
 		public:
 			// Core functions
-			static void Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow, void (*f)(unsigned int, bool) );
+			static void Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow);
 			static void RenderStep();
 			static void Shutdown();
 
@@ -21,7 +21,7 @@ namespace KPEngine
 
 		private:
 			static bool m_InitializeSuccessful;
-			static std::vector<RenderComponent*> m_RenderComponents;
+			static std::vector<RenderComponent*>* m_pRenderComponents;
 		};
 	}
 }

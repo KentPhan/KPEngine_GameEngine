@@ -19,8 +19,8 @@
 
 int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 {
-	//_CrtSetBreakAlloc(166);
-	//_CrtSetBreakAlloc(167);
+	//_CrtSetBreakAlloc(270);
+	//_CrtSetBreakAlloc(241);
 
 	// TODO is this right?
 	PlatformerGame::PlatformerGame Game = PlatformerGame::PlatformerGame();

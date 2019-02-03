@@ -8,18 +8,18 @@ namespace KPEngine
 	namespace Physics
 	{
 		bool PhysicsSystem::m_InitializeSuccessful;
-		std::vector<PhysicsComponent*> PhysicsSystem::m_PhysicsComponents;
+		std::vector<PhysicsComponent*>* PhysicsSystem::m_pPhysicsComponents;
 
 		void PhysicsSystem::RegisterPhysicsComponent(Core::GameObject* i_pGameObject)
 		{
 			assert(i_pGameObject);
 			PhysicsComponent* l_NewComponent = new PhysicsComponent(i_pGameObject);
-			m_PhysicsComponents.push_back(l_NewComponent);
+			m_pPhysicsComponents->push_back(l_NewComponent);
 		}
 
 		void PhysicsSystem::Initialize()
 		{
-			m_PhysicsComponents = std::vector<PhysicsComponent*>();
+			m_pPhysicsComponents = new std::vector<PhysicsComponent*>();
 			PhysicsSystem::m_InitializeSuccessful = true;
 		}
 
@@ -27,19 +27,21 @@ namespace KPEngine
 		{
 			if(PhysicsSystem::m_InitializeSuccessful)
 			{
-				for (size_t i = 0; i < m_PhysicsComponents.size(); i++)
+				for (size_t i = 0; i < m_pPhysicsComponents->size(); i++)
 				{
-					m_PhysicsComponents[i]->UpdatePhysics(i_DeltaTime);
+					(*m_pPhysicsComponents)[i]->UpdatePhysics(i_DeltaTime);
 				}
 			}
 		}
 
 		void PhysicsSystem::Shutdown()
 		{
-			for (size_t i = 0; i < m_PhysicsComponents.size(); i++)
+			for (size_t i = 0; i < m_pPhysicsComponents->size(); i++)
 			{
-				delete m_PhysicsComponents[i];
+				delete (*m_pPhysicsComponents)[i];
 			}
+
+			delete m_pPhysicsComponents;
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace KPEngine
 			class TimeSystem
 			{
 			private:
-				static bool Initialized;
+				static bool g_Initialized;
 				static double g_Frequency_s;
 				static double g_LastFrameStartTick;
 				static float g_LastFrameTime_s;
@@ -21,18 +21,18 @@ namespace KPEngine
 			public:
 				static void Initialize()
 				{
-					DEBUG_PRINT(Utils::KPLogType::Verbose, "Initializing Timer %d", Initialized);
+					DEBUG_PRINT(Utils::KPLogType::Verbose, "Initializing Timer %d", g_Initialized);
 
 					LARGE_INTEGER l_Frequency;
 					if (QueryPerformanceFrequency(&l_Frequency))
 					{
 						g_Frequency_s = static_cast<double>(l_Frequency.QuadPart);
-						Initialized = true;
+						g_Initialized = true;
 					}
 
-					DEBUG_PRINT(Utils::KPLogType::Verbose, "Time Frequency Set at %d %li ticks per second", Initialized,g_Frequency_s);
+					DEBUG_PRINT(Utils::KPLogType::Verbose, "Time Frequency Set at %d %li ticks per second", g_Initialized,g_Frequency_s);
 
-					//Initialized = true;
+					//g_Initialized = true;
 				}
 				static float CalculateLastFrameTime()
 				{
@@ -70,7 +70,7 @@ namespace KPEngine
 				}
 			};
 
-			bool TimeSystem::Initialized = false;
+			bool TimeSystem::g_Initialized = false;
 			double TimeSystem::g_Frequency_s = 0;
 			double TimeSystem::g_LastFrameStartTick = 0;
 			float TimeSystem::g_LastFrameTime_s = 0.0f;

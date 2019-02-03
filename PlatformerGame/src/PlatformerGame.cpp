@@ -36,8 +36,6 @@ namespace PlatformerGame
 			PlayerController *l_pPlayerController = new PlayerController();
 			l_pPlayerController->Initialize(l_playerObject);
 			m_pPlayerController = l_pPlayerController;
-
-
 		}
 		catch (int i_e)
 		{

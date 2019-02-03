@@ -20,6 +20,11 @@ namespace PlatformerGame
 			float l_speed = 1.0f;
 			MovePlayer(KPVector2(0.0f, 0.0f), i_deltaTime);
 
+
+			// InputSystem.GetInputDown(KeyCode.W)
+			// PhysicsComponent.AddForce
+
+
 			//MovePlayer(m_Direction);
 		}
 

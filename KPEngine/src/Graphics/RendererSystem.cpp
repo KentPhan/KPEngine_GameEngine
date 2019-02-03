@@ -9,13 +9,8 @@ namespace KPEngine
 	{
 		// TODO Having a hard time understanding why I have to do this
 		bool RendererSystem::m_InitializeSuccessful;
-		std::vector<RenderComponent*> RendererSystem::m_RenderComponents;
+		std::vector<RenderComponent*>* RendererSystem::m_pRenderComponents;
 
-
-		// TODO Move this input stuff
-
-
-		
 		void RendererSystem::RegisterSprite(Core::GameObject* i_pGameObject, const char* i_pFileName)
 		{
 			
@@ -23,29 +18,33 @@ namespace KPEngine
 			assert(i_pFileName);
 
 			RenderComponent* l_NewComponent = new RenderComponent(i_pGameObject, i_pFileName);
-			m_RenderComponents.push_back(l_NewComponent);
+			m_pRenderComponents->push_back(l_NewComponent);
 		}
 
-		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow, void (*f)(unsigned int, bool))
+		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 		{
 			RendererSystem::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 800, 600);
-			m_RenderComponents = std::vector<RenderComponent*>();
-
-
-			// TODO move this input stuff
-			// IMPORTANT (if we want keypress info from GLib): Set a callback for notification of key presses
-			GLib::SetKeyStateChangeCallback(f);
-
+			m_pRenderComponents = new  std::vector<RenderComponent*>();
 		}
 
 		void RendererSystem::Shutdown()
 		{
-			for (size_t i = 0; i < m_RenderComponents.size(); i++)
+			for (int i = 0; i < m_pRenderComponents->size(); i++)
 			{
-				delete m_RenderComponents[i];
+				delete (*m_pRenderComponents)[i];
 			}
-			// IMPORTANT:  Tell GLib to shutdown, releasing resources.
+			//for (std::vector<RenderComponent*>::iterator i = m_pRenderComponents->begin(); i != m_pRenderComponents->end(); i++)
+			//{
+			//	delete (*i);
+			//	//delete (*m_pRenderComponents)[i];
+			//}
+			
+			m_pRenderComponents->clear();
+
+			//// IMPORTANT:  Tell GLib to shutdown, releasing resources.
 			GLib::Shutdown();
+
+			delete m_pRenderComponents;
 		}
 
 		void RendererSystem::RenderStep()
@@ -71,9 +70,9 @@ namespace KPEngine
 						// Tell GLib that we want to render some sprites
 						GLib::Sprites::BeginRendering();
 
-						for (size_t i = 0; i < m_RenderComponents.size(); i++)
+						for (size_t i = 0; i < m_pRenderComponents->size(); i++)
 						{
-							m_RenderComponents[i]->Draw();
+							(*m_pRenderComponents)[i]->Draw();
 						}
 
 						// Tell GLib we're done rendering sprites

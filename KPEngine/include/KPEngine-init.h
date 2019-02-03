@@ -22,8 +22,8 @@ namespace KPEngine
 namespace KPEngine
 {
 
-	static void* pHeapMemory;
-	static Core::Interfaces::IGame* p_Game;
+	static void* g_pHeapMemory;
+	static Core::Interfaces::IGame* g_pGame;
 
 	bool Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow, Core::Interfaces::IGame* i_Game);
 	void Run();
