@@ -22,7 +22,7 @@ namespace KPEngine
 			static void Shutdown();
 
 			// Outward facing functions FOR NOW
-			static void RegisterPhysicsComponent(Core::GameObject* i_pGameObject);
+			static PhysicsComponent* RegisterPhysicsComponent(Core::GameObject* i_pGameObject);
 		private:
 			static bool m_InitializeSuccessful;
 			static std::vector<PhysicsComponent*>* m_pPhysicsComponents;

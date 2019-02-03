@@ -4,69 +4,39 @@
 #include "../../include/GameObjects/GameObjectType.h"
 #include "Utils/KPLogType.h"
 #include "Utils/KP_Log.h"
+#include "Input/InputSystem.h"
+#include "Physics/PhysicsComponent.h"
 
 namespace PlatformerGame
 {
 	namespace Controllers
 	{
+		using namespace KPEngine::Input;
 
-
-		PlayerController::PlayerController()
-		{
-		}
+		
 
 		void PlayerController::Update(float i_deltaTime)
 		{
-			float l_speed = 1.0f;
-			MovePlayer(KPVector2(0.0f, 0.0f), i_deltaTime);
+			float l_Force = 5.0f;
+			//MovePlayer(KPVector2(0.0f, 0.0f), i_deltaTime);
 
 
-			// InputSystem.GetInputDown(KeyCode.W)
-			// PhysicsComponent.AddForce
-
-
-			//MovePlayer(m_Direction);
-		}
-
-		void PlayerController::GetInput()
-		{
-			//char input;
-			//std::cin >> input;
-
-			//switch (input)
-			//{
-			//case 'w':
-			//	m_Direction = KPVector2(0, -1);
-			//	break;
-			//case 's':
-			//	m_Direction = KPVector2(0, 1);
-			//	break;
-			//case 'a':
-			//	m_Direction = KPVector2(-1, 0);
-			//	break;
-			//case 'd':
-			//	m_Direction = KPVector2(1, 0);
-			//	break;
-			//case 'q':
-			//	PlatformerGame::ms_bEndGame = true;
-			//	return;
-			//case 'p':
-			//	// Print list of stuff
-			//	for (int i = 0; i < PlatformerGame::ms_pMonsterList->length(); i++)
-			//	{
-			//		PlatformerGame::ms_pMonsterList->Get(i)->PrintInfo();
-			//	}
-			//	PrintInfo();
-			//	m_Direction = KPVector2(0,0);
-			//	break;
-			//default:
-			//	if (input)
-			//	{
-			//		std::cout << "Invalid Input\n";
-			//		break;
-			//	}
-
-			//}
+			if(InputSystem::GetInputDown(KeyCode::W))
+			{
+				m_pPlayersPhysicsComponent->AddForce(KPVector2(0.0f, 1.0f) * l_Force);
+			}
+			if(InputSystem::GetInputDown(KeyCode::S))
+			{
+				m_pPlayersPhysicsComponent->AddForce(KPVector2(0.0f, -1.0f) * l_Force);
+			}
+			if (InputSystem::GetInputDown(KeyCode::A))
+			{
+				m_pPlayersPhysicsComponent->AddForce(KPVector2(-1.0f, 0.0f) * l_Force);
+			}
+			if (InputSystem::GetInputDown(KeyCode::D))
+			{
+				m_pPlayersPhysicsComponent->AddForce(KPVector2(1.0f, 0.0f) * l_Force);
+			}
 		}
 
 		void PlayerController::MovePlayer(const KPVector2 movement, float i_DeltaTime)

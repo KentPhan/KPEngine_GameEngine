@@ -9,8 +9,8 @@ namespace KPEngine
 		{
 			m_HasGravity = false;
 			m_Mass = 1.0f;
-			m_Velocity = KPVector2(-10.0f, 10.0f);
-			m_Acceleration = KPVector2(2.0f, -2.0f);
+			m_Velocity = KPVector2(0.0f, 0.0f);
+			m_Acceleration = KPVector2(0.0f, 0.0f);
 		}
 
 		PhysicsComponent::~PhysicsComponent()

@@ -2,6 +2,12 @@
 #include <Core/Interfaces/IGameObjectController.h>
 #include <iostream>
 
+namespace KPEngine {
+	namespace Physics {
+		class PhysicsComponent;
+	}
+}
+
 using namespace KPEngine::Core;
 
 namespace PlatformerGame
@@ -11,7 +17,12 @@ namespace PlatformerGame
 		class PlayerController : public Interfaces::IGameObjectController
 		{
 		public:
-			PlayerController();
+			PlayerController(KPEngine::Physics::PhysicsComponent* i_pPlayersPhysics) : m_pObject(nullptr),
+			                                                                           m_pPlayersPhysicsComponent(
+				                                                                           i_pPlayersPhysics)
+			{
+			}
+
 			~PlayerController()
 			{
 				delete m_pObject;
@@ -26,9 +37,6 @@ namespace PlatformerGame
 				m_pObject->SetController(this);
 			}
 			void Update(float i_deltaTime) override;
-
-			// Input
-			void GetInput();
 
 			// Info
 			inline void PrintInfo() const override
@@ -51,6 +59,9 @@ namespace PlatformerGame
 			void MovePlayer(const KPVector2 movement, float i_DeltaTime);
 			KPVector2 m_Direction;
 			GameObject * m_pObject;
+
+			// TODO Migrate this some how later to game objects. Very tied down
+			KPEngine::Physics::PhysicsComponent * m_pPlayersPhysicsComponent;
 		};
 	}
 }
