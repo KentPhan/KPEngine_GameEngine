@@ -170,6 +170,7 @@ namespace KPEngine
 		public:
 			// Core Functions
 			static bool Initialize();
+			static void ReadInput();
 			static void ClearInput();
 			static void Shutdown();
 

@@ -56,32 +56,20 @@ namespace KPEngine
 				/*GLib::Sprites::Sprite * pGoodGuy = CreateSprite("Assets\\girl.dds");
 				GLib::Sprites::Sprite * pBadGuy = CreateSprite("Assets\\zombie.dds");*/
 
-				bool bQuit = false;
+				// IMPORTANT: Tell GLib that we want to start rendering
+				GLib::BeginRendering();
+				// Tell GLib that we want to render some sprites
+				GLib::Sprites::BeginRendering();
 
-				/*do
-				{*/
-					// IMPORTANT: We need to let GLib do it's thing. 
-					GLib::Service(bQuit);
+				for (size_t i = 0; i < m_pRenderComponents->size(); i++)
+				{
+					(*m_pRenderComponents)[i]->Draw();
+				}
 
-					if (!bQuit)
-					{
-						// IMPORTANT: Tell GLib that we want to start rendering
-						GLib::BeginRendering();
-						// Tell GLib that we want to render some sprites
-						GLib::Sprites::BeginRendering();
-
-						for (size_t i = 0; i < m_pRenderComponents->size(); i++)
-						{
-							(*m_pRenderComponents)[i]->Draw();
-						}
-
-						// Tell GLib we're done rendering sprites
-						GLib::Sprites::EndRendering();
-						// IMPORTANT: Tell GLib we're done rendering
-						GLib::EndRendering();
-					}
-
-				/*} while (bQuit == false);*/
+				// Tell GLib we're done rendering sprites
+				GLib::Sprites::EndRendering();
+				// IMPORTANT: Tell GLib we're done rendering
+				GLib::EndRendering();
 			}
 		}
 	}

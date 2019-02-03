@@ -63,6 +63,10 @@ namespace KPEngine
 		{
 			// Time
 			float l_deltaTime = KPEngine::Core::Time::TimeSystem::CalculateLastFrameTime();
+			//DEBUG_PRINT(Utils::Verbose, "Frame Start:");
+
+			// Read Input
+			Input::InputSystem::ReadInput();
 
 			// Check for quit
 			 if (Input::InputSystem::QuitRequested())

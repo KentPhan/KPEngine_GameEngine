@@ -36,18 +36,19 @@ namespace KPEngine
 			m_pInputHashKeyDown = new std::unordered_set<KeyCode>();
 			m_pInputHashKeyUp = new std::unordered_set<KeyCode>();
 
-			//// Hash Enum Values
-			//for(KeyCode l_KeyCode = static_cast<KeyCode>(0); l_KeyCode != LAST; l_KeyCode = static_cast<KeyCode>(l_KeyCode + 1))
-			//{
-			//	m_pInputHashKeyDown.insert(l_KeyCode);
-			//}
-
 			return true;
 		}
+
+		void InputSystem::ReadInput()
+		{
+			bool bQuit = false;
+			GLib::Service(bQuit);
+		}
+
 		void InputSystem::ClearInput()
 		{
-			/*m_pInputHashKeyDown.clear();
-			m_pInputHashKeyUp.clear();*/
+			m_pInputHashKeyDown->clear();
+			m_pInputHashKeyUp->clear();
 		}
 
 		void InputSystem::Shutdown()
@@ -75,8 +76,9 @@ namespace KPEngine
 			else
 				m_pInputHashKeyUp->insert(static_cast<KeyCode>(i_KeyID));
 
-			KeyCode l_Key = static_cast<KeyCode>(i_KeyID);
-			//DEBUG_PRINT(Utils::Verbose, "Input Code: %i", i_KeyID);
+			//KeyCode l_Key = static_cast<KeyCode>(i_KeyID);
+			//DEBUG_PRINT(Utils::Verbose, "Input Code: %i %i", InputSystem::inputCount++,  i_KeyID);
+
 		}
 	}
 }
