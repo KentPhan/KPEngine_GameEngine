@@ -7,6 +7,7 @@ extern bool KPVector2_UnitTest();
 extern bool FixedHeapManager_UnitTest();
 extern bool CustomFixedHeapManager_UnitTest();
 extern bool BitArray_UnitTest();
+extern bool SmartPointer_UnitTest();
 
 int main()
 {
@@ -14,9 +15,10 @@ int main()
 	/*KPEngine::Initialize();*/
 	/*KPVector2_UnitTest();*/
 	/*DynamicHeapManager_UnitTest();*/
-	FixedHeapManager_UnitTest();
+	/*FixedHeapManager_UnitTest();*/
 	/*CustomFixedHeapManager_UnitTest();*/
 	/*BitArray_UnitTest();*/
+	SmartPointer_UnitTest();
 
 
 	// List Tests
