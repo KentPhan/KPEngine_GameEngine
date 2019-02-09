@@ -186,6 +186,7 @@
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Core\Time\TimeSystem.h" />
     <ClInclude Include="include\Input\InputSystem.h" />
+    <ClInclude Include="include\Utils\SmartPointer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Input\InputSystem.cpp" />
