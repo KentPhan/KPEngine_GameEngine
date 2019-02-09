@@ -13,7 +13,7 @@ namespace KPEngine
 			// TODO Hide Game Object Construction
 			// TODO double check assignment
 			// Constructors
-			SmartPointer() : m_pObject(nullptr) , m_pReferenceCount(new long (0))
+			SmartPointer() : m_pObject(nullptr) , m_pReferenceCount(nullptr)
 			{
 				
 				
@@ -22,19 +22,12 @@ namespace KPEngine
 			{
 
 			}
+
+			// Copy and assignment
 			SmartPointer(const SmartPointer<T>& i_other) : m_pObject(i_other.m_pObject), m_pReferenceCount(i_other.m_pReferenceCount)
 			{
 				(*m_pReferenceCount)++;
 			}
-
-
-			// Destructor
-			~SmartPointer()
-			{
-				ReleaseCurrentReference();
-			}
-
-			// Operators
 			SmartPointer& operator=(const SmartPointer<T>& i_Other)
 			{
 				if (i_Other == this)
@@ -51,11 +44,18 @@ namespace KPEngine
 
 			}
 
+
+			// Destructor
+			~SmartPointer()
+			{
+				ReleaseCurrentReference();
+			}
+
+			// Operators
 			T* operator ->()
 			{
 				return m_pObject;
 			}
-
 			T& operator *()
 			{
 				assert(m_pObject != nullptr);
@@ -65,6 +65,10 @@ namespace KPEngine
 			bool operator ==( const SmartPointer<T>& i_Other)
 			{
 				return (this.m_pObject == i_Other.m_pObject);
+			}
+			operator bool() const
+			{
+				return m_pObject != nullptr;
 			}
 
 
