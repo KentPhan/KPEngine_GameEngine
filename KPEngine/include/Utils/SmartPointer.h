@@ -6,29 +6,29 @@ namespace KPEngine
 	{
 	
 		template <class T>
-		class SmartPointer
+		class StrongPointer
 		{
 		public:
 			// TODO Handle Null construction
 			// TODO Hide Game Object Construction
 			// TODO double check assignment
 			// Constructors
-			SmartPointer() : m_pObject(nullptr) , m_pReferenceCount(nullptr)
+			StrongPointer() : m_pObject(nullptr) , m_pReferenceCount(nullptr)
 			{
 				
 				
 			}
-			SmartPointer(T* i_pObject) : m_pObject(i_pObject), m_pReferenceCount(new long(1))
+			StrongPointer(T* i_pObject) : m_pObject(i_pObject), m_pReferenceCount(new long(1))
 			{
 
 			}
 
 			// Copy and assignment
-			SmartPointer(const SmartPointer<T>& i_other) : m_pObject(i_other.m_pObject), m_pReferenceCount(i_other.m_pReferenceCount)
+			StrongPointer(const StrongPointer<T>& i_other) : m_pObject(i_other.m_pObject), m_pReferenceCount(i_other.m_pReferenceCount)
 			{
 				(*m_pReferenceCount)++;
 			}
-			SmartPointer& operator=(const SmartPointer<T>& i_Other)
+			StrongPointer& operator=(const StrongPointer<T>& i_Other)
 			{
 				if (i_Other == this)
 					return this;
@@ -46,7 +46,7 @@ namespace KPEngine
 
 
 			// Destructor
-			~SmartPointer()
+			~StrongPointer()
 			{
 				ReleaseCurrentReference();
 			}
@@ -62,7 +62,7 @@ namespace KPEngine
 
 				return *m_pObject;
 			}
-			bool operator ==( const SmartPointer<T>& i_Other)
+			bool operator ==( const StrongPointer<T>& i_Other)
 			{
 				return (this.m_pObject == i_Other.m_pObject);
 			}
@@ -86,7 +86,7 @@ namespace KPEngine
 				}
 			}
 
-			void AcquireNewReference(const SmartPointer<T>& i_other)
+			void AcquireNewReference(const StrongPointer<T>& i_other)
 			{
 				m_pObject = i_other.m_pObject;
 				m_pReferenceCount = i_other.m_pReferenceCount;

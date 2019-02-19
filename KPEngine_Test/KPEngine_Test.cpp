@@ -11,7 +11,8 @@ extern bool SmartPointer_UnitTest();
 
 int main()
 {
-
+	//_CrtSetBreakAlloc(163);
+	
 	/*KPEngine::Initialize();*/
 	/*KPVector2_UnitTest();*/
 	/*DynamicHeapManager_UnitTest();*/
