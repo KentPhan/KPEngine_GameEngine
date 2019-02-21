@@ -146,7 +146,7 @@
     <ClInclude Include="include\Input\InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Utils\StrongPointer.h">
+    <ClInclude Include="include\Utils\SmartPointers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
