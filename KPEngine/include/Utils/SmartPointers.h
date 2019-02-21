@@ -27,6 +27,11 @@ namespace KPEngine
 		template <class T>
 		class StrongPointer
 		{
+			template<class U>
+			friend class StrongPointer;
+			template<class U>
+			friend class WeakPointer;
+
 		public:
 			// TODO Handle Null construction
 			// TODO Hide Game Object Construction
@@ -72,7 +77,7 @@ namespace KPEngine
 
 			// Copy Constructor Polymorphic
 			template<class U>
-			StrongPointer(const StrongPointer<U> & i_other) : m_pObject(i_other.m_pObject), m_pRefCounters(i_other.m_pRefCounters)
+			StrongPointer(const StrongPointer<U> & i_other) 
 			{
 				// TODO Implement
 				std::cout << "This Got CAlled" << std::endl;
@@ -318,6 +323,11 @@ namespace KPEngine
 		template <class T>
 		class WeakPointer
 		{
+			template<class U>
+			friend class StrongPointer;
+			template<class U>
+			friend class WeakPointer;
+
 		public:
 			// TODO Handle Null construction
 			// TODO Hide Game Object Construction

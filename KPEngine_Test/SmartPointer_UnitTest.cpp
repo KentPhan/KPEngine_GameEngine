@@ -6,6 +6,23 @@
 using KPEngine::Utils::StrongPointer;
 using std::string;
 
+class TestBase
+{
+public:
+	TestBase(){}
+};
+
+
+class TestChild : public TestBase
+{
+	public:
+	TestChild() : TestBase()
+	{
+		
+	}
+};
+
+
 bool SmartPointer_UnitTest()
 {
 	std::cout << "STRONG POINTER TEST:" << std::endl;
@@ -25,8 +42,11 @@ bool SmartPointer_UnitTest()
 	assert(l_testPointer3.GetReferenceCount() == 2);
 	assert((*l_testPointer2) == "Doodoo");
 	assert((*l_testPointer3) == "Doodoo");
+	//StrongPointer<string> l_testPointer4 = StrongPointer<int>(l_testPointer2);
 
 	// Copy Constructor Polymorphic
+	/*StrongPointer<TestChild> l_testPointer41 = StrongPointer<TestChild>();
+	StrongPointer<TestBase> l_testPointer42 = l_testPointer41;*/
 
 	// Equality Test
 	assert(*l_testPointer2 == *l_testPointer3);
