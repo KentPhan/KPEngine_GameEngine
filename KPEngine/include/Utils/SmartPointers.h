@@ -43,7 +43,7 @@ namespace KPEngine
 			StrongPointer() : m_pObject(nullptr)
 			{
 				m_pObject = nullptr;
-				m_pRefCounters = new ReferenceCounters(0, 0);
+				m_pRefCounters = nullptr;
 			}
 
 			// Standard Constructor
@@ -52,7 +52,7 @@ namespace KPEngine
 				if(i_pObject == nullptr)
 				{
 					m_pObject = nullptr;
-					m_pRefCounters = new ReferenceCounters(0, 0);
+					m_pRefCounters = nullptr;
 				}
 				else
 				{
@@ -71,7 +71,7 @@ namespace KPEngine
 				}
 				else
 				{
-					AcquireNewReference(i_other);
+					AcquireNewStrongReference(i_other);
 				}
 			}
 
@@ -86,7 +86,15 @@ namespace KPEngine
 			// Copy Constructor with WeakPointer
 			StrongPointer(const WeakPointer<T> & i_other) : m_pObject(i_other.m_pObject), m_pRefCounters(i_other.m_pRefCounters)
 			{
-				//TODO Implement
+				// if null
+				if (i_other == nullptr)
+				{
+					// Do nothing					
+				}
+				else
+				{
+					AcquireNewStrongReference(i_other);
+				}
 			}
 
 			// Copy Constructor with WeakPointer Polymorphic
@@ -99,7 +107,7 @@ namespace KPEngine
 			// Destructor
 			~StrongPointer()
 			{
-				ReleaseCurrentReference();
+				ReleaseCurrentStrongReference();
 			}
 
 			// Assignment Operator
@@ -111,12 +119,12 @@ namespace KPEngine
 				}
 				else if (i_Other == nullptr)
 				{
-					ReleaseCurrentReference();
+					ReleaseCurrentStrongReference();
 				}
 				else
 				{
-					ReleaseCurrentReference();
-					AcquireNewReference(i_Other);
+					ReleaseCurrentStrongReference();
+					AcquireNewStrongReference(i_Other);
 				}
 				return *this;
 			}
@@ -150,12 +158,12 @@ namespace KPEngine
 				}
 				else if (i_Other == nullptr)
 				{
-					ReleaseCurrentReference();
+					ReleaseCurrentStrongReference();
 				}
 				else
 				{
-					ReleaseCurrentReference();
-					AcquireNewReference(i_Other);
+					ReleaseCurrentStrongReference();
+					AcquireNewStrongReference(i_Other);
 				}
 				return *this;
 			}
@@ -263,6 +271,8 @@ namespace KPEngine
 			// Get Strong Reference Count for testing purposes
 			uint64_t GetReferenceCount() const
 			{
+				if (m_pRefCounters == nullptr)
+					return 0;
 				return m_pRefCounters->StrongReferences;
 			}
 
@@ -272,30 +282,45 @@ namespace KPEngine
 			ReferenceCounters* m_pRefCounters;
 
 
-			void ReleaseCurrentReference()
+			void ReleaseCurrentStrongReference()
 			{
+				// if object doesn't exist for some reason.
 				if(m_pObject == nullptr)
 				{
 					if(m_pRefCounters != nullptr)
 					{
-						delete m_pRefCounters;
+						// If no more strong and weak references exist, delete ref counters
+						if ((m_pRefCounters->StrongReferences == 0) && (m_pRefCounters->WeakReferences) == 0)
+						{
+							delete m_pRefCounters;
+							m_pRefCounters = nullptr;
+						}
 					}
-
+					// I believe I don't have to worry about releasing RefCounters here. That should be handled from the weak pointer end 
+					// if it wasn't deleted before
 					return;
 				}
 
-				m_pRefCounters->StrongReferences--;
-				if((m_pRefCounters->StrongReferences) == 0)
+				if(m_pRefCounters != nullptr)
 				{
-					delete m_pRefCounters;
-					delete m_pObject;
-				}
+					m_pRefCounters->StrongReferences--;
 
-				m_pObject = nullptr;
-				m_pRefCounters = nullptr;
+					// If no more strong references exist. delete object
+					if (m_pRefCounters->StrongReferences == 0)
+					{
+						delete m_pObject;
+						m_pObject = nullptr;
+					}
+					// If no more strong and weak references exist, delete ref counters
+					if ((m_pRefCounters->StrongReferences == 0) && (m_pRefCounters->WeakReferences) == 0)
+					{
+						delete m_pRefCounters;
+						m_pRefCounters = nullptr;
+					}
+				}
 			}
 
-			void AcquireNewReference(const StrongPointer<T>& i_other)
+			void AcquireNewStrongReference(const StrongPointer<T>& i_other)
 			{
 				if(i_other == nullptr)
 				{
@@ -305,6 +330,29 @@ namespace KPEngine
 				else
 				{
 					if(i_other.m_pObject == nullptr)
+					{
+						m_pObject = nullptr;
+						m_pRefCounters = nullptr;
+					}
+					else
+					{
+						m_pObject = i_other.m_pObject;
+						m_pRefCounters = i_other.m_pRefCounters;
+						m_pRefCounters->StrongReferences++;
+					}
+				}
+			}
+
+			void AcquireNewStrongReference(const WeakPointer<T>& i_other)
+			{
+				if (i_other == nullptr)
+				{
+					m_pObject = nullptr;
+					m_pRefCounters = nullptr;
+				}
+				else
+				{
+					if (i_other.m_pObject == nullptr)
 					{
 						m_pObject = nullptr;
 						m_pRefCounters = nullptr;
