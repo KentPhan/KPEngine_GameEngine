@@ -499,6 +499,13 @@ namespace KPEngine
 			inline StrongPointer<T> PromoteToStrongPointer()
 			{
 				// TODO Implement
+				// Check if Object exists before returning. Return nullptr if object doens't exist
+
+				// Release Current Weak Reference
+
+				// Add Strong Reference
+
+				// Cast to Strong Reference
 			}
 
 			// Equality Comparison Operator
