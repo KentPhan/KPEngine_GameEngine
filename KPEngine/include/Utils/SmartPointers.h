@@ -62,44 +62,44 @@ namespace KPEngine
 			}
 
 			// Copy Constructor
-			StrongPointer(const StrongPointer& i_other) : m_pObject(i_other.m_pObject), m_pRefCounters(i_other.m_pRefCounters)
+			StrongPointer(const StrongPointer& i_Other) : m_pObject(i_Other.m_pObject), m_pRefCounters(i_Other.m_pRefCounters)
 			{
 				// if null
-				if(i_other == nullptr)
+				if(i_Other == nullptr)
 				{
 					// Do nothing					
 				}
 				else
 				{
-					AcquireNewStrongReference(i_other);
+					AcquireNewStrongReference(i_Other);
 				}
 			}
 
 			// Copy Constructor Polymorphic
 			template<class U>
-			StrongPointer(const StrongPointer<U> & i_other) 
+			StrongPointer(const StrongPointer<U> & i_Other)
 			{
 				// TODO Implement
 				std::cout << "This Got CAlled" << std::endl;
 			}
 
 			// Copy Constructor with WeakPointer
-			StrongPointer(const WeakPointer<T> & i_other) : m_pObject(i_other.m_pObject), m_pRefCounters(i_other.m_pRefCounters)
+			StrongPointer(const WeakPointer<T> & i_Other) : m_pObject(i_Other.m_pObject), m_pRefCounters(i_Other.m_pRefCounters)
 			{
 				// if null
-				if (i_other == nullptr)
+				if (i_Other == nullptr)
 				{
 					// Do nothing					
 				}
 				else
 				{
-					AcquireNewStrongReference(i_other);
+					AcquireNewStrongReference(i_Other);
 				}
 			}
 
 			// Copy Constructor with WeakPointer Polymorphic
 			template<class U>
-			StrongPointer(const WeakPointer<U> & i_other) : m_pObject(i_other.m_pObject), m_pRefCounters(i_other.m_pRefCounters)
+			StrongPointer(const WeakPointer<U> & i_Other) : m_pObject(i_Other.m_pObject), m_pRefCounters(i_Other.m_pRefCounters)
 			{
 				//TODO Implement
 			}
@@ -131,20 +131,32 @@ namespace KPEngine
 
 			// Assignment Operator Polymorphic
 			template<class U>
-			StrongPointer & operator=(const StrongPointer<U> & i_other)
+			StrongPointer & operator=(const StrongPointer<U> & i_Other)
 			{
 				//TODO Implement
 			}
 
 			// Assignment Operator with WeakPointer 
-			StrongPointer & operator=(const WeakPointer<T> & i_other)
+			StrongPointer & operator=(const WeakPointer<T> & i_Other)
 			{
-				//TODO Implement
+				if (this->m_pObject == i_Other.m_pObject)
+				{
+					return *this;
+				}
+				else if (i_Other == nullptr)
+				{
+					ReleaseCurrentStrongReference();
+				}
+				else
+				{
+					ReleaseCurrentStrongReference();
+					AcquireNewStrongReference(i_Other);
+				}
 			}
 			
 			// Assignment Operator with WeakPointer Polymorphic
 			template<class U>
-			StrongPointer & operator=(const WeakPointer<U> & i_other)
+			StrongPointer & operator=(const WeakPointer<U> & i_Other)
 			{
 				//TODO Implement
 			}
@@ -176,20 +188,20 @@ namespace KPEngine
 
 			// Equality Comparison Operator Polymorphic
 			template<class U>
-			inline bool operator==(const StrongPointer<U> & i_other) const
+			inline bool operator==(const StrongPointer<U> & i_Other) const
 			{
 				//TODO Implement
 			}
 
 			// Equality Comparison Operator with Weak Pointer 
-			inline bool operator==(const WeakPointer<T> & i_other) const
+			inline bool operator==(const WeakPointer<T> & i_Other) const
 			{
-				//TODO Implement
+				return (this->m_pObject == i_Other.m_pObject);
 			}
 
 			// Equality Comparison Operator with Weak Pointer Polymorphic
 			template<class U>
-			inline bool operator==(const WeakPointer<U> & i_other) const
+			inline bool operator==(const WeakPointer<U> & i_Other) const
 			{
 				//TODO Implement
 			}
@@ -202,20 +214,20 @@ namespace KPEngine
 
 			// InEquality Comparison Operator Polymorphic
 			template<class U>
-			inline bool operator!=(const StrongPointer<U> & i_other) const
+			inline bool operator!=(const StrongPointer<U> & i_Other) const
 			{
 				//TODO Implement
 			}
 
 			// InEquality Comparison Operator with Weak Pointer
-			inline bool operator!=(const WeakPointer<T> & i_other) const
+			inline bool operator!=(const WeakPointer<T> & i_Other) const
 			{
-				//TODO Implement
+				return (this->m_pObject != i_Other.m_pObject);
 			}
 
 			// InEquality Comparison Operator with Weak Pointer Polymorphic
 			template<class U>
-			inline bool operator!=(const WeakPointer<U> & i_other) const
+			inline bool operator!=(const WeakPointer<U> & i_Other) const
 			{
 				//TODO Implement
 			}
@@ -320,47 +332,47 @@ namespace KPEngine
 				}
 			}
 
-			void AcquireNewStrongReference(const StrongPointer<T>& i_other)
+			void AcquireNewStrongReference(const StrongPointer<T>& i_Other)
 			{
-				if(i_other == nullptr)
+				if(i_Other == nullptr)
 				{
 					m_pObject = nullptr;
 					m_pRefCounters = nullptr;
 				}
 				else
 				{
-					if(i_other.m_pObject == nullptr)
+					if(i_Other.m_pObject == nullptr)
 					{
 						m_pObject = nullptr;
 						m_pRefCounters = nullptr;
 					}
 					else
 					{
-						m_pObject = i_other.m_pObject;
-						m_pRefCounters = i_other.m_pRefCounters;
+						m_pObject = i_Other.m_pObject;
+						m_pRefCounters = i_Other.m_pRefCounters;
 						m_pRefCounters->StrongReferences++;
 					}
 				}
 			}
 
-			void AcquireNewStrongReference(const WeakPointer<T>& i_other)
+			void AcquireNewStrongReference(const WeakPointer<T>& i_Other)
 			{
-				if (i_other == nullptr)
+				if (i_Other == nullptr)
 				{
 					m_pObject = nullptr;
 					m_pRefCounters = nullptr;
 				}
 				else
 				{
-					if (i_other.m_pObject == nullptr)
+					if (i_Other.m_pObject == nullptr)
 					{
 						m_pObject = nullptr;
 						m_pRefCounters = nullptr;
 					}
 					else
 					{
-						m_pObject = i_other.m_pObject;
-						m_pRefCounters = i_other.m_pRefCounters;
+						m_pObject = i_Other.m_pObject;
+						m_pRefCounters = i_Other.m_pRefCounters;
 						m_pRefCounters->StrongReferences++;
 					}
 				}
@@ -389,17 +401,17 @@ namespace KPEngine
 			}
 
 			// Copy Constructor
-			WeakPointer(const WeakPointer& i_other) : m_pObject(i_other.m_pObject), m_pRefCounters(i_other.m_pRefCounters)
+			WeakPointer(const WeakPointer& i_Other) : m_pObject(i_Other.m_pObject), m_pRefCounters(i_Other.m_pRefCounters)
 			{
 				// if null
-				if (i_other == nullptr)
+				if (i_Other == nullptr)
 				{
 					// Do nothing					
 				}
 				else
 				{
 					// TODO what if m_pObject is null?
-					AcquireNewReference(i_other);
+					AcquireNewReference(i_Other);
 				}
 			}
 
@@ -412,7 +424,7 @@ namespace KPEngine
 
 			// Copy Constructor with another Strong Pointer
 			// TODO Needed?
-			WeakPointer(const StrongPointer<T>& i_other) : m_pObject(i_other.m_pObject), m_pRefCounters(i_other.m_pRefCounters)
+			WeakPointer(const StrongPointer<T>& i_Other) : m_pObject(i_Other.m_pObject), m_pRefCounters(i_Other.m_pRefCounters)
 			{
 				// TODO Implement
 			}
@@ -451,7 +463,7 @@ namespace KPEngine
 
 			// Assignment Operator Polymorphic
 			template<class U>
-			WeakPointer & operator=(const WeakPointer<U> & i_other)
+			WeakPointer & operator=(const WeakPointer<U> & i_Other)
 			{
 				// TODO Implement
 			}
@@ -465,7 +477,7 @@ namespace KPEngine
 
 			// Assignment Operator with Strong Pointer Polymorphic
 			template<class U>
-			inline WeakPointer & operator=(const StrongPointer<U> & i_other)
+			inline WeakPointer & operator=(const StrongPointer<U> & i_Other)
 			{
 				// TODO Implement
 			}
@@ -489,7 +501,7 @@ namespace KPEngine
 			}
 
 			template<class U>
-			inline bool operator ==(const WeakPointer<U> & i_other) const
+			inline bool operator ==(const WeakPointer<U> & i_Other) const
 			{
 				// TODO Implement
 			}
@@ -592,24 +604,24 @@ namespace KPEngine
 				m_pRefCounters = nullptr;
 			}
 
-			void AcquireNewReference(const WeakPointer<T>& i_other)
+			void AcquireNewReference(const WeakPointer<T>& i_Other)
 			{
-				if (i_other == nullptr)
+				if (i_Other == nullptr)
 				{
 					m_pObject = nullptr;
 					m_pRefCounters = nullptr;
 				}
 				else
 				{
-					if (i_other.m_pObject == nullptr)
+					if (i_Other.m_pObject == nullptr)
 					{
 						m_pObject = nullptr;
 						m_pRefCounters = nullptr;
 					}
 					else
 					{
-						m_pObject = i_other.m_pObject;
-						m_pRefCounters = i_other.m_pRefCounters;
+						m_pObject = i_Other.m_pObject;
+						m_pRefCounters = i_Other.m_pRefCounters;
 						m_pRefCounters->StrongReferences++;
 					}
 				}
