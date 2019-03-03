@@ -11,7 +11,7 @@
 #include "../include/Physics/PhysicsSystem.h"
 #include "../include/Utils/KP_Log.h"
 
-
+#include "lua.hpp"
 
 //#include "../include/Core/HeapManager/MemorySystem.h"
 using namespace KPEngine::Utils;
