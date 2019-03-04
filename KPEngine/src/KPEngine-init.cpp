@@ -34,6 +34,16 @@ namespace KPEngine
 			assert(g_pLuaState);
 			luaL_openlibs(g_pLuaState);
 
+			//// Call the Lua C API function lua_type
+			//// to get the type of the top item on stack   
+			//int type = lua_type(pLuaState, -1);
+			// lua_tointeger
+			// lua_pop
+			// lua_len
+			// lua_tostring
+			// lua_tonumber
+
+
 			// Time
 			KPEngine::Core::Time::TimeSystem::Initialize();
 

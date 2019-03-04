@@ -187,8 +187,10 @@
     <ClInclude Include="include\Core\Time\TimeSystem.h" />
     <ClInclude Include="include\Input\InputSystem.h" />
     <ClInclude Include="include\Utils\SmartPointers.h" />
+    <ClInclude Include="include\Scripting\Lua\LuaSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scripting\Lua\LuaSystem.cpp" />
     <ClCompile Include="src\Input\InputSystem.cpp" />
     <ClCompile Include="src\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\Graphics\RenderComponent.cpp" />
