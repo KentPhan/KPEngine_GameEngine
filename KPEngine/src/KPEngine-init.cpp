@@ -10,8 +10,8 @@
 #include "../include/Graphics/RendererSystem.h"
 #include "../include/Physics/PhysicsSystem.h"
 #include "../include/Utils/KP_Log.h"
+#include <cassert>
 
-#include "lua.hpp"
 
 //#include "../include/Core/HeapManager/MemorySystem.h"
 using namespace KPEngine::Utils;
@@ -28,6 +28,11 @@ namespace KPEngine
 			//const size_t	sizeHeap = 1024 * 1024;
 			//KPEngine::g_pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
 			//KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(g_pHeapMemory, sizeHeap);
+
+			// Lua
+			g_pLuaState = luaL_newstate();
+			assert(g_pLuaState);
+			luaL_openlibs(g_pLuaState);
 
 			// Time
 			KPEngine::Core::Time::TimeSystem::Initialize();
@@ -100,6 +105,9 @@ namespace KPEngine
 			Input::InputSystem::Shutdown();
 
 			// Clean up Time
+
+			// Clean up Lua
+			lua_close(g_pLuaState);
 
 			//// Clean up your Memory System (HeapManager and FixedSizeAllocators)
 			//KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();

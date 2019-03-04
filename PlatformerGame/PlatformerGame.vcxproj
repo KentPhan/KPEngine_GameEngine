@@ -198,6 +198,9 @@
     <ClCompile Include="src\Controllers\RandomMonsterController.cpp" />
     <ClCompile Include="src\Controllers\FollowMonsterController.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Gamesrc\Player.lua" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

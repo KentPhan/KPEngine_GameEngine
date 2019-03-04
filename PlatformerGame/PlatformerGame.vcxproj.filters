@@ -66,4 +66,7 @@
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Gamesrc\Player.lua" />
+  </ItemGroup>
 </Project>
