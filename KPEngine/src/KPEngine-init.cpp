@@ -42,6 +42,8 @@ namespace KPEngine
 			// lua_len
 			// lua_tostring
 			// lua_tonumber
+			// lua_loadbuffer Returning not 0 means error in lua code?
+			// lua_pcall
 
 
 			// Time
