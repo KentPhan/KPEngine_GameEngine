@@ -275,8 +275,7 @@ namespace KPEngine
 			// Indirection
 			T& operator *()
 			{
-				assert(m_pObject != nullptr);
-
+				assert(m_pObject != nullptr && "Cannot dereference nullptr");
 				return *m_pObject;
 			}
 

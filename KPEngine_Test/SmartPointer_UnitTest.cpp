@@ -28,14 +28,14 @@ bool SmartPointer_UnitTest()
 	std::cout << "STRONG POINTER TEST:" << std::endl;
 
 	// Default Test
-	StrongPointer<string> * l_testPointer1 = new StrongPointer<string>();
-	assert(l_testPointer1->GetReferenceCount() == 0);
+	StrongPointer<string> l_testPointer1 = StrongPointer<string>();
+	assert(l_testPointer1.GetReferenceCount() == 0);
 	
 	// Default Assignment Test
-	StrongPointer<string>  l_testPointer2 = StrongPointer<string>();
-	l_testPointer2 = *l_testPointer1;
-	/*assert(!l_testPointer1);
-	assert(!l_testPointer11);*/
+	StrongPointer<string> l_testPointer2 = StrongPointer<string>();
+	l_testPointer2 = l_testPointer1;
+	assert(!l_testPointer1);
+	assert(!l_testPointer2);
 
 	// Default Assignment To Valid Test
 	string *  l_testData1 = new string("Test1");
@@ -63,17 +63,17 @@ bool SmartPointer_UnitTest()
 	assert(*l_testPointer4 == *l_testPointer5);
 
 	// InEquality Test
-	assert(*l_testPointer1 != l_testPointer4);
-	assert(*l_testPointer1 != l_testPointer5);
+	assert(l_testPointer1 != l_testPointer4);
+	assert(l_testPointer1 != l_testPointer5);
 
 	// Assignment Testing
-	*l_testPointer1 = (l_testPointer4);
-	assert(l_testPointer1->GetReferenceCount() == 3);
+	l_testPointer1 = (l_testPointer4);
+	assert(l_testPointer1.GetReferenceCount() == 3);
 	assert(l_testPointer4.GetReferenceCount() == 3);
 	assert(l_testPointer5.GetReferenceCount() == 3);
 
 	// Destructor testing
-	delete l_testPointer1;
+	l_testPointer1 = nullptr;
 	assert(l_testPointer4.GetReferenceCount() == 2);
 	assert(l_testPointer5.GetReferenceCount() == 2);
 	assert((*l_testPointer4) == "Doodoo");
@@ -87,7 +87,6 @@ bool SmartPointer_UnitTest()
 	// Clean up Tests
 	l_testPointer4.~StrongPointer();
 	l_testPointer5.~StrongPointer();
-	//delete l_testData1;
 
 	std::cout << "STRONG POINTER TEST PASSED:" << std::endl;
 
