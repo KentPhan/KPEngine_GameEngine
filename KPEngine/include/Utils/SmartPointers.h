@@ -495,16 +495,15 @@ namespace KPEngine
 			}
 
 			// Promote Pointer to Strong Pointer
-			inline StrongPointer<T> PromoteToStrongPointer()
+			inline StrongPointer<T> GetStrongPointer()
 			{
+				StrongPointer<T> l_NewStrongPointer = StrongPointer<T>(this);
+				return l_NewStrongPointer;
+
 				// TODO Implement
 				// Check if Object exists before returning. Return StrongPointer To null if object doens't exist
 
-				// Release Current Weak Reference
-
-				// Add Strong Reference
-
-				// Cast to Strong Reference
+				// Create Strong Reference and return it
 			}
 
 			// Equality Comparison Operator
