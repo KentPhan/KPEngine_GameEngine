@@ -80,7 +80,7 @@ namespace KPEngine
 			StrongPointer(const StrongPointer<U> & i_Other)
 			{
 				// TODO Implement
-				std::cout << "This Got CAlled" << std::endl;
+				assert(false && "Not Implemented");
 			}
 
 			// Copy Constructor with WeakPointer
@@ -102,6 +102,7 @@ namespace KPEngine
 			StrongPointer(const WeakPointer<U> & i_Other) : m_pObject(i_Other.m_pObject), m_pRefCounters(i_Other.m_pRefCounters)
 			{
 				//TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// Destructor
@@ -134,6 +135,7 @@ namespace KPEngine
 			StrongPointer & operator=(const StrongPointer<U> & i_Other)
 			{
 				//TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// Assignment Operator with WeakPointer 
@@ -159,6 +161,7 @@ namespace KPEngine
 			StrongPointer & operator=(const WeakPointer<U> & i_Other)
 			{
 				//TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// Assignment directly with existing pointer
@@ -175,7 +178,8 @@ namespace KPEngine
 				else
 				{
 					ReleaseCurrentStrongReference();
-					AcquireNewStrongReference(i_Other);
+					m_pObject = i_Other;
+					m_pRefCounters = new ReferenceCounters(1, 0);
 				}
 				return *this;
 			}
@@ -191,6 +195,7 @@ namespace KPEngine
 			inline bool operator==(const StrongPointer<U> & i_Other) const
 			{
 				//TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// Equality Comparison Operator with Weak Pointer 
@@ -204,6 +209,13 @@ namespace KPEngine
 			inline bool operator==(const WeakPointer<U> & i_Other) const
 			{
 				//TODO Implement
+				assert(false && "Not Implemented");
+			}
+
+			// Equality Comparison Operator directly with pointer
+			inline bool operator ==(const T* i_Ptr) const
+			{
+				return (this->m_pObject == i_Ptr);
 			}
 
 			// InEquality Comparison Operator
@@ -217,6 +229,7 @@ namespace KPEngine
 			inline bool operator!=(const StrongPointer<U> & i_Other) const
 			{
 				//TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// InEquality Comparison Operator with Weak Pointer
@@ -230,34 +243,13 @@ namespace KPEngine
 			inline bool operator!=(const WeakPointer<U> & i_Other) const
 			{
 				//TODO Implement
-			}
-
-			// Equality Comparison Operator directly with pointer
-			// TODO inline bool operator==(std::nullptr_t nullp) const; not needed?
-			inline bool operator ==(const T* i_Ptr) const
-			{
-				return (this->m_pObject == i_Ptr);
-			}
-
-			// Equality Comparison Operator directly with pointer Polymorphic
-			template<class U>
-			inline bool operator ==(U * i_ptr) const
-			{
-				//TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// InEquality Comparison Operator directly with pointer
-			// TODO inline bool operator==(std::nullptr_t nullp) const; not needed?
 			inline bool operator !=(const T* i_Ptr) const
 			{
 				return (this->m_pObject != i_Ptr);
-			}
-
-			// InEquality Comparison Operator directly with pointer Polymorphic
-			template<class U>
-			inline bool operator !=(U * i_ptr) const
-			{
-				//TODO Implement
 			}
 
 			// Bool Operator
@@ -275,8 +267,7 @@ namespace KPEngine
 			// Indirection
 			T& operator *()
 			{
-				assert(m_pObject != nullptr);
-
+				assert(m_pObject != nullptr && "Cannot dereference nullptr");
 				return *m_pObject;
 			}
 
@@ -324,15 +315,16 @@ namespace KPEngine
 					if (m_pRefCounters->StrongReferences == 0)
 					{
 						delete m_pObject;
-						m_pObject = nullptr;
 					}
 					// If no more strong and weak references exist, delete ref counters
 					if ((m_pRefCounters->StrongReferences == 0) && (m_pRefCounters->WeakReferences) == 0)
 					{
 						delete m_pRefCounters;
-						m_pRefCounters = nullptr;
 					}
 				}
+
+				m_pObject = nullptr;
+				m_pRefCounters = nullptr;
 			}
 
 			void AcquireNewStrongReference(const StrongPointer<T>& i_Other)
@@ -387,6 +379,13 @@ namespace KPEngine
 				m_pRefCounters = nullptr;
 			}
 
+			// Standard Constructor For Catching. This should not be allowed
+			WeakPointer(T* i_pObject) : m_pObject(i_pObject), m_pRefCounters(nullptr)
+			{
+				assert(false && "Cannot Construct Weak Pointer From Raw Pointer");
+			}
+
+
 			// Copy Constructor
 			WeakPointer(const WeakPointer& i_Other) : m_pObject(i_Other.m_pObject), m_pRefCounters(i_Other.m_pRefCounters)
 			{
@@ -406,6 +405,7 @@ namespace KPEngine
 			WeakPointer(const WeakPointer<U> & i_owner)
 			{
 				// TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// Copy Constructor with another Strong Pointer
@@ -428,6 +428,7 @@ namespace KPEngine
 			WeakPointer(const StrongPointer<U> & i_owner)
 			{
 				// TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// Destructor
@@ -460,6 +461,7 @@ namespace KPEngine
 			WeakPointer & operator=(const WeakPointer<U> & i_Other)
 			{
 				// TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// Assignment Operator with Strong Pointer 
@@ -487,25 +489,26 @@ namespace KPEngine
 			inline WeakPointer & operator=(const StrongPointer<U> & i_Other)
 			{
 				// TODO Implement
+				assert(false && "Not Implemented");
 			}
 
 			// Null assignment
-			WeakPointer<T> & operator=(std::nullptr_t i_null)
+			inline WeakPointer<T> & operator=(std::nullptr_t i_null)
 			{
-				// TODO Implement
+				ReleaseCurrentWeakReference();
+				return *this;
 			}
 
 			// Promote Pointer to Strong Pointer
-			inline StrongPointer<T> PromoteToStrongPointer()
+			inline StrongPointer<T> GetStrongPointer()
 			{
+				StrongPointer<T> l_NewStrongPointer = StrongPointer<T>(*this);
+				return l_NewStrongPointer;
+
 				// TODO Implement
-				// Check if Object exists before returning. Return nullptr if object doens't exist
+				// Check if Object exists before returning. Return StrongPointer To null if object doens't exist
 
-				// Release Current Weak Reference
-
-				// Add Strong Reference
-
-				// Cast to Strong Reference
+				// Create Strong Reference and return it
 			}
 
 			// Equality Comparison Operator
@@ -615,6 +618,9 @@ namespace KPEngine
 						m_pRefCounters = nullptr;
 					}
 				}
+
+				m_pObject = nullptr;
+				m_pRefCounters = nullptr;
 			}
 
 			void AcquireNewWeakReference(const WeakPointer<T>& i_Other)

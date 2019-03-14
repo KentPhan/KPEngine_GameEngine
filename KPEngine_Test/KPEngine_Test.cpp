@@ -7,7 +7,8 @@ extern bool KPVector2_UnitTest();
 extern bool FixedHeapManager_UnitTest();
 extern bool CustomFixedHeapManager_UnitTest();
 extern bool BitArray_UnitTest();
-extern bool SmartPointer_UnitTest();
+extern bool StrongPointer_UnitTest();
+extern bool WeakPointer_UnitTest();
 
 int main()
 {
@@ -19,7 +20,8 @@ int main()
 	/*FixedHeapManager_UnitTest();*/
 	/*CustomFixedHeapManager_UnitTest();*/
 	/*BitArray_UnitTest();*/
-	SmartPointer_UnitTest();
+	StrongPointer_UnitTest();
+	WeakPointer_UnitTest();
 
 
 	// List Tests
