@@ -212,6 +212,12 @@ namespace KPEngine
 				assert(false && "Not Implemented");
 			}
 
+			// Equality Comparison Operator directly with pointer
+			inline bool operator ==(const T* i_Ptr) const
+			{
+				return (this->m_pObject == i_Ptr);
+			}
+
 			// InEquality Comparison Operator
 			inline bool operator !=(const StrongPointer& i_Other) const
 			{
@@ -240,34 +246,10 @@ namespace KPEngine
 				assert(false && "Not Implemented");
 			}
 
-			// Equality Comparison Operator directly with pointer
-			// TODO inline bool operator==(std::nullptr_t nullp) const; not needed?
-			inline bool operator ==(const T* i_Ptr) const
-			{
-				return (this->m_pObject == i_Ptr);
-			}
-
-			// Equality Comparison Operator directly with pointer Polymorphic
-			template<class U>
-			inline bool operator ==(U * i_ptr) const
-			{
-				//TODO Implement
-				assert(false && "Not Implemented");
-			}
-
 			// InEquality Comparison Operator directly with pointer
-			// TODO inline bool operator==(std::nullptr_t nullp) const; not needed?
 			inline bool operator !=(const T* i_Ptr) const
 			{
 				return (this->m_pObject != i_Ptr);
-			}
-
-			// InEquality Comparison Operator directly with pointer Polymorphic
-			template<class U>
-			inline bool operator !=(U * i_ptr) const
-			{
-				//TODO Implement
-				assert(false && "Not Implemented");
 			}
 
 			// Bool Operator
