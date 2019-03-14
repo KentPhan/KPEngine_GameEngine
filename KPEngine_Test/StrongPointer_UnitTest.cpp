@@ -107,59 +107,143 @@ bool StrongPointer_UnitTest()
 	return true;
 }
 
+
+// Tests
+bool WeakPointerUnitTestConstructing();
+bool WeakPointerUnitTestAssignment();
+bool WeakPointerUnitTestComparison();
+
 bool WeakPointer_UnitTest()
 {
 	std::cout << "WEAK POINTER TEST:" << std::endl;
 
+	WeakPointerUnitTestConstructing();
+	WeakPointerUnitTestAssignment();
+	WeakPointerUnitTestComparison();
+
+	std::cout << "WEAK POINTER TEST PASSED:" << std::endl;
+	return true;
+}
+
+bool WeakPointerUnitTestConstructing()
+{
 	// Default Test
 	WeakPointer<string> l_WeakTestPointer1 = WeakPointer<string>();
 	assert(!l_WeakTestPointer1);
 
-	//// Constructor Test
-	// string *  l_testData1 = new string("Doodoo");
-	//StrongPointer<string>  l_StrongPointer1 = StrongPointer<string>(l_testData1);
-	//WeakPointer<string> l_WeakTestPointer2 = WeakPointer<string>(l_testData1);
-	//assert(l_StrongPointer1.GetReferenceCount() == 1);
+	// Copy Constructor Testing, Promote Testing
+	string* l_TestData1 = new string("Test1");
+	StrongPointer<string> l_StrongTestPointer1 = StrongPointer<string>(l_TestData1);
+	WeakPointer<string> l_WeakTestPointer2 = l_StrongTestPointer1;
+	assert(*l_StrongTestPointer1 == "Test1");
 
-	//// Copy Constructor Test
-	//StrongPointer<string> l_testPointer3 = StrongPointer<string>(l_testPointer2);
-	//assert(l_testPointer2.GetReferenceCount() == 2);
-	//assert(l_testPointer3.GetReferenceCount() == 2);
-	//assert((*l_testPointer2) == "Doodoo");
-	//assert((*l_testPointer3) == "Doodoo");
+	assert(l_StrongTestPointer1.GetReferenceCount() == 1);
+	assert(l_WeakTestPointer2.GetReferenceCount() == 1);
 
-	//// Equality Test
-	//assert(*l_testPointer2 == *l_testPointer3);
+	WeakPointer<string> l_WeakTestPointer3 = l_WeakTestPointer2;
+	assert(l_WeakTestPointer3.GetReferenceCount() == 2);
 
-	//// InEquality Test
-	//assert(*l_testPointer1 != l_testPointer2);
-	//assert(*l_testPointer1 != l_testPointer3);
+	assert(*l_WeakTestPointer2.GetStrongPointer() == "Test1");
+	assert(*l_WeakTestPointer3.GetStrongPointer() == "Test1");
 
-	//// Assignment Testing
-	//*l_testPointer1 = (l_testPointer2);
-	//assert(l_testPointer1->GetReferenceCount() == 3);
-	//assert(l_testPointer2.GetReferenceCount() == 3);
-	//assert(l_testPointer3.GetReferenceCount() == 3);
+	assert(l_StrongTestPointer1.GetReferenceCount() == 1);
+	assert(l_WeakTestPointer3.GetReferenceCount() == 2);
 
-	//// Destructor testing
-	//delete l_testPointer1;
-	//assert(l_testPointer2.GetReferenceCount() == 2);
-	//assert(l_testPointer3.GetReferenceCount() == 2);
-	//assert((*l_testPointer2) == "Doodoo");
-	//assert((*l_testPointer3) == "Doodoo");
+	StrongPointer<string> l_StrongTestPointer2 = l_WeakTestPointer3.GetStrongPointer();
 
-	//// Null Test
-	//l_testPointer2 = nullptr;
-	//assert(l_testPointer3.GetReferenceCount() == 1);
-	//assert((*l_testPointer3) == "Doodoo");
+	assert(*l_StrongTestPointer2 == "Test1");
+	assert(l_StrongTestPointer1.GetReferenceCount() == 2);
+	assert(l_WeakTestPointer3.GetReferenceCount() == 2);
 
-	//// Clean up Tests
-	//l_testPointer2.~StrongPointer();
-	//l_testPointer3.~StrongPointer();
-	////delete l_testData1;
-
-	//delete l_testData1;
-
-	std::cout << "WEAK POINTER TEST PASSED:" << std::endl;
 	return true;
+}
+
+bool WeakPointerUnitTestAssignment()
+{
+	// Assignment Testing
+	// Copy Constructor Testing, Promote Testing
+	string* l_TestData1 = new string("Test1");
+
+	WeakPointer<string> l_WeakTestPointer1 = WeakPointer<string>();
+	StrongPointer<string> l_StrongTestPointer1 = StrongPointer<string>(l_TestData1);
+
+	// Weak assigned Strong
+	l_WeakTestPointer1 = l_StrongTestPointer1;
+	assert(*l_StrongTestPointer1 == "Test1");
+	assert(l_WeakTestPointer1.GetReferenceCount() == 1);
+	assert(l_StrongTestPointer1.GetReferenceCount() == 1);
+
+	// Weak assigned Weak
+	WeakPointer<string> l_WeakTestPointer2 = WeakPointer<string>();
+	l_WeakTestPointer2 = l_WeakTestPointer1;
+	assert(*l_StrongTestPointer1 == "Test1");
+	assert(l_WeakTestPointer1.GetReferenceCount() == 2);
+	assert(l_WeakTestPointer2.GetReferenceCount() == 2);
+	assert(l_StrongTestPointer1.GetReferenceCount() == 1);
+
+
+	// Null Assignment
+	l_WeakTestPointer1 = nullptr;
+	assert(*l_StrongTestPointer1 == "Test1");
+	assert(l_WeakTestPointer2.GetReferenceCount() == 1);
+	assert(l_StrongTestPointer1.GetReferenceCount() == 1);
+
+	return false;
+}
+
+bool WeakPointerUnitTestComparison()
+{
+	string* l_TestData1 = new string("Test1");
+	string* l_TestData2 = new string("Test2");
+
+	StrongPointer<string> l_StrongTestPointer1 = StrongPointer<string>(l_TestData1);
+	StrongPointer<string> l_StrongTestPointer2 = StrongPointer<string>(l_TestData2);
+	WeakPointer<string> l_WeakTestPointer1_1 = WeakPointer<string>(l_StrongTestPointer1);
+	WeakPointer<string> l_WeakTestPointer1_2 = WeakPointer<string>(l_StrongTestPointer1);
+	WeakPointer<string> l_WeakTestPointer2_1 = WeakPointer<string>(l_StrongTestPointer2);
+	WeakPointer<string> l_WeakTestPointer2_2 = WeakPointer<string>(l_StrongTestPointer2);
+	assert(l_StrongTestPointer1.GetReferenceCount() == 1);
+	assert(l_StrongTestPointer2.GetReferenceCount() == 1);
+	assert(l_WeakTestPointer1_1.GetReferenceCount() == 2);
+	assert(l_WeakTestPointer1_2.GetReferenceCount() == 2);
+	assert(l_WeakTestPointer2_1.GetReferenceCount() == 2);
+	assert(l_WeakTestPointer2_2.GetReferenceCount() == 2);
+
+
+	// Equality Weak to Weak
+	assert(l_WeakTestPointer1_1 == l_WeakTestPointer1_2);
+	assert(l_WeakTestPointer2_1 == l_WeakTestPointer2_2);
+
+	// Equality Weak to Strong
+	assert(l_WeakTestPointer1_1 == l_StrongTestPointer1);
+	assert(l_WeakTestPointer1_2 == l_StrongTestPointer1);
+	assert(l_WeakTestPointer2_1 == l_StrongTestPointer2);
+	assert(l_WeakTestPointer2_2 == l_StrongTestPointer2);
+	
+	// Equality Weak to Pointer
+	assert(l_WeakTestPointer1_1 == l_TestData1);
+	assert(l_WeakTestPointer1_2 == l_TestData1);
+	assert(l_WeakTestPointer2_1 == l_TestData2);
+	assert(l_WeakTestPointer2_2 == l_TestData2);
+
+	// InEquality Weak to Weak
+	assert(l_WeakTestPointer1_1 != l_WeakTestPointer2_1);
+	assert(l_WeakTestPointer1_1 != l_WeakTestPointer2_2);
+	assert(l_WeakTestPointer1_2 != l_WeakTestPointer2_2);
+	assert(l_WeakTestPointer1_1 != l_WeakTestPointer2_2);
+
+	// InEquality Weak to Strong
+	assert(l_WeakTestPointer1_1 != l_StrongTestPointer2);
+	assert(l_WeakTestPointer1_2 != l_StrongTestPointer2);
+	assert(l_WeakTestPointer2_1 != l_StrongTestPointer1);
+	assert(l_WeakTestPointer2_2 != l_StrongTestPointer1);
+
+	// InEquality Weak to Pointer
+	assert(l_WeakTestPointer1_1 != l_TestData2);
+	assert(l_WeakTestPointer1_2 != l_TestData2);
+	assert(l_WeakTestPointer2_1 != l_TestData1);
+	assert(l_WeakTestPointer2_2 != l_TestData1);
+
+	
+	return false;
 }

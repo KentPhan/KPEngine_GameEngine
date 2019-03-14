@@ -511,16 +511,16 @@ namespace KPEngine
 			}
 
 			// Null assignment
-			WeakPointer<T> & operator=(std::nullptr_t i_null)
+			inline WeakPointer<T> & operator=(std::nullptr_t i_null)
 			{
-				// TODO Implement
-				assert(false && "Not Implemented");
+				ReleaseCurrentWeakReference();
+				return *this;
 			}
 
 			// Promote Pointer to Strong Pointer
 			inline StrongPointer<T> GetStrongPointer()
 			{
-				StrongPointer<T> l_NewStrongPointer = StrongPointer<T>(this);
+				StrongPointer<T> l_NewStrongPointer = StrongPointer<T>(*this);
 				return l_NewStrongPointer;
 
 				// TODO Implement
