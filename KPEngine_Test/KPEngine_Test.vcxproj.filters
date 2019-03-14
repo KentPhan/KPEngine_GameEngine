@@ -38,7 +38,7 @@
     <ClCompile Include="BitArray_UnitTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StrongPointer_UnitTest.cpp">
+    <ClCompile Include="SmartPointer_UnitTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
