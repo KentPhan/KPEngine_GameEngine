@@ -1,4 +1,4 @@
-Player
+Player = 
 {
 	name = "Test",
 	class = "Player",
