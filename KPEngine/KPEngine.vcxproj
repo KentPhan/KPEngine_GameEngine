@@ -173,6 +173,7 @@
     <ClInclude Include="include\Core\Interfaces\IGame.h" />
     <ClInclude Include="include\Core\Interfaces\IGameObjectController.h" />
     <ClInclude Include="include\KPEngine-init.h" />
+    <ClInclude Include="include\Utils\FileIO.h" />
     <ClInclude Include="include\Utils\KPLogType.h" />
     <ClInclude Include="include\Utils\KPVector3.h" />
     <ClInclude Include="include\Utils\KP_Log.h" />

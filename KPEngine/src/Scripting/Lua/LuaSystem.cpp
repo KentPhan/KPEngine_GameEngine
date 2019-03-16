@@ -32,5 +32,10 @@ namespace KPEngine
 			}
 		}
 	}
+
+	StrongPointer<Core::GameObject> CreateActor(const char* i_pScriptFileName)
+	{
+		return nullptr;
+	}
 }
 

@@ -1,6 +1,7 @@
 #include "../../include/Graphics/RenderComponent.h"
 #include "GLib.h"
 #include <cassert>
+#include "../../include/Utils/FileIO.h"
 
 
 namespace KPEngine
@@ -44,7 +45,7 @@ namespace KPEngine
 			size_t sizeTextureFile = 0;
 
 			// Load the source file (texture data)
-			void * pTextureFile = LoadFile(i_pFilename, sizeTextureFile);
+			void * pTextureFile = KPEngine::Utils::FileIO::LoadFile(i_pFilename, sizeTextureFile);
 
 			// Ask GLib to create a texture out of the data (assuming it was loaded successfully)
 			GLib::Texture * pTexture = pTextureFile ? GLib::CreateTexture(pTextureFile, sizeTextureFile) : nullptr;
@@ -85,39 +86,7 @@ namespace KPEngine
 			return pSprite;
 		}
 
-		void * RenderComponent::LoadFile(const char * i_pFilename, size_t & o_sizeFile)
-		{
-			assert(i_pFilename != NULL);
-
-			FILE * pFile = NULL;
-
-			errno_t fopenError = fopen_s(&pFile, i_pFilename, "rb");
-			if (fopenError != 0)
-				return NULL;
-
-			assert(pFile != NULL);
-
-			int FileIOError = fseek(pFile, 0, SEEK_END);
-			assert(FileIOError == 0);
-
-			long FileSize = ftell(pFile);
-			assert(FileSize >= 0);
-
-			FileIOError = fseek(pFile, 0, SEEK_SET);
-			assert(FileIOError == 0);
-
-			uint8_t * pBuffer = new uint8_t[FileSize];
-			assert(pBuffer);
-
-			size_t FileRead = fread(pBuffer, 1, FileSize, pFile);
-			assert(FileRead == FileSize);
-
-			fclose(pFile);
-
-			o_sizeFile = FileSize;
-
-			return pBuffer;
-		}
+		
 	}
 }
 

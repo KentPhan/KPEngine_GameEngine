@@ -1,5 +1,7 @@
 #pragma once
 #include "../Lua/export/lua.hpp"
+#include "../../Core/Classes/GameObject.h"
+#include "../../Utils/SmartPointers.h"
 
 namespace KPEngine
 {
@@ -19,6 +21,7 @@ namespace KPEngine
 
 		}
 	}
-}
 
+	StrongPointer<Core::GameObject> CreateActor(const char* i_pScriptFileName);
+}
 
