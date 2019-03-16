@@ -199,7 +199,7 @@
     <ClCompile Include="src\Controllers\FollowMonsterController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Gamesrc\Player.lua" />
+    <None Include="Assets\src\Player.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

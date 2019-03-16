@@ -67,8 +67,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Gamesrc\Player.lua">
-      <Filter>Source Files</Filter>
-    </None>
+    <None Include="Assets\src\Player.lua" />
   </ItemGroup>
 </Project>

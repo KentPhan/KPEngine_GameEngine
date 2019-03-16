@@ -14,6 +14,7 @@ namespace KPEngine
 			public:
 				static void Initialize();
 				static void Shutdown();
+				static StrongPointer<Core::GameObject> CreateActor(const char* i_pScriptFileName);
 			private:
 				static lua_State* g_pLuaState;
 			};
@@ -22,6 +23,6 @@ namespace KPEngine
 		}
 	}
 
-	StrongPointer<Core::GameObject> CreateActor(const char* i_pScriptFileName);
+	
 }
 

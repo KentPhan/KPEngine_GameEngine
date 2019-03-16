@@ -45,7 +45,7 @@ namespace KPEngine
 			size_t sizeTextureFile = 0;
 
 			// Load the source file (texture data)
-			void * pTextureFile = KPEngine::Utils::FileIO::LoadFile(i_pFilename, sizeTextureFile);
+			void * pTextureFile = FileIO::LoadFile(i_pFilename, sizeTextureFile);
 
 			// Ask GLib to create a texture out of the data (assuming it was loaded successfully)
 			GLib::Texture * pTexture = pTextureFile ? GLib::CreateTexture(pTextureFile, sizeTextureFile) : nullptr;
