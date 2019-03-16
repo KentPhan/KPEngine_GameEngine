@@ -79,7 +79,7 @@ namespace KPEngine
 
 					// Using stack field 1 as the key, get it's value from the table (in
 					// stack field 2) replacing the key in field 1 by the associated value
-					int l_type3 = lua_gettable(g_pLuaState, -2);
+					int l_type3 = lua_gettable(g_pLuaState, -2); // Player[top of stack after popping] =  Does Player(-2)["name"(Top of Stack)]
 					// It should be a string
 					assert(l_type3 == LUA_TSTRING);
 
