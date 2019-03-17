@@ -1,9 +1,17 @@
 #include "../../../include/Scripting/Lua/LuaSystem.h"
 #include <cassert>
 #include "../../../include/Utils/FileIO.h"
+#include "../../../include/Graphics/RendererSystem.h"
+#include "../../../include/Physics/PhysicsComponent.h"
+#include "../../../include/Physics/PhysicsSystem.h"
+#
+
+
 
 namespace KPEngine
 {
+	using namespace KPEngine::Core;
+
 	namespace Scripting
 	{
 		namespace Lua
@@ -36,9 +44,7 @@ namespace KPEngine
 			{
 				size_t l_SizeFile;
 				// TODO need to adapt pathing
-				void * l_pFileContents = FileIO::LoadFile(i_pScriptFileName, l_SizeFile);
-
-
+				char * l_pFileContents = static_cast<char*>(FileIO::LoadFile(i_pScriptFileName, l_SizeFile));
 
 				//// exit if something didn't work
 				//	// probably need some debug logging in here!!!!
@@ -51,7 +57,7 @@ namespace KPEngine
 				if (l_pFileContents && l_SizeFile)
 				{
 					int result = 0;
-					result = luaL_loadbuffer(g_pLuaState, reinterpret_cast<char*>(l_pFileContents), l_SizeFile, nullptr);
+					result = luaL_loadbuffer(g_pLuaState, l_pFileContents, l_SizeFile, nullptr);
 
 					assert(result == 0);
 
@@ -59,8 +65,11 @@ namespace KPEngine
 
 					assert(result == 0);
 
+					// TODO If Game Object
+
+
 					// Getting number of items in table
-					int l_type1 = lua_getglobal(g_pLuaState, "Player");
+					int l_type1 = lua_getglobal(g_pLuaState, "GameObject");
 					assert(l_type1 == LUA_TTABLE);
 
 
@@ -72,7 +81,7 @@ namespace KPEngine
 
 
 					// Getting a specific key
-					int l_type2 = lua_getglobal(g_pLuaState, "Player");
+					int l_type2 = lua_getglobal(g_pLuaState, "GameObject");
 					assert(l_type2 == LUA_TTABLE);
 
 					lua_pushstring(g_pLuaState, "name");
@@ -90,16 +99,38 @@ namespace KPEngine
 					lua_pop(g_pLuaState, 1);
 
 
+					//TODO Get Name of Game Object
+					//TODO Get Position of Game Object
+					//TODO Loop and Get Components of GameObject
+					//TODO Render Component
+					//TODO Physics Component
+
+
+
 				}
 				// Determine Game Object, Components, Properties, and stuff from Lua code, and return game object after adding it to the list
 
 				
 
 
+				delete l_pFileContents;
+
+				// TODO integrate logic below into above
+				// Create Player Game Object and register components with engine
+				KPVector2 l_startPosition = KPVector2(0.0f, 0.0f);
+				GameObject *l_playerObject = new GameObject("Kent", l_startPosition, 1);
+
+				// Registering Renderer Component
+				KPEngine::Graphics::RendererSystem::RegisterSprite(l_playerObject, "Assets\\girl.dds");
+
+				// TODO improve the structure of this. Component should be searched for in the Game Object Level somehow
+				// Register Physics Component and passing tocontroller
+				KPEngine::Physics::PhysicsComponent* l_PhysicsComponent =  KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject);
 
 
+				StrongPointer<GameObject> l_NewStrongPointer = l_playerObject;
 
-				return nullptr;
+				return l_NewStrongPointer;
 			}
 
 		}

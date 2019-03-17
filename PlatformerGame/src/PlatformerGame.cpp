@@ -22,24 +22,12 @@ namespace PlatformerGame
 	{
 		try
 		{
-			KPEngine::Scripting::Lua::LuaSystem::CreateActor("Assets\\src\\Player.lua");
-
-
-			//// Create Player Game Object and register components with engine
-			//KPVector2 l_startPosition = KPVector2(0.0f, 0.0f);
-			//GameObject *l_playerObject = new GameObject("Kent", l_startPosition, GameObjects::PlayerType);
-
-			//// Registering Renderer Component
-			//KPEngine::Graphics::RendererSystem::RegisterSprite(l_playerObject, "Assets\\girl.dds");
-
-			//// TODO improve the structure of this. Component should be searched for in the Game Object Level somehow
-			//// Register Physics Component and passing tocontroller
-			//KPEngine::Physics::PhysicsComponent* l_PhysicsComponent =  KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject);
+			StrongPointer<GameObject> l_GameObject =  KPEngine::Scripting::Lua::LuaSystem::CreateActor("Assets\\src\\Player.lua");
 
 			//// Attaching Controller
-			//PlayerController *l_pPlayerController = new PlayerController(l_PhysicsComponent);
-			//l_pPlayerController->Initialize(l_playerObject);
-			//m_pPlayerController = l_pPlayerController;
+			/*PlayerController *l_pPlayerController = new PlayerController(l_PhysicsComponent);
+			l_pPlayerController->Initialize(l_playerObject);
+			m_pPlayerController = l_pPlayerController;*/
 
 
 		}
