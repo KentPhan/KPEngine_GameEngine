@@ -77,6 +77,8 @@ namespace KPEngine
 					assert(lua_type(g_pLuaState, -1) == LUA_TNUMBER);
 
 					lua_Integer table_entries = lua_tointeger(g_pLuaState, -1);
+					int l_table_Entries = table_entries < INT_MAX ? int(table_entries) : INT_MAX;
+
 					lua_pop(g_pLuaState, 1);
 
 
