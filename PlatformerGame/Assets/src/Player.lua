@@ -1,7 +1,7 @@
 GameObject = 
 {
 	name = "Player",
-	position = { 1.0, 2.0, 3.0},
+	position = { 8.1, 2.0, 3.0},
 	components =
 	{
 		KPRender2DComponent = 

@@ -15,6 +15,12 @@ namespace KPEngine
 	{
 		namespace Lua
 		{
+			enum BuiltInComponents
+			{
+				RENDER_COMPONENT,
+				PHYSICS_COMPONENT
+			};
+
 			class LuaSystem
 			{
 			public:
@@ -22,7 +28,7 @@ namespace KPEngine
 				static void Shutdown();
 				static StrongPointer<Core::GameObject> CreateActor(const char* i_pScriptFileName);
 			private:
-
+				
 
 				static lua_State* g_pLuaState;
 			};
