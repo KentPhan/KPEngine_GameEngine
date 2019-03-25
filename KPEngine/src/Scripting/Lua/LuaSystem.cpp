@@ -142,10 +142,6 @@ namespace KPEngine
 						{
 							assert(false && "UnIdentified Component");
 						}
-{
-}
-
-
 
 						lua_pop(g_pLuaState, 1);
 					}
