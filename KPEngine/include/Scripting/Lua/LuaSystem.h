@@ -1,6 +1,6 @@
 #pragma once
 #include "../Lua/export/lua.hpp"
-#include "../../Core/Classes/GameObject.h"
+#include "../../Core/GameObject/GameObject.h"
 #include "../../Utils/SmartPointers.h"
 
 

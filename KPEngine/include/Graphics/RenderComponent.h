@@ -1,6 +1,7 @@
 #pragma once
-#include "../Core/Classes/GameObject.h"
+
 #include "GLib.h"
+#include "../Core/GameObject/GameObject.h"
 
 //// TODO is this a good way to forward delcare Glib stuff?
 //namespace GLib

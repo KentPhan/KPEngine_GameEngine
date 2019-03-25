@@ -33,7 +33,7 @@ namespace KPEngine
 
 			Offset.x += moveDir;*/
 			// TODO Convert Point2D to Vector
-			KPVector2 m_Position = m_pGameObject->GetPosition();
+			KPVector2 m_Position = m_pGameObject-> GetPosition();
 			GLib::Point2D Offset = { m_Position.X(), m_Position.Y() };
 			GLib::Sprites::RenderSprite(*m_pSprite, Offset, 0.0f);
 		}

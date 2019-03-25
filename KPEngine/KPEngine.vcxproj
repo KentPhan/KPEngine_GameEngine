@@ -162,7 +162,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\Core\Classes\GameObject.h" />
+    <ClInclude Include="include\Core\GameObject\GameObjectSystem.h" />
+    <ClInclude Include="include\Core\GameObject\GameObject.h" />
     <ClInclude Include="include\Core\HeapManager\BitArray.h" />
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapAllocators.h" />
     <ClInclude Include="include\Core\HeapManager\KPDynamicHeapManagerProxy.h" />
@@ -191,12 +192,13 @@
     <ClInclude Include="include\Scripting\Lua\LuaSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\GameObject\GameObjectSystem.cpp" />
     <ClCompile Include="src\Scripting\Lua\LuaSystem.cpp" />
     <ClCompile Include="src\Input\InputSystem.cpp" />
     <ClCompile Include="src\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\Graphics\RenderComponent.cpp" />
     <ClCompile Include="src\Graphics\RendererSystem.cpp" />
-    <ClCompile Include="src\Core\Classes\GameObject.cpp" />
+    <ClCompile Include="src\Core\GameObject\GameObject.cpp" />
     <ClCompile Include="src\Core\Classes\KPMap.cpp" />
     <ClCompile Include="src\Core\HeapManager\BitArray.cpp" />
     <ClCompile Include="src\Core\HeapManager\KPDynamicHeapManagerProxy.cpp" />

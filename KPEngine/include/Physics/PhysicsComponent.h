@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Classes/GameObject.h"
+#include "../Core/GameObject/GameObject.h"
 #include "../Utils/KP_Log.h"
 
 
@@ -18,6 +18,7 @@ namespace KPEngine
 			void UpdatePhysics(float i_DeltaTime);
 		private:
 			// TODO Condense and organize types
+
 			Core::GameObject* m_pGameObject;
 			bool m_HasGravity;
 			bool m_HasDrag;

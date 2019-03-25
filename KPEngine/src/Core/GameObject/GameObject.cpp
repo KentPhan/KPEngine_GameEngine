@@ -1,5 +1,5 @@
-#include "../../../include/Core/Classes/GameObject.h"
 #include  "../../../include/Core/Interfaces/IGameObjectController.h"
+#include "../../../include/Core/GameObject/GameObject.h"
 
 void KPEngine::Core::GameObject::SetController(KPEngine::Core::Interfaces::IGameObjectController* i_pController)
 {
