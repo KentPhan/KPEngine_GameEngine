@@ -112,7 +112,7 @@ namespace KPEngine
 
 					// Create Player Game Object and register components with engine
 					KPVector2 l_startPosition = KPVector2(l_xValue, l_yValue);
-					GameObject *l_playerObject = new GameObject(l_pName, l_startPosition, 1);
+					StrongPointer<GameObject> l_playerObject = new GameObject(l_pName, l_startPosition, 1);
 
 
 					// Loop through components

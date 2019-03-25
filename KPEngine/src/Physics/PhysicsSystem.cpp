@@ -2,6 +2,7 @@
 #include "../../include/Physics/PhysicsSystem.h"
 #include <cassert>
 #include "../../include/Physics/PhysicsComponent.h"
+#include "../../include/Utils/SmartPointers.h"
 
 namespace KPEngine
 {
@@ -10,7 +11,7 @@ namespace KPEngine
 		bool PhysicsSystem::m_InitializeSuccessful;
 		std::vector<PhysicsComponent*>* PhysicsSystem::m_pPhysicsComponents;
 
-		PhysicsComponent* PhysicsSystem::RegisterPhysicsComponent(Core::GameObject* i_pGameObject)
+		PhysicsComponent* PhysicsSystem::RegisterPhysicsComponent(StrongPointer<Core::GameObject> i_pGameObject)
 		{
 			assert(i_pGameObject);
 			PhysicsComponent* l_NewComponent = new PhysicsComponent(i_pGameObject);

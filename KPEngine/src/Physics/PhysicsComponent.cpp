@@ -5,7 +5,7 @@ namespace KPEngine
 {
 	namespace Physics
 	{
-		PhysicsComponent::PhysicsComponent(Core::GameObject* i_GameObject) :m_pGameObject(i_GameObject)
+		PhysicsComponent::PhysicsComponent(StrongPointer<Core::GameObject> i_GameObject) :m_pGameObject(i_GameObject)
 		{
 			m_HasGravity = false;
 			m_Mass = 1.0f;

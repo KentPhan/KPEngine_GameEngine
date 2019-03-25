@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../Utils/SmartPointers.h"
 
 namespace KPEngine {
 	namespace Core {
@@ -22,7 +23,7 @@ namespace KPEngine
 			static void Shutdown();
 
 			// Outward facing functions FOR NOW
-			static PhysicsComponent* RegisterPhysicsComponent(Core::GameObject* i_pGameObject);
+			static PhysicsComponent* RegisterPhysicsComponent(Utils::StrongPointer<Core::GameObject> i_pGameObject);
 		private:
 			static bool m_InitializeSuccessful;
 			static std::vector<PhysicsComponent*>* m_pPhysicsComponents;

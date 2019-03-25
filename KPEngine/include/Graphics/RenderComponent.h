@@ -1,7 +1,7 @@
 #pragma once
-
 #include "GLib.h"
 #include "../Core/GameObject/GameObject.h"
+#include "../Utils/SmartPointers.h"
 
 //// TODO is this a good way to forward delcare Glib stuff?
 //namespace GLib
@@ -19,11 +19,11 @@ namespace KPEngine
 		class RenderComponent
 		{
 		public:
-			RenderComponent(Core::GameObject* i_GameObject, const char* i_pFileName);
+			RenderComponent(StrongPointer<Core::GameObject> i_GameObject, const char* i_pFileName);
 			~RenderComponent();
 			void Draw();
 		private:
-			const Core::GameObject* m_pGameObject;
+			StrongPointer<Core::GameObject>m_pGameObject;
 			GLib::Sprites::Sprite * m_pSprite;
 			//Sprite;
 

@@ -17,7 +17,7 @@ namespace KPEngine
 			static void Shutdown();
 
 			// Outward facing functions FOR NOW
-			static void RegisterSprite(Core::GameObject* i_pGameObject, const char* i_pFileName);
+			static void RegisterSprite(StrongPointer<Core::GameObject> i_pGameObject, const char* i_pFileName);
 
 		private:
 			static bool m_InitializeSuccessful;

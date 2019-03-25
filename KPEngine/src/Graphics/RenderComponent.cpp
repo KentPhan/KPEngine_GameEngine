@@ -8,7 +8,7 @@ namespace KPEngine
 {
 	namespace Graphics
 	{
-		RenderComponent::RenderComponent(Core::GameObject* i_GameObject, const char* i_pFileName):m_pGameObject(i_GameObject)
+		RenderComponent::RenderComponent(StrongPointer<Core::GameObject> i_GameObject, const char* i_pFileName):m_pGameObject(i_GameObject)
 		{
 			m_pSprite = CreateSprite(i_pFileName);
 		}
