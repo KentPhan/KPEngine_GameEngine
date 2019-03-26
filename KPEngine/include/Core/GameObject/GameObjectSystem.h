@@ -1,4 +1,7 @@
 #pragma once
+#include <vector>
+#include "../../../../PlatformerGame/include/GameObjects/GameObjectType.h"
+#include "GameObject.h"
 
 namespace KPEngine
 {
@@ -7,8 +10,14 @@ namespace KPEngine
 		class GameObjectSystem
 		{
 		public:
-			GameObjectSystem();
-			~GameObjectSystem();
+			// Core functions
+			static void Initialize();
+			//static void PhysicsStep(float i_DeltaTime);
+			static void Shutdown();
+
+		private:
+			static bool m_InitializeSuccessful;
+			static std::vector<GameObject*>* m_pGameObjects;
 		};
 	}
 }

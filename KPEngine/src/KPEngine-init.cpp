@@ -7,6 +7,7 @@
 #include "../include/Core/Interfaces/IGame.h"
 #include "../include/Input/InputSystem.h"
 #include "../include/Core/Time/TimeSystem.h"
+#include "../include/Core/GameObject/GameObjectSystem.h"
 #include "../include/Graphics/RendererSystem.h"
 #include "../include/Physics/PhysicsSystem.h"
 #include "../include/Scripting/Lua/LuaSystem.h"
@@ -44,6 +45,9 @@ namespace KPEngine
 
 			// Physics
 			Physics::PhysicsSystem::Initialize();
+
+			// GameObjects
+			Core::GameObjectSystem::Initialize();
 
 			// Game
 			g_pGame = i_Game;
@@ -94,6 +98,9 @@ namespace KPEngine
 	{
 		try
 		{
+			// Clean up GameObjects
+			Core::GameObjectSystem::Shutdown();
+
 			// Clean up Physics
 			Physics::PhysicsSystem::Shutdown();
 

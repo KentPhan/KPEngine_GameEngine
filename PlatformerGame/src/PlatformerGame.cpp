@@ -24,7 +24,7 @@ namespace PlatformerGame
 		{
 			StrongPointer<GameObject> l_GameObject =  KPEngine::Scripting::Lua::LuaSystem::CreateActor("Assets\\src\\Player.lua");
 
-			//// Attaching Controller
+			// Attaching Controller
 			/*PlayerController *l_pPlayerController = new PlayerController(l_PhysicsComponent);
 			l_pPlayerController->Initialize(l_playerObject);
 			m_pPlayerController = l_pPlayerController;*/
