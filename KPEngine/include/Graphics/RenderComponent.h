@@ -19,11 +19,11 @@ namespace KPEngine
 		class RenderComponent
 		{
 		public:
-			RenderComponent(StrongPointer<Core::GameObject> i_GameObject, const char* i_pFileName);
+			RenderComponent(WeakPointer<Core::GameObject> i_GameObject, const char* i_pFileName);
 			~RenderComponent();
 			void Draw();
 		private:
-			StrongPointer<Core::GameObject>m_pGameObject;
+			WeakPointer<Core::GameObject>m_pGameObject;
 			GLib::Sprites::Sprite * m_pSprite;
 			//Sprite;
 

@@ -8,7 +8,7 @@ namespace KPEngine
 {
 	namespace Graphics
 	{
-		RenderComponent::RenderComponent(StrongPointer<Core::GameObject> i_GameObject, const char* i_pFileName):m_pGameObject(i_GameObject)
+		RenderComponent::RenderComponent(WeakPointer<Core::GameObject> i_GameObject, const char* i_pFileName):m_pGameObject(i_GameObject)
 		{
 			m_pSprite = CreateSprite(i_pFileName);
 		}
@@ -32,8 +32,15 @@ namespace KPEngine
 				moveDir = -moveDist;
 
 			Offset.x += moveDir;*/
-			// TODO Convert Point2D to Vector
-			KPVector2 m_Position = m_pGameObject-> GetPosition();
+
+			// TODO No Idea what the hell is happening here possibly. But there needs to be some clean up if invalid
+			StrongPointer<Core::GameObject> l_pTempGameObject =  m_pGameObject.GetStrongPointer();
+			assert(l_pTempGameObject);// Breaking here on purpose for purposes of testing and experimentation
+			if (!l_pTempGameObject)
+				return;
+
+
+			KPVector2 m_Position = l_pTempGameObject-> GetPosition();
 			GLib::Point2D Offset = { m_Position.X(), m_Position.Y() };
 			GLib::Sprites::RenderSprite(*m_pSprite, Offset, 0.0f);
 		}

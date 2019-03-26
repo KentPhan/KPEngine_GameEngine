@@ -26,7 +26,7 @@ namespace KPEngine
 			public:
 				static void Initialize();
 				static void Shutdown();
-				static StrongPointer<Core::GameObject> CreateActor(const char* i_pScriptFileName);
+				static StrongPointer<Core::GameObject> CreateGameObject(const char* i_pScriptFileName);
 			private:
 				
 

@@ -11,7 +11,7 @@ namespace KPEngine
 		class PhysicsComponent
 		{
 		public:
-			PhysicsComponent(StrongPointer<Core::GameObject> i_GameObject);
+			PhysicsComponent(WeakPointer<Core::GameObject> i_GameObject);
 			~PhysicsComponent();
 
 			void AddForce(KPVector2 i_Force);
@@ -20,7 +20,7 @@ namespace KPEngine
 		private:
 			// TODO Condense and organize types
 
-			StrongPointer<Core::GameObject> m_pGameObject;
+			WeakPointer<Core::GameObject> m_pGameObject;
 			bool m_HasGravity;
 			bool m_HasDrag;
 			float m_Mass;

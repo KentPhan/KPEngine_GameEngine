@@ -23,7 +23,7 @@ namespace KPEngine
 			static void Shutdown();
 
 			// Outward facing functions FOR NOW
-			static PhysicsComponent* RegisterPhysicsComponent(Utils::StrongPointer<Core::GameObject> i_pGameObject);
+			static void RegisterPhysicsComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject);
 		private:
 			static bool m_InitializeSuccessful;
 			static std::vector<PhysicsComponent*>* m_pPhysicsComponents;

@@ -11,9 +11,8 @@ namespace KPEngine
 		bool RendererSystem::m_InitializeSuccessful;
 		std::vector<RenderComponent*>* RendererSystem::m_pRenderComponents;
 
-		void RendererSystem::RegisterSprite(StrongPointer<Core::GameObject> i_pGameObject, const char* i_pFileName)
+		void RendererSystem::RegisterSprite(WeakPointer<Core::GameObject> i_pGameObject, const char* i_pFileName)
 		{
-			
 			assert(i_pGameObject);
 			assert(i_pFileName);
 

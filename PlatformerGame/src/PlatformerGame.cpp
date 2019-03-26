@@ -5,9 +5,7 @@
 #include "../include/Controllers/FollowMonsterController.h"
 #include "../include/GameObjects/GameObjectType.h"
 #include "../include/PlatformerGame.h"
-#include "Graphics/RendererSystem.h"
-#include "Physics/PhysicsSystem.h"
-#include "Scripting/Lua/LuaSystem.h"
+#include "Core/GameObject/GameObjectSystem.h"
 
 
 using namespace PlatformerGame::Controllers;
@@ -22,7 +20,7 @@ namespace PlatformerGame
 	{
 		try
 		{
-			StrongPointer<GameObject> l_GameObject =  KPEngine::Scripting::Lua::LuaSystem::CreateActor("Assets\\src\\Player.lua");
+			StrongPointer<GameObject> l_GameObject =  CoreFunctions::InstantiateGameObject("Assets\\src\\Player.lua");
 
 			// Attaching Controller
 			/*PlayerController *l_pPlayerController = new PlayerController(l_PhysicsComponent);

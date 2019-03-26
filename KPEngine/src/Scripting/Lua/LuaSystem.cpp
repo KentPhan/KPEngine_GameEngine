@@ -4,6 +4,7 @@
 #include "../../../include/Graphics/RendererSystem.h"
 #include "../../../include/Physics/PhysicsComponent.h"
 #include "../../../include/Physics/PhysicsSystem.h"
+#include "../../../include/Core/GameObject/GameObjectSystem.h"
 #
 
 
@@ -40,7 +41,7 @@ namespace KPEngine
 				lua_close(g_pLuaState);
 			}
 
-			StrongPointer<Core::GameObject> LuaSystem::CreateActor(const char* i_pScriptFileName)
+			StrongPointer<Core::GameObject> LuaSystem::CreateGameObject(const char* i_pScriptFileName)
 			{
 				size_t l_SizeFile;
 				StrongPointer<GameObject> l_NewStrongPointer = nullptr;
@@ -113,6 +114,7 @@ namespace KPEngine
 					// Create Player Game Object and register components with engine
 					KPVector2 l_startPosition = KPVector2(l_xValue, l_yValue);
 					StrongPointer<GameObject> l_playerObject = new GameObject(l_pName, l_startPosition, 1);
+					GameObjectSystem::RegisterGameObject(l_playerObject);
 
 
 					// Loop through components
@@ -135,8 +137,8 @@ namespace KPEngine
 						}
 						else if (strcmp(l_key,"KPPhysics2DComponent") == 0 )
 						{
-							// Register Physics Component and passing tocontroller
-							KPEngine::Physics::PhysicsComponent* l_PhysicsComponent = KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject);
+							// Register Physics Component and passing to controller
+							KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject);
 						}
 						else
 						{
