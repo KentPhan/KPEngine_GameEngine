@@ -47,7 +47,7 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4
 		// For each column in the other matrix
 		for (size_t l_rhsC = 0; l_rhsC < 4; l_rhsC++)
 		{
-			KPVector4 l_rhsCol = KPVector4(m_Matrix[0 + l_rhsC], m_Matrix[4 + l_rhsC], m_Matrix[8 + l_rhsC], m_Matrix[12 + l_rhsC]);
+			KPVector4 l_rhsCol = KPVector4(i_Other.m_Matrix[0 + l_rhsC], i_Other.m_Matrix[4 + l_rhsC], i_Other.m_Matrix[8 + l_rhsC], i_Other.m_Matrix[12 + l_rhsC]);
 
 			float l_Dot = l_lhsRow.Dot(l_rhsCol);
 			o_Result.m_Matrix[l_lhsR + l_rhsC] = l_Dot;
@@ -60,7 +60,12 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4
 
 bool KPEngine::Utils::KPMatrix4x4::operator==(KPMatrix4x4& i_Other)
 {
-	return false;
+	for (size_t i = 0; i < 16; i++)
+	{
+		if (m_Matrix[i] != i_Other.m_Matrix[i])
+			return false;
+	}
+	return true;
 }
 
 void KPEngine::Utils::KPMatrix4x4::Print()
