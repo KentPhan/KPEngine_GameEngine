@@ -9,6 +9,7 @@ extern bool CustomFixedHeapManager_UnitTest();
 extern bool BitArray_UnitTest();
 extern bool StrongPointer_UnitTest();
 extern bool WeakPointer_UnitTest();
+extern bool KPMatrix4x4_UnitTest();
 
 int main()
 {
@@ -22,7 +23,7 @@ int main()
 	/*BitArray_UnitTest();*/
 	StrongPointer_UnitTest();
 	WeakPointer_UnitTest();
-
+	KPMatrix4x4_UnitTest();
 
 	// List Tests
 	/*GameObject* test = new GameObject();

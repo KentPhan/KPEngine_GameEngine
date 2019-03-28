@@ -41,6 +41,9 @@
     <ClCompile Include="SmartPointer_UnitTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="KPMatrix4x4_UnitTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Externals\HeapManager-Debug-x64.lib" />
