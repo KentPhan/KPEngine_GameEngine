@@ -1,13 +1,14 @@
 #include "../../include/Graphics/RenderComponent.h"
 #include "GLib.h"
 #include <cassert>
+#include "../../include/Utils/FileIO.h"
 
 
 namespace KPEngine
 {
 	namespace Graphics
 	{
-		RenderComponent::RenderComponent(Core::GameObject* i_GameObject, const char* i_pFileName):m_pGameObject(i_GameObject)
+		RenderComponent::RenderComponent(WeakPointer<Core::GameObject> i_GameObject, const char* i_pFileName):m_pGameObject(i_GameObject)
 		{
 			m_pSprite = CreateSprite(i_pFileName);
 		}
@@ -31,8 +32,15 @@ namespace KPEngine
 				moveDir = -moveDist;
 
 			Offset.x += moveDir;*/
-			// TODO Convert Point2D to Vector
-			KPVector2 m_Position = m_pGameObject->GetPosition();
+
+			// TODO No Idea what the hell is happening here possibly. But there needs to be some clean up if invalid
+			StrongPointer<Core::GameObject> l_pTempGameObject =  m_pGameObject.GetStrongPointer();
+			assert(l_pTempGameObject);// Breaking here on purpose for purposes of testing and experimentation
+			if (!l_pTempGameObject)
+				return;
+
+
+			KPVector2 m_Position = l_pTempGameObject-> GetPosition();
 			GLib::Point2D Offset = { m_Position.X(), m_Position.Y() };
 			GLib::Sprites::RenderSprite(*m_pSprite, Offset, 0.0f);
 		}
@@ -44,7 +52,7 @@ namespace KPEngine
 			size_t sizeTextureFile = 0;
 
 			// Load the source file (texture data)
-			void * pTextureFile = LoadFile(i_pFilename, sizeTextureFile);
+			void * pTextureFile = FileIO::LoadFile(i_pFilename, sizeTextureFile);
 
 			// Ask GLib to create a texture out of the data (assuming it was loaded successfully)
 			GLib::Texture * pTexture = pTextureFile ? GLib::CreateTexture(pTextureFile, sizeTextureFile) : nullptr;
@@ -85,39 +93,7 @@ namespace KPEngine
 			return pSprite;
 		}
 
-		void * RenderComponent::LoadFile(const char * i_pFilename, size_t & o_sizeFile)
-		{
-			assert(i_pFilename != NULL);
-
-			FILE * pFile = NULL;
-
-			errno_t fopenError = fopen_s(&pFile, i_pFilename, "rb");
-			if (fopenError != 0)
-				return NULL;
-
-			assert(pFile != NULL);
-
-			int FileIOError = fseek(pFile, 0, SEEK_END);
-			assert(FileIOError == 0);
-
-			long FileSize = ftell(pFile);
-			assert(FileSize >= 0);
-
-			FileIOError = fseek(pFile, 0, SEEK_SET);
-			assert(FileIOError == 0);
-
-			uint8_t * pBuffer = new uint8_t[FileSize];
-			assert(pBuffer);
-
-			size_t FileRead = fread(pBuffer, 1, FileSize, pFile);
-			assert(FileRead == FileSize);
-
-			fclose(pFile);
-
-			o_sizeFile = FileSize;
-
-			return pBuffer;
-		}
+		
 	}
 }
 

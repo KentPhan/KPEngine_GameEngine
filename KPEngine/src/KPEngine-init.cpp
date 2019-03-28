@@ -7,8 +7,10 @@
 #include "../include/Core/Interfaces/IGame.h"
 #include "../include/Input/InputSystem.h"
 #include "../include/Core/Time/TimeSystem.h"
+#include "../include/Core/GameObject/GameObjectSystem.h"
 #include "../include/Graphics/RendererSystem.h"
 #include "../include/Physics/PhysicsSystem.h"
+#include "../include/Scripting/Lua/LuaSystem.h"
 #include "../include/Utils/KP_Log.h"
 #include <cassert>
 
@@ -30,21 +32,7 @@ namespace KPEngine
 			//KPEngine::Core::HeapManager::MemorySystem::InitializeMemorySystem(g_pHeapMemory, sizeHeap);
 
 			// Lua
-			g_pLuaState = luaL_newstate();
-			assert(g_pLuaState);
-			luaL_openlibs(g_pLuaState);
-
-			//// Call the Lua C API function lua_type
-			//// to get the type of the top item on stack   
-			//int type = lua_type(pLuaState, -1);
-			// lua_tointeger
-			// lua_pop
-			// lua_len
-			// lua_tostring
-			// lua_tonumber
-			// lua_loadbuffer Returning not 0 means error in lua code?
-			// lua_pcall
-
+			Scripting::Lua::LuaSystem::Initialize();
 
 			// Time
 			KPEngine::Core::Time::TimeSystem::Initialize();
@@ -57,6 +45,9 @@ namespace KPEngine
 
 			// Physics
 			Physics::PhysicsSystem::Initialize();
+
+			// GameObjects
+			Core::GameObjectSystem::Initialize();
 
 			// Game
 			g_pGame = i_Game;
@@ -107,6 +98,9 @@ namespace KPEngine
 	{
 		try
 		{
+			// Clean up GameObjects
+			Core::GameObjectSystem::Shutdown();
+
 			// Clean up Physics
 			Physics::PhysicsSystem::Shutdown();
 
@@ -119,7 +113,7 @@ namespace KPEngine
 			// Clean up Time
 
 			// Clean up Lua
-			lua_close(g_pLuaState);
+			Scripting::Lua::LuaSystem::Shutdown();
 
 			//// Clean up your Memory System (HeapManager and FixedSizeAllocators)
 			//KPEngine::Core::HeapManager::MemorySystem::DestroyMemorySystem();

@@ -1,6 +1,7 @@
 #pragma once
-#include "../Core/Classes/GameObject.h"
+#include "../Core/GameObject/GameObject.h"
 #include "../Utils/KP_Log.h"
+#include "../Utils/SmartPointers.h"
 
 
 namespace KPEngine
@@ -10,15 +11,21 @@ namespace KPEngine
 		class PhysicsComponent
 		{
 		public:
-			PhysicsComponent(Core::GameObject* i_GameObject);
+			PhysicsComponent(WeakPointer<Core::GameObject> i_GameObject);
 			~PhysicsComponent();
 
 			void AddForce(KPVector2 i_Force);
 
 			void UpdatePhysics(float i_DeltaTime);
+
+			inline WeakPointer<Core::GameObject> GetGameObject() const
+			{
+				return m_pGameObject;
+			}
 		private:
 			// TODO Condense and organize types
-			Core::GameObject* m_pGameObject;
+
+			WeakPointer<Core::GameObject> m_pGameObject;
 			bool m_HasGravity;
 			bool m_HasDrag;
 			float m_Mass;

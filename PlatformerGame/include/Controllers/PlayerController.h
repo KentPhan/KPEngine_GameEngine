@@ -1,6 +1,7 @@
 #pragma once
 #include <Core/Interfaces/IGameObjectController.h>
 #include <iostream>
+#include "Utils/SmartPointers.h"
 
 namespace KPEngine {
 	namespace Physics {
@@ -17,51 +18,57 @@ namespace PlatformerGame
 		class PlayerController : public Interfaces::IGameObjectController
 		{
 		public:
-			PlayerController(KPEngine::Physics::PhysicsComponent* i_pPlayersPhysics) : m_pObject(nullptr),
-			                                                                           m_pPlayersPhysicsComponent(
-				                                                                           i_pPlayersPhysics)
+			PlayerController()
 			{
+				m_pObject = WeakPointer<GameObject>();
+				// m_pPlayersPhysicsComponent = nullptr;
 			}
 
 			~PlayerController()
 			{
-				delete m_pObject;
+				m_pObject = nullptr;
+				// m_pPlayersPhysicsComponent = nullptr;
 			};
-
+			
 			// Setter
 
 			// Order
-			inline void Initialize(GameObject* i_pObject) override
+			inline void Initialize(WeakPointer<GameObject> i_pObject) override
 			{
 				m_pObject = i_pObject;
-				m_pObject->SetController(this);
+				StrongPointer<GameObject> l_TempStrong = m_pObject.GetStrongPointer();
+				l_TempStrong->SetController(this);
+				m_pPlayersPhysicsComponent = l_TempStrong->GetPhysicsComponent();
 			}
 			void Update(float i_deltaTime) override;
 
 			// Info
 			inline void PrintInfo() const override
 			{
-				std::cout << "Player \"" << this->m_pObject->GetName().Get() << "\" at [" << this->m_pObject->GetPosition().X() << "," << this->m_pObject->GetPosition().Y() << "]\n";
+				StrongPointer<GameObject> l_TempStrong = this->m_pObject.GetStrongPointer();
+				std::cout << "Player \"" << l_TempStrong->GetName().Get() << "\" at [" << l_TempStrong->GetPosition().X() << "," << l_TempStrong->GetPosition().Y() << "]\n";
 			}
+
 			inline char GetSymbol() const override
 			{
 				return 'P';
 			}
 			inline KPVector2 GetPosition() const override
 			{
-				return m_pObject->GetPosition();
+				return m_pObject.GetStrongPointer()->GetPosition();
 			}
-			inline GameObject* GetPossessedObject() const
+
+			inline StrongPointer<GameObject> GetPossessedObject() const
 			{
 				return m_pObject;
 			}
 		private:
 			void MovePlayer(const KPVector2 movement, float i_DeltaTime);
 			KPVector2 m_Direction;
-			GameObject * m_pObject;
+			WeakPointer<GameObject> m_pObject;
 
 			// TODO Migrate this some how later to game objects. Very tied down
-			KPEngine::Physics::PhysicsComponent * m_pPlayersPhysicsComponent;
+			StrongPointer<KPEngine::Physics::PhysicsComponent> m_pPlayersPhysicsComponent;
 		};
 	}
 }

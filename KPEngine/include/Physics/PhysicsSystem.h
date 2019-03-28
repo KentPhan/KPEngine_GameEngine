@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../Utils/SmartPointers.h"
 
 namespace KPEngine {
 	namespace Core {
@@ -9,6 +10,9 @@ namespace KPEngine {
 
 namespace KPEngine
 {
+	using Utils::StrongPointer;
+	using Utils::WeakPointer;
+
 	namespace Physics
 	{
 		class PhysicsComponent;
@@ -22,10 +26,11 @@ namespace KPEngine
 			static void Shutdown();
 
 			// Outward facing functions FOR NOW
-			static PhysicsComponent* RegisterPhysicsComponent(Core::GameObject* i_pGameObject);
+			static void RegisterPhysicsComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject);
+			static WeakPointer<PhysicsComponent> GetPhysicsComponent(const Core::GameObject*  i_GameObjectRef );
 		private:
 			static bool m_InitializeSuccessful;
-			static std::vector<PhysicsComponent*>* m_pPhysicsComponents;
+			static std::vector<StrongPointer<PhysicsComponent>>* m_pPhysicsComponents;
 		};
 	}
 }

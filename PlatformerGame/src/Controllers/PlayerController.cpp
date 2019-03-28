@@ -18,7 +18,6 @@ namespace PlatformerGame
 		void PlayerController::Update(float i_deltaTime)
 		{
 			float l_Force = 100.0f;
-			//MovePlayer(KPVector2(0.0f, 0.0f), i_deltaTime);
 
 			if(InputSystem::GetInputHeldDown(KeyCode::W))
 			{

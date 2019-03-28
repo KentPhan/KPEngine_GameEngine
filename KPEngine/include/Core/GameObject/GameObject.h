@@ -2,6 +2,8 @@
 #include "../../Utils/KPString.h"
 #include "../../Utils/KPVector2.h"
 #include "../../Utils/KPVector3.h"
+#include "../../Utils/SmartPointers.h"
+
 
 using namespace KPEngine::Utils;
 
@@ -13,6 +15,10 @@ namespace KPEngine
 		{
 			class IGameObjectController;
 		}
+	}
+	namespace Physics
+	{
+		class PhysicsComponent;
 	}
 }
 
@@ -63,6 +69,8 @@ namespace KPEngine
 			{
 				return m_pController;
 			}
+
+			WeakPointer<Physics::PhysicsComponent> GetPhysicsComponent() const;
 			
 
 			// Setters
