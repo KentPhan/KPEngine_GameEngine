@@ -36,12 +36,6 @@
     <ClInclude Include="include\Controllers\PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Controllers\FollowMonsterController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Controllers\RandomMonsterController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\GameMain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,12 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Controllers\PlayerController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Controllers\FollowMonsterController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Controllers\RandomMonsterController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GameMain.cpp">

@@ -500,7 +500,7 @@ namespace KPEngine
 			}
 
 			// Promote Pointer to Strong Pointer
-			inline StrongPointer<T> GetStrongPointer()
+			inline StrongPointer<T> GetStrongPointer() const
 			{
 				StrongPointer<T> l_NewStrongPointer = StrongPointer<T>(*this);
 				return l_NewStrongPointer;

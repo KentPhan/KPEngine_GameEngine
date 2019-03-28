@@ -10,6 +10,9 @@ namespace KPEngine {
 
 namespace KPEngine
 {
+	using Utils::StrongPointer;
+	using Utils::WeakPointer;
+
 	namespace Physics
 	{
 		class PhysicsComponent;
@@ -24,9 +27,10 @@ namespace KPEngine
 
 			// Outward facing functions FOR NOW
 			static void RegisterPhysicsComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject);
+			static WeakPointer<PhysicsComponent> GetPhysicsComponent(const Core::GameObject*  i_GameObjectRef );
 		private:
 			static bool m_InitializeSuccessful;
-			static std::vector<PhysicsComponent*>* m_pPhysicsComponents;
+			static std::vector<StrongPointer<PhysicsComponent>>* m_pPhysicsComponents;
 		};
 	}
 }

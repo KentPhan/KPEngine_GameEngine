@@ -17,6 +17,11 @@ namespace KPEngine
 			void AddForce(KPVector2 i_Force);
 
 			void UpdatePhysics(float i_DeltaTime);
+
+			inline WeakPointer<Core::GameObject> GetGameObject() const
+			{
+				return m_pGameObject;
+			}
 		private:
 			// TODO Condense and organize types
 

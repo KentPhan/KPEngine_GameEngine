@@ -19,7 +19,8 @@
 
 int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 {
-	//_CrtSetBreakAlloc(270);
+	/*_CrtSetBreakAlloc(591);
+	_CrtSetBreakAlloc(593);*/
 	//_CrtSetBreakAlloc(241);
 
 	// TODO is this right?

@@ -26,7 +26,7 @@ namespace KPEngine
 			delete m_pGameObjects;
 		}
 
-		void GameObjectSystem::RegisterGameObject(StrongPointer<GameObject> i_pGameObject)
+		void GameObjectSystem::RegisterGameObject(StrongPointer<GameObject>& i_pGameObject)
 		{
 			m_pGameObjects->push_back(i_pGameObject);
 		}

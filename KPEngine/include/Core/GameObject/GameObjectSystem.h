@@ -19,7 +19,7 @@ namespace KPEngine
 			static void Shutdown();
 
 			// Outward facing functions
-			static void RegisterGameObject(StrongPointer<GameObject> i_pGameObject);
+			static void RegisterGameObject(StrongPointer<GameObject>& i_pGameObject);
 
 		private:
 			static bool m_InitializeSuccessful;
