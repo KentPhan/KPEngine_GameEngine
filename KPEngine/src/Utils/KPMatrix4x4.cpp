@@ -1,6 +1,6 @@
 #include "../../include/Utils/KPMatrix4x4.h"
 
-
+// Constructors and Destructor
 KPEngine::Utils::KPMatrix4x4::KPMatrix4x4()
 {
 	for (float& i : m_Matrix)
@@ -27,6 +27,7 @@ KPEngine::Utils::KPMatrix4x4::~KPMatrix4x4()
 {
 }
 
+// Assignment
 KPEngine::Utils::KPMatrix4x4& KPEngine::Utils::KPMatrix4x4::operator=(const KPMatrix4x4& i_Other)
 {
 	for (size_t i = 0; i < 16; i++)
@@ -36,6 +37,7 @@ KPEngine::Utils::KPMatrix4x4& KPEngine::Utils::KPMatrix4x4::operator=(const KPMa
 	return *this;
 }
 
+// Operators
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4& i_Other)
 {
 	KPMatrix4x4 o_Result;
@@ -58,6 +60,8 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4
 	return o_Result;
 }
 
+
+// Compare Operators
 bool KPEngine::Utils::KPMatrix4x4::operator==(KPMatrix4x4& i_Other)
 {
 	for (size_t i = 0; i < 16; i++)
@@ -68,6 +72,7 @@ bool KPEngine::Utils::KPMatrix4x4::operator==(KPMatrix4x4& i_Other)
 	return true;
 }
 
+// Debug
 void KPEngine::Utils::KPMatrix4x4::Print()
 {
 	std::cout << std::endl;

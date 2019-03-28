@@ -36,7 +36,7 @@ bool MatrixMultiplyTest()
 	l_M2.Print();
 
 
-	KPMatrix4x4 l_Result = l_M1 * l_M2;
+	KPMatrix4x4 l_Result = l_M1 * l_M2 * l_M1;
 	l_Result.Print();
 
 
@@ -48,7 +48,7 @@ bool MatrixMultiplyTest()
 
 	assert(l_Result == l_Answer);
 
-	std::cout << "Matrix 4x4 Multiply Test Passed:" << std::endl;
+	std::cout << "Matrix 4x4 Multiply Test Passed:"<< std::endl;
 	
 	return true;
 }
