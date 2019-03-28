@@ -191,8 +191,10 @@
     <ClInclude Include="include\Utils\SmartPointers.h" />
     <ClInclude Include="include\Scripting\Lua\LuaSystem.h" />
     <ClInclude Include="include\Utils\KPVector4.h" />
+    <ClInclude Include="include\Utils\KPMatrix4x4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utils\KPMatrix4x4.cpp" />
     <ClCompile Include="src\Core\GameObject\GameObjectSystem.cpp" />
     <ClCompile Include="src\Scripting\Lua\LuaSystem.cpp" />
     <ClCompile Include="src\Input\InputSystem.cpp" />
