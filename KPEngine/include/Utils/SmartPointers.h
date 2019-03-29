@@ -2,6 +2,8 @@
 #include <cassert>
 #include <stdint.h>
 #include <iostream>
+
+
 namespace KPEngine
 {
 	namespace Utils
@@ -24,7 +26,7 @@ namespace KPEngine
 		template<class T>
 		class WeakPointer;
 
-		template <class T>
+		template <class TYPE>
 		class StrongPointer
 		{
 			template<class U>
@@ -47,7 +49,7 @@ namespace KPEngine
 			}
 
 			// Standard Constructor
-			StrongPointer(T* i_pObject) : m_pObject(i_pObject)
+			StrongPointer(TYPE* i_pObject) : m_pObject(i_pObject)
 			{
 				if(i_pObject == nullptr)
 				{
@@ -84,7 +86,7 @@ namespace KPEngine
 			}
 
 			// Copy Constructor with WeakPointer
-			StrongPointer(const WeakPointer<T> & i_Other) : m_pObject(i_Other.m_pObject), m_pRefCounters(i_Other.m_pRefCounters)
+			StrongPointer(const WeakPointer<TYPE> & i_Other) : m_pObject(i_Other.m_pObject), m_pRefCounters(i_Other.m_pRefCounters)
 			{
 				// if null
 				if (i_Other == nullptr)
@@ -139,7 +141,7 @@ namespace KPEngine
 			}
 
 			// Assignment Operator with WeakPointer 
-			StrongPointer & operator=(const WeakPointer<T> & i_Other)
+			StrongPointer & operator=(const WeakPointer<TYPE> & i_Other)
 			{
 				if (this->m_pObject == i_Other.m_pObject)
 				{
@@ -154,6 +156,7 @@ namespace KPEngine
 					ReleaseCurrentStrongReference();
 					AcquireNewStrongReference(i_Other);
 				}
+				return *this;
 			}
 			
 			// Assignment Operator with WeakPointer Polymorphic
@@ -165,7 +168,7 @@ namespace KPEngine
 			}
 
 			// Assignment directly with existing pointer
-			StrongPointer& operator=(T * i_Other)
+			StrongPointer& operator=(TYPE * i_Other)
 			{
 				if (this->m_pObject == i_Other)
 				{
@@ -199,7 +202,7 @@ namespace KPEngine
 			}
 
 			// Equality Comparison Operator with Weak Pointer 
-			inline bool operator==(const WeakPointer<T> & i_Other) const
+			inline bool operator==(const WeakPointer<TYPE> & i_Other) const
 			{
 				return (this->m_pObject == i_Other.m_pObject);
 			}
@@ -213,7 +216,7 @@ namespace KPEngine
 			}
 
 			// Equality Comparison Operator directly with pointer
-			inline bool operator ==(const T* i_Ptr) const
+			inline bool operator ==(const TYPE* i_Ptr) const
 			{
 				return (this->m_pObject == i_Ptr);
 			}
@@ -233,7 +236,7 @@ namespace KPEngine
 			}
 
 			// InEquality Comparison Operator with Weak Pointer
-			inline bool operator!=(const WeakPointer<T> & i_Other) const
+			inline bool operator!=(const WeakPointer<TYPE> & i_Other) const
 			{
 				return (this->m_pObject != i_Other.m_pObject);
 			}
@@ -247,7 +250,7 @@ namespace KPEngine
 			}
 
 			// InEquality Comparison Operator directly with pointer
-			inline bool operator !=(const T* i_Ptr) const
+			inline bool operator !=(const TYPE* i_Ptr) const
 			{
 				return (this->m_pObject != i_Ptr);
 			}
@@ -259,13 +262,13 @@ namespace KPEngine
 			}
 
 			// Member C++
-			T* operator ->()
+			TYPE* operator ->()
 			{
 				return m_pObject;
 			}
 
 			// Indirection
-			T& operator *()
+			TYPE& operator *()
 			{
 				assert(m_pObject != nullptr && "Cannot dereference nullptr");
 				return *m_pObject;
@@ -281,7 +284,7 @@ namespace KPEngine
 
 
 		private:
-			T* m_pObject;
+			TYPE* m_pObject = nullptr;
 			ReferenceCounters* m_pRefCounters;
 
 
@@ -314,7 +317,10 @@ namespace KPEngine
 					// If no more strong references exist. delete object
 					if (m_pRefCounters->StrongReferences == 0)
 					{
-						delete m_pObject;
+						// TODO Memory Leak is occuring here where Destructor is sometimes not called for some reason
+						// Need Help. Uncommenting and commenting controller code in PlatformGame.cpp affects this for some reason.
+						delete this->m_pObject;
+						
 					}
 					// If no more strong and weak references exist, delete ref counters
 					if ((m_pRefCounters->StrongReferences == 0) && (m_pRefCounters->WeakReferences) == 0)
@@ -327,7 +333,7 @@ namespace KPEngine
 				m_pRefCounters = nullptr;
 			}
 
-			void AcquireNewStrongReference(const StrongPointer<T>& i_Other)
+			void AcquireNewStrongReference(const StrongPointer<TYPE>& i_Other)
 			{
 				if(i_Other == nullptr || i_Other.m_pObject == nullptr)
 				{
@@ -342,7 +348,7 @@ namespace KPEngine
 				}
 			}
 
-			void AcquireNewStrongReference(const WeakPointer<T>& i_Other)
+			void AcquireNewStrongReference(const WeakPointer<TYPE>& i_Other)
 			{
 				if(i_Other == nullptr || i_Other.m_pObject == nullptr)
 				{

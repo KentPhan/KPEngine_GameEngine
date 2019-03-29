@@ -70,7 +70,7 @@ namespace KPEngine
 				return m_pController;
 			}
 
-			WeakPointer<Physics::PhysicsComponent> GetPhysicsComponent() const;
+			StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent() const;
 			
 
 			// Setters

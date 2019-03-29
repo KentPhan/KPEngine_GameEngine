@@ -106,9 +106,9 @@ namespace KPEngine
 					assert(l_xType == LUA_TNUMBER);
 					assert(l_yType == LUA_TNUMBER);
 					assert(l_zType == LUA_TNUMBER);
-					float l_xValue = lua_tonumber(g_pLuaState, -3);
-					float l_yValue = lua_tonumber(g_pLuaState, -2);
-					float l_zValue = lua_tonumber(g_pLuaState, -1);
+					float l_xValue = static_cast<float>(lua_tonumber(g_pLuaState, -3));
+					float l_yValue =static_cast<float>(lua_tonumber(g_pLuaState, -2));
+					float l_zValue = static_cast<float>(lua_tonumber(g_pLuaState, -1));
 					lua_pop(g_pLuaState, 4);
 
 					// Create Player Game Object and register components with engine
@@ -151,7 +151,7 @@ namespace KPEngine
 					l_NewStrongPointer = l_playerObject;
 				}
 				// Determine Game Object, Components, Properties, and stuff from Lua code, and return game object after adding it to the list
-				delete l_pFileContents;
+				delete[] l_pFileContents;
 
 				return l_NewStrongPointer;
 			}

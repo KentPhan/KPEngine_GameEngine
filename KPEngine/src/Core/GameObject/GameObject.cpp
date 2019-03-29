@@ -3,14 +3,12 @@
 #include "../../../include/Physics/PhysicsComponent.h"
 #include "../../../include/Physics/PhysicsSystem.h"
 
-WeakPointer<KPEngine::Physics::PhysicsComponent> KPEngine::Core::GameObject::GetPhysicsComponent() const
+StrongPointer<KPEngine::Physics::PhysicsComponent> KPEngine::Core::GameObject::GetPhysicsComponent() const
 {
 
 	{
-		StrongPointer<Physics::PhysicsComponent> l_test = Physics::PhysicsSystem::GetPhysicsComponent(this);
-		WeakPointer<Physics::PhysicsComponent> o_pComponent = l_test;
-		//o_pComponent = test;
-		return o_pComponent;
+		StrongPointer<Physics::PhysicsComponent> o_Component = Physics::PhysicsSystem::GetPhysicsComponent(this);
+		return o_Component;
 	}
 }
 

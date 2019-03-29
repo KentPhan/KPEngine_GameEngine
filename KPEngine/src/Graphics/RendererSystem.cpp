@@ -9,7 +9,7 @@ namespace KPEngine
 	{
 		// TODO Having a hard time understanding why I have to do this
 		bool RendererSystem::m_InitializeSuccessful;
-		std::vector<RenderComponent*>* RendererSystem::m_pRenderComponents;
+		std::vector<StrongPointer<RenderComponent>>* RendererSystem::m_pRenderComponents;
 
 		void RendererSystem::RegisterSprite(WeakPointer<Core::GameObject> i_pGameObject, const char* i_pFileName)
 		{
@@ -23,14 +23,14 @@ namespace KPEngine
 		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 		{
 			RendererSystem::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 800, 600);
-			m_pRenderComponents = new  std::vector<RenderComponent*>();
+			m_pRenderComponents = new  std::vector<StrongPointer<RenderComponent>>();
 		}
 
 		void RendererSystem::Shutdown()
 		{
-			for (int i = 0; i < m_pRenderComponents->size(); i++)
+			for (size_t i = 0; i < m_pRenderComponents->size(); i++)
 			{
-				delete (*m_pRenderComponents)[i];
+				(*m_pRenderComponents)[i].~StrongPointer();
 			}
 			//for (std::vector<RenderComponent*>::iterator i = m_pRenderComponents->begin(); i != m_pRenderComponents->end(); i++)
 			//{
