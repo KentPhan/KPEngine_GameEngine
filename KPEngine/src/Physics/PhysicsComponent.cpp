@@ -15,10 +15,6 @@ namespace KPEngine
 			m_Acceleration = KPVector2(0.0f, 0.0f);
 		}
 
-		PhysicsComponent::~PhysicsComponent()
-		{
-		}
-
 		void PhysicsComponent::AddForce(KPVector2 i_Force)
 		{
 			m_Acceleration +=  (i_Force / m_Mass);

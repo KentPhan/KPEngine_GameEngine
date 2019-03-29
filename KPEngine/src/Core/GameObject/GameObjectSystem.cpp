@@ -33,7 +33,7 @@ namespace KPEngine
 
 		StrongPointer<GameObject> CoreFunctions::InstantiateGameObject(const char* i_pScriptFileName)
 		{
-			return Scripting::Lua::LuaSystem::CreateGameObject(i_pScriptFileName);
+ 			return Scripting::Lua::LuaSystem::CreateGameObject(i_pScriptFileName);
 		}
 	}
 }

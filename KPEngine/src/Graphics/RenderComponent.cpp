@@ -17,6 +17,7 @@ namespace KPEngine
 		RenderComponent::~RenderComponent()
 		{
 			GLib::Sprites::Release(m_pSprite);
+			m_pGameObject.~WeakPointer();
 		}
 
 		void RenderComponent::Draw()

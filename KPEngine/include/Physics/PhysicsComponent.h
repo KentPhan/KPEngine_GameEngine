@@ -12,7 +12,10 @@ namespace KPEngine
 		{
 		public:
 			PhysicsComponent(WeakPointer<Core::GameObject> i_GameObject);
-			~PhysicsComponent();
+			~PhysicsComponent()
+			{
+				m_pGameObject.~WeakPointer();
+			}
 
 			void AddForce(KPVector2 i_Force);
 

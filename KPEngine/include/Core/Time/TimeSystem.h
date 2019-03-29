@@ -48,7 +48,7 @@ namespace KPEngine
 					{
 						double l_TickDifference = l_CurrentTickCounter - g_LastFrameStartTick;
 
-						g_LastFrameTime_s = l_TickDifference / g_Frequency_s;
+						g_LastFrameTime_s = static_cast<float>(l_TickDifference / g_Frequency_s);
 						//DEBUG_PRINT(Utils::KPLogType::Verbose, "Counter At %li", l_CurrentTickCounter);
 					}
 

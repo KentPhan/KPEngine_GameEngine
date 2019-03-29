@@ -21,7 +21,7 @@ namespace KPEngine
 
 		private:
 			static bool m_InitializeSuccessful;
-			static std::vector<RenderComponent*>* m_pRenderComponents;
+			static std::vector<StrongPointer<RenderComponent>>* m_pRenderComponents;
 		};
 	}
 }
