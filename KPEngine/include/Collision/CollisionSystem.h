@@ -21,6 +21,8 @@ namespace KPEngine
 
 		private:
 			static std::vector<StrongPointer<BoxCollisionComponent>>* m_pBoxComponents;
+
+
 		};
 	}
 }
