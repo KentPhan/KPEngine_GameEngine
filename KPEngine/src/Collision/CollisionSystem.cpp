@@ -7,6 +7,9 @@ namespace KPEngine
 {
 	namespace Collision
 	{
+		bool CollisionSystem::m_InitializeSuccessful;
+		std::vector<StrongPointer<BoxCollisionComponent>>* CollisionSystem::m_pBoxComponents;
+
 		void CollisionSystem::RegisterBoxComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject)
 		{
 			assert(i_pGameObject);
