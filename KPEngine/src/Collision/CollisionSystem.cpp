@@ -36,7 +36,7 @@ namespace KPEngine
 							continue;
 
 						
-						if((*m_pBoxComponents)[i]->SeparatingAxisCheck(*(*m_pBoxComponents)[j]))
+						if(!(*m_pBoxComponents)[i]->SeparatingAxisCheck(*(*m_pBoxComponents)[j]))
 							DEBUG_PRINT(KPLogType::Verbose, "Collision Occured!");
 					}
 				}

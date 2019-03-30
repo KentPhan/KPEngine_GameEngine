@@ -9,7 +9,7 @@ namespace KPEngine
 		BoxCollisionComponent::BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject) : m_pGameObject(i_GameObject)
 		{
 			m_Center = KPVector4();
-			m_Extents = KPVector3(2.0f, 2.0f, 2.0f);
+			m_Extents = KPVector3(10.0f, 10.0f, 2.0f);
 		}
 
 

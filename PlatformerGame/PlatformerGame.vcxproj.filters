@@ -56,5 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\src\Player.lua" />
+    <None Include="Assets\src\Monster.lua" />
   </ItemGroup>
 </Project>
