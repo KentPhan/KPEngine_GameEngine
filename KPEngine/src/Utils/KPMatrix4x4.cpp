@@ -86,10 +86,10 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateRotationMatrix_
 }
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateScaleMatrix(KPVector3 i_Scale)
 {
-	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	KPMatrix4x4 o_toReturn = CreateIdentityMatrix();
 	o_toReturn.m_Matrix[0] = i_Scale.X();
 	o_toReturn.m_Matrix[5] = i_Scale.Y();
-	o_toReturn.m_Matrix[7] = i_Scale.Z();
+	o_toReturn.m_Matrix[10] = i_Scale.Z();
 	return o_toReturn;
 }
 

@@ -133,6 +133,20 @@ bool MatrixConstructionTest()
 	l_R5.Print();
 	assert(l_R5 == l_A5 && "RotationZ");
 
+
+	float l_F4_X = 2.5f;
+	float l_F4_Y = -6.8f;
+	float l_F4_Z = 310.0f;
+	KPMatrix4x4 l_R6 = KPMatrix4x4::CreateScaleMatrix(KPVector3(l_F4_X, l_F4_Y, l_F4_Z));
+	float l_DA6[] = { l_F4_X, 0.0f , 0.0f, 0.0f,
+						0.0f, l_F4_Y , 0.0f, 0.0f ,
+						0.0f, 0.0f , l_F4_Z, 0.0f,
+						0.0f, 0.0f , 0.0f, 1.0f };
+	KPMatrix4x4 l_A6 = KPMatrix4x4(l_DA6);
+	l_R6.Print();
+	l_A6.Print();
+	assert(l_R6 == l_A6 && "Scale");
+
 	PrintTestEndLabel("Construction");
 	return true;
 }
