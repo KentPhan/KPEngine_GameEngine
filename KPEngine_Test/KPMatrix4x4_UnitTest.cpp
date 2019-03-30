@@ -30,6 +30,7 @@ const char* TestLabel(const char* i_Label)
 
 bool MatrixMultiplyTest();
 bool MatrixConstructionTest();
+bool MatrixOperationsTest();
 
 bool KPMatrix4x4_UnitTest()
 {
@@ -37,6 +38,7 @@ bool KPMatrix4x4_UnitTest()
 
 	MatrixMultiplyTest();
 	MatrixConstructionTest();
+	MatrixOperationsTest();
 
 	std::cout << "Matrix 4x4 TESTS PASSED:" << std::endl;
 	return true;
@@ -148,5 +150,30 @@ bool MatrixConstructionTest()
 	assert(l_R6 == l_A6 && "Scale");
 
 	PrintTestEndLabel("Construction");
+	return true;
+}
+
+bool MatrixOperationsTest()
+{
+	float l_DegreeToRadians = M_PI / 180.0f;
+	PrintTestStartLabel("Operation");
+
+	float l_DA1[] = { 1.0f, 2.0f , 3.0f, 4.0f,
+						5.0f, 6.0f , 7.0f, 8.0f ,
+						9.0f, 10.0f , 11.0f, 12.0f,
+						13.0f, 14.0f , 15.0f, 16.0f };
+	KPMatrix4x4 l_R1 = KPMatrix4x4(l_DA1);
+	l_R1.Print();
+	l_R1 = l_R1.CreateTransposeMatrix();
+	l_R1.Print();
+	float l_DA2[] = { 1.0f, 5.0f , 9.0f, 13.0f,
+						2.0f, 6.0f , 10.0f, 14.0f ,
+						3.0f, 7.0f , 11.0f, 15.0f,
+						4.0f, 8.0f , 12.0f, 16.0f };
+	KPMatrix4x4 l_A1 = KPMatrix4x4(l_DA2);
+	assert(l_R1 == l_A1 && "Transpose");
+
+
+	PrintTestEndLabel("Operation");
 	return true;
 }

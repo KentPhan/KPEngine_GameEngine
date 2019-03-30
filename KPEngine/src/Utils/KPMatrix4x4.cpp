@@ -92,6 +92,17 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateScaleMatrix(KPV
 	o_toReturn.m_Matrix[10] = i_Scale.Z();
 	return o_toReturn;
 }
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTransposeMatrix()
+{
+	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	for(size_t n = 0; n < 16; n++)
+	{
+		int i = n/4;
+		int j = n%4;
+		o_toReturn.m_Matrix[n] = m_Matrix[ i+(j * 4) ];
+	}
+	return o_toReturn;
+}
 
 // Operators
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4& i_Other)
