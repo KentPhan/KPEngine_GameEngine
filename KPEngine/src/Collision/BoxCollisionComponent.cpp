@@ -6,13 +6,16 @@ namespace KPEngine
 {
 	namespace Collision
 	{
-		BoxCollisionComponent::BoxCollisionComponent()
+		BoxCollisionComponent::BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject) : m_pGameObject(i_GameObject)
 		{
+			m_Center = KPVector4();
+			m_Extents = KPVector3(2.0f, 2.0f, 2.0f);
 		}
 
 
 		BoxCollisionComponent::~BoxCollisionComponent()
 		{
+			m_pGameObject.~StrongPointer();
 		}
 
 		bool BoxCollisionComponent::SeparatingAxisCheck(BoxCollisionComponent& i_Other)

@@ -9,7 +9,7 @@ namespace KPEngine
 		class BoxCollisionComponent
 		{
 		public:
-			BoxCollisionComponent();
+			BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject);
 			~BoxCollisionComponent();
 
 			bool SeparatingAxisCheck(BoxCollisionComponent& i_Box);

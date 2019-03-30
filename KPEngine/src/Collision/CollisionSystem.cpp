@@ -9,6 +9,9 @@ namespace KPEngine
 	{
 		void CollisionSystem::RegisterBoxComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject)
 		{
+			assert(i_pGameObject);
+			BoxCollisionComponent* l_NewComponent = new BoxCollisionComponent(i_pGameObject);
+			m_pBoxComponents->push_back(l_NewComponent);
 		}
 
 		void CollisionSystem::Initialize()
