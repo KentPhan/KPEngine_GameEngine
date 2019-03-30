@@ -62,18 +62,30 @@ bool MatrixMultiplyTest()
 	l_M1.Print();
 	l_M2.Print();
 
-
 	KPMatrix4x4 l_Result = l_M1 * l_M2;
 	l_Result.Print();
-
 
 	float l_DataAnswer[] = { 10.0f, 8.0f , 10.0f, 8.0f,
 						8.0f, 10.0f , 8.0f, 10.0f ,
 						4.0f, 5.0f , 4.0f, 5.0f,
 						6.0f, 3.0f , 6.0f, 3.0f };
 	KPMatrix4x4 l_Answer = KPMatrix4x4(l_DataAnswer);
+	assert(l_Result == l_Answer && "Multiply Matrix");
 
-	assert(l_Result == l_Answer && "Multiply");
+
+	float l_Data3[] = { 1.0f, 1.0f , 1.0f, 1.0f,
+						2.0f, 2.0f , 2.0f, 2.0f ,
+						3.0f, 3.0f , 3.0f, 3.0f,
+						4.0f, 4.0f , 4.0f, 4.0f };
+	KPMatrix4x4 l_M3 = KPMatrix4x4(l_Data3);
+	KPVector4 l_V1 = KPVector4(1.0f, 2.0f, 3.0f, 4.0f);
+
+	KPVector4 l_R2 = l_M3 * l_V1;
+	KPVector4 l_A2 = KPVector4(10.0f, 20.0f, 30.0f, 40.0f);
+	l_R2.Print();
+	l_A2.Print();
+	assert(l_R2 == l_A2 && "Multiply Vector");
+
 
 	PrintTestEndLabel("Multiply");
 	return true;

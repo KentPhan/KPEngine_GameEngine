@@ -69,13 +69,13 @@ namespace KPEngine
 			{
 				m_Y = i_Y;
 			}
-			inline void Z(float i_Y)
+			inline void Z(float i_Z)
 			{
-				m_Y = i_Y;
+				m_Z = i_Z;
 			}
-			inline void W(float i_Y)
+			inline void W(float i_W)
 			{
-				m_Y = i_Y;
+				m_W = i_W;
 			}
 
 			// operators
@@ -90,6 +90,15 @@ namespace KPEngine
 
 			KPVector4& operator=(const KPVector4 & i_other);
 			KPVector4 operator-(const KPVector4 & i_other) const;
+
+			inline bool operator==(const KPVector4& i_other) const
+			{
+				return ((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z));
+			}
+			inline bool operator!=(const KPVector4& i_other) const
+			{
+				return !((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z));
+			}
 
 			inline float Dot(const KPVector4 & i_other) const
 			{

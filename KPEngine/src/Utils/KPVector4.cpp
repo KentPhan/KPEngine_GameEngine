@@ -78,7 +78,6 @@ namespace KPEngine
 			temp.Y(m_W - i_other.m_W);
 			return temp;
 		}
-
 	}
 }
 

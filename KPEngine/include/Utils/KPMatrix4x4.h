@@ -30,11 +30,12 @@ namespace KPEngine
 			
 			// Operators
 			KPMatrix4x4 CreateTransposeMatrix();
+			KPMatrix4x4 CreateInversionMatrix();
 			float GetDeterminant();
-			KPMatrix4x4 GetInverse();
+			
 			
 			KPMatrix4x4 operator*(KPMatrix4x4 & i_Other);
-			KPMatrix4x4 operator*(KPVector4 & i_Other);
+			KPVector4 operator*(KPVector4 & i_Other);
 
 			// Compare Operators
 			bool operator==(KPMatrix4x4 & i_Other);

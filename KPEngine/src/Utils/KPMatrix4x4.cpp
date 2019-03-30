@@ -104,6 +104,22 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTransposeMatrix
 	return o_toReturn;
 }
 
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateInversionMatrix()
+{
+	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	for (size_t n = 0; n < 16; n++)
+	{
+		int i = n / 4;
+		int j = n % 4;
+		o_toReturn.m_Matrix[n] = m_Matrix[i + (j * 4)];
+	}
+	return o_toReturn;
+}
+float KPEngine::Utils::KPMatrix4x4::GetDeterminant()
+{
+	return 0.0f;
+}
+
 // Operators
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4& i_Other)
 {
@@ -123,6 +139,27 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4
 		}
 
 	}
+
+	return o_Result;
+}
+KPEngine::Utils::KPVector4 KPEngine::Utils::KPMatrix4x4::operator*(KPVector4& i_Other)
+{
+	KPVector4 o_Result;
+	float l_Temp[4];
+
+	// For each row in this matrix
+	size_t l_lhsR = 0;
+	for (size_t i = 0; i < 4; i++)
+	{
+		KPVector4 l_lhsRow = KPVector4(m_Matrix[0 + l_lhsR], m_Matrix[1 + l_lhsR], m_Matrix[2 + l_lhsR], m_Matrix[3 + l_lhsR]);
+		l_Temp[i] = l_lhsRow.Dot(i_Other);
+
+		l_lhsR = l_lhsR + 4;
+	}
+	o_Result.X(l_Temp[0]);
+	o_Result.Y(l_Temp[1]);
+	o_Result.Z(l_Temp[2]);
+	o_Result.W(l_Temp[3]);
 
 	return o_Result;
 }
