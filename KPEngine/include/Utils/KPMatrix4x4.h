@@ -6,6 +6,8 @@ namespace KPEngine
 {
 	namespace Utils
 	{
+		class KPVector3;
+
 		class KPMatrix4x4
 		{
 		public:
@@ -18,14 +20,15 @@ namespace KPEngine
 			// Assignment
 			KPMatrix4x4& operator=(const KPMatrix4x4 & i_Other);
 
-			KPMatrix4x4 SetIdentityMatrix();
-			KPMatrix4x4 SetTranslationMatrix();
-			KPMatrix4x4 SetRotationMatrix();
-			KPMatrix4x4 SetScaleMatrix();
+			// Static Matrix Creation Functions
+			static KPMatrix4x4 CreateIdentityMatrix();
+			static KPMatrix4x4 CreateTranslationMatrix(KPVector3 i_Translation);
+			static KPMatrix4x4 CreateRotationMatrix();
+			static KPMatrix4x4 CreateScaleMatrix();
 
 			// Operators
-			float Determinant();
-			KPMatrix4x4 Inverse();
+			float GetDeterminant();
+			KPMatrix4x4 GetInverse();
 			KPMatrix4x4 Transpose();
 			KPMatrix4x4 operator*(KPMatrix4x4 & i_Other);
 			KPMatrix4x4 operator*(KPVector4 & i_Other);

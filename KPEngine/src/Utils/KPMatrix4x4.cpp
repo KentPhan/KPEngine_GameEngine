@@ -1,4 +1,5 @@
 #include "../../include/Utils/KPMatrix4x4.h"
+#include "../../include/Utils/KPVector3.h"
 
 // Constructors and Destructor
 KPEngine::Utils::KPMatrix4x4::KPMatrix4x4()
@@ -37,6 +38,36 @@ KPEngine::Utils::KPMatrix4x4& KPEngine::Utils::KPMatrix4x4::operator=(const KPMa
 	return *this;
 }
 
+// Static Matrix Creation Functions
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateIdentityMatrix()
+{
+	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	o_toReturn.m_Matrix[0] = 1;
+	o_toReturn.m_Matrix[5] = 1;
+	o_toReturn.m_Matrix[10] = 1;
+	o_toReturn.m_Matrix[15] = 1;
+
+	return o_toReturn;
+}
+
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTranslationMatrix(KPVector3 i_Translation)
+{
+	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	return o_toReturn;
+}
+
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateRotationMatrix()
+{
+	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	return o_toReturn;
+}
+
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateScaleMatrix()
+{
+	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	return o_toReturn;
+}
+
 // Operators
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4& i_Other)
 {
@@ -59,7 +90,6 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4
 
 	return o_Result;
 }
-
 
 // Compare Operators
 bool KPEngine::Utils::KPMatrix4x4::operator==(KPMatrix4x4& i_Other)

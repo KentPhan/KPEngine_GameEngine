@@ -3,23 +3,44 @@
 #include <cassert>
 
 using KPEngine::Utils::KPMatrix4x4;
+using std::cout;
+using std::endl;;
+using std::string;
+
+
+void PrintTestStartLabel(const char* i_Label)
+{
+	std::cout << "Matrix 4x4 "<< i_Label <<" Test:" << std::endl;
+}
+
+void PrintTestEndLabel(const char* i_Label)
+{
+	std::cout << "Matrix 4x4 "<< i_Label << " Test Passed:" << std::endl;
+}
+
+const char* TestLabel(const char* i_Label)
+{
+	return (string(i_Label) + " Test Failed").c_str();
+}
+
 
 bool MatrixMultiplyTest();
+bool MatrixConstructionTest();
 
 bool KPMatrix4x4_UnitTest()
 {
 	std::cout << "Matrix 4x4 TESTS:" << std::endl;
 
 	MatrixMultiplyTest();
+	MatrixConstructionTest();
 
 	std::cout << "Matrix 4x4 TESTS PASSED:" << std::endl;
 	return true;
 }
 
-
 bool MatrixMultiplyTest()
 {
-	std::cout << "Matrix 4x4 Multiply Test:" << std::endl;
+	PrintTestStartLabel("Multiply");
 
 	float l_Data[] = { 1.0f, 2.0f , 1.0f, 2.0f,
 						2.0f, 1.0f , 2.0f, 1.0f ,
@@ -36,7 +57,7 @@ bool MatrixMultiplyTest()
 	l_M2.Print();
 
 
-	KPMatrix4x4 l_Result = l_M1 * l_M2 * l_M1;
+	KPMatrix4x4 l_Result = l_M1 * l_M2;
 	l_Result.Print();
 
 
@@ -46,9 +67,25 @@ bool MatrixMultiplyTest()
 						6.0f, 3.0f , 6.0f, 3.0f };
 	KPMatrix4x4 l_Answer = KPMatrix4x4(l_DataAnswer);
 
-	assert(l_Result == l_Answer);
+	assert(l_Result == l_Answer && "Multiply");
 
-	std::cout << "Matrix 4x4 Multiply Test Passed:"<< std::endl;
-	
+	PrintTestEndLabel("Multiply");
+	return true;
+}
+
+bool MatrixConstructionTest()
+{
+	PrintTestStartLabel("Construction");
+
+	KPMatrix4x4 l_R1 = KPMatrix4x4::CreateIdentityMatrix();
+	float l_DA1[] = { 1.0f, 0.0f , 0.0f, 0.0f,
+						0.0f, 1.0f , 0.0f, 0.0f ,
+						0.0f, 0.0f , 1.0f, 0.0f,
+						0.0f, 0.0f , 0.0f, 1.0f };
+	KPMatrix4x4 l_A1 = KPMatrix4x4(l_DA1);
+	l_R1.Print();
+	assert(l_R1 == l_A1 && "Identity");
+
+	PrintTestEndLabel("Construction");
 	return true;
 }
