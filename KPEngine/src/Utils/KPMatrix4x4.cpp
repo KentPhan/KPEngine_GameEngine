@@ -46,19 +46,24 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateIdentityMatrix(
 	o_toReturn.m_Matrix[5] = 1;
 	o_toReturn.m_Matrix[10] = 1;
 	o_toReturn.m_Matrix[15] = 1;
-
 	return o_toReturn;
 }
 
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTranslationMatrix(KPVector3 i_Translation)
 {
-	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	KPMatrix4x4 o_toReturn = CreateIdentityMatrix();
+	o_toReturn.m_Matrix[3] = i_Translation.X();
+	o_toReturn.m_Matrix[7] = i_Translation.Y();
+	o_toReturn.m_Matrix[11] = i_Translation.Z();
 	return o_toReturn;
 }
 
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateRotationMatrix()
 {
 	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	o_toReturn.m_Matrix[0] = 1;
+	o_toReturn.m_Matrix[5] = 1;
+	o_toReturn.m_Matrix[10] = 1;
 	return o_toReturn;
 }
 

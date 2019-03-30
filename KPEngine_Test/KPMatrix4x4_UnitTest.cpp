@@ -1,7 +1,10 @@
 #include <iostream>
 #include "Utils/KPMatrix4x4.h"
 #include <cassert>
+#include "Utils/KPVector3.h"
 
+using KPEngine::Utils::KPVector3;
+using KPEngine::Utils::KPVector4;
 using KPEngine::Utils::KPMatrix4x4;
 using std::cout;
 using std::endl;;
@@ -85,6 +88,16 @@ bool MatrixConstructionTest()
 	KPMatrix4x4 l_A1 = KPMatrix4x4(l_DA1);
 	l_R1.Print();
 	assert(l_R1 == l_A1 && "Identity");
+
+	KPVector3 l_V1 = KPVector3(5.0f, 10.5f, 11.7f);
+	KPMatrix4x4 l_R2 = KPMatrix4x4::CreateTranslationMatrix(l_V1);
+	float l_DA2[] = { 1.0f, 0.0f , 0.0f, 5.0f,
+						0.0f, 1.0f , 0.0f, 10.5f ,
+						0.0f, 0.0f , 1.0f, 11.7f,
+						0.0f, 0.0f , 0.0f, 1.0f };
+	KPMatrix4x4 l_A2 = KPMatrix4x4(l_DA2);
+	l_R2.Print();
+	assert(l_R2 == l_A2 && "Translation");
 
 	PrintTestEndLabel("Construction");
 	return true;
