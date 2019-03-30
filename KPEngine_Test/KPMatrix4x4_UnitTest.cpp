@@ -2,6 +2,7 @@
 #include "Utils/KPMatrix4x4.h"
 #include <cassert>
 #include "Utils/KPVector3.h"
+#include <cmath>
 
 using KPEngine::Utils::KPVector3;
 using KPEngine::Utils::KPVector4;
@@ -76,8 +77,11 @@ bool MatrixMultiplyTest()
 	return true;
 }
 
+
+# define M_PI           3.14159265358979323846f  /* pi */
 bool MatrixConstructionTest()
 {
+	float l_DegreeToRadians = M_PI / 180.0f;
 	PrintTestStartLabel("Construction");
 
 	KPMatrix4x4 l_R1 = KPMatrix4x4::CreateIdentityMatrix();
@@ -98,6 +102,36 @@ bool MatrixConstructionTest()
 	KPMatrix4x4 l_A2 = KPMatrix4x4(l_DA2);
 	l_R2.Print();
 	assert(l_R2 == l_A2 && "Translation");
+
+	float l_F1 = 0 * l_DegreeToRadians;
+	KPMatrix4x4 l_R3 = KPMatrix4x4::CreateRotationMatrix_X(l_F1);
+	float l_DA3[] = { 1.0f, 0.0f , 0.0f, 0.0f,
+						0.0f, cosf(l_F1) , sinf(l_F1) * -1.0f, 0.0f ,
+						0.0f, sinf(l_F1) , cosf(l_F1), 0.0f,
+						0.0f, 0.0f , 0.0f, 1.0f };
+	KPMatrix4x4 l_A3 = KPMatrix4x4(l_DA3);
+	l_R3.Print();
+	assert(l_R3 == l_A3 && "RotationX");
+
+	float l_F2 = 90 * l_DegreeToRadians;
+	KPMatrix4x4 l_R4 = KPMatrix4x4::CreateRotationMatrix_Y(l_F2);
+	float l_DA4[] = { cosf(l_F2), 0.0f , sinf(l_F2), 0.0f,
+						0.0f, 1.0f , 0.0f, 0.0f ,
+						sinf(l_F2) * -1.0f, 0.0f , cosf(l_F2), 0.0f,
+						0.0f, 0.0f , 0.0f, 1.0f };
+	KPMatrix4x4 l_A4 = KPMatrix4x4(l_DA4);
+	l_R4.Print();
+	assert(l_R4 == l_A4 && "RotationY");
+
+	float l_F3 = 45 * l_DegreeToRadians;
+	KPMatrix4x4 l_R5 = KPMatrix4x4::CreateRotationMatrix_Z(l_F3);
+	float l_DA5[] = { cosf(l_F3), sinf(l_F3) * -1.0f , 0.0f, 0.0f,
+						sinf(l_F3), cosf(l_F3) , 0.0f, 0.0f ,
+						0.0f, 0.0f , 1.0f, 0.0f,
+						0.0f, 0.0f , 0.0f, 1.0f };
+	KPMatrix4x4 l_A5 = KPMatrix4x4(l_DA5);
+	l_R5.Print();
+	assert(l_R5 == l_A5 && "RotationZ");
 
 	PrintTestEndLabel("Construction");
 	return true;

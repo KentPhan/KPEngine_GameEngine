@@ -1,5 +1,6 @@
 #include "../../include/Utils/KPMatrix4x4.h"
 #include "../../include/Utils/KPVector3.h"
+#include <cmath>
 
 // Constructors and Destructor
 KPEngine::Utils::KPMatrix4x4::KPMatrix4x4()
@@ -48,7 +49,6 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateIdentityMatrix(
 	o_toReturn.m_Matrix[15] = 1;
 	return o_toReturn;
 }
-
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTranslationMatrix(KPVector3 i_Translation)
 {
 	KPMatrix4x4 o_toReturn = CreateIdentityMatrix();
@@ -57,19 +57,39 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTranslationMatr
 	o_toReturn.m_Matrix[11] = i_Translation.Z();
 	return o_toReturn;
 }
-
-KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateRotationMatrix()
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateRotationMatrix_X(float i_Angle)
 {
-	KPMatrix4x4 o_toReturn = KPMatrix4x4();
-	o_toReturn.m_Matrix[0] = 1;
-	o_toReturn.m_Matrix[5] = 1;
-	o_toReturn.m_Matrix[10] = 1;
+	KPMatrix4x4 o_toReturn = CreateIdentityMatrix();
+	o_toReturn.m_Matrix[5] = cosf(i_Angle);
+	o_toReturn.m_Matrix[6] = sinf(i_Angle) * -1.0f;
+	o_toReturn.m_Matrix[9] = sinf(i_Angle);
+	o_toReturn.m_Matrix[10] = cosf(i_Angle);
 	return o_toReturn;
 }
-
-KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateScaleMatrix()
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateRotationMatrix_Y(float i_Angle)
+{
+	KPMatrix4x4 o_toReturn = CreateIdentityMatrix();
+	o_toReturn.m_Matrix[0] = cosf(i_Angle);
+	o_toReturn.m_Matrix[2] = sinf(i_Angle);
+	o_toReturn.m_Matrix[8] = sinf(i_Angle) * -1.0f;
+	o_toReturn.m_Matrix[10] = cosf(i_Angle);
+	return o_toReturn;
+}
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateRotationMatrix_Z(float i_Angle)
+{
+	KPMatrix4x4 o_toReturn = CreateIdentityMatrix();
+	o_toReturn.m_Matrix[0] = cosf(i_Angle);
+	o_toReturn.m_Matrix[1] = sinf(i_Angle) * -1.0f;
+	o_toReturn.m_Matrix[4] = sinf(i_Angle);
+	o_toReturn.m_Matrix[5] = cosf(i_Angle);
+	return o_toReturn;
+}
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateScaleMatrix(KPVector3 i_Scale)
 {
 	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	o_toReturn.m_Matrix[0] = i_Scale.X();
+	o_toReturn.m_Matrix[5] = i_Scale.Y();
+	o_toReturn.m_Matrix[7] = i_Scale.Z();
 	return o_toReturn;
 }
 

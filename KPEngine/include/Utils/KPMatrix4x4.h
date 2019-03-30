@@ -23,8 +23,10 @@ namespace KPEngine
 			// Static Matrix Creation Functions
 			static KPMatrix4x4 CreateIdentityMatrix();
 			static KPMatrix4x4 CreateTranslationMatrix(KPVector3 i_Translation);
-			static KPMatrix4x4 CreateRotationMatrix();
-			static KPMatrix4x4 CreateScaleMatrix();
+			static KPMatrix4x4 CreateRotationMatrix_X(float i_Angle);
+			static KPMatrix4x4 CreateRotationMatrix_Y(float i_Angle);
+			static KPMatrix4x4 CreateRotationMatrix_Z(float i_Angle);
+			static KPMatrix4x4 CreateScaleMatrix(KPVector3 i_Scale);
 
 			// Operators
 			float GetDeterminant();
