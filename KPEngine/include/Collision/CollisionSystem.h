@@ -20,6 +20,7 @@ namespace KPEngine
 			static void RegisterBoxComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject);
 
 		private:
+			static bool m_InitializeSuccessful;
 			static std::vector<StrongPointer<BoxCollisionComponent>>* m_pBoxComponents;
 
 
