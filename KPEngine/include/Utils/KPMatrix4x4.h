@@ -29,13 +29,14 @@ namespace KPEngine
 			static KPMatrix4x4 CreateScaleMatrix(KPVector3 i_Scale);
 			
 			// Operators
-			KPMatrix4x4 CreateTransposeMatrix();
-			KPMatrix4x4 CreateInversionMatrix();
-			float GetDeterminant();
+			KPMatrix4x4 CreateTransposeMatrix() const; 
+			KPMatrix4x4 CreateInverseMatrix() const;//TODO My implementation is fairly inefficent. But it helps me think through it
 			
 			
-			KPMatrix4x4 operator*(KPMatrix4x4 & i_Other);
-			KPVector4 operator*(KPVector4 & i_Other);
+			
+			KPMatrix4x4 operator*(const KPMatrix4x4 & i_Other) const;
+			KPMatrix4x4 operator*(float&  i_Other) const;
+			KPVector4 operator*(const KPVector4 & i_Other) const;
 
 			// Compare Operators
 			bool operator==(KPMatrix4x4 & i_Other);
@@ -44,6 +45,12 @@ namespace KPEngine
 			void Print();
 
 		private:
+			KPMatrix4x4 CreateAdjugateMatrix() const;
+			KPMatrix4x4 CreateCofactorMatrix() const;
+			static float GetCofactor(const float i_Matrix[], size_t i_IgnoredRow, size_t i_IgnoredCol, size_t i_Dimension, int i_Sign);
+			static float GetDeterminant(const float i_Matrix[],size_t i_Dimension); // Recursive
+			
+			
 			float m_Matrix[16];
 		};
 	}

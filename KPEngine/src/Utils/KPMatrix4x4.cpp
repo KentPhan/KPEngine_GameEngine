@@ -1,6 +1,7 @@
 #include "../../include/Utils/KPMatrix4x4.h"
 #include "../../include/Utils/KPVector3.h"
 #include <cmath>
+#include <cassert>
 
 // Constructors and Destructor
 KPEngine::Utils::KPMatrix4x4::KPMatrix4x4()
@@ -92,36 +93,140 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateScaleMatrix(KPV
 	o_toReturn.m_Matrix[10] = i_Scale.Z();
 	return o_toReturn;
 }
-KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTransposeMatrix()
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTransposeMatrix() const
 {
-	KPMatrix4x4 o_toReturn = KPMatrix4x4();
+	KPMatrix4x4 o_TransposeMatrix = KPMatrix4x4();
 	for(size_t n = 0; n < 16; n++)
 	{
 		int i = n/4;
 		int j = n%4;
-		o_toReturn.m_Matrix[n] = m_Matrix[ i+(j * 4) ];
+		o_TransposeMatrix.m_Matrix[n] = m_Matrix[ i+(j * 4) ];
 	}
-	return o_toReturn;
+	return o_TransposeMatrix;
 }
 
-KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateInversionMatrix()
+// InverseMatrix = Adjugate / Determinant of Matrix
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateInverseMatrix() const
 {
-	KPMatrix4x4 o_toReturn = KPMatrix4x4();
-	for (size_t n = 0; n < 16; n++)
-	{
-		int i = n / 4;
-		int j = n % 4;
-		o_toReturn.m_Matrix[n] = m_Matrix[i + (j * 4)];
+	// Calculate Determinant of Matrix
+	float l_Determinant = GetDeterminant(m_Matrix, 4);
+
+	// If condition to quit if Determinant is 0
+	assert(l_Determinant != 0 && "Matrix Does not Contain Determinant");
+
+
+	// Calculate Adjugate Matrix
+	KPMatrix4x4 l_AdjugateMatrix = CreateAdjugateMatrix();
+	float l_InverseDeterminant = (1.0f / l_Determinant);
+	return l_AdjugateMatrix* l_InverseDeterminant;
+}
+
+// AdjointMatrix = Transpose(CofactorMatrix)
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateAdjugateMatrix() const
+{
+	// Calculate CofactorMatrix
+	KPMatrix4x4 l_CoFactorMatrix = CreateCofactorMatrix();
+
+	// Transpose CofactorMatrix for Adjoint Matrix
+	return l_CoFactorMatrix.CreateTransposeMatrix();
+}
+
+// 
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateCofactorMatrix() const
+{
+	KPMatrix4x4 o_CofactorMatrix = KPMatrix4x4();
+	// For Each Element  in matrix Get Cofactor and store it
+	
+	float l_Temp[3][3];
+	int l_Sign = 1;
+	for(size_t i = 0; i < 16; i++)
+	{	
+		size_t l_IgnoredRow = i / 4;
+		size_t l_IgnoredCol = i % 4;
+		l_Sign = ((l_IgnoredCol + l_IgnoredRow) % 2) == 0 ? 1 : -1;
+
+		o_CofactorMatrix.m_Matrix[i] = GetCofactor(m_Matrix, l_IgnoredRow , l_IgnoredCol,4, l_Sign);
 	}
-	return o_toReturn;
+	return o_CofactorMatrix;
 }
-float KPEngine::Utils::KPMatrix4x4::GetDeterminant()
+
+// given a matrix, given an element, delete the row and col of that element, return (determinate of that element multiplied to the sign) this is the cofactor
+float KPEngine::Utils::KPMatrix4x4::GetCofactor(const float i_Matrix[], size_t i_IgnoredRow, size_t i_IgnoredCol, size_t i_Dimension, int i_Sign)
 {
-	return 0.0f;
+	assert(i_Dimension > 2);
+
+	// Create new Matrix For newly sized matrix
+	size_t l_CoFactorDimension = i_Dimension - 1;;
+	float * l_CoFactorMatrix = new float[l_CoFactorDimension * l_CoFactorDimension];
+	size_t l_CoRow = 0;
+	size_t l_CoCol = 0;
+
+
+	// Copy Values into newlySized Array to calculate the determinate of. Ignore Ignored Rows and Cols
+	// For each row
+	for(size_t l_Row = 0; l_Row < i_Dimension; l_Row++)
+	{
+		// If Ignored Row
+		if (l_Row == i_IgnoredRow)
+			continue;
+
+
+		for (size_t l_Col = 0; l_Col < i_Dimension; l_Col++)
+		{
+			// If Ignore Col
+			if (l_Col == i_IgnoredCol)
+				continue;
+
+			// Copy value over
+			l_CoFactorMatrix[(l_CoRow * l_CoFactorDimension) + l_CoCol] =i_Matrix[(l_Row * i_Dimension) + l_Col];
+
+			l_CoCol++;
+		}
+
+		l_CoRow++;
+		l_CoCol = 0;
+	}
+
+	const float o_Determinate =  GetDeterminant(l_CoFactorMatrix, l_CoFactorDimension);
+
+	delete[] l_CoFactorMatrix;
+
+	if (o_Determinate == 0)
+		return o_Determinate;
+
+	return o_Determinate * i_Sign;
 }
+
+float KPEngine::Utils::KPMatrix4x4::GetDeterminant(const float i_Matrix[], size_t i_Dimension)
+{
+	assert(i_Dimension > 0 && "Dimension is Zero");
+	// TODO Handle Dimension 1 and Reformat Code
+
+	if (i_Dimension == 2)// Base Case 2x2 determinate matrix. Quick way of doing the below
+		return i_Matrix[0] * i_Matrix[3]-i_Matrix[1] * i_Matrix[2];
+
+	float o_Determinant = 0.0f;
+	int l_Sign = 1;
+
+	// For each element in the first row
+	for(size_t i = 0; i < i_Dimension; i++)
+	{
+		// Get Cofactor (which leads to the return of a determinant)
+		float l_CoFactor = GetCofactor(i_Matrix, 0, i, i_Dimension, l_Sign);
+
+		l_CoFactor *= i_Matrix[i]; // Multiply by targeted element
+		o_Determinant += l_CoFactor;
+
+		l_Sign *= -1;
+	}
+
+	return o_Determinant;
+}
+
+
 
 // Operators
-KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4& i_Other)
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(const KPMatrix4x4& i_Other) const
 {
 	KPMatrix4x4 o_Result;
 
@@ -142,7 +247,21 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(KPMatrix4x4
 
 	return o_Result;
 }
-KPEngine::Utils::KPVector4 KPEngine::Utils::KPMatrix4x4::operator*(KPVector4& i_Other)
+
+KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::operator*(float& i_Other) const
+{
+	KPMatrix4x4 o_Result;
+
+	// For each item, multiply by float
+	for (size_t i = 0; i < 16; i++)
+	{
+		o_Result.m_Matrix[i] = m_Matrix[i] * i_Other;
+	}
+
+	return o_Result;
+}
+
+KPEngine::Utils::KPVector4 KPEngine::Utils::KPMatrix4x4::operator*(const KPVector4& i_Other) const
 {
 	KPVector4 o_Result;
 	float l_Temp[4];
@@ -193,3 +312,4 @@ void KPEngine::Utils::KPMatrix4x4::Print()
 	}
 	std::cout << std::endl;
 }
+

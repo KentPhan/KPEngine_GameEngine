@@ -31,6 +31,7 @@ const char* TestLabel(const char* i_Label)
 bool MatrixMultiplyTest();
 bool MatrixConstructionTest();
 bool MatrixOperationsTest();
+bool MatrixInverseTest();
 
 bool KPMatrix4x4_UnitTest()
 {
@@ -39,6 +40,7 @@ bool KPMatrix4x4_UnitTest()
 	MatrixMultiplyTest();
 	MatrixConstructionTest();
 	MatrixOperationsTest();
+	MatrixInverseTest();
 
 	std::cout << "Matrix 4x4 TESTS PASSED:" << std::endl;
 	return true;
@@ -187,5 +189,64 @@ bool MatrixOperationsTest()
 
 
 	PrintTestEndLabel("Operation");
+	return true;
+}
+
+bool MatrixInverseTest()
+{
+	float l_DegreeToRadians = M_PI / 180.0f;
+	PrintTestStartLabel("Inverse");
+
+	/*float l_DA1[] = { 1.0f, 2.0f , 3.0f, 4.0f,
+						5.0f, 6.0f , 7.0f, 8.0f ,
+						9.0f, 3.0f , 11.0f, 12.0f,
+						13.0f, 14.0f , 9.0f, 16.0f };*/
+	float l_DA1[] = { 1.0f, 0.0f , 0.0f, 0.0f,
+						0.0f, 1.0f , 0.0f, 0.0f ,
+						0.0f, 0.0f , 1.0f, 0.0f,
+						13.0f, 12.0f , 0.0f, 1.0f };
+	KPMatrix4x4 l_R1 = KPMatrix4x4(l_DA1);
+	l_R1.Print();
+	l_R1 = l_R1.CreateInverseMatrix();
+	l_R1.Print();
+	float l_DA2[] = { 1.0f, 0.0f , 0.0f, 0.0f,
+						0.0f, 1.0f , 0.0f, 0.0f ,
+						0.0f, 0.0f , 1.0f, 0.0f,
+						-13.0f, -12.0f , 0.0f, 1.0f };
+	KPMatrix4x4 l_A1 = KPMatrix4x4(l_DA2);
+	assert(l_R1 == l_A1 && "Inverse1");
+
+	float l_DA3[] = { 1.0f, 0.0f , -1.0f, 0.0f,
+						-3.0f, 4.0f , 0.0f, 2.0f ,
+						0.0f, 0.5f , 2.0f, 0.0f,
+						-0.1f, 0.0f , 0.0f, 0.0f };
+	KPMatrix4x4 l_R2 = KPMatrix4x4(l_DA3);
+	l_R2.Print();
+	l_R2 = l_R2.CreateInverseMatrix();
+	l_R2.Print();
+	float l_DA4[] = { 0.0f, 0.0f , 0.0f, -10.0f,
+						4.0f, 0.0f , 2.0f, 40.0f ,
+						-1.0f, 0.0f , 0.0f, -10.0f,
+						-8.0f, 0.5f , -4.0f, -95.0f };
+	KPMatrix4x4 l_A2 = KPMatrix4x4(l_DA4);
+	assert(l_R2 == l_A2 && "Inverse2");
+
+	float l_DA5[] = { 1.0f, 0.0f , -1.0f, 0.0f,
+						-3.0f, 4.0f , 0.0f, 2.0f ,
+						0.0f, 0.5f , 2.0f, 0.0f,
+						-0.1f, 0.0f , 0.0f, 1.0f };
+	KPMatrix4x4 l_R3 = KPMatrix4x4(l_DA5);
+	l_R3.Print();
+	l_R3 = l_R3.CreateInverseMatrix();
+	l_R3.Print();
+	float l_DA6[] = { 0.0f, 0.0f , 0.0f, -10.0f,
+						4.0f, 0.0f , 2.0f, 40.0f ,
+						-1.0f, 0.0f , 0.0f, -10.0f,
+						-8.0f, 0.5f , -4.0f, -95.0f };
+	KPMatrix4x4 l_A3 = KPMatrix4x4(l_DA6);
+	//assert(l_R3 == l_A3 && "Inverse2"); // To Lazy to type numbers. But confirmed with an external calculator
+
+
+	PrintTestEndLabel("Inverse");
 	return true;
 }
