@@ -4,6 +4,7 @@
 #include "../../../include/Graphics/RendererSystem.h"
 #include "../../../include/Physics/PhysicsComponent.h"
 #include "../../../include/Physics/PhysicsSystem.h"
+#include "../../../include/Collision/CollisionSystem.h"
 #include "../../../include/Core/GameObject/GameObjectSystem.h"
 #
 
@@ -49,6 +50,7 @@ namespace KPEngine
 				// TODO need to adapt pathing
 				char * l_pFileContents = static_cast<char*>(FileIO::LoadFile(i_pScriptFileName, l_SizeFile));
 
+				// TODO File Error Handling
 				//// exit if something didn't work
 				//	// probably need some debug logging in here!!!!
 				//if (l_pFileContents)
@@ -145,8 +147,13 @@ namespace KPEngine
 							assert(false && "UnIdentified Component");
 						}
 
+						
+
 						lua_pop(g_pLuaState, 1);
 					}
+
+					// TODO For now. Add a Box collision to everything for testing purposes
+					Collision::CollisionSystem::RegisterBoxComponent(l_playerObject);
 
 					l_NewStrongPointer = l_playerObject;
 				}
