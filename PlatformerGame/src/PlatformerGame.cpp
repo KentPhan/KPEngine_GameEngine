@@ -5,6 +5,7 @@
 #include "../include/GameObjects/GameObjectType.h"
 #include "../include/PlatformerGame.h"
 #include "Core/GameObject/GameObjectSystem.h"
+#include <string>
 
 
 using namespace PlatformerGame::Controllers;
@@ -20,6 +21,7 @@ namespace PlatformerGame
 		try
 		{
 			StrongPointer<GameObject> l_GameObject =  CoreFunctions::InstantiateGameObject("Assets\\src\\Player.lua");
+			//StrongPointer<GameObject> l_GameObject2 = CoreFunctions::InstantiateGameObject("Assets\\src\\Player.lua");
 
 			// Attaching Controller
 			m_pPlayerController = new PlayerController();
@@ -29,7 +31,7 @@ namespace PlatformerGame
 		}
 		catch (int i_e)
 		{
-			DEBUG_PRINT(KPLogType::Fatal, "Game Failed to Initialize InitGame()");
+			DEBUG_PRINT(KPLogType::Fatal, "Game Failed to Initialize InitGame() %i",i_e);
 			return false;
 		}
 		return true;

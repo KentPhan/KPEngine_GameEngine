@@ -58,7 +58,7 @@ namespace KPEngine
 		}
 		catch (int i_e)
 		{
-			DEBUG_PRINT(KPLogType::Fatal, "Engine Could Not Initialize");
+			DEBUG_PRINT(KPLogType::Fatal, "Engine Could Not Initialize %i", i_e);
 			return false;
 		}
 
@@ -124,7 +124,7 @@ namespace KPEngine
 		}
 		catch (int i_e)
 		{
-			DEBUG_PRINT(KPLogType::Fatal, "Engine Could Not Clean Up");
+			DEBUG_PRINT(KPLogType::Fatal, "Engine Could Not Clean Up %i", i_e);
 			return false;
 		}
 

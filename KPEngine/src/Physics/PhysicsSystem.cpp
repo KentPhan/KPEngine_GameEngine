@@ -18,7 +18,7 @@ namespace KPEngine
 			m_pPhysicsComponents->push_back(l_NewComponent);
 		}
 
-		WeakPointer<PhysicsComponent> PhysicsSystem::GetPhysicsComponent(const Core::GameObject* i_GameObjectRef)
+		StrongPointer<PhysicsComponent> PhysicsSystem::GetPhysicsComponent(const Core::GameObject* i_GameObjectRef)
 		{
 			// TODO So inefficent. But easiest way to current get a reference to the physics components without supplying a direct one to the game object
 			if (PhysicsSystem::m_InitializeSuccessful)
@@ -55,9 +55,10 @@ namespace KPEngine
 		{
 			for (size_t i = 0; i < m_pPhysicsComponents->size(); i++)
 			{
-				(*m_pPhysicsComponents)[i] = nullptr;
+				(*m_pPhysicsComponents)[i].~StrongPointer();
 			}
 
+			m_pPhysicsComponents->clear();
 			delete m_pPhysicsComponents;
 		}
 	}
