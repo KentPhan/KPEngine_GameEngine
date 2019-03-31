@@ -98,8 +98,8 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTransposeMatrix
 	KPMatrix4x4 o_TransposeMatrix = KPMatrix4x4();
 	for(size_t n = 0; n < 16; n++)
 	{
-		int i = n/4;
-		int j = n%4;
+		size_t i = n/4;
+		size_t j = n%4;
 		o_TransposeMatrix.m_Matrix[n] = m_Matrix[ i+(j * 4) ];
 	}
 	return o_TransposeMatrix;
@@ -137,7 +137,6 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateCofactorMatrix(
 	KPMatrix4x4 o_CofactorMatrix = KPMatrix4x4();
 	// For Each Element  in matrix Get Cofactor and store it
 	
-	float l_Temp[3][3];
 	int l_Sign = 1;
 	for(size_t i = 0; i < 16; i++)
 	{	
