@@ -5,6 +5,7 @@
 #include "../include/GameObjects/GameObjectType.h"
 #include "../include/PlatformerGame.h"
 #include "Core/GameObject/GameObjectSystem.h"
+#include  "Physics/PhysicsComponent.h"
 #include <string>
 
 
