@@ -10,6 +10,7 @@
 #include "../include/Core/GameObject/GameObjectSystem.h"
 #include "../include/Graphics/RendererSystem.h"
 #include "../include/Physics/PhysicsSystem.h"
+#include "../include/Collision/CollisionSystem.h"
 #include "../include/Scripting/Lua/LuaSystem.h"
 #include "../include/Utils/KP_Log.h"
 #include <cassert>
@@ -45,6 +46,9 @@ namespace KPEngine
 
 			// Physics
 			Physics::PhysicsSystem::Initialize();
+
+			// Collisions
+			Collision::CollisionSystem::Initialize();
 
 			// GameObjects
 			Core::GameObjectSystem::Initialize();
@@ -86,6 +90,10 @@ namespace KPEngine
 			// Physics
 			Physics::PhysicsSystem::PhysicsStep(l_deltaTime);
 
+			// Collisions
+			// TODO Consider Before and After Steps
+			Collision::CollisionSystem::CollisionStep(l_deltaTime);
+
 			// Draw
 			Graphics::RendererSystem::RenderStep();
 
@@ -100,6 +108,9 @@ namespace KPEngine
 		{
 			// Clean up GameObjects
 			Core::GameObjectSystem::Shutdown();
+
+			// Clean up Collisions
+			Collision::CollisionSystem::Shutdown();
 
 			// Clean up Physics
 			Physics::PhysicsSystem::Shutdown();

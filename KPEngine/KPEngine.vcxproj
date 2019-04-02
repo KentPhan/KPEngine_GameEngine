@@ -162,6 +162,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Collision\BoxCollisionComponent.h" />
+    <ClInclude Include="include\Collision\CollisionSystem.h" />
     <ClInclude Include="include\Core\GameObject\GameObjectSystem.h" />
     <ClInclude Include="include\Core\GameObject\GameObject.h" />
     <ClInclude Include="include\Core\HeapManager\BitArray.h" />
@@ -190,8 +192,13 @@
     <ClInclude Include="include\Input\InputSystem.h" />
     <ClInclude Include="include\Utils\SmartPointers.h" />
     <ClInclude Include="include\Scripting\Lua\LuaSystem.h" />
+    <ClInclude Include="include\Utils\KPVector4.h" />
+    <ClInclude Include="include\Utils\KPMatrix4x4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Collision\BoxCollisionComponent.cpp" />
+    <ClCompile Include="src\Collision\CollisionSystem.cpp" />
+    <ClCompile Include="src\Utils\KPMatrix4x4.cpp" />
     <ClCompile Include="src\Core\GameObject\GameObjectSystem.cpp" />
     <ClCompile Include="src\Scripting\Lua\LuaSystem.cpp" />
     <ClCompile Include="src\Input\InputSystem.cpp" />
@@ -211,6 +218,7 @@
     <ClCompile Include="src\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="src\Utils\KPString.cpp" />
     <ClCompile Include="src\Utils\KPVector2.cpp" />
+    <ClCompile Include="src\Utils\KPVector4.cpp" />
     <ClCompile Include="src\Utils\KP_Log.cpp" />
     <ClCompile Include="src\Core\Time\TimeSystem.cpp" />
   </ItemGroup>

@@ -1,15 +1,15 @@
 // To Swap between Dynamic and Mixed Heap Allocators. These have to be commented out and in according to what you want to use
 
-#include <inttypes.h>
-#include <malloc.h>
-
-#include <stdio.h>
-#include "../../../include/Core/HeapManager/KPFixedHeapManager.h"
-#include "../../../include/Core/HeapManager/KPDynamicHeapManager.h"
-#include "../../../include/Core/HeapManager/MemorySystem.h"
-#include <cassert>
-
-using KPEngine::Core::HeapManager::MemorySystem;
+//#include <inttypes.h>
+//#include <malloc.h>
+//
+//#include <stdio.h>
+//#include "../../../include/Core/HeapManager/KPFixedHeapManager.h"
+//#include "../../../include/Core/HeapManager/KPDynamicHeapManager.h"
+//#include "../../../include/Core/HeapManager/MemorySystem.h"
+//#include <cassert>
+//
+//using KPEngine::Core::HeapManager::MemorySystem;
 
 //void * __cdecl malloc(size_t i_size)
 //{
