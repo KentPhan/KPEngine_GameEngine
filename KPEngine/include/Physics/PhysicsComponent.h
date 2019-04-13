@@ -57,7 +57,7 @@ namespace KPEngine
 						// If acceleration would bring it past zero
 						if(l_VelocityBefore.Dot(l_VelocityAfter) < 0.0f)
 						{
-							DEBUG_PRINT(Verbose, "Slowed to A Stop with Drag");
+							//DEBUG_PRINT(Verbose, "Slowed to A Stop with Drag");
 							m_Velocity = KPVector2(0.0f, 0.0f);
 							m_Acceleration = KPVector2(0.0f, 0.0f);
 						}

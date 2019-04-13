@@ -3,6 +3,7 @@
 #include "../../Utils/KPVector2.h"
 #include "../../Utils/KPVector3.h"
 #include "../../Utils/SmartPointers.h"
+#include "../../Utils/KPMatrix4x4.h"
 
 
 using namespace KPEngine::Utils;
@@ -100,6 +101,7 @@ namespace KPEngine
 			Interfaces::IGameObjectController* m_pController;
 			KPVector2 m_Position;
 			KPString m_Name;
+			KPMatrix4x4 m_LocalCoordinateSystem;
 			
 			int m_Tag;
 		};

@@ -121,7 +121,7 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateInverseMatrix()
 	return l_AdjugateMatrix* l_InverseDeterminant;
 }
 
-// AdjointMatrix = Transpose(CofactorMatrix)
+// AdjointMatrix/Adjugate = Transpose(CofactorMatrix)
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateAdjugateMatrix() const
 {
 	// Calculate CofactorMatrix
