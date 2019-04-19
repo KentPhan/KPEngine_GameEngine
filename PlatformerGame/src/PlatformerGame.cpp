@@ -4,7 +4,7 @@
 #include "Utils/KP_Log.h"
 #include "../include/GameObjects/GameObjectType.h"
 #include "../include/PlatformerGame.h"
-#include "Core/GameObject/GameObjectSystem.h"
+#include "Core/Core.h"
 #include  "Physics/PhysicsComponent.h"
 #include <string>
 
@@ -21,8 +21,8 @@ namespace PlatformerGame
 	{
 		try
 		{
-			StrongPointer<GameObject> l_GameObject =  CoreFunctions::InstantiateGameObject("Assets\\src\\Player.lua");
-			StrongPointer<GameObject> l_GameObject2 = CoreFunctions::InstantiateGameObject("Assets\\src\\Monster.lua");
+			StrongPointer<GameObject> l_GameObject =  Core::InstantiateGameObject("Assets\\src\\Player.lua");
+			StrongPointer<GameObject> l_GameObject2 = Core::InstantiateGameObject("Assets\\src\\Monster.lua");
 
 			// Attaching Controller
 			m_pPlayerController = new PlayerController();

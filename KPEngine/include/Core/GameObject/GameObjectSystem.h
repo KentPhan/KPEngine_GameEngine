@@ -25,13 +25,5 @@ namespace KPEngine
 			static bool m_InitializeSuccessful;
 			static std::vector<StrongPointer<GameObject>> * m_pGameObjects;
 		};
-
-		class CoreFunctions
-		{
-		public:
-			static StrongPointer<GameObject> InstantiateGameObject(const char* i_pScriptFileName);
-		};
-		
-		
 	}
 }

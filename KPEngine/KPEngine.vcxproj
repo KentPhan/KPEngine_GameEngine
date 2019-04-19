@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="include\Collision\BoxCollisionComponent.h" />
     <ClInclude Include="include\Collision\CollisionSystem.h" />
+    <ClInclude Include="include\Core\Core.h" />
     <ClInclude Include="include\Core\GameObject\GameObjectSystem.h" />
     <ClInclude Include="include\Core\GameObject\GameObject.h" />
     <ClInclude Include="include\Core\HeapManager\BitArray.h" />
@@ -198,6 +199,7 @@
   <ItemGroup>
     <ClCompile Include="src\Collision\BoxCollisionComponent.cpp" />
     <ClCompile Include="src\Collision\CollisionSystem.cpp" />
+    <ClCompile Include="src\Core\Core.cpp" />
     <ClCompile Include="src\Utils\KPMatrix4x4.cpp" />
     <ClCompile Include="src\Core\GameObject\GameObjectSystem.cpp" />
     <ClCompile Include="src\Scripting\Lua\LuaSystem.cpp" />
