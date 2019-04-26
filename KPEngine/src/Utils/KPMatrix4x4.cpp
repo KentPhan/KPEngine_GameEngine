@@ -10,6 +10,12 @@ KPEngine::Utils::KPMatrix4x4::KPMatrix4x4()
 	{
 		i = 0.0f;
 	}
+
+	// Default Identity Matrix
+	m_Matrix[0] = 1;
+	m_Matrix[5] = 1;
+	m_Matrix[10] = 1;
+	m_Matrix[15] = 1;
 }
 KPEngine::Utils::KPMatrix4x4::KPMatrix4x4(float i_Values[])
 {

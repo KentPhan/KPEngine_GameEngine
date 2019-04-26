@@ -7,6 +7,7 @@ namespace KPEngine
 {
 	namespace Core
 	{
+		KPMatrix4x4* GameObjectSystem::m_WorldCS;
 		bool GameObjectSystem::m_InitializeSuccessful;
 		std::vector<StrongPointer<GameObject>> * GameObjectSystem::m_pGameObjects;
 
@@ -14,6 +15,9 @@ namespace KPEngine
 		{
 			m_pGameObjects = new std::vector<StrongPointer<GameObject>>();
 			m_InitializeSuccessful = true;
+
+
+			m_WorldCS = new KPMatrix4x4();
 		}
 
 		void GameObjectSystem::Shutdown()

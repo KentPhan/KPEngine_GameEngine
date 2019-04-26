@@ -36,7 +36,7 @@ namespace KPEngine
 				SetName(i_Name);
 				SetPosition(i_Position);
 				SetTag(tag);
-				m_LocalCoordinateSystem = KPMatrix4x4::CreateIdentityMatrix();
+				m_LocalCS = KPMatrix4x4();
 			}
 
 			GameObject(KPString& i_Name, KPVector2 & i_Position, int tag)
@@ -45,7 +45,7 @@ namespace KPEngine
 				SetName(i_Name);
 				SetPosition(i_Position);
 				SetTag(tag);
-				m_LocalCoordinateSystem = KPMatrix4x4::CreateIdentityMatrix();
+				m_LocalCS = KPMatrix4x4();
 			}
 
 			~GameObject() = default;
@@ -103,7 +103,7 @@ namespace KPEngine
 			Interfaces::IGameObjectController* m_pController;
 			KPVector2 m_Position;
 			KPString m_Name;
-			KPMatrix4x4 m_LocalCoordinateSystem;
+			KPMatrix4x4 m_LocalCS;
 			
 			int m_Tag;
 		};
