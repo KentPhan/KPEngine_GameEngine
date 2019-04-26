@@ -101,7 +101,8 @@ namespace KPEngine
 			
 		private:
 			Interfaces::IGameObjectController* m_pController;
-			KPVector2 m_Position;
+			KPVector2 m_Position; // World space position
+			float m_Rotation; // Local Space Rotation
 			KPString m_Name;
 			KPMatrix4x4 m_LocalCS;
 			
