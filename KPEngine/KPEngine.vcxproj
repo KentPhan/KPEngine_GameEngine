@@ -220,6 +220,7 @@
     <ClCompile Include="src\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="src\Utils\KPString.cpp" />
     <ClCompile Include="src\Utils\KPVector2.cpp" />
+    <ClCompile Include="src\Utils\KPVector3.cpp" />
     <ClCompile Include="src\Utils\KPVector4.cpp" />
     <ClCompile Include="src\Utils\KP_Log.cpp" />
     <ClCompile Include="src\Core\Time\TimeSystem.cpp" />

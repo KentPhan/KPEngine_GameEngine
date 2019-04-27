@@ -45,6 +45,14 @@ namespace KPEngine
 			{
 				return m_Z;
 			}
+			inline float Magnitude() const
+			{
+				return sqrtf(powf(m_X, 2.0f) + powf(m_Y, 2.0f) + powf(m_Z, 2.0f));
+			}
+			inline KPVector3 Normalized() const
+			{
+				return KPVector3(m_X, m_Y, m_Z) / Magnitude();
+			}
 
 			// Set
 			inline void X(float i_x)
@@ -60,9 +68,33 @@ namespace KPEngine
 				m_Z = i_z;
 			}
 
+
 			// operators
 			KPVector3 operator+(const KPVector3 & i_other) const;
 			KPVector3& operator+=(const KPVector3 & i_other);
+
+			KPVector3 operator*(const float & i_other) const;
+			KPVector3& operator*=(const float & i_other);
+
+			KPVector3 operator/(const float & i_other) const;
+			KPVector3& operator/=(const float & i_other);
+
+			KPVector3& operator=(const KPVector3 & i_other);
+			KPVector3 operator-(const KPVector3 & i_other) const;
+
+			inline bool operator==(const KPVector3& i_other) const
+			{
+				return ((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z));
+			}
+			inline bool operator!=(const KPVector3& i_other) const
+			{
+				return !((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z));
+			}
+
+			inline float Dot(const KPVector3 & i_other) const
+			{
+				return (m_X * i_other.m_X) + (m_Y * i_other.m_Y) + (m_Z * i_other.m_Z);
+			}
 
 			//Print
 			inline void Print() const

@@ -93,11 +93,11 @@ namespace KPEngine
 
 			inline bool operator==(const KPVector4& i_other) const
 			{
-				return ((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z));
+				return ((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z) && (m_W == i_other.m_W));
 			}
 			inline bool operator!=(const KPVector4& i_other) const
 			{
-				return !((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z));
+				return !((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z) && (m_W == i_other.m_W));
 			}
 
 			inline float Dot(const KPVector4 & i_other) const

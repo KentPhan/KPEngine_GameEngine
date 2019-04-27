@@ -53,7 +53,7 @@ namespace PlatformerGame
 			{
 				return 'P';
 			}
-			inline KPVector2 GetPosition() const override
+			inline KPVector3 GetPosition() const override
 			{
 				return m_pObject.GetStrongPointer()->GetPosition();
 			}

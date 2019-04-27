@@ -11,11 +11,11 @@ namespace KPEngine
 			m_Mass = 1.0f;
 			m_HasDrag = true;
 			m_DragCoefficient = 0.1f;
-			m_Velocity = KPVector2(0.0f, 0.0f);
-			m_Acceleration = KPVector2(0.0f, 0.0f);
+			m_Velocity = KPVector3(0.0f, 0.0f, 0.0f);
+			m_Acceleration = KPVector3(0.0f, 0.0f, 0.0f);
 		}
 
-		void PhysicsComponent::AddForce(KPVector2 i_Force)
+		void PhysicsComponent::AddForce(KPVector3 i_Force)
 		{
 			m_Acceleration +=  (i_Force / m_Mass);
 		}
@@ -28,11 +28,11 @@ namespace KPEngine
 				return;
 
 			// Update velocity via acceleration
-			KPVector2 l_StartVelocity = m_Velocity;
+			KPVector3 l_StartVelocity = m_Velocity;
 			m_Velocity = m_Velocity + (m_Acceleration * i_DeltaTime);
 
 			// Update position via velocity
-			KPVector2 l_NewPosition = l_pTempGameObject->GetPosition() + ( ( (l_StartVelocity + m_Velocity)/2.0f) * i_DeltaTime);
+			KPVector3 l_NewPosition = l_pTempGameObject->GetPosition() + ( ( (l_StartVelocity + m_Velocity)/2.0f) * i_DeltaTime);
 			l_pTempGameObject->SetPosition(l_NewPosition);
 
 			ApplyDrag(i_DeltaTime);

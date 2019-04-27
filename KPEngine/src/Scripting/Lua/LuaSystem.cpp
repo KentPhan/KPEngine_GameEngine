@@ -114,7 +114,7 @@ namespace KPEngine
 					lua_pop(g_pLuaState, 4);
 
 					// Create Player Game Object and register components with engine
-					KPVector2 l_startPosition = KPVector2(l_xValue, l_yValue);
+					KPVector3 l_startPosition = KPVector3(l_xValue, l_yValue, 0.0f);
 					StrongPointer<GameObject> l_playerObject = new GameObject(l_pName, l_startPosition, 1);
 					GameObjectSystem::RegisterGameObject(l_playerObject);
 

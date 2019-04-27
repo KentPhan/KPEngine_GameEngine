@@ -21,19 +21,19 @@ namespace PlatformerGame
 
 			if(InputSystem::GetInputHeldDown(KeyCode::W))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector2(0.0f, 1.0f) * l_Force);
+				m_pPlayersPhysicsComponent->AddForce(KPVector3(0.0f, 1.0f,0.0f) * l_Force);
 			}
 			if(InputSystem::GetInputHeldDown(KeyCode::S))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector2(0.0f, -1.0f) * l_Force);
+				m_pPlayersPhysicsComponent->AddForce(KPVector3(0.0f, -1.0f,0.0f) * l_Force);
 			}
 			if (InputSystem::GetInputHeldDown(KeyCode::A))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector2(-1.0f, 0.0f) * l_Force);
+				m_pPlayersPhysicsComponent->AddForce(KPVector3(-1.0f, 0.0f,0.0f) * l_Force);
 			}
 			if (InputSystem::GetInputHeldDown(KeyCode::D))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector2(1.0f, 0.0f) * l_Force);
+				m_pPlayersPhysicsComponent->AddForce(KPVector3(1.0f, 0.0f,0.0f) * l_Force);
 			}
 		}
 

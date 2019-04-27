@@ -31,7 +31,7 @@ namespace KPEngine
 		{
 		public:
 
-			GameObject(const char* i_Name, KPVector2 & i_Position, int tag)
+			GameObject(const char* i_Name, KPVector3 & i_Position, int tag)
 			{
 				SetName(i_Name);
 				SetPosition(i_Position);
@@ -39,7 +39,7 @@ namespace KPEngine
 				m_LocalCS = KPMatrix4x4();
 			}
 
-			GameObject(KPString& i_Name, KPVector2 & i_Position, int tag)
+			GameObject(KPString& i_Name, KPVector3 & i_Position, int tag)
 			{
 
 				SetName(i_Name);
@@ -56,9 +56,13 @@ namespace KPEngine
 			{
 				return m_Name;
 			}
-			inline KPVector2 GetPosition() const
+			inline KPVector3 GetPosition() const
 			{
 				return m_Position;
+			}
+			inline float GetZRotation() const
+			{
+				return m_ZRotation;
 			}
 			inline void PrintInfo() const
 			{
@@ -77,10 +81,15 @@ namespace KPEngine
 			
 
 			// Setters
-			inline KPVector2 SetPosition(KPVector2 & i_Position)
+			inline KPVector3 SetPosition(KPVector3 & i_Position)
 			{
 				m_Position = i_Position;
 				return m_Position;
+			}
+			inline float SetZRotation(float i_ZRotation)
+			{
+				m_ZRotation = i_ZRotation;
+				return m_ZRotation;
 			}
 			inline KPString SetName(const char* i_Name)
 			{
@@ -101,10 +110,10 @@ namespace KPEngine
 			
 		private:
 			Interfaces::IGameObjectController* m_pController;
-			KPVector2 m_Position; // World space position
-			float m_Rotation; // Local Space Rotation
+			KPVector3 m_Position; // World space position
+			float m_ZRotation; // Local Space Rotation
 			KPString m_Name;
-			KPMatrix4x4 m_LocalCS;
+			KPMatrix4x4 m_LocalCS; // TODO Don't know what to do with this for now. Maybe store transformation data later on
 			
 			int m_Tag;
 		};
