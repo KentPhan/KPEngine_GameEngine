@@ -22,7 +22,6 @@ namespace KPEngine
 			static void RegisterGameObject(StrongPointer<GameObject>& i_pGameObject);
 
 		private:
-			static KPMatrix4x4 * m_WorldCS;
 			static bool m_InitializeSuccessful;
 			static std::vector<StrongPointer<GameObject>> * m_pGameObjects;
 		};
