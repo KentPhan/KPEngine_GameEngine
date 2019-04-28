@@ -17,7 +17,7 @@ namespace PlatformerGame
 
 		void PlayerController::Update(float i_deltaTime)
 		{
-			float l_Force = 100.0f;
+			float l_Force = 1000.0f;
 
 			if(InputSystem::GetInputHeldDown(KeyCode::W))
 			{

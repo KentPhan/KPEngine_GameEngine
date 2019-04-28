@@ -1,6 +1,7 @@
 #include "../../include/Collision/BoxCollisionComponent.h"
 #include <cmath>
 #include "../../include/Utils/KPMatrix4x4.h"
+#include "../../include/Physics/PhysicsSystem.h"
 
 namespace KPEngine
 {
@@ -10,6 +11,7 @@ namespace KPEngine
 		{
 			m_Center = KPVector3();
 			m_Extents = KPVector3(25.0f, 35.0f, 2.0f);
+			m_pPhysicsComponent = i_GameObject->GetPhysicsComponent();
 		}
 
 
@@ -27,6 +29,7 @@ namespace KPEngine
 
 			// TODO following
 			// TODO Very inefficent with Inverse. Optimize later
+			// TODO Do both A to B and B to A detection 
 			// A against B in B's Coordinate System
 			// X Axis
 			// Y Axis

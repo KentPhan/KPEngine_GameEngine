@@ -87,12 +87,11 @@ namespace KPEngine
 			// Update GameObjects, AI
 			g_pGame->Update(l_deltaTime);
 
+			// Collisions
+			Collision::CollisionSystem::CollisionStep(l_deltaTime);
+			
 			// Physics
 			Physics::PhysicsSystem::PhysicsStep(l_deltaTime);
-
-			// Collisions
-			// TODO Consider Before and After Steps
-			Collision::CollisionSystem::CollisionStep(l_deltaTime);
 
 			// Draw
 			Graphics::RendererSystem::RenderStep();

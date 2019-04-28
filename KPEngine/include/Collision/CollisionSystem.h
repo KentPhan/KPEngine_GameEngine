@@ -23,6 +23,11 @@ namespace KPEngine
 			static bool m_InitializeSuccessful;
 			static std::vector<StrongPointer<BoxCollisionComponent>>* m_pBoxComponents;
 
+			static bool IsCollision()
+			{
+				// TODO Implement. Like Slides  with Collision Pair and Time. Need to convert logic
+			}
+
 
 		};
 	}

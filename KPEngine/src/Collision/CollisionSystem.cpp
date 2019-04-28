@@ -28,6 +28,7 @@ namespace KPEngine
 			if (CollisionSystem::m_InitializeSuccessful)
 			{
 				// TODO For now. Double loop to check collisions
+				// TODO convert to not double loop after making Collision check both coordinate axes
 				for (size_t i = 0; i < m_pBoxComponents->size(); i++)
 				{
 					for (size_t j = 0; j < m_pBoxComponents->size(); j++)

@@ -17,6 +17,7 @@ namespace KPEngine
 
 		private:
 			StrongPointer<Core::GameObject> m_pGameObject;
+			StrongPointer<Physics::PhysicsComponent> m_pPhysicsComponent;
 			KPVector3 m_Center;
 			KPVector3 m_Extents;
 		};
