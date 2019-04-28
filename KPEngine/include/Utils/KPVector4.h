@@ -1,19 +1,23 @@
 #pragma once
 #include <iostream>
 #include <math.h>
-
+#include "../../include/Utils/KPVector3.h"
 namespace KPEngine
 {
 	namespace Utils
 	{
+		class KPVector3;
+
 		// TODO:Current games uses integer based positions. Need to swap this to floats when applicable later
 		class KPVector4
 		{
 		public:
 			inline  KPVector4()
 			{
-				m_X = 0;
-				m_Y = 0;
+				m_X = 0.0f;
+				m_Y = 0.0f;
+				m_Z = 0.0f;
+				m_W = 0.0f;
 			}
 			inline KPVector4(float i_x, float i_y, float i_z, float i_w)
 			{
@@ -28,6 +32,13 @@ namespace KPEngine
 				this->m_Y = other.m_Y;
 				this->m_Z = other.m_Z;
 				this->m_W = other.m_W;
+			}
+			inline KPVector4(const KPVector3& other, float i_W)
+			{
+				this->m_X = other.X();
+				this->m_Y = other.Y();
+				this->m_Z = other.Z();
+				this->m_W = i_W;
 			}
 			inline ~KPVector4()
 			{

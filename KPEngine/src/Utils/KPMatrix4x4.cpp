@@ -62,6 +62,7 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTranslationMatr
 	o_toReturn.m_Matrix[3] = i_Translation.X();
 	o_toReturn.m_Matrix[7] = i_Translation.Y();
 	o_toReturn.m_Matrix[11] = i_Translation.Z();
+	o_toReturn.m_Matrix[15] = 1.0F;
 	return o_toReturn;
 }
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateRotationMatrix_X(float i_Angle)
