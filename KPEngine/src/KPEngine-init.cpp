@@ -87,7 +87,7 @@ namespace KPEngine
 			// Update GameObjects, AI
 			g_pGame->Update(l_deltaTime);
 
-			// Collisions
+			// Resolve Collisions Before Physics
 			Collision::CollisionSystem::CollisionStep(l_deltaTime);
 			
 			// Physics

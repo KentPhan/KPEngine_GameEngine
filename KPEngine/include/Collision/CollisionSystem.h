@@ -8,6 +8,14 @@ namespace KPEngine
 {
 	namespace Collision
 	{
+		struct CollisionPair
+		{
+			float m_CollisionTime;
+			KPVector3 m_CollisionNormal;
+			BoxCollisionComponent* m_CollisionComponents[2];
+		};
+
+
 		class CollisionSystem
 		{
 		public:
@@ -22,11 +30,9 @@ namespace KPEngine
 		private:
 			static bool m_InitializeSuccessful;
 			static std::vector<StrongPointer<BoxCollisionComponent>>* m_pBoxComponents;
+			static CollisionPair m_EarliestCollision;
 
-			static bool IsCollision()
-			{
-				// TODO Implement. Like Slides  with Collision Pair and Time. Need to convert logic
-			}
+			static bool IsCollision(BoxCollisionComponent i_Left, BoxCollisionComponent i_Right, float i_DT, float& i_ColTime, KPVector3& i_ColNormal);
 
 
 		};
