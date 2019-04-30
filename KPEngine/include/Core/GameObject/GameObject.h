@@ -31,7 +31,7 @@ namespace KPEngine
 		{
 		public:
 
-			GameObject(const char* i_Name, KPVector3 & i_Position, int tag)
+			GameObject(const char* i_Name, const KPVector3 i_Position, int tag)
 			{
 				SetName(i_Name);
 				SetPosition(i_Position);
@@ -39,7 +39,7 @@ namespace KPEngine
 				m_LocalCS = KPMatrix4x4();
 			}
 
-			GameObject(KPString& i_Name, KPVector3 & i_Position, int tag)
+			GameObject(KPString& i_Name, const KPVector3  i_Position, int tag)
 			{
 
 				SetName(i_Name);
@@ -81,7 +81,7 @@ namespace KPEngine
 			
 
 			// Setters
-			inline KPVector3 SetPosition(KPVector3 & i_Position)
+			inline KPVector3 SetPosition(const KPVector3 i_Position)
 			{
 				m_Position = i_Position;
 				return m_Position;

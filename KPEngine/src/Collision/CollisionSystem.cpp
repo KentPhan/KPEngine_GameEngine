@@ -34,8 +34,8 @@ namespace KPEngine
 
 				// TODO putting Earliest check on backburner (not in requirements) Moving on to Delegates
 				// Loop to end of frame finding earliest collision
-				/*while(l_CurrentTime < i_DeltaTime)
-				{*/
+				while(l_CurrentTime < i_DeltaTime)
+				{
 					CollisionPair l_CPair = FindEarliestCollision(i_DeltaTime);
 
 					if(l_CPair.m_Valid)
@@ -43,15 +43,18 @@ namespace KPEngine
 						l_CurrentTime = l_CPair.m_CollisionTime;
 
 						// Resolve Collision By Stopping player for now and moving in Direction of normal. Rinse and Repeat.
+						//DEBUG_PRINT(KPLogType::Verbose, "Collided: Normal: %f %f", l_CPair.m_CollisionNormal.X(), l_CPair.m_CollisionNormal.Y());
 						StrongPointer<Physics::PhysicsComponent> l_APhysics =  l_CPair.m_CollisionComponents[0]->GetPhysicsComponent();
+						StrongPointer<Core::GameObject> l_AObject = l_CPair.m_CollisionComponents[0]->GetGameObject();
+						l_AObject->SetPosition(l_AObject->GetPosition() + (l_CPair.m_CollisionNormal * 1.0f));
 						l_APhysics->SetVelocity(l_CPair.m_CollisionNormal * 100.0f);
 					}
 					else
 					{
-						//break;
+						break;
 					}
 					
-				//}
+				}
 
 				// On every found earliest collision, step time forward to the time and resolve the earliest collision changing it's direction, acceleration, and speed
 
@@ -95,7 +98,7 @@ namespace KPEngine
 					{
 						if(l_ColTime < o_EarliestCollisionPair.m_CollisionTime)
 						{
-							DEBUG_PRINT(KPLogType::Verbose, "Found Collided Earliest");
+							
 							o_EarliestCollisionPair.m_Valid = true;
 							o_EarliestCollisionPair.m_CollisionTime = l_ColTime;
 							o_EarliestCollisionPair.m_CollisionNormal = l_ColNormal;
@@ -111,12 +114,22 @@ namespace KPEngine
 		bool CollisionSystem::IsCollision(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right,
 			float& i_ColTime, KPVector3& i_ColNormal, float i_DT)
 		{
-			if (!SweptSeparatingAxisCheck(i_Left, i_Right, i_ColTime, i_DT))
+			if (!SweptSeparatingAxisCheck(i_Left, i_Right, i_ColTime, i_ColNormal, i_DT))
 			{
 				// If Collided
 				// Calculate Normal
 				// Get vector from Right to Left
-				i_ColNormal = (i_Left.GetGameObject()->GetPosition() -  i_Right.GetGameObject()->GetPosition()).Normalized(); // TODO Lazy Normal Not relative to Box Edge
+				// Maw Ghetto Way to getting the normal
+				KPVector3 LeftToRight = (i_Left.GetGameObject()->GetPosition() - i_Right.GetGameObject()->GetPosition());
+				if(i_ColNormal.X() == 1.0f)
+				{
+					i_ColNormal.X((LeftToRight.X() < 0) ? -1.0f: 1.0f);
+				}
+				else
+				{
+					i_ColNormal.Y((LeftToRight.Y() < 0) ? -1.0f : 1.0f);
+				}
+				
 				return true;
 			}
 
@@ -125,7 +138,7 @@ namespace KPEngine
 
 		// This method is ridiculous
 		bool CollisionSystem::SweptSeparatingAxisCheck(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right,
-			float& i_LatestClose,float i_TEndFrame)
+			float& i_LatestClose, KPVector3& i_Normal,float i_TEndFrame)
 		{
 			BoxCollisionComponent& l_ABox = i_Left;
 			BoxCollisionComponent& l_BBox = i_Right;
@@ -208,6 +221,7 @@ namespace KPEngine
 			// Keep Track of Latest Close and Earliest Open
 			l_TLatestClose = l_TCloseInBX;
 			l_TEarliestOpen = l_TOpenInBX;
+			i_Normal = KPVector3(1.0f, 0.0f, 0.0f);
 
 			// Calculating time of Close and Open in B Y
 			float l_ExtentsBY = l_BBox.m_Extents.Y() + l_AProjectionOntoB_Y;
@@ -231,7 +245,11 @@ namespace KPEngine
 
 			// Keep Track of Latest Close and Earliest Open
 			if(l_TCloseInBY > l_TLatestClose)
+			{
 				l_TLatestClose = l_TCloseInBY;
+				i_Normal = KPVector3(0.0f, 1.0f, 0.0f);
+			}
+				
 			if (l_TOpenInBY < l_TEarliestOpen)
 				l_TEarliestOpen = l_TOpenInBY;
 			
@@ -258,7 +276,11 @@ namespace KPEngine
 
 			// Keep Track of Latest Close and Earliest Open
 			if (l_TCloseInAX > l_TLatestClose)
+			{
 				l_TLatestClose = l_TCloseInAX;
+				i_Normal = KPVector3(-1.0f, 0.0f, 0.0f);
+			}
+				
 			if (l_TOpenInAX < l_TEarliestOpen)
 				l_TEarliestOpen = l_TOpenInAX;
 			
@@ -285,7 +307,11 @@ namespace KPEngine
 
 			// Keep Track of Latest Close and Earliest Open
 			if (l_TCloseInAY > l_TLatestClose)
+			{
 				l_TLatestClose = l_TCloseInAY;
+				i_Normal = KPVector3(0.0f, -1.0f, 0.0f);
+			}
+				
 			if (l_TOpenInAY < l_TEarliestOpen)
 				l_TEarliestOpen = l_TOpenInAY;
 			
