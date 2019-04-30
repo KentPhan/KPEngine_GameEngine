@@ -42,12 +42,18 @@ namespace KPEngine
 					{
 						l_CurrentTime = l_CPair.m_CollisionTime;
 
-						// Resolve Collision By Stopping player for now and moving in Direction of normal. Rinse and Repeat.
+						// Resolve Collision By moving in Direction of normal a bit. 
+						// Reflection of Velocity
+						// Rinse and Repeat.
 						//DEBUG_PRINT(KPLogType::Verbose, "Collided: Normal: %f %f", l_CPair.m_CollisionNormal.X(), l_CPair.m_CollisionNormal.Y());
 						StrongPointer<Physics::PhysicsComponent> l_APhysics =  l_CPair.m_CollisionComponents[0]->GetPhysicsComponent();
 						StrongPointer<Core::GameObject> l_AObject = l_CPair.m_CollisionComponents[0]->GetGameObject();
-						l_AObject->SetPosition(l_AObject->GetPosition() + (l_CPair.m_CollisionNormal * 1.0f));
-						l_APhysics->SetVelocity(l_CPair.m_CollisionNormal * 100.0f);
+						l_AObject->SetPosition(l_AObject->GetPosition() + (l_CPair.m_CollisionNormal * 1.0f)); // Move a bit back
+
+						KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
+
+						KPVector3 l_ReflectedVelocity = (((l_CPair.m_CollisionNormal * (2 * l_CPair.m_CollisionNormal.Dot(l_Incident))) - l_Incident) * -l_APhysics->GetVelocity().Magnitude()); // Get Reflection
+						l_APhysics->SetVelocity(l_ReflectedVelocity);
 					}
 					else
 					{
