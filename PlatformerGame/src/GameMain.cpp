@@ -26,8 +26,7 @@ int WINAPI wWinMain(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_l
 
 	// TODO is this right?
 	PlatformerGame::PlatformerGame Game = PlatformerGame::PlatformerGame();
-
-
+	
 	if(KPEngine::Initialize(i_hInstance, i_hPrevInstance, i_lpCmdLine,i_nCmdShow, &Game))
 	{
 		

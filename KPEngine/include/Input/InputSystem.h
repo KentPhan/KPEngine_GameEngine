@@ -182,10 +182,12 @@ namespace KPEngine
 			// TODO Put this in a smarter place
 			static bool QuitRequested();
 		private:
+			
 			static void InputWindowCallBack(unsigned int i_KeyID, bool i_bWentDown);
 			static std::unordered_set<KeyCode>* m_pInputHashKeyDown;
 			static std::unordered_set<KeyCode>* m_pInputHashKeyUp;
 			static std::unordered_set<KeyCode>* m_pInputHashKeyHeldDown;
+			static bool m_CloseApplication;
 		};
 
 	}

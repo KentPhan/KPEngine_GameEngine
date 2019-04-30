@@ -12,7 +12,7 @@ namespace KPEngine
 		std::unordered_set<KeyCode>* InputSystem::m_pInputHashKeyDown;
 		std::unordered_set<KeyCode>* InputSystem::m_pInputHashKeyUp;
 		std::unordered_set<KeyCode>* InputSystem::m_pInputHashKeyHeldDown;
-
+		bool InputSystem::m_CloseApplication;
 
 		bool InputSystem::GetInputDown(KeyCode i_Key)
 		{
@@ -31,7 +31,7 @@ namespace KPEngine
 
 		bool InputSystem::QuitRequested()
 		{
-			return m_pInputHashKeyUp->count(Q);
+			return m_pInputHashKeyUp->count(Q) || m_pInputHashKeyUp->count(Escape) || m_CloseApplication;
 		}
 
 		// Core Functions
@@ -43,6 +43,8 @@ namespace KPEngine
 			m_pInputHashKeyUp = new std::unordered_set<KeyCode>();
 			m_pInputHashKeyHeldDown = new std::unordered_set<KeyCode>();
 
+			m_CloseApplication = false;
+
 			return true;
 		}
 
@@ -50,6 +52,7 @@ namespace KPEngine
 		{
 			bool bQuit = false;
 			GLib::Service(bQuit);
+			m_CloseApplication = bQuit;
 		}
 
 		void InputSystem::ClearInput()
