@@ -18,8 +18,26 @@ namespace KPEngine
 			}
 
 			void AddForce(KPVector3 i_Force);
-
 			void UpdatePhysics(float i_DeltaTime);
+
+			inline KPVector3 GetVelocity() const
+			{
+				return m_Velocity;
+			}
+			inline KPVector3 GetAcceleration() const
+			{
+				return m_Acceleration;
+			}
+
+			void inline SetVelocity(KPVector3 i_NewVelocity)
+			{
+				m_Acceleration = KPVector3(); // Zero out acceleration if directly setting velocity
+				m_Velocity = i_NewVelocity;
+			}
+			void inline SetAcceleration(KPVector3 i_NewAcceleration)
+			{
+				m_Acceleration = i_NewAcceleration;
+			}
 
 			inline WeakPointer<Core::GameObject> GetGameObject() const
 			{

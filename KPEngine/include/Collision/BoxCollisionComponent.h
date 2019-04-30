@@ -12,7 +12,7 @@ namespace KPEngine
 			BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject);
 			~BoxCollisionComponent();
 
-			bool SeparatingAxisCheck(BoxCollisionComponent& i_Box);
+			bool SeparatingAxisCheck(BoxCollisionComponent& i_Other, float i_TEndFrame);
 			
 
 		private:

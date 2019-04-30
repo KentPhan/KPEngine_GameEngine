@@ -28,8 +28,15 @@ namespace KPEngine
 		{
 			if (CollisionSystem::m_InitializeSuccessful)
 			{
+				// Time limit is determined by the the size of the frame. (Delta Time)
+				float l_CurrentTime = 0.0f;
 
-				// Loop finding Earliest collision until reaching end up time.
+				// Loop to end of frame finding earliest collision
+
+				// On every found earliest collision, step time forward to the time and resolve the earliest collision changing it's direction, acceleration, and speed
+
+				// Stop when you go over the end of deltatime
+
 
 				const size_t l_count = m_pBoxComponents->size();
 				for (size_t i = 0; i < (l_count - 1); i++)
@@ -44,7 +51,7 @@ namespace KPEngine
 							
 
 						
-						if(!(*m_pBoxComponents)[i]->SeparatingAxisCheck(*(*m_pBoxComponents)[j]))
+						if(!(*m_pBoxComponents)[i]->SeparatingAxisCheck(*(*m_pBoxComponents)[j], i_DeltaTime))
 							DEBUG_PRINT(KPLogType::Verbose, "Collision Occured!");
 					}
 				}
@@ -62,9 +69,11 @@ namespace KPEngine
 			delete m_pBoxComponents;
 		}
 
-		bool CollisionSystem::IsCollision(BoxCollisionComponent i_Left, BoxCollisionComponent i_Right, float i_DT,
+		bool CollisionSystem::IsCollision(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float i_DT,
 			float& i_ColTime, KPVector3& i_ColNormal)
 		{
+			//
+
 			return false;
 		}
 	}
