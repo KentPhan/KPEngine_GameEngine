@@ -138,18 +138,22 @@ namespace KPEngine
 			float l_TCloseInBX = (l_BLeftX - l_ABBCenterInB.X()) / l_VelAinB.X();
 			float l_TOpenInBX = (l_BRightX - l_ABBCenterInB.X()) / l_VelAinB.X();
 
-			if (l_TOpenInBX < l_TCloseInBX) // Swap if Open is less then close
-				std::swap(l_TCloseInBX, l_TOpenInBX);
-			if (l_TCloseInBX > i_TEndFrame) // Closes after time end frame. Can exit and return false
-				return true;
-			if (l_TOpenInBX < 0.0f) // Open is before this time frame. Can exit and return false
-				return true;
 			if (l_VelAinB.X() == 0.0f)
 			{
 				if (l_ABBCenterInB.X() < l_BLeftX && l_ABBCenterInB.X() > l_BRightX)
 					return true;
 				// Otherwise still need to check other axises
 			}
+			if (l_TOpenInBX < l_TCloseInBX) // Swap if Open is less then close
+				std::swap(l_TCloseInBX, l_TOpenInBX);
+			if (l_TCloseInBX > i_TEndFrame) // Closes after time end frame. Can exit and return false
+				return true;
+			if (l_TOpenInBX < 0.0f) // Open is before this time frame. Can exit and return false
+				return true;
+
+			// Keep Track of Latest Close and Earliest Open
+			l_TLatestClose = l_TCloseInBX;
+			l_TEarliestOpen = l_TOpenInBX;
 
 			// Calculating time of Close and Open in B Y
 			float l_ExtentsBY = l_BBox.m_Extents.Y() + l_AProjectionOntoB_Y;
@@ -158,18 +162,25 @@ namespace KPEngine
 			float l_TCloseInBY = (l_BLeftY - l_ABBCenterInB.Y()) / l_VelAinB.Y();
 			float l_TOpenInBY = (l_BRightY - l_ABBCenterInB.Y()) / l_VelAinB.Y();
 
-			if (l_TOpenInBY < l_TCloseInBY) // Swap if Open is less then close
-				std::swap(l_TCloseInBY, l_TOpenInBY);
-			if (l_TCloseInBY > i_TEndFrame) // Closes after time end frame. Can exit and return false
-				return true;
-			if (l_TOpenInBY < 0.0f) // Open is before this time frame. Can exit and return false
-				return true;
 			if (l_VelAinB.Y() == 0.0f)
 			{
 				if (l_ABBCenterInB.Y() < l_BLeftY && l_ABBCenterInB.Y() > l_BRightY)
 					return true;
 				// Otherwise still need to check other axises
 			}
+			if (l_TOpenInBY < l_TCloseInBY) // Swap if Open is less then close
+				std::swap(l_TCloseInBY, l_TOpenInBY);
+			if (l_TCloseInBY > i_TEndFrame) // Closes after time end frame. Can exit and return false
+				return true;
+			if (l_TOpenInBY < 0.0f) // Open is before this time frame. Can exit and return false
+				return true;
+
+			// Keep Track of Latest Close and Earliest Open
+			if(l_TCloseInBY > l_TLatestClose)
+				l_TLatestClose = l_TCloseInBY;
+			if (l_TOpenInBY < l_TEarliestOpen)
+				l_TEarliestOpen = l_TOpenInBY;
+			
 
 			// Calculating time of Close and Open in A X
 			float l_ExtentsAX = l_ABox.m_Extents.X() + l_BProjectionOntoA_X;
@@ -178,18 +189,25 @@ namespace KPEngine
 			float l_TCloseInAX = (l_ALeftX - l_BBBCenterInA.X()) / l_VelBinA.X();
 			float l_TOpenInAX = (l_ARightX - l_BBBCenterInA.X()) / l_VelBinA.X();
 
-			if (l_TOpenInAX < l_TCloseInAX) // Swap if Open is less then close
-				std::swap(l_TCloseInAX, l_TOpenInAX);
-			if (l_TCloseInAX > i_TEndFrame) // Closes after time end frame. Can exit and return false
-				return true;
-			if (l_TOpenInAX < 0.0f) // Open is before this time frame. Can exit and return false
-				return true;
 			if (l_VelBinA.X() == 0.0f)
 			{
 				if (l_BBBCenterInA.X() < l_ALeftX && l_BBBCenterInA.X() > l_ARightX)
 					return true;
 				// Otherwise still need to check other axises
 			}
+			if (l_TOpenInAX < l_TCloseInAX) // Swap if Open is less then close
+				std::swap(l_TCloseInAX, l_TOpenInAX);
+			if (l_TCloseInAX > i_TEndFrame) // Closes after time end frame. Can exit and return false
+				return true;
+			if (l_TOpenInAX < 0.0f) // Open is before this time frame. Can exit and return false
+				return true;
+
+			// Keep Track of Latest Close and Earliest Open
+			if (l_TCloseInAX > l_TLatestClose)
+				l_TLatestClose = l_TCloseInAX;
+			if (l_TOpenInAX < l_TEarliestOpen)
+				l_TEarliestOpen = l_TOpenInAX;
+			
 
 			// Calculating time of Close and Open in A Y
 			float l_ExtentsAY = l_ABox.m_Extents.Y() + l_BProjectionOntoA_Y;
@@ -198,20 +216,27 @@ namespace KPEngine
 			float l_TCloseInAY = (l_ALeftY - l_BBBCenterInA.Y()) / l_VelBinA.Y();
 			float l_TOpenInAY = (l_ARightY - l_BBBCenterInA.Y()) / l_VelBinA.Y();
 
-			if (l_TOpenInAY < l_TCloseInAY) // Swap if Open is less then close
-				std::swap(l_TCloseInAY, l_TOpenInAY);
-			if (l_TCloseInAY > i_TEndFrame) // Closes after time end frame. Can exit and return false
-				return true;
-			if (l_TOpenInAY < 0.0f) // Open is before this time frame. Can exit and return false
-				return true;
 			if (l_VelBinA.Y() == 0.0f)
 			{
 				if (l_BBBCenterInA.Y() < l_ALeftY && l_BBBCenterInA.Y() > l_ARightY)
 					return true;
 				// Otherwise still need to check other axises
 			}
+			if (l_TOpenInAY < l_TCloseInAY) // Swap if Open is less then close
+				std::swap(l_TCloseInAY, l_TOpenInAY);
+			if (l_TCloseInAY > i_TEndFrame) // Closes after time end frame. Can exit and return false
+				return true;
+			if (l_TOpenInAY < 0.0f) // Open is before this time frame. Can exit and return false
+				return true;
 
-			DEBUG_PRINT(KPLogType::Verbose, "Got To End!");
+			// Keep Track of Latest Close and Earliest Open
+			if (l_TCloseInAY > l_TLatestClose)
+				l_TLatestClose = l_TCloseInAY;
+			if (l_TOpenInAY < l_TEarliestOpen)
+				l_TEarliestOpen = l_TOpenInAY;
+			
+
+			DEBUG_PRINT(KPLogType::Verbose, "Latest Closed: %f Earliest Open: %f", l_TLatestClose, l_TEarliestOpen);
 			return false;
 
 			////// Very Basic For Now
