@@ -100,6 +100,32 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateScaleMatrix(KPV
 	o_toReturn.m_Matrix[10] = i_Scale.Z();
 	return o_toReturn;
 }
+
+KPEngine::Utils::KPVector4 KPEngine::Utils::KPMatrix4x4::Row(size_t i_Row) const
+{
+	KPVector4 o_Result;
+
+	size_t l_RowIndex = (i_Row * 4);
+	o_Result.X(m_Matrix[l_RowIndex]);
+	o_Result.Y(m_Matrix[l_RowIndex + 1]);
+	o_Result.Z(m_Matrix[l_RowIndex + 2]);
+	o_Result.W(m_Matrix[l_RowIndex + 3]);
+
+	return o_Result;
+}
+
+KPEngine::Utils::KPVector4 KPEngine::Utils::KPMatrix4x4::Col(size_t i_Col) const
+{
+	KPVector4 o_Result;
+	
+	o_Result.X(m_Matrix[i_Col]);
+	o_Result.Y(m_Matrix[i_Col + 4]);
+	o_Result.Z(m_Matrix[i_Col + 8]);
+	o_Result.W(m_Matrix[i_Col + 12]);
+
+	return o_Result;
+}
+
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTransposeMatrix() const
 {
 	KPMatrix4x4 o_TransposeMatrix = KPMatrix4x4();

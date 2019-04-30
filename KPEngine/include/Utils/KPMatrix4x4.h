@@ -27,7 +27,12 @@ namespace KPEngine
 			static KPMatrix4x4 CreateRotationMatrix_Y(float i_Angle);
 			static KPMatrix4x4 CreateRotationMatrix_Z(float i_Angle);
 			static KPMatrix4x4 CreateScaleMatrix(KPVector3 i_Scale);
-			
+
+			// Accessors
+			KPVector4 Row(size_t i_Row) const;
+			KPVector4 Col(size_t i_Col) const;
+
+
 			// Operators
 			KPMatrix4x4 CreateTransposeMatrix() const; 
 			KPMatrix4x4 CreateInverseMatrix() const;//TODO My implementation is fairly inefficent. But it helps me think through it
