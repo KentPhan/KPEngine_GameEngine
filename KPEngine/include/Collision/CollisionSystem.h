@@ -32,6 +32,8 @@ namespace KPEngine
 			static std::vector<StrongPointer<BoxCollisionComponent>>* m_pBoxComponents;
 			static CollisionPair m_EarliestCollision;
 
+
+			static bool SeparatingAxisCheck(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float i_TEndFrame);
 			static bool FindEarliestCollision(float i_DT, float& i_ColTime);
 			static bool IsCollision(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float i_DT, float& i_ColTime, KPVector3& i_ColNormal);
 

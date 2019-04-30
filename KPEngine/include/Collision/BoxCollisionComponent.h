@@ -12,14 +12,22 @@ namespace KPEngine
 			BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject);
 			~BoxCollisionComponent();
 
-			bool SeparatingAxisCheck(BoxCollisionComponent& i_Other, float i_TEndFrame);
-			
+			inline StrongPointer<Core::GameObject> GetGameObject() const
+			{
+				return m_pGameObject;
+			}
+			inline StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent() const
+			{
+				return m_pPhysicsComponent;
+			}
+
+			KPVector3 m_Center;
+			KPVector3 m_Extents;
 
 		private:
 			StrongPointer<Core::GameObject> m_pGameObject;
 			StrongPointer<Physics::PhysicsComponent> m_pPhysicsComponent;
-			KPVector3 m_Center;
-			KPVector3 m_Extents;
+			
 		};
 	}
 }
