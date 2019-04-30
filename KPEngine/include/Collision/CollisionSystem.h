@@ -10,6 +10,11 @@ namespace KPEngine
 	{
 		struct CollisionPair
 		{
+			CollisionPair(): m_Valid(false), m_CollisionTime(0), m_CollisionComponents{}
+			{
+			}
+
+			bool m_Valid;
 			float m_CollisionTime;
 			KPVector3 m_CollisionNormal;
 			BoxCollisionComponent* m_CollisionComponents[2];
@@ -32,10 +37,10 @@ namespace KPEngine
 			static std::vector<StrongPointer<BoxCollisionComponent>>* m_pBoxComponents;
 			static CollisionPair m_EarliestCollision;
 
-
-			static bool SweptSeparatingAxisCheck(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float i_TEndFrame);
-			static bool FindEarliestCollision(float i_DT, float& i_ColTime);
-			static bool IsCollision(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float i_DT, float& i_ColTime, KPVector3& i_ColNormal);
+			static CollisionPair FindEarliestCollision(float& i_EndFrame);
+			static bool IsCollision(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float& i_ColTime, KPVector3& i_ColNormal, float i_DT);
+			static bool SweptSeparatingAxisCheck(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float& i_LatestClose, float i_TEndFrame); //TODO Only handles boxes. Adapt to Polygons and clean it up
+			
 
 
 		};

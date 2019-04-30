@@ -31,30 +31,30 @@ namespace KPEngine
 			{
 				// Time limit is determined by the the size of the frame. (Delta Time)
 				float l_CurrentTime = 0.0f;
-
+				
 				// Loop to end of frame finding earliest collision
+				/*while(l_CurrentTime < i_DeltaTime)
+				{*/
+					CollisionPair l_CPair = FindEarliestCollision(i_DeltaTime);
+
+					if(l_CPair.m_Valid)
+					{
+						l_CurrentTime = l_CPair.m_CollisionTime;
+
+						// Resolve Collision. Rinse and Repeat.
+						StrongPointer<Physics::PhysicsComponent> l_APhysics =  l_CPair.m_CollisionComponents[0]->GetPhysicsComponent();
+						l_APhysics->SetVelocity(l_CPair.m_CollisionNormal * 10.0f);
+					}
+					else
+					{
+						//break;
+					}
+					
+				//}
 
 				// On every found earliest collision, step time forward to the time and resolve the earliest collision changing it's direction, acceleration, and speed
 
 				// Stop when you go over the end of deltatime
-
-
-				const size_t l_count = m_pBoxComponents->size();
-				for (size_t i = 0; i < (l_count - 1); i++)
-				{
-					for (size_t j = i + 1; j < l_count; j++)
-					{
-						if (i == j)
-						{
-							DEBUG_PRINT(KPLogType::Fatal, "DUPLICATES SHOULD NOT OCCUR!");
-							continue;
-						}
-							
-
-						if(!SweptSeparatingAxisCheck(*(*m_pBoxComponents)[i], *(*m_pBoxComponents)[j], i_DeltaTime))
-							DEBUG_PRINT(KPLogType::Verbose, "Collision Occured!");
-					}
-				}
 			}
 		}
 
@@ -69,9 +69,62 @@ namespace KPEngine
 			delete m_pBoxComponents;
 		}
 
+
+		CollisionPair CollisionSystem::FindEarliestCollision(float& i_EndFrame)
+		{
+			CollisionPair o_EarliestCollisionPair;
+			o_EarliestCollisionPair.m_CollisionTime = i_EndFrame;
+
+			const size_t l_count = m_pBoxComponents->size();
+			for (size_t i = 0; i < (l_count - 1); i++)
+			{
+				for (size_t j = i + 1; j < l_count; j++)
+				{
+					if (i == j)
+					{
+						DEBUG_PRINT(KPLogType::Fatal, "DUPLICATES SHOULD NOT OCCUR!");
+						continue;
+					}
+
+					float l_ColTime;
+					KPVector3 l_ColNormal;
+
+
+					if (IsCollision(*(*m_pBoxComponents)[i], *(*m_pBoxComponents)[j], l_ColTime, l_ColNormal, i_EndFrame))
+					{
+						if(l_ColTime < o_EarliestCollisionPair.m_CollisionTime)
+						{
+							DEBUG_PRINT(KPLogType::Verbose, "Found Collided Earliest");
+							o_EarliestCollisionPair.m_Valid = true;
+							o_EarliestCollisionPair.m_CollisionTime = l_ColTime;
+							o_EarliestCollisionPair.m_CollisionNormal = l_ColNormal;
+							o_EarliestCollisionPair.m_CollisionComponents[0] = &*(*m_pBoxComponents)[i];
+							o_EarliestCollisionPair.m_CollisionComponents[1] = &*(*m_pBoxComponents)[j];
+						}
+					}
+				}
+			}
+			return o_EarliestCollisionPair;
+		}
+
+		bool CollisionSystem::IsCollision(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right,
+			float& i_ColTime, KPVector3& i_ColNormal, float i_DT)
+		{
+			if (!SweptSeparatingAxisCheck(i_Left, i_Right, i_ColTime, i_DT))
+			{
+				// If Collided
+				// Calculate Normal
+				// Get vector from Right to Left
+				i_ColNormal = (i_Left.GetGameObject()->GetPosition() -  i_Right.GetGameObject()->GetPosition()).Normalized(); // TODO Lazy Normal Not relative to Box Edge
+				return true;
+			}
+
+			return false;
+		}
+
 		// This method is ridiculous
 		bool CollisionSystem::SweptSeparatingAxisCheck(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right,
-			float i_TEndFrame)
+			float& i_LatestClose,float i_TEndFrame)
 		{
 			BoxCollisionComponent& l_ABox = i_Left;
 			BoxCollisionComponent& l_BBox = i_Right;
@@ -236,8 +289,20 @@ namespace KPEngine
 				l_TEarliestOpen = l_TOpenInAY;
 			
 
-			DEBUG_PRINT(KPLogType::Verbose, "Latest Closed: %f Earliest Open: %f", l_TLatestClose, l_TEarliestOpen);
-			return false;
+			//DEBUG_PRINT(KPLogType::Verbose, "Latest Closed: %f Earliest Open: %f", l_TLatestClose, l_TEarliestOpen);
+
+			if(l_TLatestClose < l_TEarliestOpen)
+			{
+				i_LatestClose = l_TLatestClose;
+				//DEBUG_PRINT(KPLogType::Verbose, "Collided Latest Closed: %f Earliest Open: %f", l_TLatestClose, l_TEarliestOpen);
+				return false;
+			}
+			else
+			{
+				//DEBUG_PRINT(KPLogType::Verbose, " Not Collided Latest Closed: %f Earliest Open: %f", l_TLatestClose, l_TEarliestOpen);
+				return true;
+			}
+			
 
 			////// Very Basic For Now
 			//return (fabsf(l_ABBCenterInB.X() - l_BBox.m_Center.X()) > (l_AProjectionOntoB_X + l_BBox.m_Extents.X())) || // A in B X axis check
@@ -245,14 +310,6 @@ namespace KPEngine
 			//	(fabsf(l_BBBCenterInA.X() - l_ABox.m_Center.X()) > (l_BProjectionOntoA_X + l_ABox.m_Extents.X())) || // B in A X axis check
 			//	(fabsf(l_BBBCenterInA.Y() - l_ABox.m_Center.Y()) > (l_BProjectionOntoA_Y + l_ABox.m_Extents.Y())) // B in A Y axis check
 			//	;
-		}
-
-		bool CollisionSystem::IsCollision(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float i_DT,
-			float& i_ColTime, KPVector3& i_ColNormal)
-		{
-			//
-
-			return false;
 		}
 	}
 }
