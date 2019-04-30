@@ -31,7 +31,8 @@ namespace KPEngine
 			{
 				// Time limit is determined by the the size of the frame. (Delta Time)
 				float l_CurrentTime = 0.0f;
-				
+
+				// TODO putting Earliest check on backburner (not in requirements) Moving on to Delegates
 				// Loop to end of frame finding earliest collision
 				/*while(l_CurrentTime < i_DeltaTime)
 				{*/
@@ -41,9 +42,9 @@ namespace KPEngine
 					{
 						l_CurrentTime = l_CPair.m_CollisionTime;
 
-						// Resolve Collision. Rinse and Repeat.
+						// Resolve Collision By Stopping player for now and moving in Direction of normal. Rinse and Repeat.
 						StrongPointer<Physics::PhysicsComponent> l_APhysics =  l_CPair.m_CollisionComponents[0]->GetPhysicsComponent();
-						l_APhysics->SetVelocity(l_CPair.m_CollisionNormal * 10.0f);
+						l_APhysics->SetVelocity(l_CPair.m_CollisionNormal * 100.0f);
 					}
 					else
 					{
