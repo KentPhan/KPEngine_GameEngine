@@ -33,17 +33,7 @@ namespace PlatformerGame
 			// Setter
 
 			// Order
-			inline void Initialize(WeakPointer<GameObject> i_pObject) override
-			{
-				m_pObject = i_pObject;
-				StrongPointer<GameObject> l_TempStrong = m_pObject.GetStrongPointer();
-				l_TempStrong->SetController(this);
-				m_pPlayersPhysicsComponent = l_TempStrong->GetPhysicsComponent();
-				m_pCollider = l_TempStrong->GetCollisionComponent();
-
-				// TODO subscribe collision on Collider here
-
-			}
+			void Initialize(WeakPointer<GameObject> i_pObject) override;
 			void Update(float i_deltaTime) override;
 
 			// Info

@@ -6,6 +6,7 @@
 #include "Utils/KP_Log.h"
 #include "Input/InputSystem.h"
 #include "Physics/PhysicsComponent.h"
+#include "Collision/BoxCollisionComponent.h"
 
 namespace PlatformerGame
 {
@@ -13,7 +14,17 @@ namespace PlatformerGame
 	{
 		using namespace KPEngine::Input;
 
-		
+
+		void PlayerController::Initialize(WeakPointer<GameObject> i_pObject)
+		{
+			m_pObject = i_pObject;
+			StrongPointer<GameObject> l_TempStrong = m_pObject.GetStrongPointer();
+			l_TempStrong->SetController(this);
+			m_pPlayersPhysicsComponent = l_TempStrong->GetPhysicsComponent();
+			m_pCollider = l_TempStrong->GetCollisionComponent();
+
+			// TODO subscribe collision on Collider here
+		}
 
 		void PlayerController::Update(float i_deltaTime)
 		{
