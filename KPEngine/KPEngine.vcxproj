@@ -195,8 +195,10 @@
     <ClInclude Include="include\Scripting\Lua\LuaSystem.h" />
     <ClInclude Include="include\Utils\KPVector4.h" />
     <ClInclude Include="include\Utils\KPMatrix4x4.h" />
+    <ClInclude Include="include\Messaging\MessagingSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Messaging\MessagingSystem.cpp" />
     <ClCompile Include="src\Collision\BoxCollisionComponent.cpp" />
     <ClCompile Include="src\Collision\CollisionSystem.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
