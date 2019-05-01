@@ -162,6 +162,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Utils\Delegates.h" />
     <ClInclude Include="include\Collision\BoxCollisionComponent.h" />
     <ClInclude Include="include\Collision\CollisionSystem.h" />
     <ClInclude Include="include\Core\Core.h" />
@@ -198,6 +199,7 @@
     <ClInclude Include="include\Messaging\MessagingSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utils\Delegates.cpp" />
     <ClCompile Include="src\Messaging\MessagingSystem.cpp" />
     <ClCompile Include="src\Collision\BoxCollisionComponent.cpp" />
     <ClCompile Include="src\Collision\CollisionSystem.cpp" />

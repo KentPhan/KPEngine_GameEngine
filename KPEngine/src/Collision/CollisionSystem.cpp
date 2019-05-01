@@ -19,6 +19,23 @@ namespace KPEngine
 			m_pBoxComponents->push_back(l_NewComponent);
 		}
 
+		StrongPointer<BoxCollisionComponent> CollisionSystem::GetCollisionComponent(
+			const Core::GameObject* i_GameObjectRef)
+		{
+			// TODO So inefficent. But easiest way to current get a reference to the physics components without supplying a direct one to the game object
+			if (CollisionSystem::m_InitializeSuccessful)
+			{
+				for (size_t i = 0; i < m_pBoxComponents->size(); i++)
+				{
+					if ((*m_pBoxComponents)[i]->GetGameObject() == i_GameObjectRef)
+					{
+						return (*m_pBoxComponents)[i];
+					}
+				}
+			}
+			return nullptr;
+		}
+
 		void CollisionSystem::Initialize()
 		{
 			m_pBoxComponents = new std::vector<StrongPointer<BoxCollisionComponent>>();
@@ -52,8 +69,12 @@ namespace KPEngine
 
 						KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
 
+						// Why Negative velocity in Reflection? I'll commit more brain cells when I have more time.
 						KPVector3 l_ReflectedVelocity = (((l_CPair.m_CollisionNormal * (2 * l_CPair.m_CollisionNormal.Dot(l_Incident))) - l_Incident) * -l_APhysics->GetVelocity().Magnitude()); // Get Reflection
 						l_APhysics->SetVelocity(l_ReflectedVelocity);
+
+
+						// Activate Delegate for Collision
 					}
 					else
 					{

@@ -8,6 +8,12 @@ namespace KPEngine
 {
 	namespace Collision
 	{
+		struct CollisionInfo
+		{
+			KPVector3 m_CollisionNormal;
+			BoxCollisionComponent* m_OtherCollider;
+		};
+
 		struct CollisionPair
 		{
 			CollisionPair(): m_Valid(false), m_CollisionTime(0), m_CollisionComponents{}
@@ -31,6 +37,7 @@ namespace KPEngine
 
 			// Outward facing functions FOR NOW
 			static void RegisterBoxComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject);
+			static StrongPointer<BoxCollisionComponent> GetCollisionComponent(const Core::GameObject*  i_GameObjectRef);
 
 		private:
 			static bool m_InitializeSuccessful;

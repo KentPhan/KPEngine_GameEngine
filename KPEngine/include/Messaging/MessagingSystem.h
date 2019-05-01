@@ -11,6 +11,7 @@ namespace KPEngine
 {
 	namespace Messaging
 	{
+		// TODO may use this for something else later. Opted to implement Delegates instead
 		// Class that implements this implements the following method
 		class IMessageHandler
 		{

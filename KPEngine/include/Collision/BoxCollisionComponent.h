@@ -1,6 +1,8 @@
 #pragma once
 #include "../Utils/KPVector4.h"
 #include "../Core/GameObject/GameObject.h"
+#include "../Utils/Delegates.h"
+#include "CollisionSystem.h"
 
 namespace KPEngine
 {
@@ -23,6 +25,9 @@ namespace KPEngine
 
 			KPVector3 m_Center;
 			KPVector3 m_Extents;
+
+			// TODO add delegate method to subscribe on collision
+			//Delegate<CollisionInfo> OnCollision;
 
 		private:
 			StrongPointer<Core::GameObject> m_pGameObject;

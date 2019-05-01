@@ -39,6 +39,10 @@ namespace PlatformerGame
 				StrongPointer<GameObject> l_TempStrong = m_pObject.GetStrongPointer();
 				l_TempStrong->SetController(this);
 				m_pPlayersPhysicsComponent = l_TempStrong->GetPhysicsComponent();
+				m_pCollider = l_TempStrong->GetCollisionComponent();
+
+				// TODO subscribe collision on Collider here
+
 			}
 			void Update(float i_deltaTime) override;
 
@@ -69,6 +73,7 @@ namespace PlatformerGame
 
 			// TODO Migrate this some how later to game objects. Very tied down
 			StrongPointer<KPEngine::Physics::PhysicsComponent> m_pPlayersPhysicsComponent;
+			StrongPointer<KPEngine::Collision::BoxCollisionComponent> m_pCollider;
 		};
 	}
 }

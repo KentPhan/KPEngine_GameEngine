@@ -21,6 +21,11 @@ namespace KPEngine
 	{
 		class PhysicsComponent;
 	}
+
+	namespace Collision
+	{
+		class BoxCollisionComponent;
+	}
 }
 
 namespace KPEngine
@@ -78,6 +83,7 @@ namespace KPEngine
 			}
 
 			StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent() const;
+			StrongPointer<Collision::BoxCollisionComponent> GetCollisionComponent() const;
 			
 
 			// Setters
