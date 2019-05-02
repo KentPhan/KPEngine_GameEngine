@@ -14,7 +14,6 @@ namespace KPEngine
 			m_Center = KPVector3();
 			m_Extents = KPVector3(25.0f, 35.0f, 2.0f);
 			m_pPhysicsComponent = i_GameObject->GetPhysicsComponent();
-			OnCollisionHandler = MultiCastDelegate<CollisionInfo>();
 		}
 
 

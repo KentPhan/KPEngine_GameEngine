@@ -75,10 +75,22 @@ namespace KPEngine
 				Receivers.push_back(i_Delegate);
 			}
 
+			inline MultiCastDelegate& operator+=(Delegate<Params ...> & i_Delegate)
+			{
+				AddDelegate(i_Delegate);
+				return *this;
+			}
+
 			void RemoveDelegate(Delegate<Params ...> & i_Delegate)
 			{
 				Receivers.erase(std::remove_if(Receivers.begin(), Receivers.end(), [&i_Delegate](const Delegate<Params ...> & i_Entry) {return i_Entry == i_Delegate; }),
 					Receivers.end());
+			}
+
+			inline MultiCastDelegate& operator-=(Delegate<Params ...> & i_Delegate)
+			{
+				RemoveDelegate(i_Delegate);
+				return *this;
 			}
 
 			void ExecuteOnBound(Params ... i_Parameters)

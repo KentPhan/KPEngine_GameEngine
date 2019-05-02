@@ -43,7 +43,7 @@ namespace PlatformerGame
 				
 			);*/
 
-			m_pCollider->OnCollisionHandler.AddDelegate(l_Delegate);
+			m_pCollider->OnCollisionHandler +=l_Delegate;
 		}
 
 		void PlayerController::Destroy()
@@ -54,7 +54,7 @@ namespace PlatformerGame
 
 			);*/
 
-			m_pCollider->OnCollisionHandler.RemoveDelegate(l_Delegate);
+			m_pCollider->OnCollisionHandler -=l_Delegate;
 		}
 
 		void PlayerController::Update(float i_deltaTime)
