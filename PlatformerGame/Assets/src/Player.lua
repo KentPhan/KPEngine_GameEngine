@@ -10,7 +10,7 @@ GameObject =
 		},
 		KPPhysics2DComponent = 
 		{
-
+			isStatic = false
 		},
 	}
 }

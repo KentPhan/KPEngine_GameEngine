@@ -41,7 +41,7 @@ namespace KPEngine
 					// if first frame
 					if(!g_LastFrameStartTick)
 					{
-						g_LastFrameTime_s = 13.3f;
+						g_LastFrameTime_s = .133f;
 					}
 					// for other franes
 					else

@@ -103,6 +103,12 @@ namespace KPEngine
 			}
 
 
+			// Statics
+			static KPVector3 Zero()
+			{
+				return KPVector3(0.0f, 0.0f, 0.0f);
+			}
+
 		private:
 			float m_X;
 			float m_Y;

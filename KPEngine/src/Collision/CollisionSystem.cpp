@@ -67,12 +67,27 @@ namespace KPEngine
 						StrongPointer<Core::GameObject> l_AObject = l_CPair.m_CollisionComponents[0]->GetGameObject();
 						l_AObject->SetPosition(l_AObject->GetPosition() + (l_CPair.m_CollisionNormal * 1.0f)); // Move a bit back
 
+						// Why Negative velocity in Reflection? I'll commit more brain cells when I have more time. Don't reflect
 						KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
-
-						// Why Negative velocity in Reflection? I'll commit more brain cells when I have more time.
 						KPVector3 l_ReflectedVelocity = (((l_CPair.m_CollisionNormal * (2 * l_CPair.m_CollisionNormal.Dot(l_Incident))) - l_Incident) * -l_APhysics->GetVelocity().Magnitude()); // Get Reflection
-						l_APhysics->SetVelocity(l_ReflectedVelocity);
+						l_APhysics->SetVelocity(l_ReflectedVelocity * 0.1f);
+						l_APhysics->SetAcceleration(KPVector3::Zero());
 
+						// If not static. Modify Velocity
+						//if(!l_APhysics->IsStatic())
+						//{
+						//	KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
+
+						//	// Why Negative velocity in Reflection? I'll commit more brain cells when I have more time. Don't reflect
+						//	//KPVector3 l_ReflectedVelocity = (((l_CPair.m_CollisionNormal * (2 * l_CPair.m_CollisionNormal.Dot(l_Incident))) - l_Incident) * -l_APhysics->GetVelocity().Magnitude()); // Get Reflection
+						//	//l_APhysics->SetVelocity(l_ReflectedVelocity);
+						//	
+						//	
+						//	//l_CPair.m_CollisionNormal
+
+						//	l_APhysics->SetAcceleration(KPVector3::Zero());
+						//	l_APhysics->SetVelocity(KPVector3::Zero());
+						//}
 
 						// Activate Delegate for Collision
 						CollisionInfo l_First = CollisionInfo();

@@ -19,6 +19,8 @@ namespace PlatformerGame
 		PlayerController::PlayerController()
 		{
 			m_pObject = WeakPointer<GameObject>();
+			m_JumpForce = 800.0f;
+			m_HorizontalMoveSpeed = 16000.0f;
 			// m_pPlayersPhysicsComponent = nullptr;
 		}
 
@@ -49,29 +51,30 @@ namespace PlatformerGame
 
 		void PlayerController::Update(float i_deltaTime)
 		{
-			float l_Force = 100000.0f;
-
-			if(InputSystem::GetInputHeldDown(KeyCode::W))
+			
+			if(InputSystem::GetInputDown(KeyCode::W))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector3(0.0f, 1.0f,0.0f) * l_Force);
+				m_pPlayersPhysicsComponent->AddForce(KPVector3(0.0f, 1.0f,0.0f) * m_JumpForce);
 			}
-			if(InputSystem::GetInputHeldDown(KeyCode::S))
+			if(InputSystem::GetInputDown(KeyCode::S))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector3(0.0f, -1.0f,0.0f) * l_Force);
+				m_pPlayersPhysicsComponent->AddForce(KPVector3(0.0f, -1.0f,0.0f) * m_JumpForce);
 			}
 			if (InputSystem::GetInputHeldDown(KeyCode::A))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector3(-1.0f, 0.0f,0.0f) * l_Force);
+				KPVector3 l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
+				m_pPlayersPhysicsComponent->SetVelocity(KPVector3(-1.0f * m_HorizontalMoveSpeed * i_deltaTime, l_CVel.Y(), l_CVel.Z()));
 			}
 			if (InputSystem::GetInputHeldDown(KeyCode::D))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector3(1.0f, 0.0f,0.0f) * l_Force);
+				KPVector3 l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
+				m_pPlayersPhysicsComponent->SetVelocity(KPVector3(1.0f* m_HorizontalMoveSpeed* i_deltaTime, l_CVel.Y(),0.0f));
 			}
 		}
 
 		void PlayerController::OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo)
 		{
-			DEBUG_PRINT(KPLogType::Verbose, "Collided Event Called!");
+			DEBUG_PRINT(KPLogType::Verbose, "Collided Event Triggered With Delegate Call!");
 		}
 
 		void PlayerController::MovePlayer(const KPVector2 movement, float i_DeltaTime)

@@ -12,7 +12,7 @@ namespace KPEngine
 		BoxCollisionComponent::BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject) : m_pGameObject(i_GameObject)
 		{
 			m_Center = KPVector3();
-			m_Extents = KPVector3(25.0f, 35.0f, 2.0f);
+			m_Extents = KPVector3(20.0f, 20.0f, 2.0f);
 			m_pPhysicsComponent = i_GameObject->GetPhysicsComponent();
 		}
 

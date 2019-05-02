@@ -149,8 +149,20 @@ namespace KPEngine
 						}
 						else if (strcmp(l_key,"KPPhysics2DComponent") == 0 )
 						{
+							// Get Static property
+							lua_pushstring(g_pLuaState, "isStatic");
+
+							int l_staticType = lua_gettable(g_pLuaState, -2);
+
+							assert(l_staticType == LUA_TBOOLEAN);
+
+							int l_staticValue = lua_toboolean(g_pLuaState, -1);
+
 							// Register Physics Component and passing to controller
-							KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject);
+							KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject,
+							                                                           l_staticValue != 0);
+
+							lua_pop(g_pLuaState, 1);
 						}
 						else
 						{

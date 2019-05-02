@@ -11,10 +11,10 @@ namespace KPEngine
 		bool PhysicsSystem::m_InitializeSuccessful;
 		std::vector<StrongPointer<PhysicsComponent>>* PhysicsSystem::m_pPhysicsComponents;
 
-		void PhysicsSystem::RegisterPhysicsComponent(WeakPointer<Core::GameObject> i_pGameObject)
+		void PhysicsSystem::RegisterPhysicsComponent(WeakPointer<Core::GameObject> i_pGameObject, bool i_IsStatic)
 		{
 			assert(i_pGameObject);
-			PhysicsComponent* l_NewComponent = new PhysicsComponent(i_pGameObject);
+			PhysicsComponent* l_NewComponent = new PhysicsComponent(i_pGameObject, i_IsStatic);
 			m_pPhysicsComponents->push_back(l_NewComponent);
 		}
 

@@ -63,6 +63,8 @@ namespace PlatformerGame
 		private:
 			KPVector2 m_Direction;
 			WeakPointer<GameObject> m_pObject;
+			float m_JumpForce;
+			float m_HorizontalMoveSpeed;
 
 			// TODO Migrate this some how later to game objects. Very tied down
 			StrongPointer<KPEngine::Physics::PhysicsComponent> m_pPlayersPhysicsComponent;
