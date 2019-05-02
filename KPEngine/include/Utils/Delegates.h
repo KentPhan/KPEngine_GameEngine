@@ -31,6 +31,12 @@ namespace KPEngine
 				return m_pInstance != nullptr;
 			}
 
+			
+			/// <summary>
+			/// Creates a generic delegate holder that calls a method on being invoked. Binds to one function that can be called on invoke
+			/// </summary>
+			/// <param name="i_pInstance">The i p instance.</param>
+			/// <returns></returns>
 			template <class T, void (T::*TMethod)(Params ...)>
 			static Delegate Create(T* i_pInstance)
 			{
@@ -59,6 +65,11 @@ namespace KPEngine
 				assert(i_pMethodStub);
 			}
 
+			/// <summary>
+			/// Stub (Does nothing) method is for holding function pointers. This method is when the stub is called
+			/// </summary>
+			/// <param name="m_pInstance">The m p instance.</param>
+			/// <param name="...i_Parameters">The ...i parameters.</param>
 			template <class T, void (T::*TMethod)(Params ...)>
 			static void method_stub(void * m_pInstance, Params ... i_Parameters)
 			{

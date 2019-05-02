@@ -1,12 +1,12 @@
 GameObject = 
 {
-	name = "Monster",
-	position = { 100.0, 2.0, 3.0},
+	name = "Platform2",
+	position = { -100.0, 50.0, 0.0},
 	components =
 	{
 		KPRender2DComponent = 
 		{
-			texture = "Assets\\zombie.dds"
+			texture = "Assets\\girl.dds"
 		},
 		KPPhysics2DComponent = 
 		{

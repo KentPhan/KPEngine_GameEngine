@@ -23,6 +23,7 @@ namespace PlatformerGame
 		{
 			StrongPointer<GameObject> l_GameObject =  Core::InstantiateGameObject("Assets\\src\\Player.lua");
 			StrongPointer<GameObject> l_GameObject2 = Core::InstantiateGameObject("Assets\\src\\Monster.lua");
+			StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\Platform.lua");
 
 			// Attaching Controller
 			m_pPlayerController = new PlayerController();
