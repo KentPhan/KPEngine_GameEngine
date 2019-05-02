@@ -85,8 +85,8 @@ namespace KPEngine
 						l_Second.m_OtherCollider = l_CPair.m_CollisionComponents[0];
 
 
-						l_CPair.m_CollisionComponents[0]->OnCollisionHandler.ExecuteOnBound(l_First);
-						l_CPair.m_CollisionComponents[1]->OnCollisionHandler.ExecuteOnBound(l_Second);
+						l_CPair.m_CollisionComponents[0]->OnCollisionHandler.Invoke(l_First);
+						l_CPair.m_CollisionComponents[1]->OnCollisionHandler.Invoke(l_Second);
 					}
 					else
 					{

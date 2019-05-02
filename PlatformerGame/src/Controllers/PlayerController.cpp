@@ -38,22 +38,12 @@ namespace PlatformerGame
 
 
 			Delegate<CollisionInfo> l_Delegate =  Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollision>(this);
-			// TODO subscribe collision on Collider here
-			/*m_pCollider->OnCollisionHandler.AddDelegate(
-				
-			);*/
-
 			m_pCollider->OnCollisionHandler +=l_Delegate;
 		}
 
 		void PlayerController::Destroy()
 		{
 			Delegate<CollisionInfo> l_Delegate = Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollision>(this);
-			// TODO subscribe collision on Collider here
-			/*m_pCollider->OnCollisionHandler.AddDelegate(
-
-			);*/
-
 			m_pCollider->OnCollisionHandler -=l_Delegate;
 		}
 

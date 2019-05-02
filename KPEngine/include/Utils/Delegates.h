@@ -93,7 +93,7 @@ namespace KPEngine
 				return *this;
 			}
 
-			void ExecuteOnBound(Params ... i_Parameters)
+			void Invoke(Params ... i_Parameters)
 			{
 				for (auto Receiver : Receivers)
 					Receiver.ExecuteIfBound(i_Parameters ...);
