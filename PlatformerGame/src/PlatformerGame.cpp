@@ -46,6 +46,7 @@ namespace PlatformerGame
 
 	bool PlatformerGame::Shutdown()
 	{
+		m_pPlayerController->Destroy();
 		delete m_pPlayerController;
 		return true;
 	}

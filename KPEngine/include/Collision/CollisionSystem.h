@@ -10,6 +10,11 @@ namespace KPEngine
 	{
 		struct CollisionInfo
 		{
+			CollisionInfo() : m_CollisionNormal(KPVector3()), m_OtherCollider(nullptr)
+			{
+				
+			}
+
 			KPVector3 m_CollisionNormal;
 			BoxCollisionComponent* m_OtherCollider;
 		};

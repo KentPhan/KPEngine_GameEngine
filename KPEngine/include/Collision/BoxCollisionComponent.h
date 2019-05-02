@@ -1,13 +1,17 @@
 #pragma once
 #include "../Utils/KPVector4.h"
 #include "../Core/GameObject/GameObject.h"
-#include "../Utils/Delegates.h"
+
 #include "CollisionSystem.h"
+#include "../Utils/Delegates.h"
+#include "../Physics/PhysicsComponent.h"
 
 namespace KPEngine
 {
 	namespace Collision
 	{
+		struct CollisionInfo;
+
 		class BoxCollisionComponent
 		{
 		public:
@@ -27,7 +31,7 @@ namespace KPEngine
 			KPVector3 m_Extents;
 
 			// TODO add delegate method to subscribe on collision
-			//Delegate<CollisionInfo> OnCollision;
+			MultiCastDelegate<CollisionInfo> OnCollisionHandler;
 
 		private:
 			StrongPointer<Core::GameObject> m_pGameObject;

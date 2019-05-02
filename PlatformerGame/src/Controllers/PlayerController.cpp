@@ -8,12 +8,25 @@
 #include "Physics/PhysicsComponent.h"
 #include "Collision/BoxCollisionComponent.h"
 
+
 namespace PlatformerGame
 {
 	namespace Controllers
 	{
 		using namespace KPEngine::Input;
+		using namespace KPEngine::Collision;
 
+		PlayerController::PlayerController()
+		{
+			m_pObject = WeakPointer<GameObject>();
+			// m_pPlayersPhysicsComponent = nullptr;
+		}
+
+		PlayerController::~PlayerController()
+		{
+			m_pObject = nullptr;
+			// m_pPlayersPhysicsComponent = nullptr;
+		}
 
 		void PlayerController::Initialize(WeakPointer<GameObject> i_pObject)
 		{
@@ -23,7 +36,25 @@ namespace PlatformerGame
 			m_pPlayersPhysicsComponent = l_TempStrong->GetPhysicsComponent();
 			m_pCollider = l_TempStrong->GetCollisionComponent();
 
+
+			Delegate<CollisionInfo> l_Delegate =  Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollision>(this);
 			// TODO subscribe collision on Collider here
+			/*m_pCollider->OnCollisionHandler.AddDelegate(
+				
+			);*/
+
+			m_pCollider->OnCollisionHandler.AddDelegate(l_Delegate);
+		}
+
+		void PlayerController::Destroy()
+		{
+			Delegate<CollisionInfo> l_Delegate = Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollision>(this);
+			// TODO subscribe collision on Collider here
+			/*m_pCollider->OnCollisionHandler.AddDelegate(
+
+			);*/
+
+			m_pCollider->OnCollisionHandler.RemoveDelegate(l_Delegate);
 		}
 
 		void PlayerController::Update(float i_deltaTime)
@@ -46,6 +77,11 @@ namespace PlatformerGame
 			{
 				m_pPlayersPhysicsComponent->AddForce(KPVector3(1.0f, 0.0f,0.0f) * l_Force);
 			}
+		}
+
+		void PlayerController::OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo)
+		{
+			DEBUG_PRINT(KPLogType::Verbose, "Collided Event Called!");
 		}
 
 		void PlayerController::MovePlayer(const KPVector2 movement, float i_DeltaTime)

@@ -75,6 +75,18 @@ namespace KPEngine
 
 
 						// Activate Delegate for Collision
+						CollisionInfo l_First = CollisionInfo();
+						l_First.m_CollisionNormal = l_CPair.m_CollisionNormal;
+						l_First.m_OtherCollider = l_CPair.m_CollisionComponents[1];
+
+
+						CollisionInfo l_Second = CollisionInfo();
+						l_Second.m_CollisionNormal = l_CPair.m_CollisionNormal * -1.0f;
+						l_Second.m_OtherCollider = l_CPair.m_CollisionComponents[0];
+
+
+						l_CPair.m_CollisionComponents[0]->OnCollisionHandler.ExecuteOnBound(l_First);
+						l_CPair.m_CollisionComponents[1]->OnCollisionHandler.ExecuteOnBound(l_Second);
 					}
 					else
 					{

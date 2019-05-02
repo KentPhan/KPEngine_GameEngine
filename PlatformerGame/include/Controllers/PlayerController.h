@@ -4,6 +4,12 @@
 #include "Utils/SmartPointers.h"
 
 namespace KPEngine {
+	namespace Collision {
+		struct CollisionInfo;
+	}
+}
+
+namespace KPEngine {
 	namespace Physics {
 		class PhysicsComponent;
 	}
@@ -18,22 +24,15 @@ namespace PlatformerGame
 		class PlayerController : public Interfaces::IGameObjectController
 		{
 		public:
-			PlayerController()
-			{
-				m_pObject = WeakPointer<GameObject>();
-				// m_pPlayersPhysicsComponent = nullptr;
-			}
+			PlayerController();
 
-			~PlayerController()
-			{
-				m_pObject = nullptr;
-				// m_pPlayersPhysicsComponent = nullptr;
-			};
+			~PlayerController();
 			
 			// Setter
 
 			// Order
 			void Initialize(WeakPointer<GameObject> i_pObject) override;
+			void Destroy() override;
 			void Update(float i_deltaTime) override;
 
 			// Info
@@ -56,8 +55,12 @@ namespace PlatformerGame
 			{
 				return m_pObject;
 			}
+
+			void OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo);
+
 		private:
 			void MovePlayer(const KPVector2 movement, float i_DeltaTime);
+		private:
 			KPVector2 m_Direction;
 			WeakPointer<GameObject> m_pObject;
 
