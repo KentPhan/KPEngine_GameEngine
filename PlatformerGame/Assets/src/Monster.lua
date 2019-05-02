@@ -6,7 +6,7 @@ GameObject =
 	{
 		KPRender2DComponent = 
 		{
-			texture = "Assets\\zombie.dds"
+			texture = "Assets\\Sprites\\Characters\\zombie.dds"
 		},
 		KPPhysics2DComponent = 
 		{

@@ -6,7 +6,7 @@ GameObject =
 	{
 		KPRender2DComponent = 
 		{
-			texture = "Assets\\girl.dds"
+			texture = "Assets\\Sprites\\Characters\\Stein.dds"
 		},
 		KPPhysics2DComponent = 
 		{
