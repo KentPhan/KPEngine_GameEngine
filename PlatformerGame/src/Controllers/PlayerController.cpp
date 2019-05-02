@@ -20,7 +20,7 @@ namespace PlatformerGame
 		{
 			m_pObject = WeakPointer<GameObject>();
 			m_JumpForce = 800.0f;
-			m_HorizontalMoveSpeed = 16000.0f;
+			m_HorizontalMoveSpeed = 100000.0f;
 			// m_pPlayersPhysicsComponent = nullptr;
 		}
 
@@ -68,7 +68,7 @@ namespace PlatformerGame
 			if (InputSystem::GetInputHeldDown(KeyCode::D))
 			{
 				KPVector3 l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
-				m_pPlayersPhysicsComponent->SetVelocity(KPVector3(1.0f* m_HorizontalMoveSpeed* i_deltaTime, l_CVel.Y(),0.0f));
+				m_pPlayersPhysicsComponent->SetVelocity(KPVector3(1.0f* m_HorizontalMoveSpeed* i_deltaTime, l_CVel.Y(), l_CVel.Z()));
 			}
 		}
 
