@@ -41,7 +41,7 @@ namespace KPEngine
 					// if first frame
 					if(!g_LastFrameStartTick)
 					{
-						g_LastFrameTime_s = .133f;
+						g_LastFrameTime_s = .00133f;
 					}
 					// for other franes
 					else
@@ -57,6 +57,12 @@ namespace KPEngine
 					
 					// Save counter for next frame
 					g_LastFrameStartTick = l_CurrentTickCounter;
+
+					// If Time jumps absurdly high. Limit it.
+					if(g_LastFrameTime_s > .133f)
+					{
+						g_LastFrameTime_s = .00133f;
+					}
 
 					return g_LastFrameTime_s;
 				}

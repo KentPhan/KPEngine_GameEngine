@@ -70,15 +70,42 @@ namespace KPEngine
 						// If not static. Modify Velocity
 						if(!l_APhysics->IsStatic())
 						{
+							/*KPVector3 l_TestPosition = l_AObject->GetPosition();
+							KPVector3 l_TestVel = l_APhysics->GetVelocity();
+							KPVector3 l_TestAcc = l_APhysics->GetAcceleration();
+							DEBUG_PRINT(KPLogType::Verbose, "%f Frame1 Col: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+								l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
+								, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());*/
+
 							// Why Negative velocity in Reflection? I'll commit more brain cells when I have more time. Don't reflect
 							// Set reflection velocity differently based upon axises
-							KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
-							KPVector3 l_ReflectedVelocity = (((l_CPair.m_CollisionNormal * (2 * l_CPair.m_CollisionNormal.Dot(l_Incident))) - l_Incident) * -l_APhysics->GetVelocity().Magnitude()); // Get Reflection
-							l_APhysics->SetVelocity(KPVector3(l_ReflectedVelocity.X()* 0.9f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
-							l_APhysics->SetAcceleration(KPVector3::Zero());
-							if (l_APhysics->GetVelocity().Magnitude() < 1.0f)
-								l_APhysics->SetVelocity(KPVector3::Zero());
+							if(l_APhysics->GetVelocity().Magnitude() != 0.0f)
+							{
+								KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
+								KPVector3 l_ReflectedVelocity = (((l_CPair.m_CollisionNormal * (2 * l_CPair.m_CollisionNormal.Dot(l_Incident))) - l_Incident) * -l_APhysics->GetVelocity().Magnitude()); // Get Reflection
+								l_APhysics->SetVelocity(KPVector3(l_ReflectedVelocity.X()* 0.9f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
+								l_APhysics->SetAcceleration(KPVector3::Zero());
+								if (l_APhysics->GetVelocity().Magnitude() < 1.0f)
+									l_APhysics->SetVelocity(KPVector3::Zero());
+							}
 							
+
+
+							/*l_TestPosition = l_AObject->GetPosition();
+							l_TestVel = l_APhysics->GetVelocity();
+							l_TestAcc = l_APhysics->GetAcceleration();
+							DEBUG_PRINT(KPLogType::Verbose, "%f Frame2 Col: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+								l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
+								, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());
+
+
+							if (l_TestPosition.X() != l_TestPosition.X() || l_TestVel.X() != l_TestVel.X())
+							{
+								DEBUG_PRINT(KPLogType::Verbose, "%f End Frame: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+									l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
+									, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());
+							}*/
+
 							//l_CPair.m_CollisionNormal
 
 							/*l_APhysics->SetAcceleration(KPVector3::Zero());

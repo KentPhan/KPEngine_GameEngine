@@ -40,8 +40,8 @@ namespace KPEngine
 			if (!l_pTempGameObject)
 				return;
 
-			KPVector3 l_TestPosition = l_pTempGameObject->GetPosition();
-			/*DEBUG_PRINT(KPLogType::Verbose, "%f Start Frame: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+			/*KPVector3 l_TestPosition = l_pTempGameObject->GetPosition();
+			DEBUG_PRINT(KPLogType::Verbose, "%f Frame1: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
 				m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
 				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
 
@@ -58,6 +58,10 @@ namespace KPEngine
 			}
 
 
+			/*DEBUG_PRINT(KPLogType::Verbose, "%f Frame2: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+				m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
+				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
+
 			// Update velocity via acceleration
 			KPVector3 l_StartVelocity = m_Velocity;
 			m_Velocity = m_Velocity + (m_Acceleration * i_DeltaTime);
@@ -67,6 +71,21 @@ namespace KPEngine
 			l_pTempGameObject->SetPosition(l_NewPosition);
 
 			ApplyDrag(i_DeltaTime);
+
+
+			/*DEBUG_PRINT(KPLogType::Verbose, "%f Frame3: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+				m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
+				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
+
+
+			// For Debugging NaN
+			/*if (l_TestPosition.X() != l_TestPosition.X() || m_Velocity.X() != m_Velocity.X())
+			{
+				DEBUG_PRINT(KPLogType::Verbose, "%f End Frame: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+					m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
+					, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());
+			}*/
+
 			//DEBUG_PRINT(KPLogType::Verbose, "Current Velocity: %f %f", l_NewPosition.X(), l_NewPosition.Y());
 		}
 
