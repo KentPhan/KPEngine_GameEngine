@@ -25,19 +25,24 @@ namespace PlatformerGame
 
 			// TODO this is a sample of what the unit test would look like. Will try to migrate logic to a seperate unit test file
 
-			// Create X Player Characters With Gravity for testing
-			for (int i = 0; i < 15; i++)
-			{
-				//StrongPointer<GameObject> l_GameObjectPlayerHolder = Core::InstantiateGameObject("Assets\\src\\Player.lua");
-			}
-
-			// Create X Platforms
 			float l_BoxDimension = 30.0f;
 			KPVector3 l_StartBoxPosition = KPVector3(-380.0f, -300.0f, 0.0f);
+			KPVector3 l_Marker = l_StartBoxPosition;
+
+			// Create X Player Characters With Gravity for testing
+			for (int i = 0; i < 6; i++)
+			{
+				StrongPointer<GameObject> l_GameObjectPlayerHolder = Core::InstantiateGameObject("Assets\\src\\Player.lua", l_Marker + KPVector3(0.0f,300.0f,0.0f));
+				l_Marker.X(l_Marker.X() + l_BoxDimension);
+			}
+
+			l_Marker = l_StartBoxPosition;
+
+			// Create X Platforms
 			for(int i = 0; i < 20; i++)
 			{
-				StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\Platform.lua", l_StartBoxPosition);
-				l_StartBoxPosition.X(l_StartBoxPosition.X() + l_BoxDimension);
+				StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\Platform.lua", l_Marker);
+				l_Marker.X(l_Marker.X() + l_BoxDimension);
 			}
 			
 			// Attaching Controller

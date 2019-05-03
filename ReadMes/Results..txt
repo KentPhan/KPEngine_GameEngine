@@ -1,0 +1,33 @@
+I will also be including a folder for this Assignment 2.10 holding most of my analysis information.
+
+Points:
+- I centered the test around testing platformer game based aspects ( Because that's what I'm making for the final)
+- I spawned multiple objects in a scene to test the collision system.
+- I Opted for a live game test instead of a unit test due to how integrated my collision system was into my game engine.I also
+figured being able to see what was actually happening with GLIB would supply a good amount of information to me the engineer.
+- I have not implemented layers into the collision system to seperate objects I have to check and objects I don't have to actually check.
+I plan to do this later.
+
+Premise:
+Due to the difficulty of hooking up a collision unit test for a collision system
+that is so deeply integrated into my engine. I opted to set up my game in a state that would push the collision system to it's limits
+in a state that could stress test collisions.
+
+I created about 27 game objects before I started running into frame rate drops. Which arguably is not a lot. :(
+(20 static objects, 7 movable objects).
+The 20 static objects act as platforms, while the 7 movable objects have gravity that constantly accelerates them towards the
+static platformers. I refrained from user input to get as much raw collision data as possible.
+
+
+My game also sadly can crash. Which is a bad sign.
+
+Beginning:
+In the Screenshot ResultsStartPNG.png you can find the performance of my game in the beginning.
+From it you can see that I had to performance indicators in function GetCofactor and GetDeterminant. Which are used a lot to
+calculate the inverse of a matrix.
+
+In the Screenshot ResultsStartFunctionBreakdown you can see the function breakdown. I pointed out the things with Red arrows that I will be
+doing my best to optimize in this assignment.
+
+
+
