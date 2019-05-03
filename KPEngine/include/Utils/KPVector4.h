@@ -68,6 +68,7 @@ namespace KPEngine
 			}
 			inline KPVector4 Normalized() const
 			{
+				DEBUG_PRINT(KPLogType::Fatal, "KPVector4 Normalize Function Cannot Divide By Zero!");
 				return KPVector4(m_X, m_Y, m_Z, m_W) / Magnitude();
 			}
 

@@ -42,7 +42,7 @@ namespace KPEngine
 				lua_close(g_pLuaState);
 			}
 
-			StrongPointer<Core::GameObject> LuaSystem::CreateGameObject(const char* i_pScriptFileName)
+			StrongPointer<Core::GameObject> LuaSystem::CreateGameObject(const char* i_pScriptFileName, bool i_OverridePosition, KPVector3 i_Position)
 			{
 				size_t l_SizeFile;
 				StrongPointer<GameObject> l_NewStrongPointer = nullptr;
@@ -115,6 +115,11 @@ namespace KPEngine
 
 					// Create Player Game Object and register components with engine
 					KPVector3 l_startPosition = KPVector3(l_xValue, l_yValue, 0.0f);
+					if (i_OverridePosition)
+					{
+						l_startPosition = i_Position;
+					}
+
 					StrongPointer<GameObject> l_playerObject = new GameObject(l_pName, l_startPosition, 1);
 					GameObjectSystem::RegisterGameObject(l_playerObject);
 
@@ -184,7 +189,6 @@ namespace KPEngine
 
 				return l_NewStrongPointer;
 			}
-
 		}
 	}
 

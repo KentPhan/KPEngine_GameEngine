@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "KP_Log.h"
 
 namespace KPEngine
 {
@@ -51,7 +52,10 @@ namespace KPEngine
 			}
 			inline KPVector3 Normalized() const
 			{
-				return KPVector3(m_X, m_Y, m_Z) / Magnitude();
+				float l_Divisor = Magnitude();
+				if(l_Divisor == 0.0f)
+					DEBUG_PRINT(KPLogType::Fatal, "KPVector3 Normalize Function Cannot Divide By Zero!");
+				return KPVector3(m_X, m_Y, m_Z) / l_Divisor;
 			}
 
 			// Set

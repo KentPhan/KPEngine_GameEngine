@@ -83,7 +83,7 @@ namespace KPEngine
 							{
 								KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
 								KPVector3 l_ReflectedVelocity = (((l_CPair.m_CollisionNormal * (2 * l_CPair.m_CollisionNormal.Dot(l_Incident))) - l_Incident) * -l_APhysics->GetVelocity().Magnitude()); // Get Reflection
-								l_APhysics->SetVelocity(KPVector3(l_ReflectedVelocity.X()* 0.9f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
+								l_APhysics->SetVelocity(KPVector3(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
 								l_APhysics->SetAcceleration(KPVector3::Zero());
 								if (l_APhysics->GetVelocity().Magnitude() < 1.0f)
 									l_APhysics->SetVelocity(KPVector3::Zero());

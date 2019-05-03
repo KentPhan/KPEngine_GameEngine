@@ -13,6 +13,7 @@ namespace KPEngine
 		{
 		public:
 			static StrongPointer<GameObject> InstantiateGameObject(const char* i_pScriptFileName);
+			static StrongPointer<GameObject> InstantiateGameObject(const char* i_pScriptFileName, KPVector3 i_StartPosition);
 		};
 
 

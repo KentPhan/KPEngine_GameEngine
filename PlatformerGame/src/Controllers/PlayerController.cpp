@@ -20,7 +20,7 @@ namespace PlatformerGame
 		{
 			m_pObject = WeakPointer<GameObject>();
 			m_JumpForce = 800.0f;
-			m_HorizontalMoveSpeed = 100000.0f;
+			m_HorizontalMoveSpeed = 10000.0f;
 			// m_pPlayersPhysicsComponent = nullptr;
 		}
 
@@ -74,7 +74,7 @@ namespace PlatformerGame
 
 		void PlayerController::OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo)
 		{
-			DEBUG_PRINT(KPLogType::Verbose, "Collided Event Triggered With Delegate Call!");
+			//DEBUG_PRINT(KPLogType::Verbose, "Collided Event Triggered With Delegate Call!");
 		}
 
 		void PlayerController::MovePlayer(const KPVector2 movement, float i_DeltaTime)
