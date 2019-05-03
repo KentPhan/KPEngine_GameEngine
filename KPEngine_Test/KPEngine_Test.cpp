@@ -10,20 +10,25 @@ extern bool BitArray_UnitTest();
 extern bool StrongPointer_UnitTest();
 extern bool WeakPointer_UnitTest();
 extern bool KPMatrix4x4_UnitTest();
+extern bool CollisionStress_UnitTest();
 
 int main()
 {
 	//_CrtSetBreakAlloc(163);
-	
+
+
+
 	/*KPEngine::Initialize();*/
 	/*KPVector2_UnitTest();*/
 	/*DynamicHeapManager_UnitTest();*/
 	/*FixedHeapManager_UnitTest();*/
 	/*CustomFixedHeapManager_UnitTest();*/
 	/*BitArray_UnitTest();*/
-	StrongPointer_UnitTest();
+	/*StrongPointer_UnitTest();
 	WeakPointer_UnitTest();
-	KPMatrix4x4_UnitTest();
+	KPMatrix4x4_UnitTest();*/
+	CollisionStress_UnitTest();
+
 
 	// List Tests
 	/*GameObject* test = new GameObject();
