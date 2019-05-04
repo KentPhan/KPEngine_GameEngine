@@ -29,5 +29,8 @@ calculate the inverse of a matrix.
 In the Screenshot ResultsStartFunctionBreakdown you can see the function breakdown. I pointed out the things with Red arrows that I will be
 doing my best to optimize in this assignment.
 
+Take note that alot of my Vector code is inlined. So it's performance is scattered across the code. 
+In optimizing my Vectors hopefully overall performance will increase.
 
+Things I Optmized:
 
