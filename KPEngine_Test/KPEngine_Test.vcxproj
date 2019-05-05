@@ -175,7 +175,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="KPMatrix4x4SSE_UnitTest.h" />
+    <ClInclude Include="KPVector4SSE_UnitTest.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="UnitTestHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BitArray_UnitTest.cpp" />
@@ -183,8 +186,13 @@
     <ClCompile Include="FixedHeapManager_UnitTest.cpp" />
     <ClCompile Include="DynamicHeapManager_UnitTest.cpp" />
     <ClCompile Include="KPEngine_Test.cpp" />
+    <ClCompile Include="KPMatrix4x4SSE_UnitTest.cpp" />
     <ClCompile Include="KPMatrix4x4_UnitTest.cpp" />
+    <ClCompile Include="KPMatrix4x4_UnitTest.h" />
     <ClCompile Include="KPVector2_UnitTest.cpp" />
+    <ClCompile Include="KPVector3SSE_UnitTest.cpp" />
+    <ClCompile Include="KPVector3SSE_UnitTest.h" />
+    <ClCompile Include="KPVector4SSE_UnitTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

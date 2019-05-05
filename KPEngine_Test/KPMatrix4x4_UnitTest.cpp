@@ -1,39 +1,9 @@
-#include <iostream>
-#include "Utils/KPMatrix4x4.h"
+#include "KPMatrix4x4_UnitTest.h"
+#include "UnitTestHelpers.h"
 #include <cassert>
-#include "Utils/KPVector3.h"
-#include <cmath>
-
-using KPEngine::Utils::KPVector3;
-using KPEngine::Utils::KPVector4;
-using KPEngine::Utils::KPMatrix4x4;
-using std::cout;
-using std::endl;;
-using std::string;
 
 
-void PrintTestStartLabel(const char* i_Label)
-{
-	std::cout << "Matrix 4x4 "<< i_Label <<" Test:" << std::endl;
-}
-
-void PrintTestEndLabel(const char* i_Label)
-{
-	std::cout << "Matrix 4x4 "<< i_Label << " Test Passed:" << std::endl;
-}
-
-const char* TestLabel(const char* i_Label)
-{
-	return (string(i_Label) + " Test Failed").c_str();
-}
-
-
-bool MatrixMultiplyTest();
-bool MatrixConstructionTest();
-bool MatrixOperationsTest();
-bool MatrixInverseTest();
-
-bool KPMatrix4x4_UnitTest()
+bool KPMatrix4x4UnitTest::KPMatrix4x4_UnitTest()
 {
 	std::cout << "Matrix 4x4 TESTS:" << std::endl;
 
@@ -46,9 +16,9 @@ bool KPMatrix4x4_UnitTest()
 	return true;
 }
 
-bool MatrixMultiplyTest()
+bool KPMatrix4x4UnitTest::MatrixMultiplyTest()
 {
-	PrintTestStartLabel("Multiply");
+	PrintTestStartLabel(g_Matrix4x4TestTitle, "Multiply");
 
 	float l_Data[] = { 1.0f, 2.0f , 1.0f, 2.0f,
 						2.0f, 1.0f , 2.0f, 1.0f ,
@@ -89,16 +59,15 @@ bool MatrixMultiplyTest()
 	assert(l_R2 == l_A2 && "Multiply Vector");
 
 
-	PrintTestEndLabel("Multiply");
+	PrintTestEndLabel(g_Matrix4x4TestTitle, "Multiply");
 	return true;
 }
 
-
 # define M_PI           3.14159265358979323846f  /* pi */
-bool MatrixConstructionTest()
+bool KPMatrix4x4UnitTest::MatrixConstructionTest()
 {
 	float l_DegreeToRadians = M_PI / 180.0f;
-	PrintTestStartLabel("Construction");
+	PrintTestStartLabel(g_Matrix4x4TestTitle, "Construction");
 
 	KPMatrix4x4 l_R1 = KPMatrix4x4::CreateIdentityMatrix();
 	float l_DA1[] = { 1.0f, 0.0f , 0.0f, 0.0f,
@@ -163,14 +132,14 @@ bool MatrixConstructionTest()
 	l_A6.Print();
 	assert(l_R6 == l_A6 && "Scale");
 
-	PrintTestEndLabel("Construction");
+	PrintTestEndLabel(g_Matrix4x4TestTitle, "Construction");
 	return true;
 }
 
-bool MatrixOperationsTest()
+bool KPMatrix4x4UnitTest::MatrixOperationsTest()
 {
 	float l_DegreeToRadians = M_PI / 180.0f;
-	PrintTestStartLabel("Operation");
+	PrintTestStartLabel(g_Matrix4x4TestTitle, "Operation");
 
 	float l_DA1[] = { 1.0f, 2.0f , 3.0f, 4.0f,
 						5.0f, 6.0f , 7.0f, 8.0f ,
@@ -188,14 +157,14 @@ bool MatrixOperationsTest()
 	assert(l_R1 == l_A1 && "Transpose");
 
 
-	PrintTestEndLabel("Operation");
+	PrintTestEndLabel(g_Matrix4x4TestTitle, "Operation");
 	return true;
 }
 
-bool MatrixInverseTest()
+bool KPMatrix4x4UnitTest::MatrixInverseTest()
 {
 	float l_DegreeToRadians = M_PI / 180.0f;
-	PrintTestStartLabel("Inverse");
+	PrintTestStartLabel(g_Matrix4x4TestTitle, "Inverse");
 
 	/*float l_DA1[] = { 1.0f, 2.0f , 3.0f, 4.0f,
 						5.0f, 6.0f , 7.0f, 8.0f ,
@@ -247,6 +216,6 @@ bool MatrixInverseTest()
 	//assert(l_R3 == l_A3 && "Inverse2"); // To Lazy to type numbers. But confirmed with an external calculator
 
 
-	PrintTestEndLabel("Inverse");
+	PrintTestEndLabel(g_Matrix4x4TestTitle, "Inverse");
 	return true;
 }

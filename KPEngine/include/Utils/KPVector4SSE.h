@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include "../../include/Utils/KPVector3SSE.h"
+#include <intrin.h>
 namespace KPEngine
 {
 	namespace Utils
@@ -116,7 +117,9 @@ namespace KPEngine
 
 			inline float Dot(const KPVector4SSE & i_other) const
 			{
-				return (m_X * i_other.m_X) + (m_Y * i_other.m_Y) + (m_Z * i_other.m_Z) + (m_W * i_other.m_W);
+				// TODO Implement SSE Version
+				return _mm_cvtss_f32(_mm_dp_ps(m_Vec4, i_other.m_Vec4, 0xF1));
+				//return (m_X * i_other.m_X) + (m_Y * i_other.m_Y) + (m_Z * i_other.m_Z) + (m_W * i_other.m_W);
 			}
 
 			//Print
@@ -129,10 +132,15 @@ namespace KPEngine
 
 
 		private:
-			float m_X;
-			float m_Y;
-			float m_Z;
-			float m_W;
+			union
+			{
+				struct
+				{
+					float m_X, m_Y, m_Z, m_W;
+				};
+				__m128 m_Vec4;
+			};
+			
 
 			//TODO Need to use this to store positions in Monster Game
 

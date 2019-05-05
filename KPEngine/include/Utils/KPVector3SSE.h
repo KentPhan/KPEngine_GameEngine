@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "KP_Log.h"
+#include <intrin.h>
 
 namespace KPEngine
 {
@@ -99,7 +100,9 @@ namespace KPEngine
 
 			inline float Dot(const KPVector3SSE & i_other) const
 			{
-				return (m_X * i_other.m_X) + (m_Y * i_other.m_Y) + (m_Z * i_other.m_Z);
+				// TODO Implement SSE Version
+				return _mm_cvtss_f32( _mm_dp_ps(m_Vec3, i_other.m_Vec3, 0x71));
+				//return (m_X * i_other.m_X) + (m_Y * i_other.m_Y) + (m_Z * i_other.m_Z);
 			}
 
 			//Print
@@ -116,9 +119,14 @@ namespace KPEngine
 			}
 
 		private:
-			float m_X;
-			float m_Y;
-			float m_Z;
+			union
+			{
+				struct
+				{
+					float m_X, m_Y, m_Z;
+				};
+				__m128 m_Vec3;
+			};
 		};
 	}
 }

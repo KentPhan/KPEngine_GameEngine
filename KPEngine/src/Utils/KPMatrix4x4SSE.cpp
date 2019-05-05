@@ -141,6 +141,7 @@ KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::CreateTranspose
 // InverseMatrix = Adjugate / Determinant of Matrix
 KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::CreateInverseMatrix() const
 {
+	// TODO Implement SSE Version
 	// Calculate Determinant of Matrix
 	float l_Determinant = GetDeterminant(m_Matrix, 4);
 
@@ -260,6 +261,7 @@ float KPEngine::Utils::KPMatrix4x4SSE::GetDeterminant(const float i_Matrix[], si
 // Operators
 KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(const KPMatrix4x4SSE& i_Other) const
 {
+	// TODO Implement SSE Version
 	KPMatrix4x4SSE o_Result;
 
 	// For each row in this matrix
@@ -282,6 +284,7 @@ KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(const
 
 KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(float& i_Other) const
 {
+	// TODO Implement SSE Version
 	KPMatrix4x4SSE o_Result;
 
 	// For each item, multiply by float
@@ -295,6 +298,7 @@ KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(float
 
 KPEngine::Utils::KPVector4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(const KPVector4SSE& i_Other) const
 {
+	// TODO Implement SSE Version
 	KPVector4SSE o_Result;
 	float l_Temp[4];
 
