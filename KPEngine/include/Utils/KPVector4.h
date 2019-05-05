@@ -100,8 +100,10 @@ namespace KPEngine
 			KPVector4 operator/(const float & i_other) const;
 			KPVector4& operator/=(const float & i_other);
 
-			KPVector4& operator=(const KPVector4 & i_other);
 			KPVector4 operator-(const KPVector4 & i_other) const;
+			KPVector4& operator-=(const KPVector4 & i_other);
+
+			KPVector4& operator=(const KPVector4 & i_other);
 
 			inline bool operator==(const KPVector4& i_other) const
 			{

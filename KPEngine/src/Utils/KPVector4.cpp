@@ -61,14 +61,7 @@ namespace KPEngine
 			return *this;
 		}
 
-		KPVector4& KPVector4::operator=(const KPVector4& i_other)
-		{
-			this->m_X = i_other.m_X;
-			this->m_Y = i_other.m_Y;
-			this->m_Z = i_other.m_Z;
-			this->m_W = i_other.m_W;
-			return *this;
-		}
+		
 		KPVector4 KPVector4::operator-(const KPVector4& i_other) const
 		{
 			KPVector4 temp;
@@ -77,6 +70,23 @@ namespace KPEngine
 			temp.Z(m_Z - i_other.m_Z);
 			temp.W(m_W - i_other.m_W);
 			return temp;
+		}
+		KPVector4& KPVector4::operator-=(const KPVector4& i_other)
+		{
+			this->m_X = (this->m_X - i_other.m_X);
+			this->m_Y = (this->m_Y - i_other.m_Y);
+			this->m_Z = (this->m_Z - i_other.m_Z);
+			this->m_W= (this->m_W - i_other.m_W);
+			return *this;
+		}
+
+		KPVector4& KPVector4::operator=(const KPVector4& i_other)
+		{
+			this->m_X = i_other.m_X;
+			this->m_Y = i_other.m_Y;
+			this->m_Z = i_other.m_Z;
+			this->m_W = i_other.m_W;
+			return *this;
 		}
 	}
 }

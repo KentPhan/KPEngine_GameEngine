@@ -83,8 +83,10 @@ namespace KPEngine
 			KPVector3 operator/(const float & i_other) const;
 			KPVector3& operator/=(const float & i_other);
 
-			KPVector3& operator=(const KPVector3 & i_other);
 			KPVector3 operator-(const KPVector3 & i_other) const;
+			KPVector3& operator-=(const KPVector3 & i_other);
+
+			KPVector3& operator=(const KPVector3 & i_other);
 
 			inline bool operator==(const KPVector3& i_other) const
 			{
