@@ -15,6 +15,7 @@ bool KPVector4SSE_UnitTest::MainTest()
 
 	// Tests Go Here
 	KPVector4SSEDotTest();
+	KPVector4SSEMagnitudeTest();
 
 	printf("KPVector4SSE TESTS PASSED\n");
 
@@ -32,5 +33,18 @@ bool KPVector4SSE_UnitTest::KPVector4SSEDotTest()
 	assert(l_result == 5.0f && "Dot Product");
 
 	PrintTestEndLabel(g_TestTitle, "Dot Product");
+	return true;
+}
+
+bool KPVector4SSE_UnitTest::KPVector4SSEMagnitudeTest()
+{
+	PrintTestStartLabel(g_TestTitle, "Magnitude");
+
+	KPVector4SSE l_test = KPVector4SSE(2.2, -3, 4.0, 0.0f);
+	float l_result = l_test.Magnitude();
+	cout << l_result << endl;
+	assert(l_result <= 5.47f && l_result >= 5.45f && "Magnitude");
+
+	PrintTestEndLabel(g_TestTitle, "Magnitude");
 	return true;
 }

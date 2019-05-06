@@ -11,23 +11,17 @@ namespace KPEngine
 		class KPVector3SSE
 		{
 		public:
-			inline  KPVector3SSE()
+			inline  KPVector3SSE() : m_Vec3(_mm_set_ps(0.0f,0.0f,0.0f,0.0f))
 			{
-				m_X = 0.0f;
-				m_Y = 0.0f;
-				m_Z = 0.0f;
+				
 			}
-			inline KPVector3SSE(const float i_x, const float i_y, const float i_z)
+			inline KPVector3SSE(const float i_x, const float i_y, const float i_z) : m_Vec3(_mm_set_ps(0.0f, i_z, i_y, i_x))
 			{
-				m_X = i_x;
-				m_Y = i_y;
-				m_Z = i_z;
+				
 			}
-			inline KPVector3SSE(const KPVector3SSE & other)
+			inline KPVector3SSE(const KPVector3SSE & other) : m_Vec3(_mm_set_ps(0.0f, other.m_Z, other.m_Y, other.m_X))
 			{
-				this->m_X = other.m_X;
-				this->m_Y = other.m_Y;
-				this->m_Z = other.m_Z;
+				
 			}
 			inline ~KPVector3SSE()
 			{
@@ -49,11 +43,11 @@ namespace KPEngine
 			}
 			inline float Magnitude() const
 			{
-				return sqrtf(powf(m_X, 2.0f) + powf(m_Y, 2.0f) + powf(m_Z, 2.0f));
+				return _mm_cvtss_f32(_mm_sqrt_ss(_mm_dp_ps(m_Vec3, m_Vec3, 0x71)));
 			}
 			inline KPVector3SSE Normalized() const
 			{
-				float l_Divisor = Magnitude();
+				const float l_Divisor = Magnitude();
 				if (l_Divisor == 0.0f)
 					DEBUG_PRINT(KPLogType::Fatal, "KPVector3SSE Normalize Function Cannot Divide By Zero!");
 				return KPVector3SSE(m_X, m_Y, m_Z) / l_Divisor;
@@ -100,9 +94,7 @@ namespace KPEngine
 
 			inline float Dot(const KPVector3SSE & i_other) const
 			{
-				// TODO Implement SSE Version
 				return _mm_cvtss_f32( _mm_dp_ps(m_Vec3, i_other.m_Vec3, 0x71));
-				//return (m_X * i_other.m_X) + (m_Y * i_other.m_Y) + (m_Z * i_other.m_Z);
 			}
 
 			//Print

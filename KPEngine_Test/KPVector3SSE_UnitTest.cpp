@@ -15,6 +15,7 @@ bool KPVector3SSE_UnitTest::MainTest()
 
 	// Tests Go Here
 	KPVector3SSEDotTest();
+	KPVector3SSEMagnitudeTest();
 
 	printf("KPVector3SSE TESTS PASSED\n");
 
@@ -32,5 +33,18 @@ bool KPVector3SSE_UnitTest::KPVector3SSEDotTest()
 	assert(l_result == 4.0f && "Dot Product");
 
 	PrintTestEndLabel(g_TestTitle, "Dot Product");
+	return true;
+}
+
+bool KPVector3SSE_UnitTest::KPVector3SSEMagnitudeTest()
+{
+	PrintTestStartLabel(g_TestTitle, "Magnitude");
+
+	KPVector3SSE l_test = KPVector3SSE(2.0f, -2.0f, 4.0);
+	float l_result = l_test.Magnitude();
+	cout << l_result << endl;
+	assert(l_result <= 4.90f && l_result >= 4.88f && "Magnitude");
+
+	PrintTestEndLabel(g_TestTitle, "Magnitude");
 	return true;
 }

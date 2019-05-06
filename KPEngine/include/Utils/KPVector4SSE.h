@@ -13,33 +13,20 @@ namespace KPEngine
 		class KPVector4SSE
 		{
 		public:
-			inline  KPVector4SSE()
+			inline  KPVector4SSE() : m_Vec4(_mm_set_ps(0.0f, 0.0f, 0.0f, 0.0f))
 			{
-				m_X = 0.0f;
-				m_Y = 0.0f;
-				m_Z = 0.0f;
-				m_W = 0.0f;
 			}
-			inline KPVector4SSE(float i_x, float i_y, float i_z, float i_w)
+			inline KPVector4SSE(float i_x, float i_y, float i_z, float i_w) : m_Vec4(_mm_set_ps(i_w, i_z, i_y, i_x))
 			{
-				m_X = i_x;
-				m_Y = i_y;
-				m_Z = i_z;
-				m_W = i_w;
+				
 			}
-			inline KPVector4SSE(const KPVector4SSE & other)
+			inline KPVector4SSE(const KPVector4SSE & other) : m_Vec4(_mm_set_ps(other.m_W, other.m_Z, other.m_Y, other.m_X))
 			{
-				this->m_X = other.m_X;
-				this->m_Y = other.m_Y;
-				this->m_Z = other.m_Z;
-				this->m_W = other.m_W;
+				
 			}
-			inline KPVector4SSE(const KPVector3SSE& other, float i_W)
+			inline KPVector4SSE(const KPVector3SSE& other, float i_W) : m_Vec4(_mm_set_ps(i_W, other.Z(), other.Y(), other.X()))
 			{
-				this->m_X = other.X();
-				this->m_Y = other.Y();
-				this->m_Z = other.Z();
-				this->m_W = i_W;
+				
 			}
 			inline ~KPVector4SSE()
 			{
@@ -65,12 +52,14 @@ namespace KPEngine
 			}
 			inline float Magnitude() const
 			{
-				return sqrtf(powf(m_X, 2.0f) + powf(m_Y, 2.0f) + powf(m_Z, 2.0f) + powf(m_W, 2.0f));
+				return _mm_cvtss_f32(_mm_sqrt_ss(_mm_dp_ps(m_Vec4, m_Vec4, 0xF1)));
 			}
 			inline KPVector4SSE Normalized() const
 			{
-				DEBUG_PRINT(KPLogType::Fatal, "KPVector4SSE Normalize Function Cannot Divide By Zero!");
-				return KPVector4SSE(m_X, m_Y, m_Z, m_W) / Magnitude();
+				const float l_Divisor = Magnitude();
+				if (l_Divisor == 0.0f)
+					DEBUG_PRINT(KPLogType::Fatal, "KPVector4SSE Normalize Function Cannot Divide By Zero!");
+				return KPVector4SSE(m_X, m_Y, m_Z, m_W) / l_Divisor;
 			}
 
 			// Set
@@ -117,9 +106,7 @@ namespace KPEngine
 
 			inline float Dot(const KPVector4SSE & i_other) const
 			{
-				// TODO Implement SSE Version
 				return _mm_cvtss_f32(_mm_dp_ps(m_Vec4, i_other.m_Vec4, 0xF1));
-				//return (m_X * i_other.m_X) + (m_Y * i_other.m_Y) + (m_Z * i_other.m_Z) + (m_W * i_other.m_W);
 			}
 
 			//Print
@@ -128,8 +115,11 @@ namespace KPEngine
 				std::cout << "(" << m_X << "," << m_Y << "," << m_Z << "," << m_W << ")";
 			}
 
-
-
+			// Statics
+			static KPVector4SSE Zero()
+			{
+				return KPVector4SSE(0.0f, 0.0f, 0.0f, 0.0f);
+			}
 
 		private:
 			union
