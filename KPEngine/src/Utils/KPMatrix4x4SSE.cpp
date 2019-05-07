@@ -141,145 +141,178 @@ KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::CreateTranspose
 // InverseMatrix = Adjugate / Determinant of Matrix
 KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::CreateInverseMatrix() const
 {
-	// TODO Implement SSE Version
-	// Calculate Determinant of Matrix
-	float l_Determinant = GetDeterminant(m_Matrix, 4);
+	KPMatrix4x4SSE l_Result = KPMatrix4x4SSE();
 
-	// If condition to quit if Determinant is 0
-	assert(l_Determinant != 0 && "Matrix Does not Contain Determinant");
+	__m128 temp = { 0.0f };
+	__m128 row0, row1, row2, row3;
+	__m128 minor0, minor1, minor2, minor3;
 
+	temp = _mm_loadh_pi(_mm_loadl_pi(temp, reinterpret_cast<const __m64 *>(&m_11)), reinterpret_cast<const __m64 *>(&m_21));
+	row1 = _mm_loadh_pi(_mm_loadl_pi(temp, reinterpret_cast<const __m64 *>(&m_31)), reinterpret_cast<const __m64 *>(&m_41));
+	row0 = _mm_shuffle_ps(temp, row1, 0x88);
+	row1 = _mm_shuffle_ps(row1, temp, 0xDD);
+	temp = _mm_loadh_pi(_mm_loadl_pi(temp, reinterpret_cast<const __m64 *>(&m_13)), reinterpret_cast<const __m64 *>(&m_23));
+	row3 = _mm_loadh_pi(_mm_loadl_pi(temp, reinterpret_cast<const __m64 *>(&m_33)), reinterpret_cast<const __m64 *>(&m_43));
+	row2 = _mm_shuffle_ps(temp, row3, 0x88);
+	row3 = _mm_shuffle_ps(row3, temp, 0xDD);
 
-	// Calculate Adjugate Matrix
-	KPMatrix4x4SSE l_AdjugateMatrix = CreateAdjugateMatrix();
-	float l_InverseDeterminant = (1.0f / l_Determinant);
-	return l_AdjugateMatrix * l_InverseDeterminant;
+	// -----------------------------------------------
+	temp = _mm_mul_ps(row2, row3);
+	temp = _mm_shuffle_ps(temp, temp, 0xB1);
+	minor0 = _mm_mul_ps(row1, temp);
+	minor1 = _mm_mul_ps(row0, temp);
+	temp = _mm_shuffle_ps(temp, temp, 0x4E);
+	minor0 = _mm_sub_ps(_mm_mul_ps(row1, temp), minor0);
+	minor1 = _mm_sub_ps(_mm_mul_ps(row0, temp), minor1);
+	minor1 = _mm_shuffle_ps(minor1, minor1, 0x4E);
+
+	// -----------------------------------------------
+	temp = _mm_mul_ps(row1, row2);
+	temp = _mm_shuffle_ps(temp, temp, 0xB1);
+	minor0 = _mm_add_ps(_mm_mul_ps(row3, temp), minor0);
+	minor3 = _mm_mul_ps(row0, temp);
+	temp = _mm_shuffle_ps(temp, temp, 0x4E);
+	minor0 = _mm_sub_ps(minor0, _mm_mul_ps(row3, temp));
+	minor3 = _mm_sub_ps(_mm_mul_ps(row0, temp), minor3);
+	minor3 = _mm_shuffle_ps(minor3, minor3, 0x4E);
+
+	// -----------------------------------------------
+	temp = _mm_mul_ps(_mm_shuffle_ps(row1, row1, 0x4E), row3);
+	temp = _mm_shuffle_ps(temp, temp, 0xB1);
+	row2 = _mm_shuffle_ps(row2, row2, 0x4E);
+	minor0 = _mm_add_ps(_mm_mul_ps(row2, temp), minor0);
+	minor2 = _mm_mul_ps(row0, temp);
+	temp = _mm_shuffle_ps(temp, temp, 0x4E);
+	minor0 = _mm_sub_ps(minor0, _mm_mul_ps(row2, temp));
+	minor2 = _mm_sub_ps(_mm_mul_ps(row0, temp), minor2);
+	minor2 = _mm_shuffle_ps(minor2, minor2, 0x4E);
+
+	// -----------------------------------------------
+	temp = _mm_mul_ps(row0, row1);
+	temp = _mm_shuffle_ps(temp, temp, 0xB1);
+	minor2 = _mm_add_ps(_mm_mul_ps(row3, temp), minor2);
+	minor3 = _mm_sub_ps(_mm_mul_ps(row2, temp), minor3);
+	temp = _mm_shuffle_ps(temp, temp, 0x4E);
+	minor2 = _mm_sub_ps(_mm_mul_ps(row3, temp), minor2);
+	minor3 = _mm_sub_ps(minor3, _mm_mul_ps(row2, temp));
+
+	// -----------------------------------------------
+	temp = _mm_mul_ps(row0, row3);
+	temp = _mm_shuffle_ps(temp, temp, 0xB1);
+	minor1 = _mm_sub_ps(minor1, _mm_mul_ps(row2, temp));
+	minor2 = _mm_add_ps(_mm_mul_ps(row1, temp), minor2);
+	temp = _mm_shuffle_ps(temp, temp, 0x4E);
+	minor1 = _mm_add_ps(_mm_mul_ps(row2, temp), minor1);
+	minor2 = _mm_sub_ps(minor2, _mm_mul_ps(row1, temp));
+
+	// -----------------------------------------------
+	temp = _mm_mul_ps(row0, row2);
+	temp = _mm_shuffle_ps(temp, temp, 0xB1);
+	minor1 = _mm_add_ps(_mm_mul_ps(row3, temp), minor1);
+	minor3 = _mm_sub_ps(minor3, _mm_mul_ps(row1, temp));
+	temp = _mm_shuffle_ps(temp, temp, 0x4E);
+	minor1 = _mm_sub_ps(minor1, _mm_mul_ps(row3, temp));
+	minor3 = _mm_add_ps(_mm_mul_ps(row1, temp), minor3);
+
+	// -----------------------------------------------
+	__m128 det;
+
+	det = _mm_mul_ps(row0, minor0);
+	det = _mm_add_ps(_mm_shuffle_ps(det, det, 0x4E), det);
+	det = _mm_add_ss(_mm_shuffle_ps(det, det, 0xB1), det);
+	temp = _mm_rcp_ss(det);
+	det = _mm_sub_ss(_mm_add_ss(temp, temp), _mm_mul_ss(det, _mm_mul_ss(temp, temp)));
+	det = _mm_shuffle_ps(det, det, 0x00);
+
+	minor0 = _mm_mul_ps(det, minor0);
+	_mm_storel_pi(reinterpret_cast<__m64 *>(&l_Result.m_11), minor0);
+	_mm_storeh_pi(reinterpret_cast<__m64 *>(&l_Result.m_13), minor0);
+
+	minor1 = _mm_mul_ps(det, minor1);
+	_mm_storel_pi(reinterpret_cast<__m64 *>(&l_Result.m_21), minor1);
+	_mm_storeh_pi(reinterpret_cast<__m64 *>(&l_Result.m_23), minor1);
+
+	minor2 = _mm_mul_ps(det, minor2);
+	_mm_storel_pi(reinterpret_cast<__m64 *>(&l_Result.m_31), minor2);
+	_mm_storeh_pi(reinterpret_cast<__m64 *>(&l_Result.m_33), minor2);
+
+	minor3 = _mm_mul_ps(det, minor3);
+	_mm_storel_pi(reinterpret_cast<__m64 *>(&l_Result.m_41), minor3);
+	_mm_storeh_pi(reinterpret_cast<__m64 *>(&l_Result.m_43), minor3);
+
+	return l_Result;
 }
-
-// AdjointMatrix/Adjugate = Transpose(CofactorMatrix)
-KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::CreateAdjugateMatrix() const
-{
-	// Calculate CofactorMatrix
-	KPMatrix4x4SSE l_CoFactorMatrix = CreateCofactorMatrix();
-
-	// Transpose CofactorMatrix for Adjoint Matrix
-	return l_CoFactorMatrix.CreateTransposeMatrix();
-}
-
-// 
-KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::CreateCofactorMatrix() const
-{
-	KPMatrix4x4SSE o_CofactorMatrix = KPMatrix4x4SSE();
-	// For Each Element  in matrix Get Cofactor and store it
-
-	int l_Sign = 1;
-	for (size_t i = 0; i < 16; i++)
-	{
-		size_t l_IgnoredRow = i / 4;
-		size_t l_IgnoredCol = i % 4;
-		l_Sign = ((l_IgnoredCol + l_IgnoredRow) % 2) == 0 ? 1 : -1;
-
-		o_CofactorMatrix.m_Matrix[i] = GetCofactor(m_Matrix, l_IgnoredRow, l_IgnoredCol, 4, l_Sign);
-	}
-	return o_CofactorMatrix;
-}
-
-// given a matrix, given an element, delete the row and col of that element, return (determinate of that element multiplied to the sign) this is the cofactor
-float KPEngine::Utils::KPMatrix4x4SSE::GetCofactor(const float i_Matrix[], size_t i_IgnoredRow, size_t i_IgnoredCol, size_t i_Dimension, int i_Sign)
-{
-	assert(i_Dimension > 2);
-
-	// Create new Matrix For newly sized matrix
-	size_t l_CoFactorDimension = i_Dimension - 1;;
-	float * l_CoFactorMatrix = new float[l_CoFactorDimension * l_CoFactorDimension];
-	size_t l_CoRow = 0;
-	size_t l_CoCol = 0;
-
-
-	// Copy Values into newlySized Array to calculate the determinate of. Ignore Ignored Rows and Cols
-	// For each row
-	for (size_t l_Row = 0; l_Row < i_Dimension; l_Row++)
-	{
-		// If Ignored Row
-		if (l_Row == i_IgnoredRow)
-			continue;
-
-
-		for (size_t l_Col = 0; l_Col < i_Dimension; l_Col++)
-		{
-			// If Ignore Col
-			if (l_Col == i_IgnoredCol)
-				continue;
-
-			// Copy value over
-			l_CoFactorMatrix[(l_CoRow * l_CoFactorDimension) + l_CoCol] = i_Matrix[(l_Row * i_Dimension) + l_Col];
-
-			l_CoCol++;
-		}
-
-		l_CoRow++;
-		l_CoCol = 0;
-	}
-
-	const float o_Determinate = GetDeterminant(l_CoFactorMatrix, l_CoFactorDimension);
-
-	delete[] l_CoFactorMatrix;
-
-	if (o_Determinate == 0)
-		return o_Determinate;
-
-	return o_Determinate * i_Sign;
-}
-
-float KPEngine::Utils::KPMatrix4x4SSE::GetDeterminant(const float i_Matrix[], size_t i_Dimension)
-{
-	assert(i_Dimension > 0 && "Dimension is Zero");
-	// TODO Handle Dimension 1 and Reformat Code
-
-	if (i_Dimension == 2)// Base Case 2x2 determinate matrix. Quick way of doing the below
-		return i_Matrix[0] * i_Matrix[3] - i_Matrix[1] * i_Matrix[2];
-
-	float o_Determinant = 0.0f;
-	int l_Sign = 1;
-
-	// For each element in the first row
-	for (size_t i = 0; i < i_Dimension; i++)
-	{
-		// Get Cofactor (which leads to the return of a determinant)
-		float l_CoFactor = GetCofactor(i_Matrix, 0, i, i_Dimension, l_Sign);
-
-		l_CoFactor *= i_Matrix[i]; // Multiply by targeted element
-		o_Determinant += l_CoFactor;
-
-		l_Sign *= -1;
-	}
-
-	return o_Determinant;
-}
-
-
 
 // Operators
 KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(const KPMatrix4x4SSE& i_Other) const
 {
-	// TODO Implement SSE Version
-	KPMatrix4x4SSE o_Result;
+	KPMatrix4x4SSE l_Result = KPMatrix4x4SSE();
 
-	// For each row in this matrix
-	for (size_t l_lhsR = 0; l_lhsR < 16; l_lhsR = l_lhsR + 4)
-	{
-		KPVector4SSE l_lhsRow = KPVector4SSE(m_Matrix[0 + l_lhsR], m_Matrix[1 + l_lhsR], m_Matrix[2 + l_lhsR], m_Matrix[3 + l_lhsR]);
-		// For each column in the other matrix
-		for (size_t l_rhsC = 0; l_rhsC < 4; l_rhsC++)
-		{
-			KPVector4SSE l_rhsCol = KPVector4SSE(i_Other.m_Matrix[0 + l_rhsC], i_Other.m_Matrix[4 + l_rhsC], i_Other.m_Matrix[8 + l_rhsC], i_Other.m_Matrix[12 + l_rhsC]);
+	// load i_other
+	__m128 rhs_row1 = _mm_load_ps(&i_Other.m_11);
+	__m128 rhs_row2 = _mm_load_ps(&i_Other.m_21);
+	__m128 rhs_row3 = _mm_load_ps(&i_Other.m_31);
+	__m128 rhs_row4 = _mm_load_ps(&i_Other.m_41);
 
-			float l_Dot = l_lhsRow.Dot(l_rhsCol);
-			o_Result.m_Matrix[l_lhsR + l_rhsC] = l_Dot;
-		}
+	__m128 acc;
 
-	}
+	// (*this).col1 * i_other
+	// m_11 * i_other.row1
+	acc = _mm_mul_ps(_mm_load1_ps(&m_11), rhs_row1);
+	// m_12 * i_other.row2
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_12), rhs_row2));
+	// m_13 * i_other.row3
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_13), rhs_row3));
+	// m_14 * i_other.row4
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_14), rhs_row4));
 
-	return o_Result;
+	// write result
+	_mm_storel_pi(reinterpret_cast<__m64 *>(&l_Result.m_11), acc);
+	_mm_storeh_pi(reinterpret_cast<__m64 *>(&l_Result.m_13), acc);
+
+	// (*this).col2 * i_other
+	// m_21 * i_other.row1
+	acc = _mm_mul_ps(_mm_load1_ps(&m_21), rhs_row1);
+	// m_22 * i_other.row2
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_22), rhs_row2));
+	// m_23 * i_other.row3
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_23), rhs_row3));
+	// m_24 * i_other.row4
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_24), rhs_row4));
+
+	// write result
+	_mm_storel_pi(reinterpret_cast<__m64 *>(&l_Result.m_21), acc);
+	_mm_storeh_pi(reinterpret_cast<__m64 *>(&l_Result.m_23), acc);
+
+	// (*this).col3 * i_other
+	// m_31 * i_other.row1
+	acc = _mm_mul_ps(_mm_load1_ps(&m_31), rhs_row1);
+	// m_32 * i_other.row2
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_32), rhs_row2));
+	// m_33 * i_other.row3
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_33), rhs_row3));
+	// m_34 * i_other.row4
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_34), rhs_row4));
+
+	// write result
+	_mm_storel_pi(reinterpret_cast<__m64 *>(&l_Result.m_31), acc);
+	_mm_storeh_pi(reinterpret_cast<__m64 *>(&l_Result.m_33), acc);
+
+	// (*this).col4 * i_other
+	// m_41 * i_other.row1
+	acc = _mm_mul_ps(_mm_load1_ps(&m_41), rhs_row1);
+	// m_42 * i_other.row2
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_42), rhs_row2));
+	// m_43 * i_other.row3
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_43), rhs_row3));
+	// m_44 * i_other.row4
+	acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&m_44), rhs_row4));
+
+	// write result
+	_mm_storel_pi(reinterpret_cast<__m64 *>(&l_Result.m_41), acc);
+	_mm_storeh_pi(reinterpret_cast<__m64 *>(&l_Result.m_43), acc);
+
+	return l_Result;
 }
 
 KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(float& i_Other) const
@@ -322,9 +355,10 @@ KPEngine::Utils::KPVector4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(const K
 // Compare Operators
 bool KPEngine::Utils::KPMatrix4x4SSE::operator==(KPMatrix4x4SSE& i_Other)
 {
+	float l_precision = 0.0001;
 	for (size_t i = 0; i < 16; i++)
 	{
-		if (m_Matrix[i] != i_Other.m_Matrix[i])
+		if (!(m_Matrix[i]  <= (i_Other.m_Matrix[i] + l_precision) && m_Matrix[i] >= (i_Other.m_Matrix[i] - l_precision)))
 			return false;
 	}
 	return true;

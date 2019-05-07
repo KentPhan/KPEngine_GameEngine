@@ -50,13 +50,19 @@ namespace KPEngine
 			void Print();
 
 		private:
-			KPMatrix4x4SSE CreateAdjugateMatrix() const;
-			KPMatrix4x4SSE CreateCofactorMatrix() const;
-			static float GetCofactor(const float i_Matrix[], size_t i_IgnoredRow, size_t i_IgnoredCol, size_t i_Dimension, int i_Sign);
-			static float GetDeterminant(const float i_Matrix[], size_t i_Dimension); // Recursive
 
-
-			float m_Matrix[16];
+			union
+			{
+				struct
+				{
+					float m_11, m_12, m_13, m_14,
+						m_21, m_22, m_23, m_24,
+						m_31, m_32, m_33, m_34,
+						m_41, m_42, m_43, m_44;
+				};
+				float m_Matrix[16];
+			};
+			
 		};
 	}
 }
