@@ -40,14 +40,15 @@ namespace KPEngine
 			if (!l_pTempGameObject)
 				return;
 
-			/*KPVector3 l_TestPosition = l_pTempGameObject->GetPosition();
-			DEBUG_PRINT(KPLogType::Verbose, "%f Frame1: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+			//KPVector3 l_TestPosition = l_pTempGameObject->GetPosition();
+			/*DEBUG_PRINT(KPLogType::Verbose, "%f Frame1: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
 				m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
 				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
 
 
 			// Clamp Acceleration with Gravity if applicable
-			if(m_HasGravity)
+			// TODO Negating Gravity as a result of Collision System Check. Need to have a more well rounded method later. Delaying to Finish Optimization Assignment.
+			if(m_HasGravity && !m_NegateGravityFrameCheck)
 			{
 				m_Acceleration = KPVector3(m_Acceleration.X(), m_Acceleration.Y() + (m_GForce * i_DeltaTime)  , m_Acceleration.Z());
 				if(m_Acceleration.Y() > m_GForce)
@@ -56,6 +57,7 @@ namespace KPEngine
 					
 				}
 			}
+			m_NegateGravityFrameCheck = false;
 
 
 			/*DEBUG_PRINT(KPLogType::Verbose, "%f Frame2: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
@@ -84,7 +86,10 @@ namespace KPEngine
 				DEBUG_PRINT(KPLogType::Verbose, "%f End Frame: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
 					m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
 					, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());
-			}*/
+			}
+			DEBUG_PRINT(KPLogType::Verbose, "%f End Frame: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+				m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
+				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
 
 			//DEBUG_PRINT(KPLogType::Verbose, "Current Velocity: %f %f", l_NewPosition.X(), l_NewPosition.Y());
 		}

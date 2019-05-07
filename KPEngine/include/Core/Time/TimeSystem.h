@@ -59,9 +59,9 @@ namespace KPEngine
 					g_LastFrameStartTick = l_CurrentTickCounter;
 
 					// If Time jumps absurdly high. Limit it.
-					if(g_LastFrameTime_s > .333f)
+					if(g_LastFrameTime_s > .222f)
 					{
-						g_LastFrameTime_s = .333f;
+						g_LastFrameTime_s = .222f;
 					}
 
 					//aDEBUG_PRINT(Utils::KPLogType::Verbose, "Frame Time difference calculated At %f", g_LastFrameTime_s);

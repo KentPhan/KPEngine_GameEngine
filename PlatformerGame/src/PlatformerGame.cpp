@@ -30,7 +30,7 @@ namespace PlatformerGame
 			KPVector3 l_Marker = l_StartBoxPosition;
 
 			// Create X Player Characters With Gravity for testing
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 12; i++)
 			{
 				StrongPointer<GameObject> l_GameObjectPlayerHolder = Core::InstantiateGameObject("Assets\\src\\Player.lua", l_Marker + KPVector3(0.0f,300.0f,0.0f));
 				l_Marker.X(l_Marker.X() + l_BoxDimension);

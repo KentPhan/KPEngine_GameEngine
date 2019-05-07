@@ -49,6 +49,7 @@ namespace KPEngine
 			static std::vector<StrongPointer<BoxCollisionComponent>>* m_pBoxComponents;
 			static CollisionPair m_EarliestCollision;
 
+			static float HandleCollision(CollisionPair& i_Pair);
 			static CollisionPair FindEarliestCollision(float& i_EndFrame);
 			static bool IsCollision(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float& i_ColTime, KPVector3& i_ColNormal, float i_DT);
 			static bool SweptSeparatingAxisCheck(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right, float& i_LatestClose, KPVector3& i_Normal, float i_TEndFrame); //TODO Only handles boxes. Adapt to Polygons and clean it up

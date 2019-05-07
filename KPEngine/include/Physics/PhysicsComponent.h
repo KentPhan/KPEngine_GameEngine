@@ -38,6 +38,11 @@ namespace KPEngine
 				m_Acceleration = i_NewAcceleration;
 			}
 
+			void inline SetNegateGravityThisFrame()
+			{
+				m_NegateGravityFrameCheck = true;
+			}
+
 			bool inline IsStatic()
 			{
 				return m_IsStatic;
@@ -52,6 +57,7 @@ namespace KPEngine
 
 			WeakPointer<Core::GameObject> m_pGameObject;
 			bool m_HasGravity;
+			bool m_NegateGravityFrameCheck;
 			float m_GForce;
 			bool m_HasDrag;
 			float m_Mass;

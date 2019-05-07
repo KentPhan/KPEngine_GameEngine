@@ -49,88 +49,11 @@ namespace KPEngine
 				// Time limit is determined by the the size of the frame. (Delta Time)
 				float l_CurrentTime = 0.0f;
 
-				// TODO putting Earliest check on backburner (not in requirements) Moving on to Delegates
 				// Loop to end of frame finding earliest collision
 				while(l_CurrentTime < i_DeltaTime)
 				{
 					CollisionPair l_CPair = FindEarliestCollision(i_DeltaTime);
-
-					if(l_CPair.m_Valid)
-					{
-						l_CurrentTime = l_CPair.m_CollisionTime;
-
-						// Resolve Collision By moving in Direction of normal a bit. 
-						// Reflection of Velocity
-						// Rinse and Repeat.
-						//DEBUG_PRINT(KPLogType::Verbose, "Collided: Normal: %f %f", l_CPair.m_CollisionNormal.X(), l_CPair.m_CollisionNormal.Y());
-						StrongPointer<Physics::PhysicsComponent> l_APhysics =  l_CPair.m_CollisionComponents[0]->GetPhysicsComponent();
-						StrongPointer<Core::GameObject> l_AObject = l_CPair.m_CollisionComponents[0]->GetGameObject();
-						l_AObject->SetPosition(l_AObject->GetPosition() + (l_CPair.m_CollisionNormal * 1.0f)); // Move a bit back
-
-						// If not static. Modify Velocity
-						if(!l_APhysics->IsStatic())
-						{
-							/*KPVector3 l_TestPosition = l_AObject->GetPosition();
-							KPVector3 l_TestVel = l_APhysics->GetVelocity();
-							KPVector3 l_TestAcc = l_APhysics->GetAcceleration();
-							DEBUG_PRINT(KPLogType::Verbose, "%f Frame1 Col: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
-								l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
-								, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());*/
-
-							// Why Negative velocity in Reflection? I'll commit more brain cells when I have more time. Don't reflect
-							// Set reflection velocity differently based upon axises
-							if(l_APhysics->GetVelocity().Magnitude() != 0.0f)
-							{
-								KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
-								KPVector3 l_ReflectedVelocity = (((l_CPair.m_CollisionNormal * (2 * l_CPair.m_CollisionNormal.Dot(l_Incident))) - l_Incident) * -l_APhysics->GetVelocity().Magnitude()); // Get Reflection
-								l_APhysics->SetVelocity(KPVector3(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
-								l_APhysics->SetAcceleration(KPVector3::Zero());
-								if (l_APhysics->GetVelocity().Magnitude() < 1.0f)
-									l_APhysics->SetVelocity(KPVector3::Zero());
-							}
-							
-
-
-							/*l_TestPosition = l_AObject->GetPosition();
-							l_TestVel = l_APhysics->GetVelocity();
-							l_TestAcc = l_APhysics->GetAcceleration();
-							DEBUG_PRINT(KPLogType::Verbose, "%f Frame2 Col: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
-								l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
-								, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());
-
-
-							if (l_TestPosition.X() != l_TestPosition.X() || l_TestVel.X() != l_TestVel.X())
-							{
-								DEBUG_PRINT(KPLogType::Verbose, "%f End Frame: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
-									l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
-									, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());
-							}*/
-
-							//l_CPair.m_CollisionNormal
-
-							/*l_APhysics->SetAcceleration(KPVector3::Zero());
-							l_APhysics->SetVelocity(KPVector3::Zero());*/
-						}
-
-						// Activate Delegate for Collision
-						CollisionInfo l_First = CollisionInfo();
-						l_First.m_CollisionNormal = l_CPair.m_CollisionNormal;
-						l_First.m_OtherCollider = l_CPair.m_CollisionComponents[1];
-
-
-						CollisionInfo l_Second = CollisionInfo();
-						l_Second.m_CollisionNormal = l_CPair.m_CollisionNormal * -1.0f;
-						l_Second.m_OtherCollider = l_CPair.m_CollisionComponents[0];
-
-
-						l_CPair.m_CollisionComponents[0]->OnCollisionHandler.Invoke(l_First);
-						l_CPair.m_CollisionComponents[1]->OnCollisionHandler.Invoke(l_Second);
-					}
-					else
-					{
-						break;
-					}
-					
+					l_CurrentTime = HandleCollision(l_CPair);
 				}
 
 				// On every found earliest collision, step time forward to the time and resolve the earliest collision changing it's direction, acceleration, and speed
@@ -150,6 +73,115 @@ namespace KPEngine
 			delete m_pBoxComponents;
 		}
 
+
+		float CollisionSystem::HandleCollision(CollisionPair& i_Pair)
+		{
+			float o_CollisionTime = INFINITY;
+			if (i_Pair.m_Valid)
+			{
+				o_CollisionTime = i_Pair.m_CollisionTime;
+
+				// TODO does not handle relative position during frame
+				// Resolve Collision By moving in Direction of normal a bit. 
+				// Reflection of Velocity
+				// Rinse and Repeat.
+				//DEBUG_PRINT(KPLogType::Verbose, "Collided: Normal: %f %f", l_CPair.m_CollisionNormal.X(), l_CPair.m_CollisionNormal.Y());
+				StrongPointer<Physics::PhysicsComponent> l_APhysics = i_Pair.m_CollisionComponents[0]->GetPhysicsComponent();
+				StrongPointer<Core::GameObject> l_AObject = i_Pair.m_CollisionComponents[0]->GetGameObject();
+
+				StrongPointer<Physics::PhysicsComponent> l_BPhysics = i_Pair.m_CollisionComponents[1]->GetPhysicsComponent();
+				StrongPointer<Core::GameObject> l_BObject = i_Pair.m_CollisionComponents[1]->GetGameObject();
+
+
+				// TODO Handle OnStayCollision
+				// Means velocity is zero
+				if (o_CollisionTime == -INFINITY)
+				{
+					// My Hackky way to handle objects accelerating past the platform in the Physics Frame due to crappy frame rates
+					// TODO fix later after optimization assignment.
+					l_APhysics->SetNegateGravityThisFrame();	
+					l_BPhysics->SetNegateGravityThisFrame();
+
+					// TODO Handle ON Stay
+				}
+				
+				if (!l_APhysics->IsStatic())
+				{
+					KPVector3 l_RelNormal = i_Pair.m_CollisionNormal * 1.0f;
+
+					/*KPVector3 l_TestPosition = l_AObject->GetPosition();
+					KPVector3 l_TestVel = l_APhysics->GetVelocity();
+					KPVector3 l_TestAcc = l_APhysics->GetAcceleration();
+					DEBUG_PRINT(KPLogType::Verbose, "%f Frame1 Col: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+						l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
+						, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());*/
+
+						// Why Negative velocity in Reflection? I'll commit more brain cells when I have more time. Don't reflect
+						// Set reflection velocity differently based upon axises
+
+					if (l_APhysics->GetVelocity().Magnitude() != 0.0f)
+					{
+						KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
+						KPVector3 l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_APhysics->GetVelocity().Magnitude()); // Get Reflection
+						l_APhysics->SetVelocity(KPVector3(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
+						l_APhysics->SetAcceleration(KPVector3::Zero());
+						if (l_APhysics->GetVelocity().Magnitude() < 1.0f)
+							l_APhysics->SetVelocity(KPVector3::Zero());
+					}
+
+					/*l_TestPosition = l_AObject->GetPosition();
+					l_TestVel = l_APhysics->GetVelocity();
+					l_TestAcc = l_APhysics->GetAcceleration();
+					DEBUG_PRINT(KPLogType::Verbose, "%f Frame2 Col: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+						l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
+						, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());
+
+
+					if (l_TestPosition.X() != l_TestPosition.X() || l_TestVel.X() != l_TestVel.X())
+					{
+						DEBUG_PRINT(KPLogType::Verbose, "%f End Frame: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+							l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
+							, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());
+					}*/
+
+					//l_CPair.m_CollisionNormal
+
+					/*l_APhysics->SetAcceleration(KPVector3::Zero());
+					l_APhysics->SetVelocity(KPVector3::Zero());*/
+				}
+
+				if (!l_BPhysics->IsStatic())
+				{
+					KPVector3 l_RelNormal = i_Pair.m_CollisionNormal * -1.0f;
+
+					if (l_BPhysics->GetVelocity().Magnitude() != 0.0f)
+					{
+						KPVector3 l_Incident = l_BPhysics->GetVelocity().Normalized();
+						KPVector3 l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_BPhysics->GetVelocity().Magnitude()); // Get Reflection
+						l_BPhysics->SetVelocity(KPVector3(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
+						l_BPhysics->SetAcceleration(KPVector3::Zero());
+						if (l_BPhysics->GetVelocity().Magnitude() < 1.0f)
+							l_BPhysics->SetVelocity(KPVector3::Zero());
+					}
+
+				}
+
+				// Activate Delegate for Collision
+				CollisionInfo l_First = CollisionInfo();
+				l_First.m_CollisionNormal = i_Pair.m_CollisionNormal;
+				l_First.m_OtherCollider = i_Pair.m_CollisionComponents[1];
+
+
+				CollisionInfo l_Second = CollisionInfo();
+				l_Second.m_CollisionNormal = i_Pair.m_CollisionNormal * -1.0f;
+				l_Second.m_OtherCollider = i_Pair.m_CollisionComponents[0];
+
+
+				i_Pair.m_CollisionComponents[0]->OnCollisionHandler.Invoke(l_First);
+				i_Pair.m_CollisionComponents[1]->OnCollisionHandler.Invoke(l_Second);
+			}
+			return o_CollisionTime;
+		}
 
 		CollisionPair CollisionSystem::FindEarliestCollision(float& i_EndFrame)
 		{
@@ -173,9 +205,29 @@ namespace KPEngine
 
 					if (IsCollision(*(*m_pBoxComponents)[i], *(*m_pBoxComponents)[j], l_ColTime, l_ColNormal, i_EndFrame))
 					{
+						// Means thing is colliding but at zero velocity. Skip over.
+						if(l_ColTime == -INFINITY)
+						{
+							// TODO Handle On Stay Collision and skip over
+							CollisionPair l_OnStayCollisionPair;
+							l_OnStayCollisionPair.m_Valid = true;
+							l_OnStayCollisionPair.m_CollisionTime = l_ColTime;
+							l_OnStayCollisionPair.m_CollisionNormal = l_ColNormal;
+							l_OnStayCollisionPair.m_CollisionComponents[0] = &*(*m_pBoxComponents)[i];
+							l_OnStayCollisionPair.m_CollisionComponents[1] = &*(*m_pBoxComponents)[j];
+							HandleCollision(l_OnStayCollisionPair);
+							//DEBUG_PRINT(KPLogType::Fatal, "NEGATIVE INFINITE COLLISION TIME HANDLED");
+							continue;
+						}
+						if (l_ColTime == INFINITY)
+						{
+							DEBUG_PRINT(KPLogType::Fatal, "POSITIVE INFINITE COLLISION TIME NOT HANDLED");
+							continue;
+						}
+
+						// If this collision happened before the earliest one. Update
 						if(l_ColTime < o_EarliestCollisionPair.m_CollisionTime)
 						{
-							
 							o_EarliestCollisionPair.m_Valid = true;
 							o_EarliestCollisionPair.m_CollisionTime = l_ColTime;
 							o_EarliestCollisionPair.m_CollisionNormal = l_ColNormal;
@@ -213,7 +265,12 @@ namespace KPEngine
 			return false;
 		}
 
-		// This method is ridiculous
+
+		// This method is ridiculous and horribly designed. TODO make it better
+		// Returned bool represents if a collision is detected
+		// i_Normal is changed to reflect collision normal from i_Right to i_Left
+		// i_LatestClose represents calculated time of collision in this frame. Returning Negative infinity means collision happened with objects moving at Zero Velocity
+		// i_TEndFrame is used to limit collisions within the frame
 		bool CollisionSystem::SweptSeparatingAxisCheck(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right,
 			float& i_LatestClose, KPVector3& i_Normal,float i_TEndFrame)
 		{
@@ -298,6 +355,8 @@ namespace KPEngine
 			// Keep Track of Latest Close and Earliest Open
 			l_TLatestClose = l_TCloseInBX;
 			l_TEarliestOpen = l_TOpenInBX;
+
+
 			i_Normal = KPVector3(1.0f, 0.0f, 0.0f);
 
 			// Calculating time of Close and Open in B Y
@@ -406,14 +465,6 @@ namespace KPEngine
 				//DEBUG_PRINT(KPLogType::Verbose, " Not Collided Latest Closed: %f Earliest Open: %f", l_TLatestClose, l_TEarliestOpen);
 				return true;
 			}
-			
-
-			////// Very Basic For Now
-			//return (fabsf(l_ABBCenterInB.X() - l_BBox.m_Center.X()) > (l_AProjectionOntoB_X + l_BBox.m_Extents.X())) || // A in B X axis check
-			//	(fabsf(l_ABBCenterInB.Y() - l_BBox.m_Center.Y()) > (l_AProjectionOntoB_Y + l_BBox.m_Extents.Y())) || // A in B Y axis check
-			//	(fabsf(l_BBBCenterInA.X() - l_ABox.m_Center.X()) > (l_BProjectionOntoA_X + l_ABox.m_Extents.X())) || // B in A X axis check
-			//	(fabsf(l_BBBCenterInA.Y() - l_ABox.m_Center.Y()) > (l_BProjectionOntoA_Y + l_ABox.m_Extents.Y())) // B in A Y axis check
-			//	;
 		}
 	}
 }
