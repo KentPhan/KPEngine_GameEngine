@@ -20,7 +20,7 @@ namespace KPEngine
 			{
 				
 			}
-			inline KPVector4SSE(const KPVector4SSE & other) : m_Vec4(_mm_set_ps(other.m_W, other.m_Z, other.m_Y, other.m_X))
+			inline KPVector4SSE(const KPVector4SSE & other) : m_Vec4(other.m_Vec4)
 			{
 				
 			}
@@ -84,14 +84,14 @@ namespace KPEngine
 			KPVector4SSE operator+(const KPVector4SSE & i_other) const;
 			KPVector4SSE& operator+=(const KPVector4SSE & i_other);
 
+			KPVector4SSE operator-(const KPVector4SSE & i_other) const;
+			KPVector4SSE& operator-=(const KPVector4SSE & i_other);
+			
 			KPVector4SSE operator*(const float & i_other) const;
 			KPVector4SSE& operator*=(const float & i_other);
 
 			KPVector4SSE operator/(const float & i_other) const;
 			KPVector4SSE& operator/=(const float & i_other);
-
-			KPVector4SSE operator-(const KPVector4SSE & i_other) const;
-			KPVector4SSE& operator-=(const KPVector4SSE & i_other);
 
 			KPVector4SSE& operator=(const KPVector4SSE & i_other);
 

@@ -9,92 +9,55 @@ namespace KPEngine
 	{
 		KPVector4SSE KPVector4SSE::operator+(const KPVector4SSE& i_other) const
 		{
-			// TODO Implement SSE Version
 			KPVector4SSE temp;
-			temp.X(m_X + i_other.m_X);
-			temp.Y(m_Y + i_other.m_Y);
-			temp.Z(m_Z + i_other.m_Z);
-			temp.W(m_W + i_other.m_W);
+			temp.m_Vec4 = _mm_add_ps(m_Vec4, i_other.m_Vec4);
 			return temp;
 		}
 		KPVector4SSE& KPVector4SSE::operator+=(const KPVector4SSE& i_other)
 		{
-			// TODO Implement SSE Version
-			this->m_X = (this->m_X + i_other.m_X);
-			this->m_Y = (this->m_Y + i_other.m_Y);
-			this->m_Z = (this->m_Z + i_other.m_Z);
-			this->m_W = (this->m_W + i_other.m_W);
+			this->m_Vec4 = _mm_add_ps(m_Vec4, i_other.m_Vec4);
+			return *this;
+		}
+
+		KPVector4SSE KPVector4SSE::operator-(const KPVector4SSE& i_other) const
+		{
+			KPVector4SSE temp;
+			temp.m_Vec4 = _mm_sub_ps(m_Vec4, i_other.m_Vec4);
+			return temp;
+		}
+		KPVector4SSE& KPVector4SSE::operator-=(const KPVector4SSE& i_other)
+		{
+			this->m_Vec4 = _mm_sub_ps(m_Vec4, i_other.m_Vec4);
 			return *this;
 		}
 
 		KPVector4SSE KPVector4SSE::operator*(const float& i_other) const
 		{
-			// TODO Implement SSE Version
 			KPVector4SSE temp;
-			temp.X(m_X * i_other);
-			temp.Y(m_Y * i_other);
-			temp.Z(m_Z * i_other);
-			temp.W(m_W * i_other);
+			temp.m_Vec4 = _mm_mul_ps(m_Vec4, _mm_load_ps1(&i_other));
 			return temp;
 		}
 		KPVector4SSE& KPVector4SSE::operator*=(const float& i_other)
 		{
-			// TODO Implement SSE Version
-			this->m_X = (this->m_X * i_other);
-			this->m_Y = (this->m_Y * i_other);
-			this->m_Z = (this->m_Z * i_other);
-			this->m_W = (this->m_W * i_other);
+			this->m_Vec4 = _mm_mul_ps(m_Vec4, _mm_load_ps1(&i_other));
 			return *this;
 		}
 
 		KPVector4SSE KPVector4SSE::operator/(const float& i_other) const
 		{
-			// TODO Implement SSE Version
 			KPVector4SSE temp;
-			temp.X(m_X / i_other);
-			temp.Y(m_Y / i_other);
-			temp.Z(m_Z / i_other);
-			temp.W(m_W / i_other);
+			temp.m_Vec4 = _mm_div_ps(m_Vec4, _mm_load_ps1(&i_other));
 			return temp;
 		}
 		KPVector4SSE& KPVector4SSE::operator/=(const float& i_other)
 		{
-			// TODO Implement SSE Version
-			this->m_X = (this->m_X / i_other);
-			this->m_Y = (this->m_Y / i_other);
-			this->m_Z = (this->m_Z / i_other);
-			this->m_W = (this->m_W / i_other);
-			return *this;
-		}
-
-
-		KPVector4SSE KPVector4SSE::operator-(const KPVector4SSE& i_other) const
-		{
-			// TODO Implement SSE Version
-			KPVector4SSE temp;
-			temp.X(m_X - i_other.m_X);
-			temp.Y(m_Y - i_other.m_Y);
-			temp.Z(m_Z - i_other.m_Z);
-			temp.W(m_W - i_other.m_W);
-			return temp;
-		}
-		KPVector4SSE& KPVector4SSE::operator-=(const KPVector4SSE& i_other)
-		{
-			// TODO Implement SSE Version
-			this->m_X = (this->m_X - i_other.m_X);
-			this->m_Y = (this->m_Y - i_other.m_Y);
-			this->m_Z = (this->m_Z - i_other.m_Z);
-			this->m_W = (this->m_W - i_other.m_W);
+			this->m_Vec4 = _mm_div_ps(m_Vec4, _mm_load_ps1(&i_other));
 			return *this;
 		}
 
 		KPVector4SSE& KPVector4SSE::operator=(const KPVector4SSE& i_other)
 		{
-			// TODO Implement SSE Version
-			this->m_X = i_other.m_X;
-			this->m_Y = i_other.m_Y;
-			this->m_Z = i_other.m_Z;
-			this->m_W = i_other.m_W;
+			this->m_Vec4 = i_other.m_Vec4;
 			return *this;
 		}
 	}

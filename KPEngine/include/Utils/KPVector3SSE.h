@@ -19,7 +19,7 @@ namespace KPEngine
 			{
 				
 			}
-			inline KPVector3SSE(const KPVector3SSE & other) : m_Vec3(_mm_set_ps(0.0f, other.m_Z, other.m_Y, other.m_X))
+			inline KPVector3SSE(const KPVector3SSE & other) : m_Vec3(other.m_Vec3)
 			{
 				
 			}
@@ -72,14 +72,14 @@ namespace KPEngine
 			KPVector3SSE operator+(const KPVector3SSE & i_other) const;
 			KPVector3SSE& operator+=(const KPVector3SSE & i_other);
 
+			KPVector3SSE operator-(const KPVector3SSE & i_other) const;
+			KPVector3SSE& operator-=(const KPVector3SSE & i_other);
+			
 			KPVector3SSE operator*(const float & i_other) const;
 			KPVector3SSE& operator*=(const float & i_other);
 
 			KPVector3SSE operator/(const float & i_other) const;
 			KPVector3SSE& operator/=(const float & i_other);
-
-			KPVector3SSE operator-(const KPVector3SSE & i_other) const;
-			KPVector3SSE& operator-=(const KPVector3SSE & i_other);
 
 			KPVector3SSE& operator=(const KPVector3SSE & i_other);
 
