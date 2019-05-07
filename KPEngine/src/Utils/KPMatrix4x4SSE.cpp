@@ -355,7 +355,7 @@ KPEngine::Utils::KPVector4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(const K
 // Compare Operators
 bool KPEngine::Utils::KPMatrix4x4SSE::operator==(KPMatrix4x4SSE& i_Other)
 {
-	float l_precision = 0.0001;
+	float l_precision = 0.0001; 
 	for (size_t i = 0; i < 16; i++)
 	{
 		if (!(m_Matrix[i]  <= (i_Other.m_Matrix[i] + l_precision) && m_Matrix[i] >= (i_Other.m_Matrix[i] - l_precision)))

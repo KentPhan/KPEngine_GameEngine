@@ -60,6 +60,10 @@ namespace KPEngine
 						m_31, m_32, m_33, m_34,
 						m_41, m_42, m_43, m_44;
 				};
+				struct
+				{
+					__m128 m_Row1, m_Row2, m_Row3, m_Row4;
+				};
 				float m_Matrix[16];
 			};
 			
