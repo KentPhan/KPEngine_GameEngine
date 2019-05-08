@@ -1,9 +1,9 @@
 #pragma once
 #include "../../Utils/KPString.h"
 #include "../../Utils/KPVector2.h"
-#include "../../Utils/KPVector3.h"
+#include "../../Utils/KPVector3SSE.h"
 #include "../../Utils/SmartPointers.h"
-#include "../../Utils/KPMatrix4x4.h"
+#include "../../Utils/KPMatrix4x4SSE.h"
 
 
 using namespace KPEngine::Utils;
@@ -36,21 +36,21 @@ namespace KPEngine
 		{
 		public:
 
-			GameObject(const char* i_Name, const KPVector3 i_Position, int tag)
+			GameObject(const char* i_Name, const KPVector3SSE i_Position, int tag)
 			{
 				SetName(i_Name);
 				SetPosition(i_Position);
 				SetTag(tag);
-				m_LocalCS = KPMatrix4x4();
+				m_LocalCS = KPMatrix4x4SSE();
 			}
 
-			GameObject(KPString& i_Name, const KPVector3  i_Position, int tag)
+			GameObject(KPString& i_Name, const KPVector3SSE  i_Position, int tag)
 			{
 
 				SetName(i_Name);
 				SetPosition(i_Position);
 				SetTag(tag);
-				m_LocalCS = KPMatrix4x4();
+				m_LocalCS = KPMatrix4x4SSE();
 			}
 
 			~GameObject() = default;
@@ -61,7 +61,7 @@ namespace KPEngine
 			{
 				return m_Name;
 			}
-			inline KPVector3 GetPosition() const
+			inline KPVector3SSE GetPosition() const
 			{
 				return m_Position;
 			}
@@ -87,7 +87,7 @@ namespace KPEngine
 			
 
 			// Setters
-			inline KPVector3 SetPosition(const KPVector3 i_Position)
+			inline KPVector3SSE SetPosition(const KPVector3SSE i_Position)
 			{
 				m_Position = i_Position;
 				return m_Position;
@@ -116,10 +116,10 @@ namespace KPEngine
 			
 		private:
 			Interfaces::IGameObjectController* m_pController;
-			KPVector3 m_Position; // World space position
+			KPVector3SSE m_Position; // World space position
 			float m_ZRotation; // Local Space Rotation
 			KPString m_Name;
-			KPMatrix4x4 m_LocalCS; // TODO Don't know what to do with this for now. Maybe store transformation data later on
+			KPMatrix4x4SSE m_LocalCS; // TODO Don't know what to do with this for now. Maybe store transformation data later on
 			
 			int m_Tag;
 		};

@@ -107,11 +107,11 @@ namespace KPEngine
 				
 				if (!l_APhysics->IsStatic())
 				{
-					KPVector3 l_RelNormal = i_Pair.m_CollisionNormal * 1.0f;
+					KPVector3SSE l_RelNormal = i_Pair.m_CollisionNormal * 1.0f;
 
-					/*KPVector3 l_TestPosition = l_AObject->GetPosition();
-					KPVector3 l_TestVel = l_APhysics->GetVelocity();
-					KPVector3 l_TestAcc = l_APhysics->GetAcceleration();
+					/*KPVector3SSE l_TestPosition = l_AObject->GetPosition();
+					KPVector3SSE l_TestVel = l_APhysics->GetVelocity();
+					KPVector3SSE l_TestAcc = l_APhysics->GetAcceleration();
 					DEBUG_PRINT(KPLogType::Verbose, "%f Frame1 Col: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
 						l_TestAcc.X(), l_TestAcc.Y(), l_TestAcc.Z()
 						, l_TestVel.X(), l_TestVel.Y(), l_TestVel.Z());*/
@@ -121,12 +121,13 @@ namespace KPEngine
 
 					if (l_APhysics->GetVelocity().Magnitude() != 0.0f)
 					{
-						KPVector3 l_Incident = l_APhysics->GetVelocity().Normalized();
-						KPVector3 l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_APhysics->GetVelocity().Magnitude()); // Get Reflection
-						l_APhysics->SetVelocity(KPVector3(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
-						l_APhysics->SetAcceleration(KPVector3::Zero());
-						if (l_APhysics->GetVelocity().Magnitude() < 1.0f)
-							l_APhysics->SetVelocity(KPVector3::Zero());
+						l_AObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 1.0f));
+						KPVector3SSE l_Incident = l_APhysics->GetVelocity().Normalized();
+						KPVector3SSE l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_APhysics->GetVelocity().Magnitude()); // Get Reflection
+						l_APhysics->SetVelocity(KPVector3SSE(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
+						l_APhysics->SetAcceleration(KPVector3SSE::Zero());
+						/*if (l_APhysics->GetVelocity().Magnitude() < 1.0f)
+							l_APhysics->SetVelocity(KPVector3SSE::Zero());*/
 					}
 
 					/*l_TestPosition = l_AObject->GetPosition();
@@ -146,22 +147,23 @@ namespace KPEngine
 
 					//l_CPair.m_CollisionNormal
 
-					/*l_APhysics->SetAcceleration(KPVector3::Zero());
-					l_APhysics->SetVelocity(KPVector3::Zero());*/
+					/*l_APhysics->SetAcceleration(KPVector3SSE::Zero());
+					l_APhysics->SetVelocity(KPVector3SSE::Zero());*/
 				}
 
 				if (!l_BPhysics->IsStatic())
 				{
-					KPVector3 l_RelNormal = i_Pair.m_CollisionNormal * -1.0f;
+					KPVector3SSE l_RelNormal = i_Pair.m_CollisionNormal * -1.0f;
 
 					if (l_BPhysics->GetVelocity().Magnitude() != 0.0f)
 					{
-						KPVector3 l_Incident = l_BPhysics->GetVelocity().Normalized();
-						KPVector3 l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_BPhysics->GetVelocity().Magnitude()); // Get Reflection
-						l_BPhysics->SetVelocity(KPVector3(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
-						l_BPhysics->SetAcceleration(KPVector3::Zero());
-						if (l_BPhysics->GetVelocity().Magnitude() < 1.0f)
-							l_BPhysics->SetVelocity(KPVector3::Zero());
+						l_BObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 1.0f));
+						KPVector3SSE l_Incident = l_BPhysics->GetVelocity().Normalized();
+						KPVector3SSE l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_BPhysics->GetVelocity().Magnitude()); // Get Reflection
+						l_BPhysics->SetVelocity(KPVector3SSE(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
+						l_BPhysics->SetAcceleration(KPVector3SSE::Zero());
+						/*if (l_BPhysics->GetVelocity().Magnitude() < 1.0f)
+							l_BPhysics->SetVelocity(KPVector3SSE::Zero());*/
 					}
 
 				}
@@ -200,7 +202,7 @@ namespace KPEngine
 					}
 
 					float l_ColTime;
-					KPVector3 l_ColNormal;
+					KPVector3SSE l_ColNormal;
 
 
 					if (IsCollision(*(*m_pBoxComponents)[i], *(*m_pBoxComponents)[j], l_ColTime, l_ColNormal, i_EndFrame))
@@ -241,7 +243,7 @@ namespace KPEngine
 		}
 
 		bool CollisionSystem::IsCollision(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right,
-			float& i_ColTime, KPVector3& i_ColNormal, float i_DT)
+			float& i_ColTime, KPVector3SSE& i_ColNormal, float i_DT)
 		{
 			if (!SweptSeparatingAxisCheck(i_Left, i_Right, i_ColTime, i_ColNormal, i_DT))
 			{
@@ -249,7 +251,7 @@ namespace KPEngine
 				// Calculate Normal
 				// Get vector from Right to Left
 				// Maw Ghetto Way to getting the normal
-				KPVector3 LeftToRight = (i_Left.GetGameObject()->GetPosition() - i_Right.GetGameObject()->GetPosition());
+				KPVector3SSE LeftToRight = (i_Left.GetGameObject()->GetPosition() - i_Right.GetGameObject()->GetPosition());
 				if(i_ColNormal.X() == 1.0f)
 				{
 					i_ColNormal.X((LeftToRight.X() < 0) ? -1.0f: 1.0f);
@@ -272,7 +274,7 @@ namespace KPEngine
 		// i_LatestClose represents calculated time of collision in this frame. Returning Negative infinity means collision happened with objects moving at Zero Velocity
 		// i_TEndFrame is used to limit collisions within the frame
 		bool CollisionSystem::SweptSeparatingAxisCheck(BoxCollisionComponent& i_Left, BoxCollisionComponent& i_Right,
-			float& i_LatestClose, KPVector3& i_Normal,float i_TEndFrame)
+			float& i_LatestClose, KPVector3SSE& i_Normal,float i_TEndFrame)
 		{
 			BoxCollisionComponent& l_ABox = i_Left;
 			BoxCollisionComponent& l_BBox = i_Right;
@@ -283,41 +285,41 @@ namespace KPEngine
 
 			// TODO Very inefficient with Inverse. Optimize later. Could 
 			// Compute all transformation matrices for transforming. TODO could optimize later
-			KPMatrix4x4 l_ARot = KPMatrix4x4::CreateRotationMatrix_Z(l_AObject->GetZRotation());
-			KPMatrix4x4 l_ATrans = KPMatrix4x4::CreateTranslationMatrix(l_AObject->GetPosition());
-			KPMatrix4x4 l_AToWorld = l_ATrans * l_ARot;
-			KPMatrix4x4 l_WorldToA = l_AToWorld.CreateInverseMatrix();
-			KPMatrix4x4 l_WorldToAVec = l_ARot.CreateInverseMatrix();
+			KPMatrix4x4SSE l_ARot = KPMatrix4x4SSE::CreateRotationMatrix_Z(l_AObject->GetZRotation());
+			KPMatrix4x4SSE l_ATrans = KPMatrix4x4SSE::CreateTranslationMatrix(l_AObject->GetPosition());
+			KPMatrix4x4SSE l_AToWorld = l_ATrans * l_ARot;
+			KPMatrix4x4SSE l_WorldToA = l_AToWorld.CreateInverseMatrix();
+			KPMatrix4x4SSE l_WorldToAVec = l_ARot.CreateInverseMatrix();
 
-			KPMatrix4x4 l_BRot = KPMatrix4x4::CreateRotationMatrix_Z(l_BObject->GetZRotation());
-			KPMatrix4x4 l_BTrans = KPMatrix4x4::CreateTranslationMatrix(l_BObject->GetPosition());
-			KPMatrix4x4 l_BToWorld = l_BTrans * l_BRot;
-			KPMatrix4x4 l_WorldToB = l_BToWorld.CreateInverseMatrix();
-			KPMatrix4x4 l_WorldToBVec = l_BRot.CreateInverseMatrix();
+			KPMatrix4x4SSE l_BRot = KPMatrix4x4SSE::CreateRotationMatrix_Z(l_BObject->GetZRotation());
+			KPMatrix4x4SSE l_BTrans = KPMatrix4x4SSE::CreateTranslationMatrix(l_BObject->GetPosition());
+			KPMatrix4x4SSE l_BToWorld = l_BTrans * l_BRot;
+			KPMatrix4x4SSE l_WorldToB = l_BToWorld.CreateInverseMatrix();
+			KPMatrix4x4SSE l_WorldToBVec = l_BRot.CreateInverseMatrix();
 
-			KPMatrix4x4 l_AToB = l_WorldToB * l_AToWorld;
-			KPMatrix4x4 l_BToA = l_WorldToA * l_BToWorld;
+			KPMatrix4x4SSE l_AToB = l_WorldToB * l_AToWorld;
+			KPMatrix4x4SSE l_BToA = l_WorldToA * l_BToWorld;
 
 			// Calculating relative velocities
-			KPVector3 l_AVelRelToB = l_APhysics->GetVelocity() - l_BPhysics->GetVelocity();
-			KPVector3 l_BVelRelToA = l_BPhysics->GetVelocity() - l_APhysics->GetVelocity();
-			KPVector4 l_VelAinB = l_WorldToBVec * KPVector4(l_AVelRelToB, 0.0f); // A in B
-			KPVector4 l_VelBinA = l_WorldToAVec * KPVector4(l_BVelRelToA, 0.0f); // B in A
+			KPVector3SSE l_AVelRelToB = l_APhysics->GetVelocity() - l_BPhysics->GetVelocity();
+			KPVector3SSE l_BVelRelToA = l_BPhysics->GetVelocity() - l_APhysics->GetVelocity();
+			KPVector4SSE l_VelAinB = l_WorldToBVec * KPVector4SSE(l_AVelRelToB, 0.0f); // A in B
+			KPVector4SSE l_VelBinA = l_WorldToAVec * KPVector4SSE(l_BVelRelToA, 0.0f); // B in A
 
 			// A against B in B's Coordinate System
 			// Transform A's Points to B's coordinate system for A to B check
-			KPVector4 l_ABBCenterInB = l_AToB * KPVector4(l_ABox.m_Center, 1.0f);
-			KPVector4 l_AExtentsXInB = l_AToB * KPVector4(l_ABox.m_Extents.X(), 0.0f, 0.0f, 0.0f);
-			KPVector4 l_AExtentsYInB = l_AToB * KPVector4(0.0f, l_ABox.m_Extents.Y(), 0.0f, 0.0f);
+			KPVector4SSE l_ABBCenterInB = l_AToB * KPVector4SSE(l_ABox.m_Center, 1.0f);
+			KPVector4SSE l_AExtentsXInB = l_AToB * KPVector4SSE(l_ABox.m_Extents.X(), 0.0f, 0.0f, 0.0f);
+			KPVector4SSE l_AExtentsYInB = l_AToB * KPVector4SSE(0.0f, l_ABox.m_Extents.Y(), 0.0f, 0.0f);
 
 			float l_AProjectionOntoB_X = fabsf(l_AExtentsXInB.X()) + fabsf(l_AExtentsYInB.X());// X Axis
 			float l_AProjectionOntoB_Y = fabsf(l_AExtentsXInB.Y()) + fabsf(l_AExtentsYInB.Y());// Y Axis
 
 			// B against A in A's Coordinate System
 			// Transform B's Points to A's coordinate system for B to A check
-			KPVector4 l_BBBCenterInA = l_BToA * KPVector4(l_BBox.m_Center, 1.0f);
-			KPVector4 l_BExtentsXInA = l_BToA * KPVector4(l_BBox.m_Extents.X(), 0.0f, 0.0f, 0.0f);
-			KPVector4 l_BExtentsYInA = l_BToA * KPVector4(0.0f, l_BBox.m_Extents.Y(), 0.0f, 0.0f);
+			KPVector4SSE l_BBBCenterInA = l_BToA * KPVector4SSE(l_BBox.m_Center, 1.0f);
+			KPVector4SSE l_BExtentsXInA = l_BToA * KPVector4SSE(l_BBox.m_Extents.X(), 0.0f, 0.0f, 0.0f);
+			KPVector4SSE l_BExtentsYInA = l_BToA * KPVector4SSE(0.0f, l_BBox.m_Extents.Y(), 0.0f, 0.0f);
 
 			float l_BProjectionOntoA_X = fabsf(l_BExtentsXInA.X()) + fabsf(l_BExtentsYInA.X());// X Axis
 			float l_BProjectionOntoA_Y = fabsf(l_BExtentsXInA.Y()) + fabsf(l_BExtentsYInA.Y());// Y Axis
@@ -357,7 +359,7 @@ namespace KPEngine
 			l_TEarliestOpen = l_TOpenInBX;
 
 
-			i_Normal = KPVector3(1.0f, 0.0f, 0.0f);
+			i_Normal = KPVector3SSE(1.0f, 0.0f, 0.0f);
 
 			// Calculating time of Close and Open in B Y
 			float l_ExtentsBY = l_BBox.m_Extents.Y() + l_AProjectionOntoB_Y;
@@ -383,7 +385,7 @@ namespace KPEngine
 			if(l_TCloseInBY > l_TLatestClose)
 			{
 				l_TLatestClose = l_TCloseInBY;
-				i_Normal = KPVector3(0.0f, 1.0f, 0.0f);
+				i_Normal = KPVector3SSE(0.0f, 1.0f, 0.0f);
 			}
 				
 			if (l_TOpenInBY < l_TEarliestOpen)
@@ -414,7 +416,7 @@ namespace KPEngine
 			if (l_TCloseInAX > l_TLatestClose)
 			{
 				l_TLatestClose = l_TCloseInAX;
-				i_Normal = KPVector3(-1.0f, 0.0f, 0.0f);
+				i_Normal = KPVector3SSE(-1.0f, 0.0f, 0.0f);
 			}
 				
 			if (l_TOpenInAX < l_TEarliestOpen)
@@ -445,7 +447,7 @@ namespace KPEngine
 			if (l_TCloseInAY > l_TLatestClose)
 			{
 				l_TLatestClose = l_TCloseInAY;
-				i_Normal = KPVector3(0.0f, -1.0f, 0.0f);
+				i_Normal = KPVector3SSE(0.0f, -1.0f, 0.0f);
 			}
 				
 			if (l_TOpenInAY < l_TEarliestOpen)

@@ -41,7 +41,7 @@ namespace KPEngine
 				return;
 
 
-			KPVector3 m_Position = l_pTempGameObject-> GetPosition();
+			KPVector3SSE m_Position = l_pTempGameObject-> GetPosition();
 			GLib::Point2D Offset = { m_Position.X(), m_Position.Y() };
 			GLib::Sprites::RenderSprite(*m_pSprite, Offset, 0.0f);
 		}

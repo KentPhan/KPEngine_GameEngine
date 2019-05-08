@@ -54,21 +54,21 @@ namespace PlatformerGame
 			
 			if(InputSystem::GetInputDown(KeyCode::W))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector3(0.0f, 1.0f,0.0f) * m_JumpForce);
+				m_pPlayersPhysicsComponent->AddForce(KPVector3SSE(0.0f, 1.0f,0.0f) * m_JumpForce);
 			}
 			if(InputSystem::GetInputDown(KeyCode::S))
 			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector3(0.0f, -1.0f,0.0f) * m_JumpForce);
+				m_pPlayersPhysicsComponent->AddForce(KPVector3SSE(0.0f, -1.0f,0.0f) * m_JumpForce);
 			}
 			if (InputSystem::GetInputHeldDown(KeyCode::A))
 			{
-				KPVector3 l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
-				m_pPlayersPhysicsComponent->SetVelocity(KPVector3(-1.0f * m_HorizontalMoveSpeed * i_deltaTime, l_CVel.Y(), l_CVel.Z()));
+				KPVector3SSE l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
+				m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE(-1.0f * m_HorizontalMoveSpeed * i_deltaTime, l_CVel.Y(), l_CVel.Z()));
 			}
 			if (InputSystem::GetInputHeldDown(KeyCode::D))
 			{
-				KPVector3 l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
-				m_pPlayersPhysicsComponent->SetVelocity(KPVector3(1.0f* m_HorizontalMoveSpeed* i_deltaTime, l_CVel.Y(), l_CVel.Z()));
+				KPVector3SSE l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
+				m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE(1.0f* m_HorizontalMoveSpeed* i_deltaTime, l_CVel.Y(), l_CVel.Z()));
 			}
 		}
 

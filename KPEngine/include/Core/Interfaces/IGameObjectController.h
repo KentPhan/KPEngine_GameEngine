@@ -18,7 +18,7 @@ namespace KPEngine
 				virtual void Update(float i_deltaTime) = 0;
 				virtual void PrintInfo() const = 0;
 				virtual char GetSymbol() const = 0;
-				virtual KPVector3 GetPosition() const = 0;
+				virtual KPVector3SSE GetPosition() const = 0;
 			protected:
 				virtual ~IGameObjectController() {};
 			};

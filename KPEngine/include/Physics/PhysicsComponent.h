@@ -17,23 +17,23 @@ namespace KPEngine
 				m_pGameObject.~WeakPointer();
 			}
 
-			void AddForce(KPVector3 i_Force);
+			void AddForce(KPVector3SSE i_Force);
 			void UpdatePhysics(float i_DeltaTime);
 
-			inline KPVector3 GetVelocity() const
+			inline KPVector3SSE GetVelocity() const
 			{
 				return m_Velocity;
 			}
-			inline KPVector3 GetAcceleration() const
+			inline KPVector3SSE GetAcceleration() const
 			{
 				return m_Acceleration;
 			}
 
-			void inline SetVelocity(KPVector3 i_NewVelocity)
+			void inline SetVelocity(KPVector3SSE i_NewVelocity)
 			{
 				m_Velocity = i_NewVelocity;
 			}
-			void inline SetAcceleration(KPVector3 i_NewAcceleration)
+			void inline SetAcceleration(KPVector3SSE i_NewAcceleration)
 			{
 				m_Acceleration = i_NewAcceleration;
 			}
@@ -62,8 +62,8 @@ namespace KPEngine
 			bool m_HasDrag;
 			float m_Mass;
 			float m_DragCoefficient;
-			KPVector3 m_Velocity;
-			KPVector3 m_Acceleration;
+			KPVector3SSE m_Velocity;
+			KPVector3SSE m_Acceleration;
 			bool m_IsStatic;
 
 			void ApplyDrag(float i_DeltaTime);

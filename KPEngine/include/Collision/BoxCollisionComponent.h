@@ -1,5 +1,5 @@
 #pragma once
-#include "../Utils/KPVector4.h"
+#include "../Utils/KPVector4SSE.h"
 #include "../Core/GameObject/GameObject.h"
 
 #include "CollisionSystem.h"
@@ -27,8 +27,8 @@ namespace KPEngine
 				return m_pPhysicsComponent;
 			}
 
-			KPVector3 m_Center;
-			KPVector3 m_Extents;
+			KPVector3SSE m_Center;
+			KPVector3SSE m_Extents;
 
 			// TODO add delegate method to subscribe on collision
 			MultiCastDelegate<CollisionInfo> OnCollisionHandler;

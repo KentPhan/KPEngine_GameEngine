@@ -26,7 +26,7 @@ namespace KPEngine
 			public:
 				static void Initialize();
 				static void Shutdown();
-				static StrongPointer<Core::GameObject> CreateGameObject(const char* i_pScriptFileName, bool i_OverridePosition, KPVector3 i_Position);
+				static StrongPointer<Core::GameObject> CreateGameObject(const char* i_pScriptFileName, bool i_OverridePosition, KPVector3SSE i_Position);
 			private:
 
 				static lua_State* g_pLuaState;
