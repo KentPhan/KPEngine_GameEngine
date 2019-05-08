@@ -52,7 +52,10 @@ namespace KPEngine
 			}
 			inline float Magnitude() const
 			{
-				return _mm_cvtss_f32(_mm_sqrt_ss(_mm_dp_ps(m_Vec4, m_Vec4, 0xF1)));
+				return _mm_cvtss_f32(_mm_sqrt_ss(_mm_dp_ps(
+					m_Vec4,
+					m_Vec4,
+					0xF1)));
 			}
 			inline KPVector4SSE Normalized() const
 			{
@@ -124,11 +127,12 @@ namespace KPEngine
 		private:
 			union
 			{
+				__m128 m_Vec4;
 				struct
 				{
 					float m_X, m_Y, m_Z, m_W;
 				};
-				__m128 m_Vec4;
+				
 			};
 			
 

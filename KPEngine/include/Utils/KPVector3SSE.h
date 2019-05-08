@@ -11,6 +11,8 @@ namespace KPEngine
 		class KPVector3SSE
 		{
 		public:
+
+
 			inline  KPVector3SSE() : m_Vec3(_mm_set_ps(0.0f,0.0f,0.0f,0.0f))
 			{
 				
@@ -27,6 +29,15 @@ namespace KPEngine
 			{
 
 			}
+			inline void* operator new(size_t i_size)
+			{
+				return _mm_malloc(i_size, 16);
+			}
+			inline void operator delete(void * i_p)
+			{
+				_mm_free(i_p);
+			}
+
 
 			// Get
 			inline float X() const
@@ -43,7 +54,10 @@ namespace KPEngine
 			}
 			inline float Magnitude() const
 			{
-				return _mm_cvtss_f32(_mm_sqrt_ss(_mm_dp_ps(m_Vec3, m_Vec3, 0x71)));
+				return _mm_cvtss_f32(_mm_sqrt_ss(_mm_dp_ps(
+					m_Vec3,
+					m_Vec3,
+					0x71)));
 			}
 			inline KPVector3SSE Normalized() const
 			{
@@ -113,11 +127,13 @@ namespace KPEngine
 		private:
 			union
 			{
+				__m128  m_Vec3;
 				struct
 				{
+					
 					float m_X, m_Y, m_Z;
 				};
-				__m128 m_Vec3;
+				
 			};
 		};
 	}

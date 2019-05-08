@@ -27,6 +27,15 @@ namespace KPEngine
 				return m_pPhysicsComponent;
 			}
 
+			inline void* operator new(size_t i_size)
+			{
+				return _mm_malloc(i_size, 16);
+			}
+			inline void operator delete(void * i_p)
+			{
+				_mm_free(i_p);
+			}
+
 			KPVector3SSE m_Center;
 			KPVector3SSE m_Extents;
 
