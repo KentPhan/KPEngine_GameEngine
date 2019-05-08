@@ -13,13 +13,13 @@ Due to the difficulty of hooking up a collision unit test for a collision system
 that is so deeply integrated into my engine. I opted to set up my game in a state that would push the collision system to it's limits
 in a state that could stress test collisions.
 
-I created about 27 game objects before I started running into frame rate drops. Which arguably is not a lot. :(
-(20 static objects, 7 movable objects).
-The 20 static objects act as platforms, while the 7 movable objects have gravity that constantly accelerates them towards the
+I created about 32 game objects before I started running into frame rate drops. Which arguably is not a lot. :(
+(20 static objects, 12 movable objects).
+The 20 static objects act as platforms, while the 12 movable objects have gravity that constantly accelerates them towards the
 static platformers. I refrained from user input to get as much raw collision data as possible.
 
-
-My game also sadly can crash. Which is a bad sign.
+Due to how I set up my Collision and Physics Frame. Objects can accelerate a bit into the other object if the framerate gets bad enough. Will resolve at a later time.
+Doing Both x86 and 64 bit test
 
 Beginning:
 In the Screenshot ResultsStartPNG.png you can find the performance of my game in the beginning.
@@ -33,4 +33,8 @@ Take note that alot of my Vector code is inlined. So it's performance is scatter
 In optimizing my Vectors hopefully overall performance will increase.
 
 Things I Optmized:
+- All Vector Functions
+- Matrix Inverse
+- Matrix Multiply
 
+After Optimization:
