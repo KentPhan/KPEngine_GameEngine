@@ -41,6 +41,7 @@ namespace KPEngine
 
 			// TODO add delegate method to subscribe on collision
 			MultiCastDelegate<CollisionInfo> OnCollisionHandler;
+			MultiCastDelegate<CollisionInfo> OnCollisionStayHandler;
 
 		private:
 			StrongPointer<Core::GameObject> m_pGameObject;

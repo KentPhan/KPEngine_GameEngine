@@ -25,16 +25,9 @@ namespace PlatformerGame
 
 			// TODO this is a sample of what the unit test would look like. Will try to migrate logic to a seperate unit test file
 
-			float l_BoxDimension = 40.0f;
+			float l_BoxDimension = 30.0f;
 			KPVector3SSE l_StartBoxPosition = KPVector3SSE(-380.0f, -300.0f, 0.0f);
 			KPVector3SSE l_Marker = l_StartBoxPosition;
-
-			// Create X Player Characters With Gravity for testing
-			for (int i = 0; i < 12; i++)
-			{
-				StrongPointer<GameObject> l_GameObjectPlayerHolder = Core::InstantiateGameObject("Assets\\src\\Player.lua", l_Marker + KPVector3SSE(0.0f,300.0f,0.0f));
-				l_Marker.X(l_Marker.X() + l_BoxDimension);
-			}
 
 			l_Marker = l_StartBoxPosition;
 

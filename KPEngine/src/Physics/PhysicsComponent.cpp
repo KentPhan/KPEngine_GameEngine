@@ -40,8 +40,8 @@ namespace KPEngine
 			if (!l_pTempGameObject)
 				return;
 
-			//KPVector3SSE l_TestPosition = l_pTempGameObject->GetPosition();
-			/*DEBUG_PRINT(KPLogType::Verbose, "%f Frame1: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+			/*KPVector3SSE l_TestPosition = l_pTempGameObject->GetPosition();
+			DEBUG_PRINT(KPLogType::Verbose, "%f Frame1: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
 				m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
 				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
 
@@ -54,7 +54,6 @@ namespace KPEngine
 				if(m_Acceleration.Y() > m_GForce)
 				{
 					// TODO could go over
-					
 				}
 			}
 			m_NegateGravityFrameCheck = false;

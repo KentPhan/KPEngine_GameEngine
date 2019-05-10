@@ -57,6 +57,7 @@ namespace PlatformerGame
 			}
 
 			void OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo);
+			void OnCollisionStay(KPEngine::Collision::CollisionInfo i_ColInfo);
 
 		private:
 			void MovePlayer(const KPVector2 movement, float i_DeltaTime);
@@ -65,6 +66,7 @@ namespace PlatformerGame
 			WeakPointer<GameObject> m_pObject;
 			float m_JumpForce;
 			float m_HorizontalMoveSpeed;
+			bool m_IsGrounded;
 
 			// TODO Migrate this some how later to game objects. Very tied down
 			StrongPointer<KPEngine::Physics::PhysicsComponent> m_pPlayersPhysicsComponent;
