@@ -45,7 +45,8 @@ namespace KPEngine
 			PLAYER = 0x01,
 			PLATFORM = 0x02,
 			DEATH = 0x04,
-			WIN = 0x08
+			WIN = 0x08,
+			UI = 0x10
 		};
 
 

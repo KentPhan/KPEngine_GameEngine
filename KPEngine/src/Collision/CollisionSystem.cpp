@@ -103,7 +103,7 @@ namespace KPEngine
 					// TODO Handle ON Stay
 				}
 				
-				if (!l_APhysics->IsStatic())
+				if (l_APhysics && !l_APhysics->IsStatic())
 				{
 					KPVector3SSE l_RelNormal = i_Pair.m_CollisionNormal * 1.0f;
 
@@ -149,7 +149,7 @@ namespace KPEngine
 					l_APhysics->SetVelocity(KPVector3SSE::Zero());*/
 				}
 
-				if (!l_BPhysics->IsStatic())
+				if (l_BPhysics && !l_BPhysics->IsStatic())
 				{
 					KPVector3SSE l_RelNormal = i_Pair.m_CollisionNormal * -1.0f;
 
@@ -276,12 +276,12 @@ namespace KPEngine
 		{
 			BoxCollisionComponent& l_ABox = i_Left;
 			BoxCollisionComponent& l_BBox = i_Right;
+
 			StrongPointer<Core::GameObject> l_AObject = l_ABox.GetGameObject();
 			StrongPointer<Core::GameObject> l_BObject = l_BBox.GetGameObject();
 			StrongPointer<Physics::PhysicsComponent> l_APhysics = l_ABox.GetPhysicsComponent();
 			StrongPointer<Physics::PhysicsComponent> l_BPhysics = l_BBox.GetPhysicsComponent();
 
-			// TODO Very inefficient with Inverse. Optimize later. Could 
 			// Compute all transformation matrices for transforming. TODO could optimize later
 			KPMatrix4x4SSE l_ARot = KPMatrix4x4SSE::CreateRotationMatrix_Z(l_AObject->GetZRotation());
 			KPMatrix4x4SSE l_ATrans = KPMatrix4x4SSE::CreateTranslationMatrix(l_AObject->GetPosition());
@@ -298,9 +298,12 @@ namespace KPEngine
 			KPMatrix4x4SSE l_AToB = l_WorldToB * l_AToWorld;
 			KPMatrix4x4SSE l_BToA = l_WorldToA * l_BToWorld;
 
-			// Calculating relative velocities
-			KPVector3SSE l_AVelRelToB = l_APhysics->GetVelocity() - l_BPhysics->GetVelocity();
-			KPVector3SSE l_BVelRelToA = l_BPhysics->GetVelocity() - l_APhysics->GetVelocity();
+			// Calculating relative velocities. If Physics Component doesn't exist. Assume Zero
+			KPVector3SSE l_AVel = (l_APhysics) ? l_APhysics->GetVelocity() : KPVector3SSE::Zero();
+			KPVector3SSE l_BVel = (l_BPhysics) ? l_BPhysics->GetVelocity() : KPVector3SSE::Zero();;
+
+			KPVector3SSE l_AVelRelToB = l_AVel - l_BVel;
+			KPVector3SSE l_BVelRelToA = l_BVel - l_AVel;
 			KPVector4SSE l_VelAinB = l_WorldToBVec * KPVector4SSE(l_AVelRelToB, 0.0f); // A in B
 			KPVector4SSE l_VelBinA = l_WorldToAVec * KPVector4SSE(l_BVelRelToA, 0.0f); // B in A
 

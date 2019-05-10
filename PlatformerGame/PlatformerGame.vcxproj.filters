@@ -59,5 +59,7 @@
     <None Include="Assets\src\Monster.lua" />
     <None Include="Assets\src\Platform.lua" />
     <None Include="Assets\src\DeathPlatform.lua" />
+    <None Include="Assets\src\Text_Win.lua" />
+    <None Include="Assets\src\Text_Enter.lua" />
   </ItemGroup>
 </Project>

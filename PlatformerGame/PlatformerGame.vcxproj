@@ -199,6 +199,8 @@
     <None Include="Assets\src\Monster.lua" />
     <None Include="Assets\src\Platform.lua" />
     <None Include="Assets\src\Player.lua" />
+    <None Include="Assets\src\Text_Enter.lua" />
+    <None Include="Assets\src\Text_Win.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
