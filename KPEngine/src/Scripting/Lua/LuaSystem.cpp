@@ -120,7 +120,21 @@ namespace KPEngine
 						l_startPosition = i_Position;
 					}
 
-					StrongPointer<GameObject> l_playerObject = new GameObject(l_pName, l_startPosition, 1);
+					// Get Layer
+					lua_pushstring(g_pLuaState, "layer");
+					int l_layerType = lua_gettable(g_pLuaState, -2);
+					assert(l_layerType == LUA_TNUMBER);
+					Layer l_Layer = static_cast<Layer>(static_cast<int>(lua_tonumber(g_pLuaState, -1)));
+					lua_pop(g_pLuaState, 1);
+
+					// Get Tag
+					lua_pushstring(g_pLuaState, "tag");
+					int l_tagType = lua_gettable(g_pLuaState, -2);
+					assert(l_tagType == LUA_TNUMBER);
+					Tag l_Tag = static_cast<Tag>(static_cast<int>(lua_tonumber(g_pLuaState, -1)));
+					lua_pop(g_pLuaState, 1);
+
+					StrongPointer<GameObject> l_playerObject = new GameObject(l_pName, l_startPosition, l_Layer, l_Tag);
 					GameObjectSystem::RegisterGameObject(l_playerObject);
 
 

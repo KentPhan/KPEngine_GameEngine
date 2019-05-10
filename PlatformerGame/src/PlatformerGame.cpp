@@ -38,7 +38,7 @@ namespace PlatformerGame
 				l_Marker.X(l_Marker.X() + l_BoxDimension);
 			}
 
-			StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\DeathPlatform.lua", KPVector3SSE(100.0f,100.0f,0.0f));
+			StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\DeathPlatform.lua", KPVector3SSE(300.0f,-300.0f,0.0f));
 			
 			// Attaching Controller
 			m_pPlayerController = new PlayerController();

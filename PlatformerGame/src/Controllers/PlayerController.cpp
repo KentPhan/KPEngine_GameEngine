@@ -96,6 +96,11 @@ namespace PlatformerGame
 				m_IsGrounded = true;
 			}
 
+			if(i_ColInfo.m_OtherCollider->GetGameObject()->GetTag() == Tag::DEATH)
+			{
+				DEBUG_PRINT(KPLogType::Verbose, "Collided With Death!"); 
+			}
+
 			
 		}
 
