@@ -28,7 +28,8 @@ namespace KPEngine
 			}
 
 			void AddForce(KPVector3SSE i_Force);
-			void UpdatePhysics(float i_DeltaTime);
+			void UpdatePhysicsForcesPass(float i_DeltaTime);
+			void UpdatePhysicsMovementPass(float i_DeltaTime);
 
 			inline KPVector3SSE GetVelocity() const
 			{
@@ -48,11 +49,6 @@ namespace KPEngine
 				m_Acceleration = i_NewAcceleration;
 			}
 
-			void inline SetNegateGravityThisFrame()
-			{
-				m_NegateGravityFrameCheck = true;
-			}
-
 			bool inline IsStatic()
 			{
 				return m_IsStatic;
@@ -67,11 +63,11 @@ namespace KPEngine
 
 			WeakPointer<Core::GameObject> m_pGameObject;
 			bool m_HasGravity;
-			bool m_NegateGravityFrameCheck;
 			float m_GForce;
 			bool m_HasDrag;
 			float m_Mass;
 			float m_DragCoefficient;
+			KPVector3SSE m_InitialVelocity;
 			KPVector3SSE m_Velocity;
 			KPVector3SSE m_Acceleration;
 			bool m_IsStatic;

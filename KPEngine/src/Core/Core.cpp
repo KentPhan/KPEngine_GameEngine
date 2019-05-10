@@ -15,6 +15,10 @@ namespace KPEngine
 		{
 			return Scripting::Lua::LuaSystem::CreateGameObject(i_pScriptFileName, true, i_StartPosition);
 		}
+
+		void Core::DestroyGameObject(StrongPointer<GameObject> i_ObjectToDestroy)
+		{
+		}
 	}
 }
 

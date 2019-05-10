@@ -195,6 +195,7 @@
     <ClCompile Include="src\GameMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\src\DeathPlatform.lua" />
     <None Include="Assets\src\Monster.lua" />
     <None Include="Assets\src\Platform.lua" />
     <None Include="Assets\src\Player.lua" />

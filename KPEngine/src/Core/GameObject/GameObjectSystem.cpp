@@ -30,6 +30,10 @@ namespace KPEngine
 		{
 			m_pGameObjects->push_back(i_pGameObject);
 		}
+
+		void GameObjectSystem::UnRegisterGameObject(StrongPointer<GameObject>& i_pGameObject)
+		{
+		}
 	}
 }
 

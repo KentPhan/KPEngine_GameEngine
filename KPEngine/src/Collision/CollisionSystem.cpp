@@ -99,9 +99,7 @@ namespace KPEngine
 				{
 					// My Hackky way to handle objects accelerating past the platform in the Physics Frame due to crappy frame rates
 					// TODO fix later after optimization assignment.
-					l_APhysics->SetNegateGravityThisFrame();	
-					l_BPhysics->SetNegateGravityThisFrame();
-
+	
 					// TODO Handle ON Stay
 				}
 				
@@ -121,7 +119,7 @@ namespace KPEngine
 
 					if (l_APhysics->GetVelocity().Magnitude() != 0.0f)
 					{
-						l_AObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 1.0f));
+						l_AObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 0.1f));
 						KPVector3SSE l_Incident = l_APhysics->GetVelocity().Normalized();
 						KPVector3SSE l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_APhysics->GetVelocity().Magnitude()); // Get Reflection
 						l_APhysics->SetVelocity(KPVector3SSE(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
@@ -157,7 +155,7 @@ namespace KPEngine
 
 					if (l_BPhysics->GetVelocity().Magnitude() != 0.0f)
 					{
-						l_BObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 1.0f));
+						l_BObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 0.1f));
 						KPVector3SSE l_Incident = l_BPhysics->GetVelocity().Normalized();
 						KPVector3SSE l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_BPhysics->GetVelocity().Magnitude()); // Get Reflection
 						l_BPhysics->SetVelocity(KPVector3SSE(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));

@@ -21,6 +21,8 @@ namespace KPEngine
 			// Outward facing functions
 			static void RegisterGameObject(StrongPointer<GameObject>& i_pGameObject);
 
+			static void UnRegisterGameObject(StrongPointer<GameObject>& i_pGameObject);
+
 		private:
 			static bool m_InitializeSuccessful;
 			static std::vector<StrongPointer<GameObject>> * m_pGameObjects;

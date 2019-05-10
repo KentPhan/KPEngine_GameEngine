@@ -22,7 +22,8 @@ namespace KPEngine
 		public:
 			// Core functions
 			static void Initialize();
-			static void PhysicsStep(float i_DeltaTime);
+			static void PhysicsStepCalc(float i_DeltaTime);
+			static void PhysicsStepApply(float i_DeltaTime);
 			static void Shutdown();
 
 			// Outward facing functions FOR NOW

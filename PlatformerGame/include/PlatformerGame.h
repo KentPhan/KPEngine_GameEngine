@@ -9,10 +9,20 @@
 
 namespace PlatformerGame
 {
+
+	enum GameStates
+	{
+		PLAY,
+		LOSE,
+		WIN
+	};
+
+
 	class PlatformerGame : public KPEngine::Core::Interfaces::IGame
 	{
 	private:
 		// static members
+
 
 	public:
 

@@ -40,13 +40,24 @@ namespace KPEngine
 			PhysicsSystem::m_InitializeSuccessful = true;
 		}
 
-		void PhysicsSystem::PhysicsStep(float i_DeltaTime)
+		void PhysicsSystem::PhysicsStepCalc(float i_DeltaTime)
 		{
 			if(PhysicsSystem::m_InitializeSuccessful)
 			{
 				for (size_t i = 0; i < m_pPhysicsComponents->size(); i++)
 				{
-					(*m_pPhysicsComponents)[i]->UpdatePhysics(i_DeltaTime);
+					(*m_pPhysicsComponents)[i]->UpdatePhysicsForcesPass(i_DeltaTime);
+				}
+			}
+		}
+
+		void PhysicsSystem::PhysicsStepApply(float i_DeltaTime)
+		{
+			if (PhysicsSystem::m_InitializeSuccessful)
+			{
+				for (size_t i = 0; i < m_pPhysicsComponents->size(); i++)
+				{
+					(*m_pPhysicsComponents)[i]->UpdatePhysicsMovementPass(i_DeltaTime);
 				}
 			}
 		}

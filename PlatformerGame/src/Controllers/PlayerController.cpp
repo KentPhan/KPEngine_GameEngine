@@ -89,9 +89,14 @@ namespace PlatformerGame
 
 		void PlayerController::OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo)
 		{
-			KPVector3SSE l_OtherN = i_ColInfo.m_CollisionNormal;
-			DEBUG_PRINT(KPLogType::Verbose, "Collision! %f %f %f", l_OtherN.X(), l_OtherN.Y(), l_OtherN.Z());
-			m_IsGrounded = true;
+			/*KPVector3SSE l_OtherN = i_ColInfo.m_CollisionNormal;
+			DEBUG_PRINT(KPLogType::Verbose, "Collision! %f %f %f", l_OtherN.X(), l_OtherN.Y(), l_OtherN.Z());*/
+			if(i_ColInfo.m_CollisionNormal.Y() > 0.0f)
+			{
+				m_IsGrounded = true;
+			}
+
+			
 		}
 
 		void PlayerController::OnCollisionStay(KPEngine::Collision::CollisionInfo i_ColInfo)
