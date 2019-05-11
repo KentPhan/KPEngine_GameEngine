@@ -2,7 +2,7 @@ GameObject =
 {
 	name = "DeathPlatform",
 	position = { -380.0, -300.0, 0.0},
-	layer = 1,
+	layer = 2,
 	tag = 4,
 	components =
 	{
@@ -10,9 +10,10 @@ GameObject =
 		{
 			texture = "Assets\\Sprites\\Tiles\\Tile_64_NC_W.dds"
 		},
-		KPPhysics2DComponent = 
+		BoxCollisionComponent = 
 		{
-			isStatic = true
-		},
+			center = { 0.0, 0.0, 0.0},
+			extents = { 15.0, 15.0, 0.0}
+		}
 	}
 }

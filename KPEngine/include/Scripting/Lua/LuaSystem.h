@@ -28,6 +28,7 @@ namespace KPEngine
 				static void Shutdown();
 				static StrongPointer<Core::GameObject> CreateGameObject(const char* i_pScriptFileName, bool i_OverridePosition, KPVector3SSE i_Position);
 			private:
+				static KPVector3SSE ReadVector(const char* i_TableName);
 
 				static lua_State* g_pLuaState;
 			};

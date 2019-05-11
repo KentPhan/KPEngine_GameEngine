@@ -5,6 +5,7 @@
 #include "CollisionSystem.h"
 #include "../Utils/Delegates.h"
 #include "../Physics/PhysicsComponent.h"
+#include "../../include/Utils/SmartPointers.h"
 
 namespace KPEngine
 {
@@ -15,17 +16,14 @@ namespace KPEngine
 		class BoxCollisionComponent
 		{
 		public:
-			BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject);
+			BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject, KPVector3SSE i_Center, KPVector3SSE i_Extents);
 			~BoxCollisionComponent();
 
 			inline StrongPointer<Core::GameObject> GetGameObject() const
 			{
 				return m_pGameObject;
 			}
-			inline StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent() const
-			{
-				return m_pPhysicsComponent;
-			}
+			StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent();
 
 			inline void* operator new(size_t i_size)
 			{

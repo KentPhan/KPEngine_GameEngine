@@ -2,7 +2,7 @@ GameObject =
 {
 	name = "Win",
 	position = { 140.0, 100.0, 3.0},
-	layer = 2,
+	layer = 4,
 	tag = 16,
 	components =
 	{

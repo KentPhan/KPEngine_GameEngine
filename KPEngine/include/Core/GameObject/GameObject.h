@@ -35,9 +35,10 @@ namespace KPEngine
 		// The Dream would be to drive these with data. But that's for another time
 		enum Layer
 		{
-			COLLIDE = 0x01,
-			NO_COLLIDE = 0x02,
-			TRIGGER = 0x04
+			CHARACTER_LAYER = 0x01,
+			PLATFORM_LAYER = 0x02,
+			NO_COLLIDE = 0x04,
+			TRIGGER = 0x08
 		};
 
 		enum Tag
