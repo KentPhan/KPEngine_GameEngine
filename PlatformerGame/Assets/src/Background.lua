@@ -1,7 +1,7 @@
 GameObject = 
 {
 	name = "Background",
-	position = { 0.0, 0.0, 0.0},
+	position = { 0.0, -600.0, 0.0},
 	layer = 4,
 	tag = 32,
 	components =

@@ -85,7 +85,9 @@ namespace KPEngine
 				// Tell GLib that we want to render some sprites
 				GLib::Sprites::BeginRendering();
 
-				for (size_t i = 0; i < m_pRenderComponents->size(); i++)
+				// TODO Implement Draw Order based upon Z value instead later. Like a sorted List.
+				// Objects towards the back of the list are drawn first
+				for (int i = m_pRenderComponents->size() - 1; i >= 0; i--)
 				{
 					(*m_pRenderComponents)[i]->Draw();
 				}

@@ -25,8 +25,8 @@ namespace PlatformerGame
 	{
 		try
 		{
-			
-
+			// Create Background
+			StrongPointer<GameObject> l_GameObjectBackground = Core::InstantiateGameObject("Assets\\src\\Background.lua");
 
 			// Create Player
 			StrongPointer<GameObject> l_GameObject =  Core::InstantiateGameObject("Assets\\src\\Player.lua");
@@ -69,15 +69,14 @@ namespace PlatformerGame
 
 			// Create UI
 			m_pUIPressEnter = Core::InstantiateGameObject("Assets\\src\\Text_Enter.lua", KPVector3SSE(0.0f, 0.0f, 0.0f));
-			
+
 			// Attaching Controller
 			m_pPlayerController = new PlayerController();
 			m_pPlayerController->Initialize(l_GameObject);
 			m_CurrentState = GameStates::START;
 			m_StartPosition = l_GameObject->GetPosition();
 
-			// Create Background
-			//StrongPointer<GameObject> l_GameObjectBackground = Core::InstantiateGameObject("Assets\\src\\Background.lua");
+			
 
 			// Set Instance
 			Instance = this;
