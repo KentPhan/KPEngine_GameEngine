@@ -1,3 +1,9 @@
+Running:
+
+Make sure to Set PlatformerGame as Start Up Project
+
+
+--------------------------------------------------------------------------
 GamePlay:
 When you start up the game. Press Enter to Start.
 
