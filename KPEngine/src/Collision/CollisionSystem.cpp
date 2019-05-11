@@ -167,18 +167,21 @@ namespace KPEngine
 				}
 
 				// Activate Delegate for Collision
-				CollisionInfo l_First = CollisionInfo();
-				l_First.m_CollisionNormal = i_Pair.m_CollisionNormal;
-				l_First.m_OtherCollider = i_Pair.m_CollisionComponents[1];
+				CollisionInfo* l_First = new CollisionInfo();
+				l_First->m_CollisionNormal = i_Pair.m_CollisionNormal;
+				l_First->m_OtherCollider = i_Pair.m_CollisionComponents[1];
 
 
-				CollisionInfo l_Second = CollisionInfo();
-				l_Second.m_CollisionNormal = i_Pair.m_CollisionNormal * -1.0f;
-				l_Second.m_OtherCollider = i_Pair.m_CollisionComponents[0];
+				CollisionInfo* l_Second = new CollisionInfo();
+				l_Second->m_CollisionNormal = i_Pair.m_CollisionNormal * -1.0f;
+				l_Second->m_OtherCollider = i_Pair.m_CollisionComponents[0];
 
 
 				i_Pair.m_CollisionComponents[0]->OnCollisionHandler.Invoke(l_First);
 				i_Pair.m_CollisionComponents[1]->OnCollisionHandler.Invoke(l_Second);
+
+				delete l_First;
+				delete l_Second;
 			}
 			return o_CollisionTime;
 		}

@@ -40,21 +40,21 @@ namespace PlatformerGame
 			m_pCollider = l_TempStrong->GetCollisionComponent();
 
 
-			Delegate<CollisionInfo> l_Delegate =  Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollision>(this);
+			Delegate<CollisionInfo*> l_Delegate =  Delegate<CollisionInfo*>::Create<PlayerController, &PlayerController::OnCollision>(this);
 			m_pCollider->OnCollisionHandler +=l_Delegate;
 
 
-			Delegate<CollisionInfo> l_DelegateStay = Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollisionStay>(this);
+			Delegate<CollisionInfo*> l_DelegateStay = Delegate<CollisionInfo*>::Create<PlayerController, &PlayerController::OnCollisionStay>(this);
 			m_pCollider->OnCollisionStayHandler += l_DelegateStay;
 
 		}
 
 		void PlayerController::Destroy()
 		{
-			Delegate<CollisionInfo> l_Delegate = Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollision>(this);
+			Delegate<CollisionInfo*> l_Delegate = Delegate<CollisionInfo*>::Create<PlayerController, &PlayerController::OnCollision>(this);
 			m_pCollider->OnCollisionHandler -=l_Delegate;
 
-			Delegate<CollisionInfo> l_DelegateStay = Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollisionStay>(this);
+			Delegate<CollisionInfo*> l_DelegateStay = Delegate<CollisionInfo*>::Create<PlayerController, &PlayerController::OnCollisionStay>(this);
 			m_pCollider->OnCollisionStayHandler -= l_DelegateStay;
 		}
 
@@ -87,16 +87,16 @@ namespace PlatformerGame
 
 		}
 
-		void PlayerController::OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo)
+		void PlayerController::OnCollision(KPEngine::Collision::CollisionInfo* i_ColInfo)
 		{
 			/*KPVector3SSE l_OtherN = i_ColInfo.m_CollisionNormal;
 			DEBUG_PRINT(KPLogType::Verbose, "Collision! %f %f %f", l_OtherN.X(), l_OtherN.Y(), l_OtherN.Z());*/
-			if(i_ColInfo.m_CollisionNormal.Y() > 0.0f)
+			if(i_ColInfo->m_CollisionNormal.Y() > 0.0f)
 			{
 				m_IsGrounded = true;
 			}
 
-			if(i_ColInfo.m_OtherCollider->GetGameObject()->GetTag() == Tag::DEATH)
+			if(i_ColInfo->m_OtherCollider->GetGameObject()->GetTag() == Tag::DEATH)
 			{
 				DEBUG_PRINT(KPLogType::Verbose, "Collided With Death!"); 
 			}
@@ -104,7 +104,7 @@ namespace PlatformerGame
 			
 		}
 
-		void PlayerController::OnCollisionStay(KPEngine::Collision::CollisionInfo i_ColInfo)
+		void PlayerController::OnCollisionStay(KPEngine::Collision::CollisionInfo* i_ColInfo)
 		{
 			DEBUG_PRINT(KPLogType::Verbose, "Collision Stay!");
 		}

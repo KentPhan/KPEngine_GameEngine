@@ -40,8 +40,8 @@ namespace KPEngine
 			KPVector3SSE m_Extents;
 
 			// TODO add delegate method to subscribe on collision
-			MultiCastDelegate<CollisionInfo> OnCollisionHandler;
-			MultiCastDelegate<CollisionInfo> OnCollisionStayHandler;
+			MultiCastDelegate<CollisionInfo*> OnCollisionHandler;
+			MultiCastDelegate<CollisionInfo*> OnCollisionStayHandler;
 
 		private:
 			StrongPointer<Core::GameObject> m_pGameObject;

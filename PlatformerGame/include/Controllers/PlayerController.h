@@ -56,8 +56,8 @@ namespace PlatformerGame
 				return m_pObject;
 			}
 
-			void OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo);
-			void OnCollisionStay(KPEngine::Collision::CollisionInfo i_ColInfo);
+			void OnCollision(KPEngine::Collision::CollisionInfo* i_ColInfo);
+			void OnCollisionStay(KPEngine::Collision::CollisionInfo* i_ColInfo);
 
 		private:
 			void MovePlayer(const KPVector2 movement, float i_DeltaTime);
