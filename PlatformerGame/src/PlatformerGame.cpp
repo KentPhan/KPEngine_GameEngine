@@ -44,6 +44,9 @@ namespace PlatformerGame
 			// Create Death Platforms
 			StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\DeathPlatform.lua", KPVector3SSE(300.0f,-300.0f,0.0f));
 
+			// Create Win Key
+			StrongPointer<GameObject> l_GameObjectKey = Core::InstantiateGameObject("Assets\\src\\KeyToWin.lua", KPVector3SSE(400.0f, -300.0f, 0.0f));
+
 			// Create UI
 			m_pUIPressEnter = Core::InstantiateGameObject("Assets\\src\\Text_Enter.lua", KPVector3SSE(0.0f, 0.0f, 0.0f));
 			

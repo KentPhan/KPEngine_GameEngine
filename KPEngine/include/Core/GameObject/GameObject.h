@@ -32,6 +32,7 @@ namespace KPEngine
 {
 	namespace Core
 	{
+		// TODO Static and not data driven right now. Make it data driven
 		// The Dream would be to drive these with data. But that's for another time
 		enum Layer
 		{

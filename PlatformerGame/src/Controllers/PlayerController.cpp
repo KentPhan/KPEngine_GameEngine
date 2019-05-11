@@ -107,6 +107,13 @@ namespace PlatformerGame
 				PlatformerGame::Instance->TriggerGameOver();
 			}
 
+
+			if (i_ColInfo->m_OtherCollider->GetGameObject()->GetTag() == Tag::WIN)
+			{
+				DEBUG_PRINT(KPLogType::Verbose, "Player Got The Key!");
+				PlatformerGame::Instance->TriggerWin();
+			}
+
 			
 		}
 
