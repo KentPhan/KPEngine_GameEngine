@@ -1,6 +1,7 @@
 
 #include "../../../include/Core/GameObject/GameObjectSystem.h"
 #include "../../../include/Scripting/Lua/LuaSystem.h"
+#include <algorithm>
 
 
 namespace KPEngine
@@ -33,6 +34,10 @@ namespace KPEngine
 
 		void GameObjectSystem::UnRegisterGameObject(StrongPointer<GameObject>& i_pGameObject)
 		{
+			m_pGameObjects->erase(
+				std::remove_if(m_pGameObjects->begin(), m_pGameObjects->end(),
+					[&i_pGameObject](StrongPointer<GameObject>& i_Item) {return i_Item == i_pGameObject; })
+				, m_pGameObjects->end());
 		}
 	}
 }

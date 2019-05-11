@@ -58,6 +58,7 @@ namespace KPEngine
 			static void RegisterBoxComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject,
 				KPVector3SSE i_Center = KPVector3SSE(),
 				KPVector3SSE i_Extents = KPVector3SSE());
+			static void UnRegisterBoxComponent(const WeakPointer<Core::GameObject> i_GameObjectRef);
 			static StrongPointer<BoxCollisionComponent> GetCollisionComponent(const Core::GameObject*  i_GameObjectRef);
 
 		private:

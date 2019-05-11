@@ -22,10 +22,15 @@ namespace KPEngine
 			RenderComponent(WeakPointer<Core::GameObject> i_GameObject, const char* i_pFileName);
 			~RenderComponent();
 			void Draw();
+
+			inline WeakPointer<Core::GameObject> GetGameObject() const
+			{
+				return m_pGameObject;
+			}
 		private:
 			WeakPointer<Core::GameObject>m_pGameObject;
 			GLib::Sprites::Sprite * m_pSprite;
-			//Sprite;
+			
 
 			GLib::Sprites::Sprite* CreateSprite(const char * i_pFilename);
 		};

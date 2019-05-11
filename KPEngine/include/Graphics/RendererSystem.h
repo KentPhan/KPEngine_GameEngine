@@ -18,6 +18,7 @@ namespace KPEngine
 
 			// Outward facing functions FOR NOW
 			static void RegisterSprite(WeakPointer<Core::GameObject> i_pGameObject, const char* i_pFileName);
+			static void UnRegisterSprite(const WeakPointer<Core::GameObject> i_GameObjectRef);
 
 		private:
 			static bool m_InitializeSuccessful;

@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include "../../include/Graphics/RendererSystem.h"
+#include <algorithm>
 
 namespace KPEngine
 {
@@ -18,6 +19,14 @@ namespace KPEngine
 
 			RenderComponent* l_NewComponent = new RenderComponent(i_pGameObject, i_pFileName);
 			m_pRenderComponents->push_back(l_NewComponent);
+		}
+
+		void RendererSystem::UnRegisterSprite(const WeakPointer<Core::GameObject> i_GameObjectRef)
+		{
+			m_pRenderComponents->erase(
+				std::remove_if(m_pRenderComponents->begin(), m_pRenderComponents->end(),
+					[&i_GameObjectRef](StrongPointer<RenderComponent>& i_Item) {return i_Item->GetGameObject() == i_GameObjectRef; })
+				, m_pRenderComponents->end());
 		}
 
 		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)

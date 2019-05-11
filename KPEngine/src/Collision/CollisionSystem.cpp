@@ -2,7 +2,7 @@
 #include "../../include/Utils/KPLogType.h"
 #include "../../include/Utils/KP_Log.h"
 #include "../../include/Physics/PhysicsComponent.h"
-
+#include <algorithm>
 
 namespace KPEngine
 {
@@ -21,6 +21,14 @@ namespace KPEngine
 			m_pBoxComponents->push_back(l_NewComponent);
 		}
 
+		void CollisionSystem::UnRegisterBoxComponent(const WeakPointer<Core::GameObject> i_GameObjectRef)
+		{
+			m_pBoxComponents->erase(
+				std::remove_if(m_pBoxComponents->begin(), m_pBoxComponents->end(),
+					[&i_GameObjectRef](StrongPointer<BoxCollisionComponent>& i_Item) {return i_Item->GetGameObject() == i_GameObjectRef; })
+				, m_pBoxComponents->end());
+		}
+
 		StrongPointer<BoxCollisionComponent> CollisionSystem::GetCollisionComponent(
 			const Core::GameObject* i_GameObjectRef)
 		{
@@ -37,6 +45,8 @@ namespace KPEngine
 			}
 			return nullptr;
 		}
+
+		
 
 		void CollisionSystem::Initialize()
 		{

@@ -28,6 +28,7 @@ namespace KPEngine
 
 			// Outward facing functions FOR NOW
 			static void RegisterPhysicsComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject, bool i_IsStatic);
+			static void UnRegisterPhysicsComponent(const WeakPointer<Core::GameObject> i_GameObjectRef);
 			static StrongPointer<PhysicsComponent> GetPhysicsComponent(const Core::GameObject*  i_GameObjectRef );
 		private:
 			static bool m_InitializeSuccessful;

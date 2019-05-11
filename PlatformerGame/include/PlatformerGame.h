@@ -28,7 +28,9 @@ namespace PlatformerGame
 		bool Init() override;
 		void Update(float i_deltaTime) override;
 		bool Shutdown() override;
+		void TriggerWin();
 		void TriggerGameOver();
+		
 
 		// Instances to access
 		static PlatformerGame* Instance;
@@ -37,6 +39,9 @@ namespace PlatformerGame
 		Controllers::PlayerController* m_pPlayerController;
 		GameStates m_CurrentState;
 		KPVector3SSE m_StartPosition;
+
+		WeakPointer<GameObject> m_pUIPressEnter;
+		WeakPointer<GameObject> m_pUIWin;
 	};
 }
 

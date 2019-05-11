@@ -45,7 +45,7 @@ namespace PlatformerGame
 			StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\DeathPlatform.lua", KPVector3SSE(300.0f,-300.0f,0.0f));
 
 			// Create UI
-			StrongPointer<GameObject> l_GameObjectText = Core::InstantiateGameObject("Assets\\src\\Text_Enter.lua", KPVector3SSE(300.0f, -300.0f, 0.0f));
+			m_pUIPressEnter = Core::InstantiateGameObject("Assets\\src\\Text_Enter.lua", KPVector3SSE(0.0f, 0.0f, 0.0f));
 			
 			// Attaching Controller
 			m_pPlayerController = new PlayerController();
@@ -74,6 +74,8 @@ namespace PlatformerGame
 				if(InputSystem::GetInputDown(KeyCode::Enter))
 				{
 					m_CurrentState = GameStates::PLAY;
+					Core::DestroyGameObject(m_pUIPressEnter);
+					m_pUIPressEnter = nullptr;
 				}
 				break;
 			}
@@ -87,6 +89,10 @@ namespace PlatformerGame
 				if (InputSystem::GetInputDown(KeyCode::Enter))
 				{
 					m_CurrentState = GameStates::START;
+					Core::DestroyGameObject(m_pUIWin);
+
+					// UI
+					m_pUIPressEnter = Core::InstantiateGameObject("Assets\\src\\Text_Enter.lua", KPVector3SSE(0.0f, 0.0f, 0.0f));
 				}
 				break;
 			}
@@ -101,13 +107,28 @@ namespace PlatformerGame
 	{
 		m_pPlayerController->Destroy();
 		delete m_pPlayerController;
+
+		m_pUIPressEnter = nullptr;
+		m_pUIWin = nullptr;
 		return true;
+	}
+
+	void PlatformerGame::TriggerWin()
+	{
+		m_CurrentState = GameStates::WIN;
+		m_pPlayerController->ResetPlayer(m_StartPosition);
+
+		// UI
+		m_pUIWin = Core::InstantiateGameObject("Assets\\src\\Text_Win.lua", KPVector3SSE(0.0f, 0.0f, 0.0f));
 	}
 
 	void PlatformerGame::TriggerGameOver()
 	{
 		m_CurrentState = GameStates::START;
 		m_pPlayerController->ResetPlayer(m_StartPosition);
+
+		// UI
+		m_pUIPressEnter = Core::InstantiateGameObject("Assets\\src\\Text_Enter.lua", KPVector3SSE(0.0f, 0.0f, 0.0f));
 	}
 }
 
