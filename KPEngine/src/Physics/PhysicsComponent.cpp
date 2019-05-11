@@ -14,7 +14,7 @@ namespace KPEngine
 			m_Velocity = KPVector3SSE(0.0f, 0.0f, 0.0f);
 			m_Acceleration = KPVector3SSE(0.0f, 0.0f, 0.0f);
 			m_IsStatic = i_IsStatic;
-			m_GForce = -1000.0f;
+			m_GForce = -5000.0f;
 		}
 
 		void PhysicsComponent::AddForce(KPVector3SSE i_Force)
@@ -64,7 +64,7 @@ namespace KPEngine
 			m_InitialVelocity = m_Velocity;
 			m_Velocity = m_Velocity + (m_Acceleration * i_DeltaTime);
 
-			ApplyDrag(i_DeltaTime);
+			//ApplyDrag(i_DeltaTime);
 
 
 			/*DEBUG_PRINT(KPLogType::Verbose, "%f Frame3: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),

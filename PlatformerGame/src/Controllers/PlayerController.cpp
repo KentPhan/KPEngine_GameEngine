@@ -18,8 +18,8 @@ namespace PlatformerGame
 		PlayerController::PlayerController()
 		{
 			m_pObject = WeakPointer<GameObject>();
-			m_JumpForce = 800.0f;
-			m_HorizontalMoveSpeed = 100.0f;
+			m_JumpForce = 2000.0f;
+			m_HorizontalMoveSpeed = 300.0f;
 			m_IsGrounded = false;
 			// m_pPlayersPhysicsComponent = nullptr;
 		}

@@ -47,7 +47,7 @@ namespace PlatformerGame
 			}
 
 			// Platform 2
-			l_Marker += KPVector3SSE(100.0f, 0.0f, 0.0f);
+			l_Marker += KPVector3SSE(300.0f, 0.0f, 0.0f);
 			for (int i = 0; i < 15; i++)
 			{
 				StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\Platform.lua", l_Marker);
