@@ -2,7 +2,7 @@
 #include "../../include/Utils/KPLogType.h"
 #include "../../include/Utils/KP_Log.h"
 #include "../../include/Physics/PhysicsComponent.h"
-
+#include <algorithm>
 
 namespace KPEngine
 {
@@ -12,11 +12,21 @@ namespace KPEngine
 		std::vector<StrongPointer<BoxCollisionComponent>>* CollisionSystem::m_pBoxComponents;
 		CollisionPair CollisionSystem::m_EarliestCollision;
 
-		void CollisionSystem::RegisterBoxComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject)
+		void CollisionSystem::RegisterBoxComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject,
+														KPVector3SSE i_Center,
+														KPVector3SSE i_Extents)
 		{
 			assert(i_pGameObject);
-			BoxCollisionComponent* l_NewComponent = new BoxCollisionComponent(i_pGameObject);
+			BoxCollisionComponent* l_NewComponent = new BoxCollisionComponent(i_pGameObject, i_Center, i_Extents);
 			m_pBoxComponents->push_back(l_NewComponent);
+		}
+
+		void CollisionSystem::UnRegisterBoxComponent(const WeakPointer<Core::GameObject> i_GameObjectRef)
+		{
+			m_pBoxComponents->erase(
+				std::remove_if(m_pBoxComponents->begin(), m_pBoxComponents->end(),
+					[&i_GameObjectRef](StrongPointer<BoxCollisionComponent>& i_Item) {return i_Item->GetGameObject() == i_GameObjectRef; })
+				, m_pBoxComponents->end());
 		}
 
 		StrongPointer<BoxCollisionComponent> CollisionSystem::GetCollisionComponent(
@@ -35,6 +45,8 @@ namespace KPEngine
 			}
 			return nullptr;
 		}
+
+		
 
 		void CollisionSystem::Initialize()
 		{
@@ -92,20 +104,7 @@ namespace KPEngine
 				StrongPointer<Physics::PhysicsComponent> l_BPhysics = i_Pair.m_CollisionComponents[1]->GetPhysicsComponent();
 				StrongPointer<Core::GameObject> l_BObject = i_Pair.m_CollisionComponents[1]->GetGameObject();
 
-
-				// TODO Handle OnStayCollision
-				// Means velocity is zero
-				if (o_CollisionTime == -INFINITY)
-				{
-					// My Hackky way to handle objects accelerating past the platform in the Physics Frame due to crappy frame rates
-					// TODO fix later after optimization assignment.
-					l_APhysics->SetNegateGravityThisFrame();	
-					l_BPhysics->SetNegateGravityThisFrame();
-
-					// TODO Handle ON Stay
-				}
-				
-				if (!l_APhysics->IsStatic())
+				if (l_APhysics && !l_APhysics->IsStatic())
 				{
 					KPVector3SSE l_RelNormal = i_Pair.m_CollisionNormal * 1.0f;
 
@@ -121,7 +120,7 @@ namespace KPEngine
 
 					if (l_APhysics->GetVelocity().Magnitude() != 0.0f)
 					{
-						l_AObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 1.0f));
+						l_AObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 0.1f));
 						KPVector3SSE l_Incident = l_APhysics->GetVelocity().Normalized();
 						KPVector3SSE l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_APhysics->GetVelocity().Magnitude()); // Get Reflection
 						l_APhysics->SetVelocity(KPVector3SSE(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
@@ -151,13 +150,13 @@ namespace KPEngine
 					l_APhysics->SetVelocity(KPVector3SSE::Zero());*/
 				}
 
-				if (!l_BPhysics->IsStatic())
+				if (l_BPhysics && !l_BPhysics->IsStatic())
 				{
 					KPVector3SSE l_RelNormal = i_Pair.m_CollisionNormal * -1.0f;
 
 					if (l_BPhysics->GetVelocity().Magnitude() != 0.0f)
 					{
-						l_BObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 1.0f));
+						l_BObject->SetPosition(l_AObject->GetPosition() + (l_RelNormal * 0.1f));
 						KPVector3SSE l_Incident = l_BPhysics->GetVelocity().Normalized();
 						KPVector3SSE l_ReflectedVelocity = (((l_RelNormal * (2 * l_RelNormal.Dot(l_Incident))) - l_Incident) * l_BPhysics->GetVelocity().Magnitude()); // Get Reflection
 						l_BPhysics->SetVelocity(KPVector3SSE(l_ReflectedVelocity.X()* 0.7f, l_ReflectedVelocity.Y()* 0.1f, l_ReflectedVelocity.Z()));
@@ -168,19 +167,46 @@ namespace KPEngine
 
 				}
 
+
+				// TODO Handle OnStayCollision
+				// Means velocity is zero
+				if (o_CollisionTime == -INFINITY)
+				{
+					// My Hackky way to handle objects accelerating past the platform in the Physics Frame due to crappy frame rates
+					// TODO fix later after optimization assignment.
+
+					// TODO Handle ON Stay
+				}
+
+
+				
+
+				
+
+
+				if(l_APhysics)
+				{
+					CollisionInfo* l_First = new CollisionInfo();
+					l_First->m_CollisionNormal = i_Pair.m_CollisionNormal;
+					l_First->m_OtherCollider = i_Pair.m_CollisionComponents[1];
+					i_Pair.m_CollisionComponents[0]->OnCollisionHandler.Invoke(l_First);
+					delete l_First;
+				}
+				if(l_BPhysics)
+				{
+					CollisionInfo* l_Second = new CollisionInfo();
+					l_Second->m_CollisionNormal = i_Pair.m_CollisionNormal * -1.0f;
+					l_Second->m_OtherCollider = i_Pair.m_CollisionComponents[0];
+					i_Pair.m_CollisionComponents[1]->OnCollisionHandler.Invoke(l_Second);
+					delete l_Second;
+				}
+
 				// Activate Delegate for Collision
-				CollisionInfo l_First = CollisionInfo();
-				l_First.m_CollisionNormal = i_Pair.m_CollisionNormal;
-				l_First.m_OtherCollider = i_Pair.m_CollisionComponents[1];
+				
 
 
-				CollisionInfo l_Second = CollisionInfo();
-				l_Second.m_CollisionNormal = i_Pair.m_CollisionNormal * -1.0f;
-				l_Second.m_OtherCollider = i_Pair.m_CollisionComponents[0];
-
-
-				i_Pair.m_CollisionComponents[0]->OnCollisionHandler.Invoke(l_First);
-				i_Pair.m_CollisionComponents[1]->OnCollisionHandler.Invoke(l_Second);
+				
+				
 			}
 			return o_CollisionTime;
 		}
@@ -201,6 +227,12 @@ namespace KPEngine
 						continue;
 					}
 
+					// TODO Build this off a later matrix
+					// Skip Platform layers that are the same
+					if ((*m_pBoxComponents)[i]->GetGameObject()->GetLayer() == Core::Layer::PLATFORM_LAYER && (*m_pBoxComponents)[j]->GetGameObject()->GetLayer() == Core::Layer::PLATFORM_LAYER)
+						continue;
+
+
 					float l_ColTime;
 					KPVector3SSE l_ColNormal;
 
@@ -210,6 +242,8 @@ namespace KPEngine
 						// Means thing is colliding but at zero velocity. Skip over.
 						if(l_ColTime == -INFINITY)
 						{
+							
+
 							// TODO Handle On Stay Collision and skip over
 							CollisionPair l_OnStayCollisionPair;
 							l_OnStayCollisionPair.m_Valid = true;
@@ -218,7 +252,7 @@ namespace KPEngine
 							l_OnStayCollisionPair.m_CollisionComponents[0] = &*(*m_pBoxComponents)[i];
 							l_OnStayCollisionPair.m_CollisionComponents[1] = &*(*m_pBoxComponents)[j];
 							HandleCollision(l_OnStayCollisionPair);
-							//DEBUG_PRINT(KPLogType::Fatal, "NEGATIVE INFINITE COLLISION TIME HANDLED");
+							DEBUG_PRINT(KPLogType::Fatal, "NEGATIVE INFINITE COLLISION TIME HANDLED");
 							continue;
 						}
 						if (l_ColTime == INFINITY)
@@ -278,12 +312,12 @@ namespace KPEngine
 		{
 			BoxCollisionComponent& l_ABox = i_Left;
 			BoxCollisionComponent& l_BBox = i_Right;
+
 			StrongPointer<Core::GameObject> l_AObject = l_ABox.GetGameObject();
 			StrongPointer<Core::GameObject> l_BObject = l_BBox.GetGameObject();
 			StrongPointer<Physics::PhysicsComponent> l_APhysics = l_ABox.GetPhysicsComponent();
 			StrongPointer<Physics::PhysicsComponent> l_BPhysics = l_BBox.GetPhysicsComponent();
 
-			// TODO Very inefficient with Inverse. Optimize later. Could 
 			// Compute all transformation matrices for transforming. TODO could optimize later
 			KPMatrix4x4SSE l_ARot = KPMatrix4x4SSE::CreateRotationMatrix_Z(l_AObject->GetZRotation());
 			KPMatrix4x4SSE l_ATrans = KPMatrix4x4SSE::CreateTranslationMatrix(l_AObject->GetPosition());
@@ -300,9 +334,12 @@ namespace KPEngine
 			KPMatrix4x4SSE l_AToB = l_WorldToB * l_AToWorld;
 			KPMatrix4x4SSE l_BToA = l_WorldToA * l_BToWorld;
 
-			// Calculating relative velocities
-			KPVector3SSE l_AVelRelToB = l_APhysics->GetVelocity() - l_BPhysics->GetVelocity();
-			KPVector3SSE l_BVelRelToA = l_BPhysics->GetVelocity() - l_APhysics->GetVelocity();
+			// Calculating relative velocities. If Physics Component doesn't exist. Assume Zero
+			KPVector3SSE l_AVel = (l_APhysics) ? l_APhysics->GetVelocity() : KPVector3SSE::Zero();
+			KPVector3SSE l_BVel = (l_BPhysics) ? l_BPhysics->GetVelocity() : KPVector3SSE::Zero();;
+
+			KPVector3SSE l_AVelRelToB = l_AVel - l_BVel;
+			KPVector3SSE l_BVelRelToA = l_BVel - l_AVel;
 			KPVector4SSE l_VelAinB = l_WorldToBVec * KPVector4SSE(l_AVelRelToB, 0.0f); // A in B
 			KPVector4SSE l_VelBinA = l_WorldToAVec * KPVector4SSE(l_BVelRelToA, 0.0f); // B in A
 

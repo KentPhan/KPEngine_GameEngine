@@ -3,6 +3,7 @@
 #include <cassert>
 #include "../../include/Physics/PhysicsComponent.h"
 #include "../../include/Utils/SmartPointers.h"
+#include <algorithm>
 
 namespace KPEngine
 {
@@ -16,6 +17,14 @@ namespace KPEngine
 			assert(i_pGameObject);
 			PhysicsComponent* l_NewComponent = new PhysicsComponent(i_pGameObject, i_IsStatic);
 			m_pPhysicsComponents->push_back(l_NewComponent);
+		}
+
+		void PhysicsSystem::UnRegisterPhysicsComponent(const WeakPointer<Core::GameObject> i_GameObjectRef)
+		{
+			m_pPhysicsComponents->erase(
+				std::remove_if(m_pPhysicsComponents->begin(), m_pPhysicsComponents->end(),
+					[&i_GameObjectRef](StrongPointer<PhysicsComponent>& i_Item) {return i_Item->GetGameObject() == i_GameObjectRef; })
+				, m_pPhysicsComponents->end());
 		}
 
 		StrongPointer<PhysicsComponent> PhysicsSystem::GetPhysicsComponent(const Core::GameObject* i_GameObjectRef)
@@ -40,13 +49,24 @@ namespace KPEngine
 			PhysicsSystem::m_InitializeSuccessful = true;
 		}
 
-		void PhysicsSystem::PhysicsStep(float i_DeltaTime)
+		void PhysicsSystem::PhysicsStepCalc(float i_DeltaTime)
 		{
 			if(PhysicsSystem::m_InitializeSuccessful)
 			{
 				for (size_t i = 0; i < m_pPhysicsComponents->size(); i++)
 				{
-					(*m_pPhysicsComponents)[i]->UpdatePhysics(i_DeltaTime);
+					(*m_pPhysicsComponents)[i]->UpdatePhysicsForcesPass(i_DeltaTime);
+				}
+			}
+		}
+
+		void PhysicsSystem::PhysicsStepApply(float i_DeltaTime)
+		{
+			if (PhysicsSystem::m_InitializeSuccessful)
+			{
+				for (size_t i = 0; i < m_pPhysicsComponents->size(); i++)
+				{
+					(*m_pPhysicsComponents)[i]->UpdatePhysicsMovementPass(i_DeltaTime);
 				}
 			}
 		}

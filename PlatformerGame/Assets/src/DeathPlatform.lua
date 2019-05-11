@@ -1,18 +1,14 @@
 GameObject = 
 {
-	name = "Monster",
-	position = { 100.0, 2.0, 3.0},
-	layer = 1,
+	name = "DeathPlatform",
+	position = { -380.0, -300.0, 0.0},
+	layer = 2,
 	tag = 4,
 	components =
 	{
 		KPRender2DComponent = 
 		{
-			texture = "Assets\\Sprites\\Characters\\zombie.dds"
-		},
-		KPPhysics2DComponent = 
-		{
-			isStatic=false
+			texture = "Assets\\Sprites\\Tiles\\Tile_64_NC_W.dds"
 		},
 		BoxCollisionComponent = 
 		{

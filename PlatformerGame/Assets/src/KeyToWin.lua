@@ -1,14 +1,14 @@
 GameObject = 
 {
-	name = "Platform",
-	position = { -380.0, -300.0, 0.0},
+	name = "KeyToWin",
+	position = { -480.0, -300.0, 0.0},
 	layer = 2,
-	tag = 2,
+	tag = 8,
 	components =
 	{
 		KPRender2DComponent = 
 		{
-			texture = "Assets\\Sprites\\Tiles\\Tile_1_C.dds"
+			texture = "Assets\\Sprites\\Tiles\\Tile_Win.dds"
 		},
 		BoxCollisionComponent = 
 		{

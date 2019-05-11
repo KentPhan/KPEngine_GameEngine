@@ -99,9 +99,6 @@
     <ClCompile Include="src\Messaging\MessagingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\Delegates.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Utils\KPVector3SSE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

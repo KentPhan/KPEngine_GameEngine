@@ -7,7 +7,7 @@
 #include "Input/InputSystem.h"
 #include "Physics/PhysicsComponent.h"
 #include "Collision/BoxCollisionComponent.h"
-
+#include "Graphics/RenderComponent.h"
 
 namespace PlatformerGame
 {
@@ -19,8 +19,9 @@ namespace PlatformerGame
 		PlayerController::PlayerController()
 		{
 			m_pObject = WeakPointer<GameObject>();
-			m_JumpForce = 800.0f;
-			m_HorizontalMoveSpeed = 10000.0f;
+			m_JumpForce = 2000.0f;
+			m_HorizontalMoveSpeed = 300.0f;
+			m_IsGrounded = false;
 			// m_pPlayersPhysicsComponent = nullptr;
 		}
 
@@ -37,67 +38,105 @@ namespace PlatformerGame
 			l_TempStrong->SetController(this);
 			m_pPlayersPhysicsComponent = l_TempStrong->GetPhysicsComponent();
 			m_pCollider = l_TempStrong->GetCollisionComponent();
+			m_pRenderer = l_TempStrong->GetRenderComponent();
 
+			m_IsFacingRight = true;
 
-			Delegate<CollisionInfo> l_Delegate =  Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollision>(this);
+			Delegate<CollisionInfo*> l_Delegate =  Delegate<CollisionInfo*>::Create<PlayerController, &PlayerController::OnCollision>(this);
 			m_pCollider->OnCollisionHandler +=l_Delegate;
+
+
+			Delegate<CollisionInfo*> l_DelegateStay = Delegate<CollisionInfo*>::Create<PlayerController, &PlayerController::OnCollisionStay>(this);
+			m_pCollider->OnCollisionStayHandler += l_DelegateStay;
+
 		}
 
 		void PlayerController::Destroy()
 		{
-			Delegate<CollisionInfo> l_Delegate = Delegate<CollisionInfo>::Create<PlayerController, &PlayerController::OnCollision>(this);
+			Delegate<CollisionInfo*> l_Delegate = Delegate<CollisionInfo*>::Create<PlayerController, &PlayerController::OnCollision>(this);
 			m_pCollider->OnCollisionHandler -=l_Delegate;
+
+			Delegate<CollisionInfo*> l_DelegateStay = Delegate<CollisionInfo*>::Create<PlayerController, &PlayerController::OnCollisionStay>(this);
+			m_pCollider->OnCollisionStayHandler -= l_DelegateStay;
 		}
 
 		void PlayerController::Update(float i_deltaTime)
 		{
 			
-			if(InputSystem::GetInputDown(KeyCode::W))
+			// Jumpting
+			if(m_IsGrounded && InputSystem::GetInputDown(KeyCode::W))
 			{
 				m_pPlayersPhysicsComponent->AddForce(KPVector3SSE(0.0f, 1.0f,0.0f) * m_JumpForce);
+				m_IsGrounded = false;
 			}
-			if(InputSystem::GetInputDown(KeyCode::S))
-			{
-				m_pPlayersPhysicsComponent->AddForce(KPVector3SSE(0.0f, -1.0f,0.0f) * m_JumpForce);
-			}
+
+			// Horizontal Movement
 			if (InputSystem::GetInputHeldDown(KeyCode::A))
 			{
+				if(m_IsFacingRight)
+				{
+					m_pRenderer->FlipSprite();
+					m_IsFacingRight = !m_IsFacingRight;
+				}
+
 				KPVector3SSE l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
-				m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE(-1.0f * m_HorizontalMoveSpeed * i_deltaTime, l_CVel.Y(), l_CVel.Z()));
+				m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE(-1.0f * m_HorizontalMoveSpeed , l_CVel.Y(), l_CVel.Z()));
 			}
-			if (InputSystem::GetInputHeldDown(KeyCode::D))
+			else if (InputSystem::GetInputHeldDown(KeyCode::D))
+			{
+				if (!m_IsFacingRight)
+				{
+					m_pRenderer->FlipSprite();
+					m_IsFacingRight = !m_IsFacingRight;
+				}
+
+				KPVector3SSE l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
+				m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE(1.0f* m_HorizontalMoveSpeed , l_CVel.Y(), l_CVel.Z()));
+			}
+			else
 			{
 				KPVector3SSE l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
-				m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE(1.0f* m_HorizontalMoveSpeed* i_deltaTime, l_CVel.Y(), l_CVel.Z()));
+				m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE(0.0f, l_CVel.Y(), l_CVel.Z()));
 			}
+
 		}
 
-		void PlayerController::OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo)
+		void PlayerController::ResetPlayer(KPVector3SSE i_Position)
 		{
-			//DEBUG_PRINT(KPLogType::Verbose, "Collided Event Triggered With Delegate Call!");
+			m_pObject.GetStrongPointer()->SetPosition(i_Position);
+			m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE::Zero());
 		}
 
-		void PlayerController::MovePlayer(const KPVector2 movement, float i_DeltaTime)
+		void PlayerController::OnCollision(KPEngine::Collision::CollisionInfo* i_ColInfo)
 		{
-			assert(m_pObject);
-			// TODO Update player position
-			/*float l_Speed = 5.0f * i_DeltaTime;
+			/*KPVector3SSE l_OtherN = i_ColInfo.m_CollisionNormal;
+			DEBUG_PRINT(KPLogType::Verbose, "Collision! %f %f %f", l_OtherN.X(), l_OtherN.Y(), l_OtherN.Z());*/
+			if(i_ColInfo->m_CollisionNormal.Y() > 0.0f)
+			{
+				m_IsGrounded = true;
+			}
 
-			KPVector2 newPosition = m_pObject->GetPosition() + KPVector2(1.0f,1.0f) * l_Speed;*/
+			if(i_ColInfo->m_OtherCollider->GetGameObject()->GetTag() == Tag::DEATH)
+			{
+				DEBUG_PRINT(KPLogType::Verbose, "Collided With Death!");
+				PlatformerGame::Instance->TriggerGameOver();
+			}
 
-			//// TODO consolidate enforce boundaries
-			//// only move if would stay in boundaries
-			//if (newPosition.X() < 0 || newPosition.X() > 19)
-			//{
-			//	newPosition.X(m_pObject->GetPosition().X());
-			//}
-			//if (newPosition.Y() < 0 || newPosition.Y() > 19)
-			//{
-			//	newPosition.Y(m_pObject->GetPosition().Y());
-			//}
 
-			/*m_pObject->SetPosition(newPosition);*/
+			if (i_ColInfo->m_OtherCollider->GetGameObject()->GetTag() == Tag::WIN)
+			{
+				DEBUG_PRINT(KPLogType::Verbose, "Player Got The Key!");
+				PlatformerGame::Instance->TriggerWin();
+			}
+
+			
 		}
+
+		void PlayerController::OnCollisionStay(KPEngine::Collision::CollisionInfo* i_ColInfo)
+		{
+			DEBUG_PRINT(KPLogType::Verbose, "Collision Stay!");
+		}
+
 	}
 }
 

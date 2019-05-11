@@ -44,7 +44,7 @@ bool KPVector4SSE_UnitTest::KPVector4SSEMagnitudeTest()
 {
 	PrintTestStartLabel(g_TestTitle, "Magnitude");
 
-	KPVector4SSE l_test = KPVector4SSE(2.2, -3, 4.0, 0.0f);
+	KPVector4SSE l_test = KPVector4SSE(2.2f, -3.0f, 4.0f, 0.0f);
 	float l_result = l_test.Magnitude();
 	cout << l_result << endl;
 	assert(l_result <= 5.47f && l_result >= 5.45f && "Magnitude");

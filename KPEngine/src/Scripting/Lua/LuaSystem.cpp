@@ -120,7 +120,21 @@ namespace KPEngine
 						l_startPosition = i_Position;
 					}
 
-					StrongPointer<GameObject> l_playerObject = new GameObject(l_pName, l_startPosition, 1);
+					// Get Layer
+					lua_pushstring(g_pLuaState, "layer");
+					int l_layerType = lua_gettable(g_pLuaState, -2);
+					assert(l_layerType == LUA_TNUMBER);
+					Layer l_Layer = static_cast<Layer>(static_cast<int>(lua_tonumber(g_pLuaState, -1)));
+					lua_pop(g_pLuaState, 1);
+
+					// Get Tag
+					lua_pushstring(g_pLuaState, "tag");
+					int l_tagType = lua_gettable(g_pLuaState, -2);
+					assert(l_tagType == LUA_TNUMBER);
+					Tag l_Tag = static_cast<Tag>(static_cast<int>(lua_tonumber(g_pLuaState, -1)));
+					lua_pop(g_pLuaState, 1);
+
+					StrongPointer<GameObject> l_playerObject = new GameObject(l_pName, l_startPosition, l_Layer, l_Tag);
 					GameObjectSystem::RegisterGameObject(l_playerObject);
 
 
@@ -169,6 +183,17 @@ namespace KPEngine
 
 							lua_pop(g_pLuaState, 1);
 						}
+						else if (strcmp(l_key, "BoxCollisionComponent") == 0)
+						{
+							// Get Center
+							KPVector3SSE l_Center = ReadVector("center");
+
+							// Get Extents
+							KPVector3SSE l_Extents = ReadVector("extents");
+
+							// TODO For now. Add a Box collision to everything for testing purposes
+							Collision::CollisionSystem::RegisterBoxComponent(l_playerObject, l_Center, l_Extents);
+						}
 						else
 						{
 							assert(false && "UnIdentified Component");
@@ -178,16 +203,24 @@ namespace KPEngine
 
 						lua_pop(g_pLuaState, 1);
 					}
-
-					// TODO For now. Add a Box collision to everything for testing purposes
-					Collision::CollisionSystem::RegisterBoxComponent(l_playerObject);
-
 					l_NewStrongPointer = l_playerObject;
 				}
 				// Determine Game Object, Components, Properties, and stuff from Lua code, and return game object after adding it to the list
 				delete[] l_pFileContents;
 
 				return l_NewStrongPointer;
+			}
+
+			KPVector3SSE LuaSystem::ReadVector(const char* i_TableName)
+			{
+				lua_pushstring(g_pLuaState, i_TableName); // Push field name to table
+				assert(lua_gettable(g_pLuaState, -2) == LUA_TTABLE); // Confirm it is a table
+				assert((lua_rawgeti(g_pLuaState, -1, 1) == LUA_TNUMBER) && (lua_rawgeti(g_pLuaState, -2, 2) == LUA_TNUMBER) && (lua_rawgeti(g_pLuaState, -3, 3) == LUA_TNUMBER)); // confirm all the raw values are numbers
+				KPVector3SSE l_Data = KPVector3SSE(static_cast<float>(lua_tonumber(g_pLuaState, -3)),
+					static_cast<float>(lua_tonumber(g_pLuaState, -2)),
+					static_cast<float>(lua_tonumber(g_pLuaState, -1))); // Get Vector
+				lua_pop(g_pLuaState, 4);
+				return l_Data;
 			}
 		}
 	}

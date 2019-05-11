@@ -87,11 +87,14 @@ namespace KPEngine
 			// Update GameObjects, AI
 			g_pGame->Update(l_deltaTime);
 
+			// Calculates Physics values and sets them. Doesn't move objects yet
+			Physics::PhysicsSystem::PhysicsStepCalc(l_deltaTime);
+
 			// Resolve Collisions Before Physics
 			Collision::CollisionSystem::CollisionStep(l_deltaTime);
 			
-			// Physics
-			Physics::PhysicsSystem::PhysicsStep(l_deltaTime);
+			// After Collisions now Apply final movements to objects
+			Physics::PhysicsSystem::PhysicsStepApply(l_deltaTime);
 
 			// Draw
 			Graphics::RendererSystem::RenderStep();

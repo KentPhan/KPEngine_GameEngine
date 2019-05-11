@@ -5,6 +5,7 @@
 #include "CollisionSystem.h"
 #include "../Utils/Delegates.h"
 #include "../Physics/PhysicsComponent.h"
+#include "../../include/Utils/SmartPointers.h"
 
 namespace KPEngine
 {
@@ -15,15 +16,19 @@ namespace KPEngine
 		class BoxCollisionComponent
 		{
 		public:
-			BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject);
+			BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject, KPVector3SSE i_Center, KPVector3SSE i_Extents);
 			~BoxCollisionComponent();
 
 			inline StrongPointer<Core::GameObject> GetGameObject() const
 			{
 				return m_pGameObject;
 			}
-			inline StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent() const
+			// TODO  I don't understand. Why this cannot be **** const
+			inline StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent() 
 			{
+				if (!m_pPhysicsComponent)
+					m_pPhysicsComponent = m_pGameObject->GetPhysicsComponent();
+
 				return m_pPhysicsComponent;
 			}
 
@@ -40,7 +45,8 @@ namespace KPEngine
 			KPVector3SSE m_Extents;
 
 			// TODO add delegate method to subscribe on collision
-			MultiCastDelegate<CollisionInfo> OnCollisionHandler;
+			MultiCastDelegate<CollisionInfo*> OnCollisionHandler;
+			MultiCastDelegate<CollisionInfo*> OnCollisionStayHandler;
 
 		private:
 			StrongPointer<Core::GameObject> m_pGameObject;

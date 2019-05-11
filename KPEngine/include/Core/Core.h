@@ -14,6 +14,7 @@ namespace KPEngine
 		public:
 			static StrongPointer<GameObject> InstantiateGameObject(const char* i_pScriptFileName);
 			static StrongPointer<GameObject> InstantiateGameObject(const char* i_pScriptFileName, KPVector3SSE i_StartPosition);
+			static void DestroyGameObject(StrongPointer<GameObject> i_ObjectToDestroy);
 		};
 
 

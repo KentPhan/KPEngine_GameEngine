@@ -8,11 +8,25 @@ namespace KPEngine
 {
 	namespace Collision
 	{
+		// TODO Becareful with passing info to game side.
 		struct CollisionInfo
 		{
 			CollisionInfo() : m_CollisionNormal(KPVector3SSE()), m_OtherCollider(nullptr)
 			{
 				
+			}
+			CollisionInfo(const CollisionInfo& i_Other) : m_CollisionNormal(i_Other.m_CollisionNormal), m_OtherCollider(i_Other.m_OtherCollider)
+			{
+				
+			}
+
+			inline void* operator new(size_t i_size)
+			{
+				return _mm_malloc(i_size, 16);
+			}
+			inline void operator delete(void * i_p)
+			{
+				_mm_free(i_p);
 			}
 
 			KPVector3SSE m_CollisionNormal;
@@ -41,7 +55,10 @@ namespace KPEngine
 			static void Shutdown();
 
 			// Outward facing functions FOR NOW
-			static void RegisterBoxComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject);
+			static void RegisterBoxComponent(Utils::WeakPointer<Core::GameObject> i_pGameObject,
+				KPVector3SSE i_Center = KPVector3SSE(),
+				KPVector3SSE i_Extents = KPVector3SSE());
+			static void UnRegisterBoxComponent(const WeakPointer<Core::GameObject> i_GameObjectRef);
 			static StrongPointer<BoxCollisionComponent> GetCollisionComponent(const Core::GameObject*  i_GameObjectRef);
 
 		private:

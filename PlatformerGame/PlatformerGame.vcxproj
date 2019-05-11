@@ -195,9 +195,14 @@
     <ClCompile Include="src\GameMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\src\Background.lua" />
+    <None Include="Assets\src\DeathPlatform.lua" />
+    <None Include="Assets\src\KeyToWin.lua" />
     <None Include="Assets\src\Monster.lua" />
     <None Include="Assets\src\Platform.lua" />
     <None Include="Assets\src\Player.lua" />
+    <None Include="Assets\src\Text_Enter.lua" />
+    <None Include="Assets\src\Text_Win.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -202,7 +202,6 @@
     <ClInclude Include="include\Messaging\MessagingSystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Utils\Delegates.cpp" />
     <ClCompile Include="src\Messaging\MessagingSystem.cpp" />
     <ClCompile Include="src\Collision\BoxCollisionComponent.cpp" />
     <ClCompile Include="src\Collision\CollisionSystem.cpp" />

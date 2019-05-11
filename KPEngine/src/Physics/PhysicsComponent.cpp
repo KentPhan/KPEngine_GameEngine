@@ -14,7 +14,7 @@ namespace KPEngine
 			m_Velocity = KPVector3SSE(0.0f, 0.0f, 0.0f);
 			m_Acceleration = KPVector3SSE(0.0f, 0.0f, 0.0f);
 			m_IsStatic = i_IsStatic;
-			m_GForce = -1000.0f;
+			m_GForce = -5000.0f;
 		}
 
 		void PhysicsComponent::AddForce(KPVector3SSE i_Force)
@@ -29,7 +29,7 @@ namespace KPEngine
 				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
 		}
 
-		void PhysicsComponent::UpdatePhysics(float i_DeltaTime)
+		void PhysicsComponent::UpdatePhysicsForcesPass(float i_DeltaTime)
 		{
 			if (m_IsStatic)
 				return;
@@ -40,39 +40,31 @@ namespace KPEngine
 			if (!l_pTempGameObject)
 				return;
 
-			//KPVector3SSE l_TestPosition = l_pTempGameObject->GetPosition();
-			/*DEBUG_PRINT(KPLogType::Verbose, "%f Frame1: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
+			/*KPVector3SSE l_TestPosition = l_pTempGameObject->GetPosition();
+			DEBUG_PRINT(KPLogType::Verbose, "%f Frame1: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
 				m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
 				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
 
 
 			// Clamp Acceleration with Gravity if applicable
-			// TODO Negating Gravity as a result of Collision System Check. Need to have a more well rounded method later. Delaying to Finish Optimization Assignment.
-			if(m_HasGravity && !m_NegateGravityFrameCheck)
+			if(m_HasGravity)
 			{
 				m_Acceleration = KPVector3SSE(m_Acceleration.X(), m_Acceleration.Y() + (m_GForce * i_DeltaTime)  , m_Acceleration.Z());
 				if(m_Acceleration.Y() > m_GForce)
 				{
 					// TODO could go over
-					
 				}
 			}
-			m_NegateGravityFrameCheck = false;
-
 
 			/*DEBUG_PRINT(KPLogType::Verbose, "%f Frame2: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
 				m_Acceleration.X(), m_Acceleration.Y(), m_Acceleration.Z()
 				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
 
 			// Update velocity via acceleration
-			KPVector3SSE l_StartVelocity = m_Velocity;
+			m_InitialVelocity = m_Velocity;
 			m_Velocity = m_Velocity + (m_Acceleration * i_DeltaTime);
 
-			// Update position via velocity
-			KPVector3SSE l_NewPosition = l_pTempGameObject->GetPosition() + ( ( (l_StartVelocity + m_Velocity)/2.0f) * i_DeltaTime);
-			l_pTempGameObject->SetPosition(l_NewPosition);
-
-			ApplyDrag(i_DeltaTime);
+			//ApplyDrag(i_DeltaTime);
 
 
 			/*DEBUG_PRINT(KPLogType::Verbose, "%f Frame3: Position: %f %f %f   Acceleration: %f %f %f   Velocity: %f %f %f", i_DeltaTime, l_TestPosition.X(), l_TestPosition.Y(), l_TestPosition.Z(),
@@ -92,6 +84,18 @@ namespace KPEngine
 				, m_Velocity.X(), m_Velocity.Y(), m_Velocity.Z());*/
 
 			//DEBUG_PRINT(KPLogType::Verbose, "Current Velocity: %f %f", l_NewPosition.X(), l_NewPosition.Y());
+		}
+
+		void PhysicsComponent::UpdatePhysicsMovementPass(float i_DeltaTime)
+		{
+			StrongPointer<Core::GameObject> l_pTempGameObject = m_pGameObject.GetStrongPointer();
+			assert(l_pTempGameObject);// Breaking here on purpose for purposes of testing and experimentation
+
+			// Update position via velocity
+			// TODO Was originally using this.But due to Collision System not taking initial velocity into account. I decided to simplify on this end
+			//KPVector3SSE l_NewPosition = l_pTempGameObject->GetPosition() + ( ((m_InitialVelocity + m_Velocity)/ 2.0f) * i_DeltaTime); 
+			KPVector3SSE l_NewPosition = l_pTempGameObject->GetPosition() + (m_Velocity * i_DeltaTime);
+			l_pTempGameObject->SetPosition(l_NewPosition);
 		}
 
 		void PhysicsComponent::ApplyDrag(float i_DeltaTime)

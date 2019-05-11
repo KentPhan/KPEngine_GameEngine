@@ -4,22 +4,23 @@
 #include "../../include/Physics/PhysicsSystem.h"
 #include "../../include/Utils/SmartPointers.h"
 #include "../../include/Physics/PhysicsComponent.h"
+#include "../../include/Core/GameObject/GameObject.h"
 
 namespace KPEngine
 {
 	namespace Collision
 	{
-		BoxCollisionComponent::BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject) : m_pGameObject(i_GameObject)
+		BoxCollisionComponent::BoxCollisionComponent(StrongPointer<Core::GameObject> i_GameObject, KPVector3SSE i_Center, KPVector3SSE i_Extents) 
+		: m_Center(i_Center), m_Extents(i_Extents), m_pGameObject(i_GameObject)
 		{
-			m_Center = KPVector3SSE();
-			m_Extents = KPVector3SSE(15.0f, 15.0f, 0.0f);
 			m_pPhysicsComponent = i_GameObject->GetPhysicsComponent();
+			
 		}
-
 
 		BoxCollisionComponent::~BoxCollisionComponent()
 		{
 			m_pGameObject.~StrongPointer();
 		}
+
 	}
 }

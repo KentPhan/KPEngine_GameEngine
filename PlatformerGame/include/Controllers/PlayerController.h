@@ -56,19 +56,23 @@ namespace PlatformerGame
 				return m_pObject;
 			}
 
-			void OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo);
+			void ResetPlayer(KPVector3SSE i_Position);
 
-		private:
-			void MovePlayer(const KPVector2 movement, float i_DeltaTime);
+			void OnCollision(KPEngine::Collision::CollisionInfo* i_ColInfo);
+			void OnCollisionStay(KPEngine::Collision::CollisionInfo* i_ColInfo);
+
 		private:
 			KPVector2 m_Direction;
 			WeakPointer<GameObject> m_pObject;
 			float m_JumpForce;
 			float m_HorizontalMoveSpeed;
+			bool m_IsGrounded;
+			bool m_IsFacingRight;
 
 			// TODO Migrate this some how later to game objects. Very tied down
 			StrongPointer<KPEngine::Physics::PhysicsComponent> m_pPlayersPhysicsComponent;
 			StrongPointer<KPEngine::Collision::BoxCollisionComponent> m_pCollider;
+			StrongPointer<KPEngine::Graphics::RenderComponent> m_pRenderer;
 		};
 	}
 }

@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include "../../include/Graphics/RendererSystem.h"
+#include <algorithm>
 
 namespace KPEngine
 {
@@ -18,6 +19,30 @@ namespace KPEngine
 
 			RenderComponent* l_NewComponent = new RenderComponent(i_pGameObject, i_pFileName);
 			m_pRenderComponents->push_back(l_NewComponent);
+		}
+
+		void RendererSystem::UnRegisterSprite(const WeakPointer<Core::GameObject> i_GameObjectRef)
+		{
+			m_pRenderComponents->erase(
+				std::remove_if(m_pRenderComponents->begin(), m_pRenderComponents->end(),
+					[&i_GameObjectRef](StrongPointer<RenderComponent>& i_Item) {return i_Item->GetGameObject() == i_GameObjectRef; })
+				, m_pRenderComponents->end());
+		}
+
+		StrongPointer<RenderComponent> RendererSystem::GetRenderComponent(const Core::GameObject* i_GameObjectRef)
+		{
+			// TODO So inefficent. But easiest way to current get a reference to the physics components without supplying a direct one to the game object
+			if (RendererSystem::m_InitializeSuccessful)
+			{
+				for (size_t i = 0; i < m_pRenderComponents->size(); i++)
+				{
+					if ((*m_pRenderComponents)[i]->GetGameObject() == i_GameObjectRef)
+					{
+						return (*m_pRenderComponents)[i];
+					}
+				}
+			}
+			return nullptr;
 		}
 
 		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
@@ -60,7 +85,9 @@ namespace KPEngine
 				// Tell GLib that we want to render some sprites
 				GLib::Sprites::BeginRendering();
 
-				for (size_t i = 0; i < m_pRenderComponents->size(); i++)
+				// TODO Implement Draw Order based upon Z value instead later. Like a sorted List.
+				// Objects towards the back of the list are drawn first
+				for (int i = m_pRenderComponents->size() - 1; i >= 0; i--)
 				{
 					(*m_pRenderComponents)[i]->Draw();
 				}

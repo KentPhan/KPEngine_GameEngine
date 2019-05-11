@@ -1,7 +1,9 @@
 GameObject = 
 {
 	name = "Player",
-	position = { 140.0, 100.0, 3.0},
+	position = { -500.0, 100.0, 3.0},
+	layer = 1,
+	tag = 1,
 	components =
 	{
 		KPRender2DComponent = 
@@ -12,5 +14,10 @@ GameObject =
 		{
 			isStatic = false
 		},
+		BoxCollisionComponent = 
+		{
+			center = { 0.0, 0.0, 0.0},
+			extents = { 15.0, 15.0, 0.0}
+		}
 	}
 }
