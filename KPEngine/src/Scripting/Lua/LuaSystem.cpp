@@ -194,6 +194,11 @@ namespace KPEngine
 							// TODO For now. Add a Box collision to everything for testing purposes
 							Collision::CollisionSystem::RegisterBoxComponent(l_playerObject, l_Center, l_Extents);
 						}
+						else if (strcmp(l_key, "CameraComponent") == 0)
+						{
+							// Just set as main camera for now
+							Graphics::RendererSystem::RegisterMainCamera(l_playerObject);
+						}
 						else
 						{
 							assert(false && "UnIdentified Component");

@@ -21,7 +21,7 @@ namespace KPEngine
 		public:
 			RenderComponent(WeakPointer<Core::GameObject> i_GameObject, const char* i_pFileName);
 			~RenderComponent();
-			void Draw();
+			void Draw(const KPMatrix4x4SSE& i_CameraSpace);
 			void FlipSprite();
 
 			inline WeakPointer<Core::GameObject> GetGameObject() const

@@ -41,6 +41,7 @@ namespace KPEngine
 
 			KPMatrix4x4SSE operator*(const KPMatrix4x4SSE & i_Other) const;
 			KPMatrix4x4SSE operator*(float&  i_Other) const;
+			KPVector3SSE operator*(const KPVector3SSE & i_Other) const;
 			KPVector4SSE operator*(const KPVector4SSE & i_Other) const;
 
 			// Compare Operators

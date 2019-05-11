@@ -11,6 +11,7 @@ namespace KPEngine
 		// TODO Having a hard time understanding why I have to do this
 		bool RendererSystem::m_InitializeSuccessful;
 		std::vector<StrongPointer<RenderComponent>>* RendererSystem::m_pRenderComponents;
+		StrongPointer<CameraComponent> RendererSystem::m_MainCamera;
 
 		void RendererSystem::RegisterSprite(WeakPointer<Core::GameObject> i_pGameObject, const char* i_pFileName)
 		{
@@ -45,6 +46,12 @@ namespace KPEngine
 			return nullptr;
 		}
 
+		void RendererSystem::RegisterMainCamera(StrongPointer<Core::GameObject> i_pGameObject)
+		{
+			CameraComponent* l_Camera = new CameraComponent(i_pGameObject);
+			m_MainCamera = l_Camera;
+		}
+
 		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 		{
 			RendererSystem::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 1920, 1080);
@@ -53,17 +60,16 @@ namespace KPEngine
 
 		void RendererSystem::Shutdown()
 		{
+			// Clean Render Components
 			for (size_t i = 0; i < m_pRenderComponents->size(); i++)
 			{
 				(*m_pRenderComponents)[i].~StrongPointer();
 			}
-			//for (std::vector<RenderComponent*>::iterator i = m_pRenderComponents->begin(); i != m_pRenderComponents->end(); i++)
-			//{
-			//	delete (*i);
-			//	//delete (*m_pRenderComponents)[i];
-			//}
-			
+
 			m_pRenderComponents->clear();
+
+			// Clean Camera
+			m_MainCamera.~StrongPointer();
 
 			//// IMPORTANT:  Tell GLib to shutdown, releasing resources.
 			GLib::Shutdown();
@@ -85,12 +91,29 @@ namespace KPEngine
 				// Tell GLib that we want to render some sprites
 				GLib::Sprites::BeginRendering();
 
-				// TODO Implement Draw Order based upon Z value instead later. Like a sorted List.
-				// Objects towards the back of the list are drawn first
+				KPMatrix4x4SSE l_CameraSpace;
+
+				// Get Camera
+				if(m_MainCamera)
+				{
+					l_CameraSpace = m_MainCamera->GetCameraTransform().CreateInverseMatrix();
+				}
+				else
+				{
+					l_CameraSpace = KPMatrix4x4SSE::CreateIdentityMatrix();
+				}
+
+				// Default to just drawing with Camera at 0,0
+					// TODO Implement Draw Order based upon Z value instead later. Like a sorted List.
+					// Objects towards the back of the list are drawn first
 				for (int i = m_pRenderComponents->size() - 1; i >= 0; i--)
 				{
-					(*m_pRenderComponents)[i]->Draw();
+					(*m_pRenderComponents)[i]->Draw(l_CameraSpace);
 				}
+
+
+
+				
 
 				// Tell GLib we're done rendering sprites
 				GLib::Sprites::EndRendering();

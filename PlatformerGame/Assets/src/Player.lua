@@ -18,6 +18,10 @@ GameObject =
 		{
 			center = { 0.0, 0.0, 0.0},
 			extents = { 15.0, 15.0, 0.0}
+		},
+		CameraComponent =
+		{
+
 		}
 	}
 }

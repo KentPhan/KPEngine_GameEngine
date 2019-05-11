@@ -329,6 +329,13 @@ KPEngine::Utils::KPMatrix4x4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(float
 	return o_Result;
 }
 
+KPEngine::Utils::KPVector3SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(const KPVector3SSE& i_Other) const
+{
+	KPVector4SSE i_Other4 = KPVector4SSE(i_Other.X(),i_Other.Y(),i_Other.Z(), 1.0f);
+	KPVector4SSE o_Value = (*this) * i_Other4;
+	return KPVector3SSE(o_Value.X(), o_Value.Y(), o_Value.Z());
+}
+
 KPEngine::Utils::KPVector4SSE KPEngine::Utils::KPMatrix4x4SSE::operator*(const KPVector4SSE& i_Other) const
 {
 	// TODO Implement SSE Version

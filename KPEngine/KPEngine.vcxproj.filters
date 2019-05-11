@@ -108,6 +108,9 @@
     <ClCompile Include="src\Utils\KPMatrix4x4SSE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\CameraComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Utils\List.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Utils\KPMatrix4x4SSE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics\CameraComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

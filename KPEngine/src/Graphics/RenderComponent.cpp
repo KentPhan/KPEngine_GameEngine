@@ -21,7 +21,7 @@ namespace KPEngine
 			m_pGameObject.~WeakPointer();
 		}
 
-		void RenderComponent::Draw()
+		void RenderComponent::Draw(const KPMatrix4x4SSE& i_CameraSpace)
 		{
 			/*static float			moveDist = .01f;
 			static float			moveDir = moveDist;
@@ -41,7 +41,7 @@ namespace KPEngine
 			if (!l_pTempGameObject)
 				return;
 
-			KPVector3SSE m_Position = l_pTempGameObject-> GetPosition();
+			KPVector3SSE m_Position = i_CameraSpace * l_pTempGameObject-> GetPosition();
 			GLib::Point2D Offset = { m_Position.X(), m_Position.Y() };
 			GLib::Sprites::RenderSprite(*m_pSprite, Offset, 0.0f);
 		}
