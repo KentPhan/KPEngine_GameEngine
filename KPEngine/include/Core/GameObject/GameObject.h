@@ -48,7 +48,8 @@ namespace KPEngine
 			PLATFORM = 0x02,
 			DEATH = 0x04,
 			WIN = 0x08,
-			UI = 0x10
+			UI = 0x10,
+			BACKGROUND = 0x20,
 		};
 
 

@@ -1,7 +1,7 @@
 GameObject = 
 {
 	name = "Player",
-	position = { 140.0, 100.0, 3.0},
+	position = { -500.0, 100.0, 3.0},
 	layer = 1,
 	tag = 1,
 	components =

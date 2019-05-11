@@ -25,27 +25,47 @@ namespace PlatformerGame
 	{
 		try
 		{
+			
+
+
 			// Create Player
 			StrongPointer<GameObject> l_GameObject =  Core::InstantiateGameObject("Assets\\src\\Player.lua");
 
 			// Create Platforms
 			float l_BoxDimension = 30.0f;
-			KPVector3SSE l_StartBoxPosition = KPVector3SSE(-380.0f, -300.0f, 0.0f);
-			KPVector3SSE l_Marker = l_StartBoxPosition;
+			KPVector3SSE l_Marker; // For marking where to make boxes
 
-			l_Marker = l_StartBoxPosition;
+			// TODO In the long run I would make a level generator and reader from a CSV file of some sort
 
-			for(int i = 0; i < 20; i++)
+			// Platform 1
+			KPVector3SSE l_Platform1Start = KPVector3SSE(-600.0f, -300.0f, 0.0f);
+			l_Marker = l_Platform1Start;
+			for(int i = 0; i < 15; i++)
 			{
 				StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\Platform.lua", l_Marker);
 				l_Marker.X(l_Marker.X() + l_BoxDimension);
 			}
 
-			// Create Death Platforms
-			StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\DeathPlatform.lua", KPVector3SSE(300.0f,-300.0f,0.0f));
+			// Platform 2
+			l_Marker += KPVector3SSE(100.0f, 0.0f, 0.0f);
+			for (int i = 0; i < 15; i++)
+			{
+				StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\Platform.lua", l_Marker);
+				l_Marker.X(l_Marker.X() + l_BoxDimension);
+			}
 
 			// Create Win Key
-			StrongPointer<GameObject> l_GameObjectKey = Core::InstantiateGameObject("Assets\\src\\KeyToWin.lua", KPVector3SSE(400.0f, -300.0f, 0.0f));
+			l_Marker += KPVector3SSE(-l_BoxDimension, l_BoxDimension, 0.0f);
+			StrongPointer<GameObject> l_GameObjectKey = Core::InstantiateGameObject("Assets\\src\\KeyToWin.lua", l_Marker);
+
+			// Create Death Platforms
+			KPVector3SSE l_PlatformDeathStart = KPVector3SSE(-1000.0f, -540.0f, 0.0f);
+			l_Marker = l_PlatformDeathStart;
+			for (int i = 0; i < 100; i++)
+			{
+				StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\DeathPlatform.lua", l_Marker);
+				l_Marker.X(l_Marker.X() + l_BoxDimension);
+			}
 
 			// Create UI
 			m_pUIPressEnter = Core::InstantiateGameObject("Assets\\src\\Text_Enter.lua", KPVector3SSE(0.0f, 0.0f, 0.0f));
@@ -56,6 +76,8 @@ namespace PlatformerGame
 			m_CurrentState = GameStates::START;
 			m_StartPosition = l_GameObject->GetPosition();
 
+			// Create Background
+			//StrongPointer<GameObject> l_GameObjectBackground = Core::InstantiateGameObject("Assets\\src\\Background.lua");
 
 			// Set Instance
 			Instance = this;

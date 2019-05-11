@@ -62,5 +62,6 @@
     <None Include="Assets\src\Text_Win.lua" />
     <None Include="Assets\src\Text_Enter.lua" />
     <None Include="Assets\src\KeyToWin.lua" />
+    <None Include="Assets\src\Background.lua" />
   </ItemGroup>
 </Project>
