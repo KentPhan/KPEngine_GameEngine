@@ -29,6 +29,22 @@ namespace KPEngine
 				, m_pRenderComponents->end());
 		}
 
+		StrongPointer<RenderComponent> RendererSystem::GetRenderComponent(const Core::GameObject* i_GameObjectRef)
+		{
+			// TODO So inefficent. But easiest way to current get a reference to the physics components without supplying a direct one to the game object
+			if (RendererSystem::m_InitializeSuccessful)
+			{
+				for (size_t i = 0; i < m_pRenderComponents->size(); i++)
+				{
+					if ((*m_pRenderComponents)[i]->GetGameObject() == i_GameObjectRef)
+					{
+						return (*m_pRenderComponents)[i];
+					}
+				}
+			}
+			return nullptr;
+		}
+
 		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 		{
 			RendererSystem::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 1920, 1080);

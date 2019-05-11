@@ -22,17 +22,20 @@ namespace KPEngine
 			RenderComponent(WeakPointer<Core::GameObject> i_GameObject, const char* i_pFileName);
 			~RenderComponent();
 			void Draw();
+			void FlipSprite();
 
 			inline WeakPointer<Core::GameObject> GetGameObject() const
 			{
 				return m_pGameObject;
 			}
 		private:
+			bool m_isFlipped;
+			KPString m_FileName;
 			WeakPointer<Core::GameObject>m_pGameObject;
 			GLib::Sprites::Sprite * m_pSprite;
 			
 
-			GLib::Sprites::Sprite* CreateSprite(const char * i_pFilename);
+			GLib::Sprites::Sprite* CreateSprite(const char * i_pFilename, bool i_FlipHorizontally);
 		};
 	}
 }

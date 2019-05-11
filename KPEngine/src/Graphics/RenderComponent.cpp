@@ -8,9 +8,10 @@ namespace KPEngine
 {
 	namespace Graphics
 	{
-		RenderComponent::RenderComponent(WeakPointer<Core::GameObject> i_GameObject, const char* i_pFileName):m_pGameObject(i_GameObject)
+		RenderComponent::RenderComponent(WeakPointer<Core::GameObject> i_GameObject, const char* i_pFileName) :m_pGameObject(i_GameObject), m_isFlipped(false)
 		{
-			m_pSprite = CreateSprite(i_pFileName);
+			m_FileName = KPString(i_pFileName);
+			m_pSprite = CreateSprite(m_FileName.Get(), false);
 		}
 
 
@@ -40,13 +41,19 @@ namespace KPEngine
 			if (!l_pTempGameObject)
 				return;
 
-
 			KPVector3SSE m_Position = l_pTempGameObject-> GetPosition();
 			GLib::Point2D Offset = { m_Position.X(), m_Position.Y() };
 			GLib::Sprites::RenderSprite(*m_pSprite, Offset, 0.0f);
 		}
 
-		GLib::Sprites::Sprite* RenderComponent::CreateSprite(const char * i_pFilename)
+		void RenderComponent::FlipSprite()
+		{
+			GLib::Sprites::Release(m_pSprite);
+			m_isFlipped = !m_isFlipped;
+			m_pSprite = CreateSprite(m_FileName.Get(), m_isFlipped);
+		}
+
+		GLib::Sprites::Sprite* RenderComponent::CreateSprite(const char * i_pFilename, bool i_FlipHorizontally)
 		{
 			assert(i_pFilename);
 
@@ -77,7 +84,13 @@ namespace KPEngine
 
 			// Define the sprite edges
 			GLib::Sprites::SpriteEdges	Edges = { -float(width / 2.0f), float(height), float(width / 2.0f), 0.0f };
-			GLib::Sprites::SpriteUVs	UVs = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, 1.0f }, { 1.0f, 1.0f } };
+			
+			GLib::Sprites::SpriteUVs	UVs;
+			if(!i_FlipHorizontally)
+				UVs = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 0.0f, 1.0f }, { 1.0f, 1.0f } };
+			else
+				UVs = { { 1.0f, 0.0f }, { 0.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
+
 			GLib::RGBA							Color = { 255, 255, 255, 255 };
 
 			// Create the sprite

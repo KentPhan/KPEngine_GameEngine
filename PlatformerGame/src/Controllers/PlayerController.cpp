@@ -7,6 +7,7 @@
 #include "Input/InputSystem.h"
 #include "Physics/PhysicsComponent.h"
 #include "Collision/BoxCollisionComponent.h"
+#include "Graphics/RenderComponent.h"
 
 namespace PlatformerGame
 {
@@ -37,7 +38,9 @@ namespace PlatformerGame
 			l_TempStrong->SetController(this);
 			m_pPlayersPhysicsComponent = l_TempStrong->GetPhysicsComponent();
 			m_pCollider = l_TempStrong->GetCollisionComponent();
+			m_pRenderer = l_TempStrong->GetRenderComponent();
 
+			m_IsFacingRight = true;
 
 			Delegate<CollisionInfo*> l_Delegate =  Delegate<CollisionInfo*>::Create<PlayerController, &PlayerController::OnCollision>(this);
 			m_pCollider->OnCollisionHandler +=l_Delegate;
@@ -70,11 +73,23 @@ namespace PlatformerGame
 			// Horizontal Movement
 			if (InputSystem::GetInputHeldDown(KeyCode::A))
 			{
+				if(m_IsFacingRight)
+				{
+					m_pRenderer->FlipSprite();
+					m_IsFacingRight = !m_IsFacingRight;
+				}
+
 				KPVector3SSE l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
 				m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE(-1.0f * m_HorizontalMoveSpeed , l_CVel.Y(), l_CVel.Z()));
 			}
 			else if (InputSystem::GetInputHeldDown(KeyCode::D))
 			{
+				if (!m_IsFacingRight)
+				{
+					m_pRenderer->FlipSprite();
+					m_IsFacingRight = !m_IsFacingRight;
+				}
+
 				KPVector3SSE l_CVel = m_pPlayersPhysicsComponent->GetVelocity();
 				m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE(1.0f* m_HorizontalMoveSpeed , l_CVel.Y(), l_CVel.Z()));
 			}

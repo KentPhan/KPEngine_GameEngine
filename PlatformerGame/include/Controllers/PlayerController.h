@@ -67,10 +67,12 @@ namespace PlatformerGame
 			float m_JumpForce;
 			float m_HorizontalMoveSpeed;
 			bool m_IsGrounded;
+			bool m_IsFacingRight;
 
 			// TODO Migrate this some how later to game objects. Very tied down
 			StrongPointer<KPEngine::Physics::PhysicsComponent> m_pPlayersPhysicsComponent;
 			StrongPointer<KPEngine::Collision::BoxCollisionComponent> m_pCollider;
+			StrongPointer<KPEngine::Graphics::RenderComponent> m_pRenderer;
 		};
 	}
 }

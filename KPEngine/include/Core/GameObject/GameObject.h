@@ -17,6 +17,12 @@ namespace KPEngine
 			class IGameObjectController;
 		}
 	}
+
+	namespace Graphics
+	{
+		class RenderComponent;
+	}
+
 	namespace Physics
 	{
 		class PhysicsComponent;
@@ -114,6 +120,7 @@ namespace KPEngine
 				return m_pController;
 			}
 
+			StrongPointer<Graphics::RenderComponent> GetRenderComponent() const;
 			StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent() const;
 			StrongPointer<Collision::BoxCollisionComponent> GetCollisionComponent() const;
 			
