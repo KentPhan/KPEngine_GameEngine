@@ -23,7 +23,14 @@ namespace KPEngine
 			{
 				return m_pGameObject;
 			}
-			StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent();
+			// TODO  I don't understand. Why this cannot be **** const
+			inline StrongPointer<Physics::PhysicsComponent> GetPhysicsComponent() 
+			{
+				if (!m_pPhysicsComponent)
+					m_pPhysicsComponent = m_pGameObject->GetPhysicsComponent();
+
+				return m_pPhysicsComponent;
+			}
 
 			inline void* operator new(size_t i_size)
 			{

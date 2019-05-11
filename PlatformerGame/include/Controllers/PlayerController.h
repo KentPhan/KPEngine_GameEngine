@@ -56,11 +56,11 @@ namespace PlatformerGame
 				return m_pObject;
 			}
 
+			void ResetPlayer(KPVector3SSE i_Position);
+
 			void OnCollision(KPEngine::Collision::CollisionInfo* i_ColInfo);
 			void OnCollisionStay(KPEngine::Collision::CollisionInfo* i_ColInfo);
 
-		private:
-			void MovePlayer(const KPVector2 movement, float i_DeltaTime);
 		private:
 			KPVector2 m_Direction;
 			WeakPointer<GameObject> m_pObject;

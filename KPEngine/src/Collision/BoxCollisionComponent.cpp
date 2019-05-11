@@ -22,12 +22,5 @@ namespace KPEngine
 			m_pGameObject.~StrongPointer();
 		}
 
-		StrongPointer<Physics::PhysicsComponent> BoxCollisionComponent::GetPhysicsComponent()
-		{
-			if (!m_pPhysicsComponent)
-				m_pPhysicsComponent = m_pGameObject->GetPhysicsComponent();
-				
-			return m_pPhysicsComponent;
-		}
 	}
 }

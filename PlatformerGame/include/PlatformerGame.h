@@ -12,8 +12,8 @@ namespace PlatformerGame
 
 	enum GameStates
 	{
+		START,
 		PLAY,
-		LOSE,
 		WIN
 	};
 
@@ -25,14 +25,18 @@ namespace PlatformerGame
 
 
 	public:
-
 		bool Init() override;
 		void Update(float i_deltaTime) override;
 		bool Shutdown() override;
+		void TriggerGameOver();
 
-		//static void InitiateGame();
 		// Instances to access
+		static PlatformerGame* Instance;
+
+		// Variables
 		Controllers::PlayerController* m_pPlayerController;
+		GameStates m_CurrentState;
+		KPVector3SSE m_StartPosition;
 	};
 }
 

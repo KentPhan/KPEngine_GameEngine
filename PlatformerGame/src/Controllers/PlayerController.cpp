@@ -8,7 +8,6 @@
 #include "Physics/PhysicsComponent.h"
 #include "Collision/BoxCollisionComponent.h"
 
-
 namespace PlatformerGame
 {
 	namespace Controllers
@@ -87,6 +86,12 @@ namespace PlatformerGame
 
 		}
 
+		void PlayerController::ResetPlayer(KPVector3SSE i_Position)
+		{
+			m_pObject.GetStrongPointer()->SetPosition(i_Position);
+			m_pPlayersPhysicsComponent->SetVelocity(KPVector3SSE::Zero());
+		}
+
 		void PlayerController::OnCollision(KPEngine::Collision::CollisionInfo* i_ColInfo)
 		{
 			/*KPVector3SSE l_OtherN = i_ColInfo.m_CollisionNormal;
@@ -98,7 +103,8 @@ namespace PlatformerGame
 
 			if(i_ColInfo->m_OtherCollider->GetGameObject()->GetTag() == Tag::DEATH)
 			{
-				DEBUG_PRINT(KPLogType::Verbose, "Collided With Death!"); 
+				DEBUG_PRINT(KPLogType::Verbose, "Collided With Death!");
+				PlatformerGame::Instance->TriggerGameOver();
 			}
 
 			
@@ -109,27 +115,6 @@ namespace PlatformerGame
 			DEBUG_PRINT(KPLogType::Verbose, "Collision Stay!");
 		}
 
-		void PlayerController::MovePlayer(const KPVector2 movement, float i_DeltaTime)
-		{
-			assert(m_pObject);
-			// TODO Update player position
-			/*float l_Speed = 5.0f * i_DeltaTime;
-
-			KPVector2 newPosition = m_pObject->GetPosition() + KPVector2(1.0f,1.0f) * l_Speed;*/
-
-			//// TODO consolidate enforce boundaries
-			//// only move if would stay in boundaries
-			//if (newPosition.X() < 0 || newPosition.X() > 19)
-			//{
-			//	newPosition.X(m_pObject->GetPosition().X());
-			//}
-			//if (newPosition.Y() < 0 || newPosition.Y() > 19)
-			//{
-			//	newPosition.Y(m_pObject->GetPosition().Y());
-			//}
-
-			/*m_pObject->SetPosition(newPosition);*/
-		}
 	}
 }
 

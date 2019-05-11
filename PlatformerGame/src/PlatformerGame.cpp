@@ -7,6 +7,7 @@
 #include "Core/Core.h"
 #include  "Physics/PhysicsComponent.h"
 #include <string>
+#include "Input/InputSystem.h"
 
 
 using namespace PlatformerGame::Controllers;
@@ -16,39 +17,45 @@ namespace PlatformerGame
 {
 	
 	using namespace KPEngine::Core::Interfaces;
+	using namespace KPEngine::Input;
+
+	PlatformerGame* PlatformerGame::Instance;
 
 	bool PlatformerGame::Init()
 	{
 		try
 		{
+			// Create Player
 			StrongPointer<GameObject> l_GameObject =  Core::InstantiateGameObject("Assets\\src\\Player.lua");
 
-			// TODO this is a sample of what the unit test would look like. Will try to migrate logic to a seperate unit test file
-
+			// Create Platforms
 			float l_BoxDimension = 30.0f;
 			KPVector3SSE l_StartBoxPosition = KPVector3SSE(-380.0f, -300.0f, 0.0f);
 			KPVector3SSE l_Marker = l_StartBoxPosition;
 
 			l_Marker = l_StartBoxPosition;
 
-			// Create X Platforms
 			for(int i = 0; i < 20; i++)
 			{
 				StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\Platform.lua", l_Marker);
 				l_Marker.X(l_Marker.X() + l_BoxDimension);
 			}
 
-			// Death Test
+			// Create Death Platforms
 			StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\DeathPlatform.lua", KPVector3SSE(300.0f,-300.0f,0.0f));
 
-			// UI Test
-			//StrongPointer<GameObject> l_GameObjectText = Core::InstantiateGameObject("Assets\\src\\Text_Enter.lua", KPVector3SSE(300.0f, -300.0f, 0.0f));
+			// Create UI
+			StrongPointer<GameObject> l_GameObjectText = Core::InstantiateGameObject("Assets\\src\\Text_Enter.lua", KPVector3SSE(300.0f, -300.0f, 0.0f));
 			
 			// Attaching Controller
 			m_pPlayerController = new PlayerController();
 			m_pPlayerController->Initialize(l_GameObject);
+			m_CurrentState = GameStates::START;
+			m_StartPosition = l_GameObject->GetPosition();
 
 
+			// Set Instance
+			Instance = this;
 		}
 		catch (int i_e)
 		{
@@ -60,15 +67,47 @@ namespace PlatformerGame
 
 	void PlatformerGame::Update(float i_deltaTime)
 	{
-		m_pPlayerController->Update(i_deltaTime);
+		switch(m_CurrentState)
+		{
+			case START:
+			{
+				if(InputSystem::GetInputDown(KeyCode::Enter))
+				{
+					m_CurrentState = GameStates::PLAY;
+				}
+				break;
+			}
+			case PLAY: 
+			{
+				m_pPlayerController->Update(i_deltaTime);
+				break;
+			}
+			case WIN: 
+			{
+				if (InputSystem::GetInputDown(KeyCode::Enter))
+				{
+					m_CurrentState = GameStates::START;
+				}
+				break;
+			}
+			default: ;
+		}
 		//DEBUG_PRINT(KPLogType::Verbose, "Game Update Triggered: %f", i_deltaTime);
 	}
+
+
 
 	bool PlatformerGame::Shutdown()
 	{
 		m_pPlayerController->Destroy();
 		delete m_pPlayerController;
 		return true;
+	}
+
+	void PlatformerGame::TriggerGameOver()
+	{
+		m_CurrentState = GameStates::START;
+		m_pPlayerController->ResetPlayer(m_StartPosition);
 	}
 }
 

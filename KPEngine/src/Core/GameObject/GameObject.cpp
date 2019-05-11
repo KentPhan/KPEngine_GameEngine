@@ -4,13 +4,10 @@
 #include "../../../include/Physics/PhysicsSystem.h"
 #include "../../../include/Collision/CollisionSystem.h"
 
-StrongPointer<KPEngine::Physics::PhysicsComponent> KPEngine::Core::GameObject::GetPhysicsComponent() const
+StrongPointer<KPEngine::Physics::PhysicsComponent>  KPEngine::Core::GameObject::GetPhysicsComponent() const
 {
-
-	{
-		StrongPointer<Physics::PhysicsComponent> o_Component = Physics::PhysicsSystem::GetPhysicsComponent(this);
-		return o_Component;
-	}
+	StrongPointer<Physics::PhysicsComponent> o_Component = Physics::PhysicsSystem::GetPhysicsComponent(this);
+	return o_Component;
 }
 
 StrongPointer<KPEngine::Collision::BoxCollisionComponent> KPEngine::Core::GameObject::GetCollisionComponent() const
