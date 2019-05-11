@@ -10,6 +10,12 @@ KPEngine::Utils::KPMatrix4x4::KPMatrix4x4()
 	{
 		i = 0.0f;
 	}
+
+	// Default Identity Matrix
+	m_Matrix[0] = 1;
+	m_Matrix[5] = 1;
+	m_Matrix[10] = 1;
+	m_Matrix[15] = 1;
 }
 KPEngine::Utils::KPMatrix4x4::KPMatrix4x4(float i_Values[])
 {
@@ -56,6 +62,7 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTranslationMatr
 	o_toReturn.m_Matrix[3] = i_Translation.X();
 	o_toReturn.m_Matrix[7] = i_Translation.Y();
 	o_toReturn.m_Matrix[11] = i_Translation.Z();
+	o_toReturn.m_Matrix[15] = 1.0F;
 	return o_toReturn;
 }
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateRotationMatrix_X(float i_Angle)
@@ -93,6 +100,32 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateScaleMatrix(KPV
 	o_toReturn.m_Matrix[10] = i_Scale.Z();
 	return o_toReturn;
 }
+
+KPEngine::Utils::KPVector4 KPEngine::Utils::KPMatrix4x4::Row(size_t i_Row) const
+{
+	KPVector4 o_Result;
+
+	size_t l_RowIndex = (i_Row * 4);
+	o_Result.X(m_Matrix[l_RowIndex]);
+	o_Result.Y(m_Matrix[l_RowIndex + 1]);
+	o_Result.Z(m_Matrix[l_RowIndex + 2]);
+	o_Result.W(m_Matrix[l_RowIndex + 3]);
+
+	return o_Result;
+}
+
+KPEngine::Utils::KPVector4 KPEngine::Utils::KPMatrix4x4::Col(size_t i_Col) const
+{
+	KPVector4 o_Result;
+	
+	o_Result.X(m_Matrix[i_Col]);
+	o_Result.Y(m_Matrix[i_Col + 4]);
+	o_Result.Z(m_Matrix[i_Col + 8]);
+	o_Result.W(m_Matrix[i_Col + 12]);
+
+	return o_Result;
+}
+
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateTransposeMatrix() const
 {
 	KPMatrix4x4 o_TransposeMatrix = KPMatrix4x4();
@@ -121,7 +154,7 @@ KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateInverseMatrix()
 	return l_AdjugateMatrix* l_InverseDeterminant;
 }
 
-// AdjointMatrix = Transpose(CofactorMatrix)
+// AdjointMatrix/Adjugate = Transpose(CofactorMatrix)
 KPEngine::Utils::KPMatrix4x4 KPEngine::Utils::KPMatrix4x4::CreateAdjugateMatrix() const
 {
 	// Calculate CofactorMatrix

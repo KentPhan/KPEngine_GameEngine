@@ -41,7 +41,7 @@ namespace KPEngine
 					// if first frame
 					if(!g_LastFrameStartTick)
 					{
-						g_LastFrameTime_s = 13.3f;
+						g_LastFrameTime_s = .00133f;
 					}
 					// for other franes
 					else
@@ -53,10 +53,18 @@ namespace KPEngine
 					}
 
 
-					//DEBUG_PRINT(Utils::KPLogType::Verbose, "Frame Time difference calculated At %f", g_LastFrameTime_s);
 					
+					//DEBUG_PRINT(Utils::KPLogType::Verbose, "Frame Time difference calculated At %f", g_LastFrameTime_s);
 					// Save counter for next frame
 					g_LastFrameStartTick = l_CurrentTickCounter;
+
+					// If Time jumps absurdly high. Limit it.
+					if(g_LastFrameTime_s > .222f)
+					{
+						g_LastFrameTime_s = .222f;
+					}
+
+					//aDEBUG_PRINT(Utils::KPLogType::Verbose, "Frame Time difference calculated At %f", g_LastFrameTime_s);
 
 					return g_LastFrameTime_s;
 				}

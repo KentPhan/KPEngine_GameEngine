@@ -22,7 +22,7 @@ namespace KPEngine
 
 		void RendererSystem::Initialize(HINSTANCE i_hInstance, HINSTANCE i_hPrevInstance, LPWSTR i_lpCmdLine, int i_nCmdShow)
 		{
-			RendererSystem::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 800, 600);
+			RendererSystem::m_InitializeSuccessful = GLib::Initialize(i_hInstance, i_nCmdShow, "Platformer Game", -1, 1920, 1080);
 			m_pRenderComponents = new  std::vector<StrongPointer<RenderComponent>>();
 		}
 

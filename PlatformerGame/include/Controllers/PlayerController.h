@@ -4,6 +4,12 @@
 #include "Utils/SmartPointers.h"
 
 namespace KPEngine {
+	namespace Collision {
+		struct CollisionInfo;
+	}
+}
+
+namespace KPEngine {
 	namespace Physics {
 		class PhysicsComponent;
 	}
@@ -18,28 +24,15 @@ namespace PlatformerGame
 		class PlayerController : public Interfaces::IGameObjectController
 		{
 		public:
-			PlayerController()
-			{
-				m_pObject = WeakPointer<GameObject>();
-				// m_pPlayersPhysicsComponent = nullptr;
-			}
+			PlayerController();
 
-			~PlayerController()
-			{
-				m_pObject = nullptr;
-				// m_pPlayersPhysicsComponent = nullptr;
-			};
+			~PlayerController();
 			
 			// Setter
 
 			// Order
-			inline void Initialize(WeakPointer<GameObject> i_pObject) override
-			{
-				m_pObject = i_pObject;
-				StrongPointer<GameObject> l_TempStrong = m_pObject.GetStrongPointer();
-				l_TempStrong->SetController(this);
-				m_pPlayersPhysicsComponent = l_TempStrong->GetPhysicsComponent();
-			}
+			void Initialize(WeakPointer<GameObject> i_pObject) override;
+			void Destroy() override;
 			void Update(float i_deltaTime) override;
 
 			// Info
@@ -53,7 +46,7 @@ namespace PlatformerGame
 			{
 				return 'P';
 			}
-			inline KPVector2 GetPosition() const override
+			inline KPVector3SSE GetPosition() const override
 			{
 				return m_pObject.GetStrongPointer()->GetPosition();
 			}
@@ -62,13 +55,20 @@ namespace PlatformerGame
 			{
 				return m_pObject;
 			}
+
+			void OnCollision(KPEngine::Collision::CollisionInfo i_ColInfo);
+
 		private:
 			void MovePlayer(const KPVector2 movement, float i_DeltaTime);
+		private:
 			KPVector2 m_Direction;
 			WeakPointer<GameObject> m_pObject;
+			float m_JumpForce;
+			float m_HorizontalMoveSpeed;
 
 			// TODO Migrate this some how later to game objects. Very tied down
 			StrongPointer<KPEngine::Physics::PhysicsComponent> m_pPlayersPhysicsComponent;
+			StrongPointer<KPEngine::Collision::BoxCollisionComponent> m_pCollider;
 		};
 	}
 }

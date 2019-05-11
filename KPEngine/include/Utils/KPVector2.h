@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <math.h>
+#include "KPLogType.h"
+#include "KP_Log.h"
 
 namespace KPEngine
 {
@@ -45,6 +47,7 @@ namespace KPEngine
 			}
 			inline KPVector2 Normalized() const
 			{
+				DEBUG_PRINT(KPLogType::Fatal, "KPVector2 Normalize Function Cannot Divide By Zero!");
 				return KPVector2(m_X,m_Y)/ Magnitude();
 			}
 

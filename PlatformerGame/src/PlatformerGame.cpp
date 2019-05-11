@@ -4,7 +4,7 @@
 #include "Utils/KP_Log.h"
 #include "../include/GameObjects/GameObjectType.h"
 #include "../include/PlatformerGame.h"
-#include "Core/GameObject/GameObjectSystem.h"
+#include "Core/Core.h"
 #include  "Physics/PhysicsComponent.h"
 #include <string>
 
@@ -21,9 +21,30 @@ namespace PlatformerGame
 	{
 		try
 		{
-			StrongPointer<GameObject> l_GameObject =  CoreFunctions::InstantiateGameObject("Assets\\src\\Player.lua");
-			StrongPointer<GameObject> l_GameObject2 = CoreFunctions::InstantiateGameObject("Assets\\src\\Monster.lua");
+			StrongPointer<GameObject> l_GameObject =  Core::InstantiateGameObject("Assets\\src\\Player.lua");
 
+			// TODO this is a sample of what the unit test would look like. Will try to migrate logic to a seperate unit test file
+
+			float l_BoxDimension = 40.0f;
+			KPVector3SSE l_StartBoxPosition = KPVector3SSE(-380.0f, -300.0f, 0.0f);
+			KPVector3SSE l_Marker = l_StartBoxPosition;
+
+			// Create X Player Characters With Gravity for testing
+			for (int i = 0; i < 12; i++)
+			{
+				StrongPointer<GameObject> l_GameObjectPlayerHolder = Core::InstantiateGameObject("Assets\\src\\Player.lua", l_Marker + KPVector3SSE(0.0f,300.0f,0.0f));
+				l_Marker.X(l_Marker.X() + l_BoxDimension);
+			}
+
+			l_Marker = l_StartBoxPosition;
+
+			// Create X Platforms
+			for(int i = 0; i < 20; i++)
+			{
+				StrongPointer<GameObject> l_GameObjectPlat = Core::InstantiateGameObject("Assets\\src\\Platform.lua", l_Marker);
+				l_Marker.X(l_Marker.X() + l_BoxDimension);
+			}
+			
 			// Attaching Controller
 			m_pPlayerController = new PlayerController();
 			m_pPlayerController->Initialize(l_GameObject);
@@ -46,6 +67,7 @@ namespace PlatformerGame
 
 	bool PlatformerGame::Shutdown()
 	{
+		m_pPlayerController->Destroy();
 		delete m_pPlayerController;
 		return true;
 	}

@@ -8,18 +8,55 @@ namespace KPEngine
 {
 	namespace Physics
 	{
+		
 		class PhysicsComponent
 		{
 		public:
-			PhysicsComponent(WeakPointer<Core::GameObject> i_GameObject);
+			PhysicsComponent(WeakPointer<Core::GameObject> i_GameObject, bool i_IsStatic = false);
 			~PhysicsComponent()
 			{
 				m_pGameObject.~WeakPointer();
 			}
 
-			void AddForce(KPVector2 i_Force);
+			inline void* operator new(size_t i_size)
+			{
+				return _mm_malloc(i_size, 16);
+			}
+			inline void operator delete(void * i_p)
+			{
+				_mm_free(i_p);
+			}
 
+			void AddForce(KPVector3SSE i_Force);
 			void UpdatePhysics(float i_DeltaTime);
+
+			inline KPVector3SSE GetVelocity() const
+			{
+				return m_Velocity;
+			}
+			inline KPVector3SSE GetAcceleration() const
+			{
+				return m_Acceleration;
+			}
+
+			void inline SetVelocity(KPVector3SSE i_NewVelocity)
+			{
+				m_Velocity = i_NewVelocity;
+			}
+			void inline SetAcceleration(KPVector3SSE i_NewAcceleration)
+			{
+				m_Acceleration = i_NewAcceleration;
+			}
+
+			void inline SetNegateGravityThisFrame()
+			{
+				m_NegateGravityFrameCheck = true;
+			}
+
+			bool inline IsStatic()
+			{
+				return m_IsStatic;
+			}
 
 			inline WeakPointer<Core::GameObject> GetGameObject() const
 			{
@@ -30,42 +67,16 @@ namespace KPEngine
 
 			WeakPointer<Core::GameObject> m_pGameObject;
 			bool m_HasGravity;
+			bool m_NegateGravityFrameCheck;
+			float m_GForce;
 			bool m_HasDrag;
 			float m_Mass;
 			float m_DragCoefficient;
-			KPVector2 m_Velocity;
-			KPVector2 m_Acceleration;
+			KPVector3SSE m_Velocity;
+			KPVector3SSE m_Acceleration;
+			bool m_IsStatic;
 
-			void inline ApplyDrag(float i_DeltaTime)
-			{
-				if(m_HasDrag)
-				{
-					float l_Magnitude = m_Velocity.Magnitude();
-					float l_Force = m_DragCoefficient * l_Magnitude * l_Magnitude;
-					if(l_Force > 0.0f)
-					{
-						KPVector2 l_ForceToAdd =  m_Velocity.Normalized() * l_Force * -1.0f;
-
-						AddForce(l_ForceToAdd);
-
-
-						// TODO Does not account for midpoint velocity. Does Flat velocity calculation. So slightly off.
-						// If the objects new acceleration would bring the velocity to a stop. Set velocity and acceleration to zero.
-						KPVector2 l_VelocityBefore = m_Velocity;
-						KPVector2 l_VelocityAfter = m_Velocity + (m_Acceleration * i_DeltaTime);
-
-						// If acceleration would bring it past zero
-						if(l_VelocityBefore.Dot(l_VelocityAfter) < 0.0f)
-						{
-							DEBUG_PRINT(Verbose, "Slowed to A Stop with Drag");
-							m_Velocity = KPVector2(0.0f, 0.0f);
-							m_Acceleration = KPVector2(0.0f, 0.0f);
-						}
-					}
-						
-				}
-			}
-
+			void ApplyDrag(float i_DeltaTime);
 			void inline ApplyVelocity(float i_DeltaTime)
 			{
 				

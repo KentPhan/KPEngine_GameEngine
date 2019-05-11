@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "KP_Log.h"
 
 namespace KPEngine
 {
@@ -45,6 +46,17 @@ namespace KPEngine
 			{
 				return m_Z;
 			}
+			inline float Magnitude() const
+			{
+				return sqrtf(powf(m_X, 2.0f) + powf(m_Y, 2.0f) + powf(m_Z, 2.0f));
+			}
+			inline KPVector3 Normalized() const
+			{
+				float l_Divisor = Magnitude();
+				if(l_Divisor == 0.0f)
+					DEBUG_PRINT(KPLogType::Fatal, "KPVector3 Normalize Function Cannot Divide By Zero!");
+				return KPVector3(m_X, m_Y, m_Z) / l_Divisor;
+			}
 
 			// Set
 			inline void X(float i_x)
@@ -60,9 +72,35 @@ namespace KPEngine
 				m_Z = i_z;
 			}
 
+
 			// operators
 			KPVector3 operator+(const KPVector3 & i_other) const;
 			KPVector3& operator+=(const KPVector3 & i_other);
+
+			KPVector3 operator*(const float & i_other) const;
+			KPVector3& operator*=(const float & i_other);
+
+			KPVector3 operator/(const float & i_other) const;
+			KPVector3& operator/=(const float & i_other);
+
+			KPVector3 operator-(const KPVector3 & i_other) const;
+			KPVector3& operator-=(const KPVector3 & i_other);
+
+			KPVector3& operator=(const KPVector3 & i_other);
+
+			inline bool operator==(const KPVector3& i_other) const
+			{
+				return ((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z));
+			}
+			inline bool operator!=(const KPVector3& i_other) const
+			{
+				return !((m_X == i_other.m_X) && (m_Y == i_other.m_Y) && (m_Z == i_other.m_Z));
+			}
+
+			inline float Dot(const KPVector3 & i_other) const
+			{
+				return (m_X * i_other.m_X) + (m_Y * i_other.m_Y) + (m_Z * i_other.m_Z);
+			}
 
 			//Print
 			inline void Print() const
@@ -70,6 +108,12 @@ namespace KPEngine
 				std::cout << "(" << m_X << "," << m_Y << ","<< m_Z<< ")";
 			}
 
+
+			// Statics
+			static KPVector3 Zero()
+			{
+				return KPVector3(0.0f, 0.0f, 0.0f);
+			}
 
 		private:
 			float m_X;

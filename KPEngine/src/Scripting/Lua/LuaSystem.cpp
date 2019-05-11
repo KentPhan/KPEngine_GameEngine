@@ -42,7 +42,7 @@ namespace KPEngine
 				lua_close(g_pLuaState);
 			}
 
-			StrongPointer<Core::GameObject> LuaSystem::CreateGameObject(const char* i_pScriptFileName)
+			StrongPointer<Core::GameObject> LuaSystem::CreateGameObject(const char* i_pScriptFileName, bool i_OverridePosition, KPVector3SSE i_Position)
 			{
 				size_t l_SizeFile;
 				StrongPointer<GameObject> l_NewStrongPointer = nullptr;
@@ -90,7 +90,7 @@ namespace KPEngine
 					lua_pushstring(g_pLuaState, "name");
 					// Using stack field 1 as the key, get it's value from the table (in
 					// stack field 2) replacing the key in field 1 by the associated value
-					int l_nameType = lua_gettable(g_pLuaState, -2); // Player[top of stack after popping] =  Does Player(-2)["name"(Top of Stack)]
+					int l_nameType = lua_gettable(g_pLuaState, -2); // GameObject[top of stack after popping] =  Does GameObject(-2)["name"(Top of Stack)]
 					// It should be a string
 					assert(l_nameType == LUA_TSTRING);
 					// Retrieve the value associated with key "name" as a string, assuming it�s a string
@@ -114,7 +114,12 @@ namespace KPEngine
 					lua_pop(g_pLuaState, 4);
 
 					// Create Player Game Object and register components with engine
-					KPVector2 l_startPosition = KPVector2(l_xValue, l_yValue);
+					KPVector3SSE l_startPosition = KPVector3SSE(l_xValue, l_yValue, 0.0f);
+					if (i_OverridePosition)
+					{
+						l_startPosition = i_Position;
+					}
+
 					StrongPointer<GameObject> l_playerObject = new GameObject(l_pName, l_startPosition, 1);
 					GameObjectSystem::RegisterGameObject(l_playerObject);
 
@@ -130,17 +135,39 @@ namespace KPEngine
 						assert(lua_type(g_pLuaState, -1) == LUA_TTABLE);
 
 						const char* l_key = lua_tostring(g_pLuaState, -2);
-
+						
 
 						if(strcmp(l_key,"KPRender2DComponent") == 0)
 						{
+							// Get Render String File name
+							lua_pushstring(g_pLuaState, "texture");
+							
+							int l_fileNameType = lua_gettable(g_pLuaState, -2); // KPRenderComponent[top of stack after popping] =  Does KPRenderComponent(-2)["texture"(Top of Stack)]
+							// It should be a string
+							assert(l_fileNameType == LUA_TSTRING);
+							// Retrieve the value associated with key "texture" as a string, assuming it�s a string
+							const char * l_pFileName = lua_tostring(g_pLuaState, -1);
+							
 							// Registering Renderer Component
-							KPEngine::Graphics::RendererSystem::RegisterSprite(l_playerObject, "Assets\\girl.dds");
+							KPEngine::Graphics::RendererSystem::RegisterSprite(l_playerObject, l_pFileName);
+							lua_pop(g_pLuaState, 1);
 						}
 						else if (strcmp(l_key,"KPPhysics2DComponent") == 0 )
 						{
+							// Get Static property
+							lua_pushstring(g_pLuaState, "isStatic");
+
+							int l_staticType = lua_gettable(g_pLuaState, -2);
+
+							assert(l_staticType == LUA_TBOOLEAN);
+
+							int l_staticValue = lua_toboolean(g_pLuaState, -1);
+
 							// Register Physics Component and passing to controller
-							KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject);
+							KPEngine::Physics::PhysicsSystem::RegisterPhysicsComponent(l_playerObject,
+							                                                           l_staticValue != 0);
+
+							lua_pop(g_pLuaState, 1);
 						}
 						else
 						{
@@ -162,7 +189,6 @@ namespace KPEngine
 
 				return l_NewStrongPointer;
 			}
-
 		}
 	}
 

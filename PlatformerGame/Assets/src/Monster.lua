@@ -6,11 +6,11 @@ GameObject =
 	{
 		KPRender2DComponent = 
 		{
-			texture = "Assets\\girl.dds"
+			texture = "Assets\\Sprites\\Characters\\zombie.dds"
 		},
 		KPPhysics2DComponent = 
 		{
-
+			isStatic=false
 		},
 	}
 }
