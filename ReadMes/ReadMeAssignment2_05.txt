@@ -1,1 +1,0 @@
-Set Start Up Project as PlatformGame And Run

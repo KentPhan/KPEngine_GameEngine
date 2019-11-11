@@ -20,8 +20,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KPEngine_Test", "KPEngine_T
 		{F2A542AA-9DF0-4550-89DE-A1DE95EC397F} = {F2A542AA-9DF0-4550-89DE-A1DE95EC397F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InterviewProblems", "InterviewProblems\InterviewProblems.vcxproj", "{4B1052DD-5760-413E-AC8B-80531F2B7E6B}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLib", "GLib\GLib.vcxproj", "{B2AB67DE-B7FA-42BA-B060-959487392AEA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLibTest", "GLibTest\GLibTest.vcxproj", "{983BA8F0-73F6-41AA-B41A-B9F4DE771982}"
@@ -32,9 +30,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lua-WinLibs", "Lua\Lua-WinLibs.vcxproj", "{BDF98E69-FC1B-4010-B9D7-8DB75E26A245}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -66,14 +61,6 @@ Global
 		{EFD712F4-297D-4A38-BAD9-FF7C8CCF5193}.Release|x64.Build.0 = Release|x64
 		{EFD712F4-297D-4A38-BAD9-FF7C8CCF5193}.Release|x86.ActiveCfg = Release|Win32
 		{EFD712F4-297D-4A38-BAD9-FF7C8CCF5193}.Release|x86.Build.0 = Release|Win32
-		{4B1052DD-5760-413E-AC8B-80531F2B7E6B}.Debug|x64.ActiveCfg = Debug|x64
-		{4B1052DD-5760-413E-AC8B-80531F2B7E6B}.Debug|x64.Build.0 = Debug|x64
-		{4B1052DD-5760-413E-AC8B-80531F2B7E6B}.Debug|x86.ActiveCfg = Debug|Win32
-		{4B1052DD-5760-413E-AC8B-80531F2B7E6B}.Debug|x86.Build.0 = Debug|Win32
-		{4B1052DD-5760-413E-AC8B-80531F2B7E6B}.Release|x64.ActiveCfg = Release|x64
-		{4B1052DD-5760-413E-AC8B-80531F2B7E6B}.Release|x64.Build.0 = Release|x64
-		{4B1052DD-5760-413E-AC8B-80531F2B7E6B}.Release|x86.ActiveCfg = Release|Win32
-		{4B1052DD-5760-413E-AC8B-80531F2B7E6B}.Release|x86.Build.0 = Release|Win32
 		{B2AB67DE-B7FA-42BA-B060-959487392AEA}.Debug|x64.ActiveCfg = Debug|x64
 		{B2AB67DE-B7FA-42BA-B060-959487392AEA}.Debug|x64.Build.0 = Debug|x64
 		{B2AB67DE-B7FA-42BA-B060-959487392AEA}.Debug|x86.ActiveCfg = Debug|Win32
@@ -104,6 +91,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5FF6BF8A-807A-47B4-AE3D-5EEF34A3F1A5}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
